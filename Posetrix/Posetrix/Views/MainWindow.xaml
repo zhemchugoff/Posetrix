@@ -109,7 +109,7 @@
                 VerticalAlignment="Center"
                 Style="{StaticResource BodyTextBlockStyle}"
                 Text="I want to draw" />
-            <TextBox HorizontalAlignment="Stretch" Text="Images" />
+            <TextBox HorizontalAlignment="Stretch" Text="0" />
         </UniformGrid>
         <UniformGrid Grid.Row="3" Columns="2">
             <TextBlock
