@@ -2,132 +2,55 @@
     x:Class="Posetrix.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:UserControls="clr-namespace:Posetrix.Views.UserControls"
     xmlns:core="clr-namespace:Posetrix.Core;assembly=Posetrix.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Posetrix"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:usercontrols="clr-namespace:Posetrix.Views.UserControls"
     Title="Posetrix"
     Width="400"
-    Height="600"
+    Height="680"
+    MinWidth="400"
+    MinHeight="680"
     d:DataContext="{d:DesignInstance Type=core:MainWindowViewModel}"
     ResizeMode="CanResize"
     ThemeMode="System"
     mc:Ignorable="d">
     <Grid Margin="20" ShowGridLines="True">
-
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="2*" />
             <RowDefinition Height="3*" />
+            <RowDefinition Height="2*" />
             <RowDefinition Height="*" />
-            <RowDefinition />
-            <RowDefinition />
+
         </Grid.RowDefinitions>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <TextBlock
-                Grid.Row="0"
-                HorizontalAlignment="Center"
-                Text="Add your reference images" />
-            <Button
-                Grid.Row="1"
-                Height="46"
-                HorizontalAlignment="Stretch"
-                Content="&#xE710;"
-                FontFamily="{StaticResource SymbolThemeFontFamily}"
-                FontSize="20"
-                Style="{DynamicResource AccentButtonStyle}" />
-            <TextBlock
-                Grid.Row="2"
-                HorizontalAlignment="Center"
-                Text="100 images" />
-        </Grid>
-        <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <TextBlock
-                Grid.Row="0"
-                HorizontalAlignment="Center"
-                Style="{StaticResource TitleTextBlockStyle}"
-                Text="Practice modes" />
-            <ComboBox
-                Grid.Row="1"
-                HorizontalAlignment="Stretch"
-                SelectedIndex="0">
-                <ComboBoxItem Content="Timed practice" />
-                <ComboBoxItem Content="Class mode" />
-                <ComboBoxItem Content="Custom mode" />
 
-            </ComboBox>
-            <StackPanel
-                Grid.Row="2"
-                HorizontalAlignment="Stretch"
-                Orientation="Horizontal">
-                <ToggleButton Content="30s" />
-                <ToggleButton Content="45s" />
-                <ToggleButton Content="1m" />
-                <ToggleButton Content="2m" />
-                <ToggleButton Content="5m" />
-                <ToggleButton Content="10m" />
-                <ToggleButton Content="Custom" />
-            </StackPanel>
+        <usercontrols:ReferencesAdd Grid.Row="0" />
+        <usercontrols:PracticeModes Grid.Row="1" />
+        <usercontrols:PredefinedIntervals Grid.Row="2" />
+        <usercontrols:CustomInterval Grid.Row="3" />
+        <usercontrols:ReferencesNumber Grid.Row="4" />
 
 
-            <Grid Grid.Row="3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <TextBox
-                    Grid.Column="0"
-                    Height="30"
-                    Margin="0,0,10,0"
-                    Text="Hours" />
-                <TextBox
-                    Grid.Column="1"
-                    Height="30"
-                    Margin="0,0,10,0"
-                    Text="Minutes" />
-                <TextBox
-                    Grid.Column="2"
-                    Height="30"
-                    Text="Seconds" />
-            </Grid>
-        </Grid>
-        <UniformGrid
-            Grid.Row="2"
-            VerticalAlignment="Center"
-            Columns="2">
+        <UniformGrid Grid.Row="5" Columns="2">
             <TextBlock
                 Margin="0,0,10,0"
                 VerticalAlignment="Center"
-                Style="{StaticResource BodyTextBlockStyle}"
-                Text="I want to draw" />
-            <TextBox HorizontalAlignment="Stretch" Text="{Binding Counter}" />
-            <Button Command="{Binding IncrementCommand}" Content="Increment" />
-            <Button Command="{Binding DecrementCommand}" Content="Decrement" />
-        </UniformGrid>
-        <UniformGrid Grid.Row="3" Columns="2">
-            <TextBlock
-                Margin="0,0,10,0"
-                VerticalAlignment="Center"
-                Style="{StaticResource BodyTextBlockStyle}"
                 Text="Shuffle images" />
             <CheckBox IsChecked="True" />
         </UniformGrid>
-        <Button
-            Grid.Row="4"
-            Height="46"
-            HorizontalAlignment="Stretch"
-            Content="Start a drawing session"
-            Style="{DynamicResource AccentButtonStyle}" />
+
+        <Grid Grid.Row="6">
+            <Button
+                Height="46"
+                HorizontalAlignment="Stretch"
+                Content="Start a drawing session"
+                Style="{DynamicResource AccentButtonStyle}" />
+        </Grid>
+
     </Grid>
 </Window>
