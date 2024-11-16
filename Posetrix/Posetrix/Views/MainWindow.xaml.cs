@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Posetrix.Core;
+using System.Windows;
 
 namespace Posetrix
 {
@@ -10,6 +11,7 @@ namespace Posetrix
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainWindowViewModel();
         }
     }
 }
