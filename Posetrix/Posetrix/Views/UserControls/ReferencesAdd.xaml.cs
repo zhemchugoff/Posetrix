@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Posetrix.Views.UserControls
 {
@@ -23,6 +12,18 @@ namespace Posetrix.Views.UserControls
         public ReferencesAdd()
         {
             InitializeComponent();
+        }
+
+        private void ShowSettingsWindow_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            SettingsWindow settingsWindow = new();
+            settingsWindow.Show();
+        }
+
+        private void AddReferencesButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            ReferenceFoldersAddWindow referenceFoldersAddWindow = new ReferenceFoldersAddWindow();
+            referenceFoldersAddWindow.Show();
         }
     }
 }
