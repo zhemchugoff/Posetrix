@@ -9,11 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\undraw_walk_ing_qkyj.png" />
+    <None Remove="Images\undraw_workout_gcgu.png" />
     <None Remove="Images\undraw_workout_gcgu.svg" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="SharpVectors" Version="1.8.4.2" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +24,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\undraw_walk_ing_qkyj.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\undraw_workout_gcgu.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\undraw_workout_gcgu.svg" />
   </ItemGroup>
 

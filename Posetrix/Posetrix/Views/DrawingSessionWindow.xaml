@@ -16,8 +16,9 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <svg:SvgViewbox Source="Images/undraw_workout_gcgu.svg" Stretch="Uniform" />
-        </Grid>
+
+        <Image Name="MyImage" Grid.Row="0" />
+        <!--<svg:SvgViewbox Source="Images/undraw_workout_gcgu.svg" Stretch="Uniform" />-->
+        <!--<Image Grid.Row="0" Source="pack://application:,,,/Images/undraw_workout_gcgu.png" />-->
     </Grid>
 </Window>

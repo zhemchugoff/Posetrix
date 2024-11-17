@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Posetrix.Converters;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 
 namespace Posetrix.Views
 {
@@ -22,6 +15,17 @@ namespace Posetrix.Views
         public DrawingSessionWindow()
         {
             InitializeComponent();
+            DisplayWebPImage("Images/4.webp");
+            //var bitmap = new BitmapImage(new Uri("pack://application:,,,/Images/undraw_workout_gcgu.png")); 
+            //MyImage.Source = bitmap;
+        }
+
+        private void DisplayWebPImage(string imagePath)
+        {
+            using var image = Image.Load<Rgba32>(imagePath);
+            // Convert ImageSharp image to BitmapSource
+            var bitmapSource = ImageLoader.ConvertToBitmapSource(image);
+            MyImage.Source = bitmapSource;
         }
     }
 }
