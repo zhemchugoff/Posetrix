@@ -1,10 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-namespace Posetrix.Core;
+
+namespace Posetrix.Core.ViewModels;
 
 public partial class MainWindowViewModel: ObservableObject
 {
+
+
     [ObservableProperty]
     public int counter;
 
@@ -19,6 +22,4 @@ public partial class MainWindowViewModel: ObservableObject
     {
         Counter--;
     }
-
-
 }

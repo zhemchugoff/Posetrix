@@ -1,4 +1,4 @@
-﻿using Posetrix.Core;
+﻿using Posetrix.Core.ViewModels;
 
 namespace Posetrix.Tests;
 
