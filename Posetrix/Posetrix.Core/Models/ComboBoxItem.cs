@@ -1,7 +1,7 @@
 ﻿namespace Posetrix.Core.Models;
 
-public class Session
+public class ComboBoxItem
 {
-    public int Id { get; set; }
     public string? Name { get; set; }
+    public string? Content { get; set; }
 }

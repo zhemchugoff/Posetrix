@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class MainWindowViewModel: ObservableObject
+public partial class MainWindowViewModel: BaseViewModel
 {
 
 

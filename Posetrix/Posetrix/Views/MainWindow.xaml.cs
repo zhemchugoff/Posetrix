@@ -1,6 +1,7 @@
 ﻿using Posetrix.Core.ViewModels;
 using System.Windows;
 using Posetrix.Views;
+using System.Windows.Controls;
 
 namespace Posetrix
 {

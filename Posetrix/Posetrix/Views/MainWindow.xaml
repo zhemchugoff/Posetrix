@@ -18,10 +18,18 @@
     ResizeMode="CanResize"
     ThemeMode="System"
     mc:Ignorable="d">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type core:CustomIntervalsViewModel}">
+            <usercontrols:CustomInterval />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type core:PredefinedIntervalsViewModel}">
+            <usercontrols:PredefinedIntervals />
+        </DataTemplate>
+    </Window.Resources>
     <Grid Margin="20" ShowGridLines="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="6*" />
             <RowDefinition Height="2*" />
             <RowDefinition Height="2*" />
             <RowDefinition Height="3*" />
@@ -32,8 +40,9 @@
 
         <usercontrols:ReferencesAdd Grid.Row="0" />
         <usercontrols:PracticeModes Grid.Row="1" />
-        <usercontrols:PredefinedIntervals Grid.Row="2" />
-        <usercontrols:CustomInterval Grid.Row="3" />
+        <!--<usercontrols:PredefinedIntervals Grid.Row="2" />-->
+        <!--<ContentControl x:Name="contentControl" Grid.Row="2" />-->
+        <!--<usercontrols:CustomInterval Grid.Row="3" />-->
         <usercontrols:ReferencesNumber Grid.Row="4" />
 
 

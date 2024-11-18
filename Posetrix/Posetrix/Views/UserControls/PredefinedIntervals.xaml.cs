@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using Posetrix.Core.Interfaces;
+using Posetrix.Core.ViewModels;
+using System.Windows.Controls;
 
 namespace Posetrix.Views.UserControls
 {
@@ -10,6 +12,7 @@ namespace Posetrix.Views.UserControls
         public PredefinedIntervals()
         {
             InitializeComponent();
+            DataContext = new PredefinedIntervalsViewModel();
         }
     }
 }
