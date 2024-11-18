@@ -15,7 +15,7 @@ namespace Posetrix.Views
         public DrawingSessionWindow()
         {
             InitializeComponent();
-            DisplayWebPImage("Images/4.webp");
+            DisplayWebPImage("Images/1undraw_workout_gcgu.png");
             //var bitmap = new BitmapImage(new Uri("pack://application:,,,/Images/undraw_workout_gcgu.png")); 
             //MyImage.Source = bitmap;
         }

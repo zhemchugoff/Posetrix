@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Icons\book%281%29.png" />
+    <None Remove="Images\Icons\book.png" />
     <None Remove="Images\undraw_walk_ing_qkyj.png" />
     <None Remove="Images\undraw_workout_gcgu.png" />
     <None Remove="Images\undraw_workout_gcgu.svg" />
@@ -24,6 +26,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Icons\book(1).png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Icons\book.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\undraw_walk_ing_qkyj.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
