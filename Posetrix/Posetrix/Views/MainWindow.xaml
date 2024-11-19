@@ -19,7 +19,7 @@
     ThemeMode="System"
     mc:Ignorable="d">
     <Window.Resources>
-        <DataTemplate DataType="{x:Type core:CustomIntervalsViewModel}">
+        <DataTemplate DataType="{x:Type core:CustomIntervalViewModel}">
             <usercontrols:CustomInterval />
         </DataTemplate>
         <DataTemplate DataType="{x:Type core:PredefinedIntervalsViewModel}">
@@ -28,25 +28,26 @@
     </Window.Resources>
     <Grid Margin="20" ShowGridLines="True">
         <Grid.RowDefinitions>
+            <!--  Add referenced button  -->
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="6*" />
+            <!--  Practice modes  -->
+            <RowDefinition Height="4*" />
+            <!--  References number  -->
             <RowDefinition Height="2*" />
+            <!--  Shuffle button  -->
             <RowDefinition Height="2*" />
-            <RowDefinition Height="3*" />
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="*" />
+            <!--  Start a sessiom button  -->
+            <RowDefinition Height="Auto" />
+
 
         </Grid.RowDefinitions>
 
         <usercontrols:ReferencesAdd Grid.Row="0" />
         <usercontrols:PracticeModes Grid.Row="1" />
-        <!--<usercontrols:PredefinedIntervals Grid.Row="2" />-->
-        <!--<ContentControl x:Name="contentControl" Grid.Row="2" />-->
-        <!--<usercontrols:CustomInterval Grid.Row="3" />-->
-        <usercontrols:ReferencesNumber Grid.Row="4" />
+        <usercontrols:ReferencesNumber Grid.Row="2" />
 
 
-        <UniformGrid Grid.Row="5" Columns="2">
+        <UniformGrid Grid.Row="3" Columns="2">
             <TextBlock
                 Margin="0,0,10,0"
                 VerticalAlignment="Center"
@@ -54,7 +55,7 @@
             <CheckBox IsChecked="True" />
         </UniformGrid>
 
-        <Grid Grid.Row="6">
+        <Grid Grid.Row="4">
             <Button
                 Height="46"
                 HorizontalAlignment="Stretch"

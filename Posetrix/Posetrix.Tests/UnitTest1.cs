@@ -21,4 +21,18 @@ public class UnitTest1
         viewModel.Decrement();
         Assert.Equal(-1, viewModel.Counter);
     }
+
+    [Fact]
+    public void Constructor_PopulatesObservableCollection()
+    {
+
+        // Arrange
+        int numberOfViewModels = 2;
+        var viewModel = new PracticeModesViewModel();
+
+        // Assert
+        Assert.NotNull(viewModel.ViewModelsCollection);
+        Assert.NotEmpty(viewModel.ViewModelsCollection);
+        Assert.Equal(viewModel.ViewModelsCollection.Count, numberOfViewModels);
+    }
 }

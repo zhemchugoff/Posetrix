@@ -13,7 +13,7 @@ namespace Posetrix.Views.UserControls
         public CustomInterval()
         {
             InitializeComponent();
-            DataContext = new CustomIntervalsViewModel();
+            DataContext = new CustomIntervalViewModel();
         }
     }
 }

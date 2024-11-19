@@ -21,7 +21,8 @@
             Grid.Column="0"
             Margin="0,0,4,0"
             HorizontalAlignment="Stretch"
-            Content="30s" />
+            Content="30s"
+            IsChecked="True" />
         <ToggleButton
             Grid.Column="1"
             Margin="0,0,4,0"

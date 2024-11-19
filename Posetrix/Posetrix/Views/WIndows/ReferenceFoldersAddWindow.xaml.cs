@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using Posetrix.Core.ViewModels;
+using Posetrix.Services;
 
 namespace Posetrix.Views
 {
@@ -10,6 +12,8 @@ namespace Posetrix.Views
         public ReferenceFoldersAddWindow()
         {
             InitializeComponent();
+            var folderBrowserService = new FolderBrowserService();
+            DataContext = new ReferenceFoldersAddWindowViewModel(folderBrowserService);
         }
     }
 }

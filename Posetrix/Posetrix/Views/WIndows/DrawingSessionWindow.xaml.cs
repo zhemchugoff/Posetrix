@@ -3,6 +3,7 @@ using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 
 namespace Posetrix.Views
@@ -15,9 +16,11 @@ namespace Posetrix.Views
         public DrawingSessionWindow()
         {
             InitializeComponent();
-            DisplayWebPImage("Images/1undraw_workout_gcgu.png");
-            //var bitmap = new BitmapImage(new Uri("pack://application:,,,/Images/undraw_workout_gcgu.png")); 
-            //MyImage.Source = bitmap;
+            //DisplayWebPImage("Images/4.webp");
+            //var bitmap = new bitmapimage(new uri("pack://application:,,,/images/undraw_workout_gcgu.png"));
+            //MyImage.source = bitmap;
+            ImageSource imageSource = new BitmapImage(new Uri("pack://application:,,,/images/undraw_workout_gcgu.png"));
+            MyImage.Source = imageSource;
         }
 
         private void DisplayWebPImage(string imagePath)

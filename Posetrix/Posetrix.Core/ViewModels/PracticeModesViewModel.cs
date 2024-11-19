@@ -26,7 +26,7 @@ namespace Posetrix.Core.ViewModels
             ViewModelsCollection = new ObservableCollection<ComboBoxViewModel>
             {
                 new ComboBoxViewModel {ViewModelName = "Predefined intervals", ViewModelObject = new PredefinedIntervalsViewModel()},
-                new ComboBoxViewModel {ViewModelName = "Custom Intervals", ViewModelObject = new CustomIntervalsViewModel()}
+                new ComboBoxViewModel {ViewModelName = "Custom Intervals", ViewModelObject = new CustomIntervalViewModel()}
             };
 
             CurrentViewModel = ViewModelsCollection[0];
