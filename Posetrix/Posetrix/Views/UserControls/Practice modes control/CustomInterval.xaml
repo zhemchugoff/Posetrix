@@ -5,10 +5,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Posetrix.Views.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewmodels="clr-namespace:Posetrix.Core.ViewModels;assembly=Posetrix.Core"
-    d:DataContext="{d:DesignInstance Type=viewmodels:CustomIntervalViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    DataContext="{Binding Path=CustomIntervalViewModel, Source={StaticResource Locator}}"
     mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>

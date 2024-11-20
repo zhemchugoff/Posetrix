@@ -12,7 +12,6 @@ namespace Posetrix.Views.UserControls
         public PracticeModes()
         {
             InitializeComponent();
-            DataContext = new PracticeModesViewModel();
         }
     }
 }

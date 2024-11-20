@@ -22,7 +22,7 @@ namespace Posetrix.Views.UserControls
 
         private void AddReferencesButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            ReferenceFoldersAddWindow referenceFoldersAddWindow = new ReferenceFoldersAddWindow();
+            FoldersAddWindow referenceFoldersAddWindow = new FoldersAddWindow();
             referenceFoldersAddWindow.Show();
         }
     }

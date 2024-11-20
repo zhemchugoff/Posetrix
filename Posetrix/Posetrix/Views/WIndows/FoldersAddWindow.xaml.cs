@@ -7,13 +7,13 @@ namespace Posetrix.Views
     /// <summary>
     /// Interaction logic for AddReferenceFoldersWindow.xaml
     /// </summary>
-    public partial class ReferenceFoldersAddWindow : Window
+    public partial class FoldersAddWindow : Window
     {
-        public ReferenceFoldersAddWindow()
+        public FoldersAddWindow()
         {
             InitializeComponent();
-            var folderBrowserService = new FolderBrowserService();
-            DataContext = new ReferenceFoldersAddWindowViewModel(folderBrowserService);
+            //var folderBrowserService = new FolderBrowserService();
+            //DataContext = new ReferenceFoldersAddWindowViewModel(folderBrowserService);
         }
     }
 }

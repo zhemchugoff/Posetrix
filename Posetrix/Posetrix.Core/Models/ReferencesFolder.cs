@@ -22,9 +22,9 @@ public class ReferencesFolder
         else
         {
             // Convert the object to a ReferencesFolder object
-            ReferencesFolder comparedBird = (ReferencesFolder)compared;
+            ReferencesFolder comparedFolder = (ReferencesFolder)compared;
             // If the values of the object variables are equal, the objects are, too
-            return this.FullFolderPath.Equals(comparedBird.FullFolderPath);
+            return this.FullFolderPath.Equals(comparedFolder.FullFolderPath);
         }
     }
 

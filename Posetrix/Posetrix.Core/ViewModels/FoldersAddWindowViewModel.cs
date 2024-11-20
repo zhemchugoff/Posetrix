@@ -2,14 +2,14 @@
 using CommunityToolkit.Mvvm.Input;
 using Posetrix.Core.Models;
 using System.Collections.ObjectModel;
-using Microsoft.Win32;
 using Posetrix.Core.Interfaces;
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class ReferenceFoldersAddWindowViewModel: BaseViewModel
+public partial class FoldersAddWindowViewModel: BaseViewModel
 {
     private readonly IFolderBrowserService _folderBrowserService;
+    public int FolderId { get; set; } = 123;
     public ObservableCollection<ReferencesFolder> ReferenceFolders { get; set; }
 
     // Supported image extensions that WPF can display out of the box
@@ -27,11 +27,10 @@ public partial class ReferenceFoldersAddWindowViewModel: BaseViewModel
     [ObservableProperty]
     private ReferencesFolder? _selectedFolder;
 
-    public ReferenceFoldersAddWindowViewModel(IFolderBrowserService folderBrowserService)
+    public FoldersAddWindowViewModel(IFolderBrowserService folderBrowserService)
     {
         _folderBrowserService = folderBrowserService;
         ReferenceFolders = new ObservableCollection<ReferencesFolder>();
-        //ReferenceFolders = new ObservableCollection<ReferencesFolder>
         //{
         //    new ReferencesFolder {FullFolderPath=@"c:\temp\Folder1", FolderName="Folder 1", References = ["File1", "File2", "File3"] },
         //    new ReferencesFolder {FullFolderPath=@"c:\temp\Folder2", FolderName="Folder 2", References = ["File1", "File2", "File3"] },

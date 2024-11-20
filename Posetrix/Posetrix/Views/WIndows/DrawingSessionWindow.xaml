@@ -9,7 +9,9 @@
     Title="DrawingSessionWindow"
     Width="600"
     Height="450"
+    DataContext="{Binding Path=SessionViewModel, Source={StaticResource Locator}}"
     mc:Ignorable="d">
+
     <Window.Resources>
         <Style
             x:Key="ControlButton"
@@ -45,10 +47,13 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <UniformGrid Grid.Row="0" Columns="2">
-            <TextBlock Text="Image 1/10" />
-            <TextBlock HorizontalAlignment="Right" Text="HH:MM:SS" />
+            <TextBlock Text="Text" />
+            <TextBlock HorizontalAlignment="Right" Text="{Binding Seconds}" />
         </UniformGrid>
-        <Image Name="MyImage" Grid.Row="1" />
+        <Image
+            Name="MyImage"
+            Grid.Row="1"
+            Source="{Binding CurrentImage}" />
         <!--<svg:SvgViewbox Source="Images/undraw_workout_gcgu.svg" Stretch="Uniform" />-->
         <!--<Image Grid.Row="0" Source="pack://application:,,,/Images/undraw_workout_gcgu.png" />-->
         <StackPanel

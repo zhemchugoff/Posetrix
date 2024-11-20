@@ -1,7 +1,6 @@
 ﻿using Posetrix.Core.ViewModels;
 using System.Windows;
 using Posetrix.Views;
-using System.Windows.Controls;
 
 namespace Posetrix
 {
@@ -13,7 +12,6 @@ namespace Posetrix
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel();
         }
 
         private void ShowDrawingSessionWindow_Click(object sender, RoutedEventArgs e)

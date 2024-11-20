@@ -12,7 +12,6 @@ namespace Posetrix.Views.UserControls
         public PredefinedIntervals()
         {
             InitializeComponent();
-            DataContext = new PredefinedIntervalsViewModel();
         }
     }
 }

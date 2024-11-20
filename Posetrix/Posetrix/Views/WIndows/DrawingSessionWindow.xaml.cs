@@ -19,8 +19,8 @@ namespace Posetrix.Views
             //DisplayWebPImage("Images/4.webp");
             //var bitmap = new bitmapimage(new uri("pack://application:,,,/images/undraw_workout_gcgu.png"));
             //MyImage.source = bitmap;
-            ImageSource imageSource = new BitmapImage(new Uri("pack://application:,,,/images/undraw_workout_gcgu.png"));
-            MyImage.Source = imageSource;
+            //ImageSource imageSource = new BitmapImage(new Uri("pack://application:,,,/images/undraw_workout_gcgu.png"));
+            //MyImage.Source = imageSource;
         }
 
         private void DisplayWebPImage(string imagePath)

@@ -3,6 +3,9 @@ using Posetrix.Core.Interfaces;
 
 namespace Posetrix.Services;
 
+/// <summary>
+/// A class <c>FolderBrowserService</c> implements <c>IFolderBrowserService</c> interface for Open Folder Dialog
+/// </summary>
 public class FolderBrowserService : IFolderBrowserService
 {
     public string OpenFolderDialog()

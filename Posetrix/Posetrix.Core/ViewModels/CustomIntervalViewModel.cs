@@ -13,10 +13,12 @@ namespace Posetrix.Core.ViewModels
 
         public CustomIntervalViewModel()
         {
-            _sessionTimer = new SessionTimer();
-            _sessionTimer.Hours = 0;
-            _sessionTimer.Minutes = 0;
-            _sessionTimer.Seconds = 0;
+            _sessionTimer = new SessionTimer
+            {
+                Hours = 0,
+                Minutes = 0,
+                Seconds = 30
+            };
         }
     }
 }
