@@ -5,16 +5,14 @@ namespace Posetrix.Core.ViewModels;
 
 public partial class SessionViewModel : BaseViewModel
 {
-    private CustomIntervalViewModel _customInterval;
-    private FoldersAddWindowViewModel _foldersAddWindow;
+    private readonly CustomIntervalViewModel _customInterval;
+    private readonly FoldersAddWindowViewModel _foldersAddWindow;
 
     [ObservableProperty]
     private int _timer;
 
     [ObservableProperty]
     private int _seconds;
-
-    //public int Id { get; set; } = 2;
 
     private readonly ObservableCollection<string> _sessionImages;
 

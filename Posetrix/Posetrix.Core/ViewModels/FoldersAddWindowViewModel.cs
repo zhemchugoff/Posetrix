@@ -9,20 +9,7 @@ namespace Posetrix.Core.ViewModels;
 public partial class FoldersAddWindowViewModel: BaseViewModel
 {
     private readonly IFolderBrowserService _folderBrowserService;
-    public int FolderId { get; set; } = 123;
     public ObservableCollection<ReferencesFolder> ReferenceFolders { get; set; }
-
-    // Supported image extensions that WPF can display out of the box
-    private static readonly string[] SupportedImageExtensions =
-    [
-        ".bmp",
-        ".jpg",
-        ".jpeg",
-        ".png",
-        ".gif",
-        ".tiff",
-        ".wdp"
-    ];
 
     [ObservableProperty]
     private ReferencesFolder? _selectedFolder;
@@ -31,11 +18,6 @@ public partial class FoldersAddWindowViewModel: BaseViewModel
     {
         _folderBrowserService = folderBrowserService;
         ReferenceFolders = new ObservableCollection<ReferencesFolder>();
-        //{
-        //    new ReferencesFolder {FullFolderPath=@"c:\temp\Folder1", FolderName="Folder 1", References = ["File1", "File2", "File3"] },
-        //    new ReferencesFolder {FullFolderPath=@"c:\temp\Folder2", FolderName="Folder 2", References = ["File1", "File2", "File3"] },
-        //    new ReferencesFolder {FullFolderPath=@"c:\temp\Folder3", FolderName="Folder 3", References = ["File1", "File2", "File3"] },
-        //};
     }
 
     [RelayCommand]
@@ -52,9 +34,9 @@ public partial class FoldersAddWindowViewModel: BaseViewModel
         if (!string.IsNullOrEmpty(folderPath))
         {
             string folderName = Path.GetFileName(folderPath);
-            List<string> references = GetImageFiles(folderPath);
+            List<string> references = ReferencesFolder.GetImageFiles(folderPath);
 
-            if (!string.IsNullOrEmpty(folderName) && references.Count > 0)
+            if (!string.IsNullOrEmpty(folderName) && references.Count > 0 && references is not null)
             {
                 ReferencesFolder folderObject = CreateFolderObject(folderPath, folderName, references);
 
@@ -72,14 +54,5 @@ public partial class FoldersAddWindowViewModel: BaseViewModel
     {
         ReferencesFolder referencesFolder  = new ReferencesFolder() { FullFolderPath = folderPath, FolderName = folderName, References = files };
         return referencesFolder;
-    }
-
-    private static List<string> GetImageFiles(string folderPath)
-    {
-        var imageFiles = Directory.GetFiles(folderPath)
-            .Where(file => SupportedImageExtensions.Contains(Path.GetExtension(file).ToLowerInvariant()))
-            .ToList();
-
-        return imageFiles;
     }
 }

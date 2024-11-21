@@ -6,6 +6,24 @@ public class ReferencesFolder
     public string? FolderName { get; set; }
     public List<String>? References { get; set; }
 
+
+    /// <summary>
+    /// Supported extensions that WPF can display out of the box.
+    /// </summary>
+    public static string[] SupportedImageExtensions { get; } = { ".bmp", ".jpg", ".jpeg", ".png", ".gif", ".tiff", ".wdp" };
+
+    /// <summary>
+    /// Returns a list of image files in a folder with supported extensions from <c>SupportedImageExtensions</c>.
+    /// </summary>
+    public static List<string> GetImageFiles(string folderPath)
+    {
+        var imageFiles = Directory.GetFiles(folderPath)
+            .Where(file => SupportedImageExtensions.Contains(Path.GetExtension(file).ToLowerInvariant()))
+            .ToList();
+
+        return imageFiles;
+    }
+
     public override bool Equals(object? compared)
     {
         // If the variables are located in the same position, they are equal
