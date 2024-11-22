@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    DataContext="{Binding Path=CustomIntervalViewModel, Source={StaticResource Locator}}"
     mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>

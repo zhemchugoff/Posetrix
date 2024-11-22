@@ -6,7 +6,7 @@ namespace Posetrix.Core.ViewModels;
 
 public partial class MainWindowViewModel: BaseViewModel
 {
-
+    public string WindowTitle { get; set; } = "Posetrix";
 
     [ObservableProperty]
     public int counter;

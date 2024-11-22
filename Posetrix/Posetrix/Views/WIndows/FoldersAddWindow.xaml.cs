@@ -9,9 +9,13 @@ namespace Posetrix.Views
     /// </summary>
     public partial class FoldersAddWindow : Window
     {
-        public FoldersAddWindow()
+
+
+        public FoldersAddWindow(FoldersAddWindowViewModel foldersAddWindowViewModel)
         {
             InitializeComponent();
+            DataContext = foldersAddWindowViewModel;
+
             //var folderBrowserService = new FolderBrowserService();
             //DataContext = new ReferenceFoldersAddWindowViewModel(folderBrowserService);
         }

@@ -7,9 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:Posetrix.Core.ViewModels;assembly=Posetrix.Core"
     d:DesignWidth="800"
-    DataContext="{Binding Path=FoldersAddWindowViewModel, Source={StaticResource Locator}}"
     mc:Ignorable="d">
-    <Grid>
+    <Grid x:Name="MainContent">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
@@ -63,7 +62,6 @@
             Grid.Row="2"
             Margin="0,0,0,10"
             HorizontalAlignment="Center"
-            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-            Text="{Binding ReferenceFolders.Count}" />
+            Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
     </Grid>
 </UserControl>

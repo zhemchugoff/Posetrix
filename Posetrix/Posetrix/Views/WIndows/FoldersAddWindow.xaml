@@ -7,12 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="clr-namespace:Posetrix.Core.Models;assembly=Posetrix.Core"
     xmlns:services="clr-namespace:Posetrix.Services"
+    xmlns:viewmodels="clr-namespace:Posetrix.Core.ViewModels;assembly=Posetrix.Core"
     Title="Add your references"
     Width="600"
     Height="400"
     MinWidth="600"
     MinHeight="400"
-    DataContext="{Binding Path=FoldersAddWindowViewModel, Source={StaticResource Locator}}"
+    d:DataContext="{d:DesignInstance Type=viewmodels:FoldersAddWindowViewModel}"
     mc:Ignorable="d">
     <Grid Margin="20" ShowGridLines="True">
         <Grid.RowDefinitions>
