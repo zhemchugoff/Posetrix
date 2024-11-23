@@ -3,13 +3,21 @@ using CommunityToolkit.Mvvm.Input;
 using Posetrix.Core.Models;
 using System.Collections.ObjectModel;
 using Posetrix.Core.Interfaces;
+using System.Diagnostics;
+using System.Collections.Specialized;
 
 namespace Posetrix.Core.ViewModels;
 
 public partial class FoldersAddWindowViewModel: BaseViewModel
 {
     private readonly IFolderBrowserService _folderBrowserService;
-    public ObservableCollection<ReferencesFolder> ReferenceFolders { get; set; }
+
+    public ObservableCollection<ReferencesFolder> ReferenceFolders { get; } = new ObservableCollection<ReferencesFolder>();
+
+    public string WindowTitle { get; private set; } = "Add your references";
+
+    [ObservableProperty]
+    public string _folderCount;
 
     [ObservableProperty]
     private ReferencesFolder? _selectedFolder;
@@ -17,7 +25,13 @@ public partial class FoldersAddWindowViewModel: BaseViewModel
     public FoldersAddWindowViewModel(IFolderBrowserService folderBrowserService)
     {
         _folderBrowserService = folderBrowserService;
-        ReferenceFolders = new ObservableCollection<ReferencesFolder>();
+        FolderCount = $"Folders: 0";
+        ReferenceFolders.CollectionChanged += ReferenceFolders_CollectionChanged;
+    }
+
+    private void ReferenceFolders_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        FolderCount = $"Folders: {ReferenceFolders.Count}";
     }
 
     [RelayCommand]
@@ -43,6 +57,7 @@ public partial class FoldersAddWindowViewModel: BaseViewModel
                 if (!ReferenceFolders.Contains(folderObject))
                 {
                     ReferenceFolders.Add(folderObject);
+                    Debug.WriteLine($"Folders {FolderCount}");
                 }
             }
 

@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:Posetrix.Views.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:Posetrix.Core.ViewModels;assembly=Posetrix.Core"
+    d:DataContext="{d:DesignInstance Type=viewmodels:FoldersAddWindowViewModel}"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid x:Name="MainContent">
@@ -62,6 +63,6 @@
             Grid.Row="2"
             Margin="0,0,0,10"
             HorizontalAlignment="Center"
-            Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+            Text="{Binding FolderCount, UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
 </UserControl>

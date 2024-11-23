@@ -12,16 +12,16 @@ namespace Posetrix.Views.UserControls
     public partial class ReferencesAdd : UserControl
     {
         private readonly IServiceProvider _serviceProvider;
+        private readonly FoldersAddWindowViewModel _foldersAddWindowViewModel;
 
         //private readonly SettingsWindow _settingsWindow;
 
-        public ReferencesAdd(IServiceProvider serviceProvider)
+        public ReferencesAdd(IServiceProvider serviceProvider, FoldersAddWindowViewModel foldersAddWindowViewModel)
         {
             InitializeComponent();
-            this._serviceProvider = serviceProvider;
-
-
-            //_settingsWindow = settingsWindow;
+            _serviceProvider = serviceProvider;
+            _foldersAddWindowViewModel = foldersAddWindowViewModel;
+            DataContext = _foldersAddWindowViewModel;
         }
 
         private void ShowSettingsWindow_Click(object sender, System.Windows.RoutedEventArgs e)

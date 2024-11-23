@@ -8,7 +8,7 @@
     xmlns:models="clr-namespace:Posetrix.Core.Models;assembly=Posetrix.Core"
     xmlns:services="clr-namespace:Posetrix.Services"
     xmlns:viewmodels="clr-namespace:Posetrix.Core.ViewModels;assembly=Posetrix.Core"
-    Title="Add your references"
+    Title="{Binding WindowTitle}"
     Width="600"
     Height="400"
     MinWidth="600"

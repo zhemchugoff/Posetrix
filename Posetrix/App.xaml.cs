@@ -35,9 +35,9 @@ namespace Posetrix
             serviceCollection.AddSingleton<MainWindow>();
             serviceCollection.AddSingleton<MainWindowViewModel>();
             // Windows with add references button and settings button
-            serviceCollection.AddTransient<ReferencesAdd>();
+            serviceCollection.AddSingleton<ReferencesAdd>();
             serviceCollection.AddTransient<FoldersAddWindow>();
-            serviceCollection.AddTransient<FoldersAddWindowViewModel>();
+            serviceCollection.AddSingleton<FoldersAddWindowViewModel>();
             serviceCollection.AddTransient<IFolderBrowserService ,FolderBrowserService>();
 
             serviceCollection.AddTransient<SettingsWindow>();
