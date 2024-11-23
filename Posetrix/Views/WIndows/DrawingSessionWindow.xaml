@@ -6,10 +6,11 @@
     xmlns:local="clr-namespace:Posetrix.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:svg="http://sharpvectors.codeplex.com/svgc/"
-    Title="DrawingSessionWindow"
+    xmlns:viewmodels="clr-namespace:Posetrix.Core.ViewModels;assembly=Posetrix.Core"
+    Title="{Binding WindowTitle}"
     Width="600"
     Height="450"
-    DataContext="{Binding Path=SessionViewModel, Source={StaticResource Locator}}"
+    d:DataContext="{d:DesignInstance Type=viewmodels:SessionViewModel}"
     mc:Ignorable="d">
 
     <Window.Resources>

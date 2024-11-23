@@ -1,31 +1,31 @@
 ﻿using System.Windows;
-using Posetrix.Core.ViewModels;
 using System.Diagnostics;
+using Posetrix.Core.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
+using Posetrix.Core.ViewModels;
 
-namespace Posetrix.Views
+namespace Posetrix.Views;
+
+/// <summary>
+/// Interaction logic for SettingsWindow.xaml
+/// </summary>
+public partial class SettingsWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for SettingsWindow.xaml
-    /// </summary>
-    public partial class SettingsWindow : Window
+    public SettingsWindow(SettingsWindowViewModel settingsWindowViewModel)
     {
-        public SettingsWindow(SettingsWindowViewModel settingsWindowViewModel)
-        {
-            InitializeComponent();
-            DataContext = settingsWindowViewModel;
-            Title = settingsWindowViewModel.Title;
-        }
+        InitializeComponent();
+        DataContext = settingsWindowViewModel;
+    }
 
-        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+    private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+    {
+        // Open the URL in the default web browser
+        Process.Start(new ProcessStartInfo
         {
-            // Open the URL in the default web browser
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = e.Uri.AbsoluteUri,
-                UseShellExecute = true
-            });
+            FileName = e.Uri.AbsoluteUri,
+            UseShellExecute = true
+        });
 
-            e.Handled = true;
-        }
+        e.Handled = true;
     }
 }

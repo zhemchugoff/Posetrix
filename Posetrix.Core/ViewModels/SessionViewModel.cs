@@ -1,10 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Posetrix.Core.Interfaces;
 using System.Collections.ObjectModel;
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class SessionViewModel : BaseViewModel
+public partial class SessionViewModel : BaseViewModel, ICustomWindow
 {
+    public string WindowTitle => "Drawing session";
+
     private readonly CustomIntervalViewModel _customInterval;
     private readonly FoldersAddWindowViewModel _foldersAddWindow;
 
@@ -18,6 +21,7 @@ public partial class SessionViewModel : BaseViewModel
 
     [ObservableProperty]
     private string? _currentImage;
+
 
     public SessionViewModel(CustomIntervalViewModel customInterval, FoldersAddWindowViewModel foldersAddWindow)
     {

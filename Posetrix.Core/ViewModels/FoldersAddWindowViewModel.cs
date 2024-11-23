@@ -8,13 +8,13 @@ using System.Collections.Specialized;
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class FoldersAddWindowViewModel: BaseViewModel
+public partial class FoldersAddWindowViewModel: BaseViewModel, ICustomWindow
 {
     private readonly IFolderBrowserService _folderBrowserService;
+    public string WindowTitle { get; } = "Add folders";
 
     public ObservableCollection<ReferencesFolder> ReferenceFolders { get; } = new ObservableCollection<ReferencesFolder>();
 
-    public string WindowTitle { get; private set; } = "Add your references";
 
     [ObservableProperty]
     public string _folderCount;

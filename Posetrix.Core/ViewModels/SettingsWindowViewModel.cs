@@ -1,11 +1,9 @@
-﻿namespace Posetrix.Core.ViewModels;
-public partial class SettingsWindowViewModel: BaseViewModel
+﻿using Posetrix.Core.Interfaces;
+
+namespace Posetrix.Core.ViewModels;
+public partial class SettingsWindowViewModel: BaseViewModel, ICustomWindow
 {
-    public string Title { get; private set; } = "Setting window";
-    public SettingsWindowViewModel()
-    {
-        
-    }
+    public string WindowTitle => "Settings";
 
 }
 
