@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:Posetrix.Views.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:Posetrix.Core.ViewModels;assembly=Posetrix.Core"
+    d:DataContext="{d:DesignInstance Type=viewmodels:PracticeModesViewModel}"
     d:DesignHeight="200"
     d:DesignWidth="400"
     mc:Ignorable="d">
@@ -28,7 +29,16 @@
             ItemsSource="{Binding ViewModelsCollection}"
             SelectedItem="{Binding CurrentViewModel}" />
         <Grid Grid.Row="2" Margin="0,20">
-            <ContentControl Content="{Binding CurrentViewModel.ViewModelObject}" />
+            <ContentControl Content="{Binding CurrentViewModel.ViewModelObject}">
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type viewmodels:CustomIntervalViewModel}">
+                        <local:CustomInterval />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:PredefinedIntervalsViewModel}">
+                        <local:PredefinedIntervals />
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>
         </Grid>
 
         <!--<ContentControl Grid.Row="2" Content="{Binding SelectedItem.Content}" />-->

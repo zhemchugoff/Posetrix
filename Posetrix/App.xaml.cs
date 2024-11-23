@@ -42,6 +42,13 @@ namespace Posetrix
 
             serviceCollection.AddTransient<SettingsWindow>();
             serviceCollection.AddSingleton<SettingsWindowViewModel>();
+
+            serviceCollection.AddTransient<PracticeModes>();
+            serviceCollection.AddTransient<CustomInterval>();
+            serviceCollection.AddTransient<CustomIntervalViewModel>();
+            serviceCollection.AddTransient<PredefinedIntervals>();
+            serviceCollection.AddTransient<PredefinedIntervalsViewModel>();
+            serviceCollection.AddTransient<PracticeModesViewModel>();
         }
     }
 

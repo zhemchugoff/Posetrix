@@ -34,7 +34,7 @@ namespace Posetrix.Core.ViewModels
                 new ComboBoxViewModel {ViewModelName = "Custom Intervals", ViewModelObject = _customIntervalViewModel}
             };
 
-            CurrentViewModel = ViewModelsCollection[1];    
+            CurrentViewModel = ViewModelsCollection[0];
         }
 
     }

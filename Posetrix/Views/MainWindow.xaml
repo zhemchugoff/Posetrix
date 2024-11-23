@@ -16,7 +16,14 @@
     Icon="pack://application:,,,/Images/Icons/book(1).png"
     ResizeMode="CanResize"
     mc:Ignorable="d">
-    <Window.Resources />
+    <Window.Resources>
+        <!--<DataTemplate DataType="{x:Type core:CustomIntervalViewModel}">
+            <usercontrols:CustomInterval />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type core:PredefinedIntervalsViewModel}">
+            <usercontrols:PredefinedIntervals />
+        </DataTemplate>-->
+    </Window.Resources>
     <Grid Margin="20" ShowGridLines="True">
         <Grid.RowDefinitions>
             <!--  Add referenced button  -->
@@ -33,6 +40,7 @@
 
         </Grid.RowDefinitions>
         <ContentControl x:Name="ReferenceAddControlContainer" Grid.Row="0" />
+        <ContentControl x:Name="PracticeModesControlContainer" Grid.Row="1" />
         <!--<usercontrols:ReferencesAdd Grid.Row="0" />-->
         <!--<usercontrols:PracticeModes Grid.Row="1" />-->
         <!--<usercontrols:ReferencesNumber Grid.Row="2" />-->

@@ -22,8 +22,11 @@ namespace Posetrix
 
             _serviceProvider = serviceProvider;
 
-            var userControl = _serviceProvider.GetRequiredService<ReferencesAdd>();
-            ReferenceAddControlContainer.Content = userControl;
+            var referencesAddControl = _serviceProvider.GetRequiredService<ReferencesAdd>();
+            var practiceModes = _serviceProvider.GetRequiredService<PracticeModes>();
+
+            ReferenceAddControlContainer.Content = referencesAddControl;
+            PracticeModesControlContainer.Content = practiceModes;
         }
 
         private void ShowDrawingSessionWindow_Click(object sender, RoutedEventArgs e)

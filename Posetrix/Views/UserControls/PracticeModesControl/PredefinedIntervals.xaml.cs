@@ -1,6 +1,4 @@
-﻿using Posetrix.Core.Interfaces;
-using Posetrix.Core.ViewModels;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace Posetrix.Views.UserControls
 {
