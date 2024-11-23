@@ -15,7 +15,6 @@
     d:DataContext="{d:DesignInstance Type=core:MainWindowViewModel}"
     Icon="pack://application:,,,/Images/Icons/book(1).png"
     ResizeMode="CanResize"
-    ThemeMode="Light"
     mc:Ignorable="d">
     <Window.Resources />
     <Grid Margin="20" ShowGridLines="True">

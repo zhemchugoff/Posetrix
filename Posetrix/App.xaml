@@ -3,14 +3,17 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:Posetrix"
-    xmlns:services="clr-namespace:Posetrix.Services">
+    ThemeMode="System">
     <Application.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
+            <FontFamily x:Key="SegoeUIIcons">pack://application:,,,/Fonts/#Segoe Fluent Icons</FontFamily>
+            <!--<ResourceDictionary.MergedDictionaries>
+
                 <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Themes/Fluent.xaml" />
-            </ResourceDictionary.MergedDictionaries>
+
+            </ResourceDictionary.MergedDictionaries>-->
             <!--<services:ViewModelLocator x:Key="Locator" />-->
+
         </ResourceDictionary>
     </Application.Resources>
-
 </Application>

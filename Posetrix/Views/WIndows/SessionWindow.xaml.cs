@@ -2,7 +2,6 @@
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp;
 using System.Windows;
-using Posetrix.Core.Interfaces;
 
 
 namespace Posetrix.Views;
@@ -10,9 +9,9 @@ namespace Posetrix.Views;
 /// <summary>
 /// Interaction logic for DrawingSessionWindow.xaml
 /// </summary>
-public partial class DrawingSessionWindow : Window
+public partial class SessionWindow : Window
 {
-    public DrawingSessionWindow()
+    public SessionWindow()
     {
         InitializeComponent();
         //DisplayWebPImage("Images/4.webp");

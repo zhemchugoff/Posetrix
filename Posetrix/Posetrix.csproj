@@ -27,6 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Fonts\SegoeFluentIcons.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\Icons\book(1).png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

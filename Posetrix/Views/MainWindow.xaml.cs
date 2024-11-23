@@ -28,7 +28,7 @@ namespace Posetrix
 
         private void ShowDrawingSessionWindow_Click(object sender, RoutedEventArgs e)
         {
-            DrawingSessionWindow drawingSessionWindow = new DrawingSessionWindow();
+            SessionWindow drawingSessionWindow = new SessionWindow();
             drawingSessionWindow.Show();
         }
     }

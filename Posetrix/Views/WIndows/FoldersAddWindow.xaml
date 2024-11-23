@@ -56,7 +56,6 @@
                             Grid.Row="1"
                             Grid.Column="1"
                             Margin="12,0,0,6"
-                            Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                             Text="{Binding FullFolderPath, Mode=OneWay}" />
                     </Grid>
                 </DataTemplate>
@@ -76,7 +75,7 @@
                 VerticalAlignment="Center"
                 Command="{Binding OpenFolderCommand}"
                 Content="&#xE710;"
-                FontFamily="{StaticResource SymbolThemeFontFamily}"
+                FontFamily="{StaticResource SegoeUIIcons}"
                 FontSize="16">
                 <Button.ToolTip>
                     <ToolTip>
@@ -97,7 +96,7 @@
                 Command="{Binding RemoveFolderCommand}"
                 CommandParameter="{Binding SelectedFolder}"
                 Content="&#xE738;"
-                FontFamily="{StaticResource SymbolThemeFontFamily}"
+                FontFamily="{StaticResource SegoeUIIcons}"
                 FontSize="16">
                 <Button.ToolTip>
                     <ToolTip>
