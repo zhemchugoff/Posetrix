@@ -15,13 +15,12 @@ namespace Posetrix.Core.ViewModels
         private ComboBoxItem? _selectedItem;
 
         [ObservableProperty]
-        private object? _currentViewModel;
+        private object? _selectedViewModel;
         public ObservableCollection<ComboBoxViewModel> ViewModelsCollection { get; set; }
 
         public string Name => "Practice Modes";
 
-        public string? SelectedControl { get; set; }
-
+        //public string? SelectedControl { get; set; }
 
         public PracticeModesViewModel(PredefinedIntervalsViewModel predefinedIntervalsViewModel, CustomIntervalViewModel customIntervalViewModel)
         {
@@ -34,7 +33,7 @@ namespace Posetrix.Core.ViewModels
                 new ComboBoxViewModel {ViewModelName = "Custom Intervals", ViewModelObject = _customIntervalViewModel}
             };
 
-            CurrentViewModel = ViewModelsCollection[0];
+            SelectedViewModel = ViewModelsCollection[0];
         }
 
     }

@@ -10,6 +10,15 @@
     d:DesignHeight="200"
     d:DesignWidth="400"
     mc:Ignorable="d">
+    <ContentControl.Resources>
+        <!--  Template for dynamic custom views display  -->
+        <DataTemplate DataType="{x:Type viewmodels:CustomIntervalViewModel}">
+            <local:CustomInterval />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:PredefinedIntervalsViewModel}">
+            <local:PredefinedIntervals />
+        </DataTemplate>
+    </ContentControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -27,20 +36,9 @@
             Grid.Row="1"
             DisplayMemberPath="ViewModelName"
             ItemsSource="{Binding ViewModelsCollection}"
-            SelectedItem="{Binding CurrentViewModel}" />
+            SelectedItem="{Binding SelectedViewModel}" />
         <Grid Grid.Row="2" Margin="0,20">
-            <ContentControl Content="{Binding CurrentViewModel.ViewModelObject}">
-                <ContentControl.Resources>
-                    <DataTemplate DataType="{x:Type viewmodels:CustomIntervalViewModel}">
-                        <local:CustomInterval />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type viewmodels:PredefinedIntervalsViewModel}">
-                        <local:PredefinedIntervals />
-                    </DataTemplate>
-                </ContentControl.Resources>
-            </ContentControl>
+            <ContentControl Content="{Binding SelectedViewModel.ViewModelObject}" />
         </Grid>
-
-        <!--<ContentControl Grid.Row="2" Content="{Binding SelectedItem.Content}" />-->
     </Grid>
 </UserControl>

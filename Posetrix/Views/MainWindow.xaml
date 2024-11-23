@@ -16,14 +16,7 @@
     Icon="pack://application:,,,/Images/Icons/book(1).png"
     ResizeMode="CanResize"
     mc:Ignorable="d">
-    <Window.Resources>
-        <!--<DataTemplate DataType="{x:Type core:CustomIntervalViewModel}">
-            <usercontrols:CustomInterval />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type core:PredefinedIntervalsViewModel}">
-            <usercontrols:PredefinedIntervals />
-        </DataTemplate>-->
-    </Window.Resources>
+    <Window.Resources />
     <Grid Margin="20" ShowGridLines="True">
         <Grid.RowDefinitions>
             <!--  Add referenced button  -->
@@ -41,11 +34,22 @@
         </Grid.RowDefinitions>
         <ContentControl x:Name="ReferenceAddControlContainer" Grid.Row="0" />
         <ContentControl x:Name="PracticeModesControlContainer" Grid.Row="1" />
-        <!--<usercontrols:ReferencesAdd Grid.Row="0" />-->
-        <!--<usercontrols:PracticeModes Grid.Row="1" />-->
-        <!--<usercontrols:ReferencesNumber Grid.Row="2" />-->
 
+        <!--  Image count section  -->
+        <UniformGrid
+            Grid.Row="2"
+            VerticalAlignment="Center"
+            Columns="2">
+            <TextBlock
+                Margin="0,0,10,0"
+                VerticalAlignment="Center"
+                Text="I want to draw" />
+            <TextBox HorizontalAlignment="Stretch" Text="0" />
+            <!--<Button Command="{Binding IncrementCommand}" Content="Increment" />
+    <Button Command="{Binding DecrementCommand}" Content="Decrement" />-->
+        </UniformGrid>
 
+        <!--  Shuffle section  -->
         <UniformGrid Grid.Row="3" Columns="2">
             <TextBlock
                 Margin="0,0,10,0"
