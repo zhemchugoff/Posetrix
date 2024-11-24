@@ -4,12 +4,11 @@ using System.Collections.ObjectModel;
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class SessionViewModel : BaseViewModel, ICustomWindow
+public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
 {
     public string WindowTitle => "Drawing session";
 
-    private readonly CustomIntervalViewModel _customInterval;
-    private readonly FoldersAddWindowViewModel _foldersAddWindow;
+    private readonly MainWindowViewModel _mainWindowViewModel;
 
     [ObservableProperty]
     private int _timer;
@@ -18,29 +17,23 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
     private int _seconds;
 
     private readonly ObservableCollection<string> _sessionImages;
-
     [ObservableProperty]
     private string? _currentImage;
 
 
-    public SessionViewModel(CustomIntervalViewModel customInterval, FoldersAddWindowViewModel foldersAddWindow)
+    public SessionWindowViewModel(MainWindowViewModel mainWindowViewModel)
     {
-        _customInterval = customInterval;
-
-        if (foldersAddWindow != null) { 
-        _foldersAddWindow = foldersAddWindow;
-        }
-
-
-        _timer = _customInterval.SessionTimer.Seconds;
+        _mainWindowViewModel = mainWindowViewModel;
         _sessionImages = new ObservableCollection<string>();
         PopulateSessionImagesList();
-        _currentImage = _foldersAddWindow.ReferenceFolders[0].References[0];
+        _currentImage = mainWindowViewModel.ReferenceFolders[0].References[1];
+        this._mainWindowViewModel = mainWindowViewModel;
     }
 
     private void PopulateSessionImagesList()
     {
-        foreach (var referenceFolder in _foldersAddWindow.ReferenceFolders) { 
+        foreach (var referenceFolder in _mainWindowViewModel.ReferenceFolders)
+        {
             foreach (var image in referenceFolder.References)
             {
                 _sessionImages.Add(image);

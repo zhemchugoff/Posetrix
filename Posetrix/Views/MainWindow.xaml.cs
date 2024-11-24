@@ -12,27 +12,31 @@ namespace Posetrix
     /// </summary>
     public partial class MainWindow : Window
     {
-        //private readonly ICustomWindow _mainWindowViewModel;
         private readonly IServiceProvider _serviceProvider;
 
         public MainWindow(MainWindowViewModel mainWindowViewModel, IServiceProvider serviceProvider)
         {
             InitializeComponent();
             DataContext = mainWindowViewModel;
-
             _serviceProvider = serviceProvider;
-
-            var referencesAddControl = _serviceProvider.GetRequiredService<ReferencesAdd>();
-            var practiceModes = _serviceProvider.GetRequiredService<PracticeModes>();
-
-            ReferenceAddControlContainer.Content = referencesAddControl;
-            PracticeModesControlContainer.Content = practiceModes;
         }
 
+        private void ShowSettingsWindow_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var settingsWindow = _serviceProvider.GetRequiredService<SettingsWindow>();
+            settingsWindow.Show();
+        }
+
+        private void AddReferencesButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var foldersAddWindow = _serviceProvider.GetRequiredService<FoldersAddWindow>();
+            foldersAddWindow.Show();
+        }
         private void ShowDrawingSessionWindow_Click(object sender, RoutedEventArgs e)
         {
-            SessionWindow drawingSessionWindow = new SessionWindow();
+            var drawingSessionWindow = _serviceProvider.GetRequiredService<SessionWindow>();
             drawingSessionWindow.Show();
         }
+
     }
 }

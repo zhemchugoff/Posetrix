@@ -2,6 +2,7 @@
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp;
 using System.Windows;
+using Posetrix.Core.ViewModels;
 
 
 namespace Posetrix.Views;
@@ -11,9 +12,11 @@ namespace Posetrix.Views;
 /// </summary>
 public partial class SessionWindow : Window
 {
-    public SessionWindow()
+    public SessionWindow(SessionWindowViewModel sessionWindowViewModel)
     {
         InitializeComponent();
+        DataContext = sessionWindowViewModel;
+        
         //DisplayWebPImage("Images/4.webp");
         //var bitmap = new bitmapimage(new uri("pack://application:,,,/images/undraw_workout_gcgu.png"));
         //MyImage.source = bitmap;

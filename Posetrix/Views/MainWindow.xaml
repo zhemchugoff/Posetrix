@@ -16,7 +16,15 @@
     Icon="pack://application:,,,/Images/Icons/book(1).png"
     ResizeMode="CanResize"
     mc:Ignorable="d">
-    <Window.Resources />
+    <Window.Resources>
+        <!--  Template for dynamic custom views display  -->
+        <DataTemplate DataType="{x:Type core:CustomIntervalViewModel}">
+            <usercontrols:CustomInterval />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type core:PredefinedIntervalsViewModel}">
+            <usercontrols:PredefinedIntervals />
+        </DataTemplate>
+    </Window.Resources>
     <Grid Margin="20" ShowGridLines="True">
         <Grid.RowDefinitions>
             <!--  Add referenced button  -->
@@ -29,11 +37,85 @@
             <RowDefinition Height="2*" />
             <!--  Start a sessiom button  -->
             <RowDefinition Height="Auto" />
-
-
         </Grid.RowDefinitions>
-        <ContentControl x:Name="ReferenceAddControlContainer" Grid.Row="0" />
-        <ContentControl x:Name="PracticeModesControlContainer" Grid.Row="1" />
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Name="openSettingsWindowButton"
+                    Grid.Column="0"
+                    Width="28"
+                    Height="28"
+                    Padding="0"
+                    VerticalAlignment="Center"
+                    Click="ShowSettingsWindow_Click"
+                    Content="&#xE713;"
+                    FontFamily="{StaticResource SegoeUIIcons}"
+                    FontSize="16">
+                    <Button.ToolTip>
+                        <ToolTip>
+                            <TextBlock
+                                FontFamily="Segoe UI"
+                                FontSize="12"
+                                Text="Settings" />
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+                <TextBlock
+                    Grid.Column="1"
+                    Margin="-40,0,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Text="Add your reference images" />
+            </Grid>
+
+            <Button
+                Name="addReferencesButton"
+                Grid.Row="1"
+                Height="46"
+                Margin="0,10"
+                HorizontalAlignment="Stretch"
+                Click="AddReferencesButton_Click"
+                Content="&#xE710;"
+                FontFamily="{StaticResource SegoeUIIcons}"
+                FontSize="20"
+                Style="{DynamicResource AccentButtonStyle}" />
+            <TextBlock
+                Grid.Row="2"
+                Margin="0,0,0,10"
+                HorizontalAlignment="Center"
+                Text="{Binding FolderCount}" />
+        </Grid>
+        <!--<ContentControl x:Name="PracticeModesControlContainer" Grid.Row="1" />-->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock
+                Grid.Row="0"
+                Margin="0,20"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Text="Practice modes" />
+            <ComboBox
+                Grid.Row="1"
+                DisplayMemberPath="ViewModelName"
+                ItemsSource="{Binding ViewModelsCollection}"
+                SelectedItem="{Binding SelectedViewModel}" />
+            <Grid Grid.Row="2" Margin="0,20">
+                <ContentControl Content="{Binding SelectedViewModel.ViewModelObject}" />
+            </Grid>
+        </Grid>
 
         <!--  Image count section  -->
         <UniformGrid
@@ -44,7 +126,10 @@
                 Margin="0,0,10,0"
                 VerticalAlignment="Center"
                 Text="I want to draw" />
-            <TextBox HorizontalAlignment="Stretch" Text="0" />
+            <TextBox
+                HorizontalAlignment="Stretch"
+                Text="{Binding SessionImageCounter}"
+                ToolTip="0: Endless mode" />
             <!--<Button Command="{Binding IncrementCommand}" Content="Increment" />
     <Button Command="{Binding DecrementCommand}" Content="Decrement" />-->
         </UniformGrid>
@@ -55,7 +140,7 @@
                 Margin="0,0,10,0"
                 VerticalAlignment="Center"
                 Text="Shuffle images" />
-            <CheckBox IsChecked="True" />
+            <CheckBox IsChecked="{Binding IsShuffleEnabled}" />
         </UniformGrid>
 
         <Grid Grid.Row="4">

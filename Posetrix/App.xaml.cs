@@ -33,22 +33,22 @@ namespace Posetrix
         {
             // Main application window
             serviceCollection.AddTransient<MainWindow>();
-            serviceCollection.AddTransient<MainWindowViewModel>();
+            serviceCollection.AddSingleton<MainWindowViewModel>();
             // Windows with add references button and settings button
-            serviceCollection.AddTransient<ReferencesAdd>();
             serviceCollection.AddTransient<IFolderBrowserService, FolderBrowserService>();
             serviceCollection.AddTransient<FoldersAddWindow>();
-            serviceCollection.AddSingleton<FoldersAddWindowViewModel>();
 
             serviceCollection.AddTransient<SettingsWindow>();
             serviceCollection.AddSingleton<SettingsWindowViewModel>();
 
-            serviceCollection.AddTransient<PracticeModes>();
+
             serviceCollection.AddTransient<CustomInterval>();
-            serviceCollection.AddTransient<CustomIntervalViewModel>();
+            serviceCollection.AddSingleton<CustomIntervalViewModel>();
             serviceCollection.AddTransient<PredefinedIntervals>();
-            serviceCollection.AddTransient<PredefinedIntervalsViewModel>();
-            serviceCollection.AddTransient<PracticeModesViewModel>();
+            serviceCollection.AddSingleton<PredefinedIntervalsViewModel>();
+
+            serviceCollection.AddTransient<SessionWindow>();
+            serviceCollection.AddTransient<SessionWindowViewModel>();
         }
     }
 

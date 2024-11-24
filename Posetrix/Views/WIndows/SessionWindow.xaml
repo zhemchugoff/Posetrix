@@ -10,7 +10,7 @@
     Title="{Binding WindowTitle}"
     Width="600"
     Height="450"
-    d:DataContext="{d:DesignInstance Type=viewmodels:SessionViewModel}"
+    d:DataContext="{d:DesignInstance Type=viewmodels:SessionWindowViewModel}"
     mc:Ignorable="d">
 
     <Window.Resources>
