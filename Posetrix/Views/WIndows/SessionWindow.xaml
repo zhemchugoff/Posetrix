@@ -119,7 +119,11 @@
             Grid.Row="3"
             HorizontalAlignment="Center"
             Orientation="Horizontal">
-            <Button Content="&#xE76B;" Style="{StaticResource ControlButton}">
+            <Button
+                Command="{Binding SelectPreviousImageCommand}"
+                Content="&#xE76B;"
+                IsEnabled="{Binding CanSelectPreviousImage}"
+                Style="{StaticResource ControlButton}">
                 <Button.ToolTip>
                     <ToolTip>
                         <TextBlock

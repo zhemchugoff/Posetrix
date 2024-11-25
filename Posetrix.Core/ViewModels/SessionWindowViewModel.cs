@@ -22,6 +22,9 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
     private bool _canSelectNextImage;
 
     [ObservableProperty]
+    private bool _canSelectPreviousImage;
+
+    [ObservableProperty]
     private string? _currentImage;
 
     [ObservableProperty]
@@ -38,6 +41,8 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
         _currentImageIndex = 0;
         CurrentImage = _sessionImages[_currentImageIndex];
         UpdateNextImageStatus();
+        UpdatePreviousImageStatus();
+
     }
 
     [RelayCommand]
@@ -49,17 +54,42 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
             CurrentImage = _sessionImages[_currentImageIndex];
         }
         UpdateNextImageStatus();
+        UpdatePreviousImageStatus();
+    }
+
+    [RelayCommand]
+    private void SelectPreviousImage()
+    {
+        if (CanSelectPreviousImage)
+        {
+            _currentImageIndex--;
+            CurrentImage = _sessionImages[_currentImageIndex];
+        }
+        UpdateNextImageStatus();
+        UpdatePreviousImageStatus();
     }
 
     private void UpdateNextImageStatus()
     {
-        if (_currentImageIndex < _sessionImages.Count-1)
+        if (_currentImageIndex < _sessionImages.Count - 1)
         {
             CanSelectNextImage = true;
         }
         else
         {
             CanSelectNextImage = false;
+        }
+    }
+
+    private void UpdatePreviousImageStatus()
+    {
+        if (_currentImageIndex > 0)
+        {
+            CanSelectPreviousImage = true;
+        }
+        else
+        {
+            CanSelectPreviousImage = false;
         }
     }
 }
