@@ -16,7 +16,7 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
     private readonly PredefinedIntervalsViewModel _predefinedIntervalsViewModel;
     private readonly CustomIntervalViewModel _customIntervalViewModel;
 
-    public ObservableCollection<ImageFolder> ReferenceFolders { get; } = new ObservableCollection<ImageFolder>();
+    public ObservableCollection<ImageFolder> ReferenceFolders { get; } = [];
 
     [ObservableProperty]
     public string _folderCount;
@@ -50,11 +50,11 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
         ReferenceFolders.CollectionChanged += ReferenceFolders_CollectionChanged;
         IsShuffleEnabled = true;
 
-        ViewModelsCollection = new ObservableCollection<ComboBoxViewModel>
-            {
-                new ComboBoxViewModel {ViewModelName = "Predefined intervals", ViewModelObject = _predefinedIntervalsViewModel},
-                new ComboBoxViewModel {ViewModelName = "Custom Intervals", ViewModelObject = _customIntervalViewModel}
-            };
+        ViewModelsCollection =
+            [
+                new() {ViewModelName = "Predefined intervals", ViewModelObject = _predefinedIntervalsViewModel},
+                new() {ViewModelName = "Custom Intervals", ViewModelObject = _customIntervalViewModel}
+            ];
 
         SelectedViewModel = ViewModelsCollection[0];
     }
@@ -94,7 +94,7 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
 
     private static ImageFolder CreateFolderObject(string folderPath, string folderName, List<string> files)
     {
-        ImageFolder referencesFolder = new ImageFolder()
+        ImageFolder referencesFolder = new()
         {
             FullFolderPath = folderPath,
             FolderName = folderName,

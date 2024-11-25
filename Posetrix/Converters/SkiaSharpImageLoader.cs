@@ -7,22 +7,20 @@ namespace Posetrix.Converters;
 
 public class SkiaSharpImageLoader : IValueConverter
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is string imagePath && !string.IsNullOrEmpty(imagePath))
         {
             try
             {
-                using (var skBitmap = SKBitmap.Decode(imagePath))
-                {
-                    return ConvertToBitmapSource(skBitmap);
-                }
+                using var skBitmap = SKBitmap.Decode(imagePath);
+                return ConvertToBitmapSource(skBitmap);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to load image: {ex.Message}");
             }
-        }
+        } 
 
         return null;
     }
@@ -32,7 +30,7 @@ public class SkiaSharpImageLoader : IValueConverter
         throw new NotImplementedException();
     }
 
-    private BitmapSource ConvertToBitmapSource(SKBitmap skBitmap)
+    private static BitmapSource ConvertToBitmapSource(SKBitmap skBitmap)
     {
         // Create a byte array to hold the pixel data.
         int size = skBitmap.Height * skBitmap.Width * 4; // Assuming 4 bytes per pixel (BGRA).

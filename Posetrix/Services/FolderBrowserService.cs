@@ -8,7 +8,7 @@ namespace Posetrix.Services;
 /// </summary>
 public class FolderBrowserService : IFolderBrowserService
 {
-    public string OpenFolderDialog()
+    public string? OpenFolderDialog()
     {
         var folderDialog = new OpenFolderDialog
         {

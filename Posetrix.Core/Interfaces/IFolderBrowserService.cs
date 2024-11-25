@@ -6,5 +6,5 @@
 /// </summary>
 public interface IFolderBrowserService
 {
-    string OpenFolderDialog();
+    string? OpenFolderDialog();
 }

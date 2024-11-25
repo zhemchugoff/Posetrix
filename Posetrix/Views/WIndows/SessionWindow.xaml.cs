@@ -1,7 +1,4 @@
-﻿using Posetrix.Converters;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp;
-using System.Windows;
+﻿using System.Windows;
 using Posetrix.Core.ViewModels;
 
 

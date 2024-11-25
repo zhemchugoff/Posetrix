@@ -10,20 +10,9 @@ using System.Threading.Tasks;
 
 namespace Posetrix.Core.Models;
 
-public class SessionCollection
+public class SessionCollection(ObservableCollection<ImageFolder> imageFolders, bool isShuffleEnabled, int imageCounter)
 {
-    private readonly List<string> _images;
-    private readonly ObservableCollection<ImageFolder> _imageFolders;
-    private readonly bool _isShuffleEnabled;
-    private readonly int _imageCounter;
-
-    public SessionCollection(ObservableCollection<ImageFolder> imageFolders, bool isShuffleEnabled, int imageCounter)
-    {
-        _images = new List<string>();
-        _imageFolders = imageFolders;
-        _isShuffleEnabled = isShuffleEnabled;
-        _imageCounter = imageCounter;
-    }
+    private readonly List<string> _images = [];
 
 
     /// <summary>
@@ -31,12 +20,10 @@ public class SessionCollection
     /// </summary>
     public void PopulateCollection()
     {
-        foreach (var imageFolder in _imageFolders)
+        foreach (var imageFolder in imageFolders)
         {
-            foreach (var image in imageFolder.References)
-            {
-                _images.Add(image);
-            }
+            _images.AddRange(from image in imageFolder.References
+                             select image);
         }
     }
 
@@ -46,29 +33,25 @@ public class SessionCollection
     /// </summary>
     public void Shuffle()
     {
-        Random rng = new Random();
+        Random rng = new();
 
         int n = _images.Count;
         for (int i = n - 1; i > 0; i--)
         {
             int j = rng.Next(0, i + 1);
             // Swap list[i] with the element at random index.
-            string temp = _images[i];
-            _images[i] = _images[j];
-            _images[j] = temp;
+            (_images[j], _images[i]) = (_images[i], _images[j]);
         }
     }
-
-
 
     /// <summary>
     /// Reduce list size if <c>_imageCounter</c> more than 0 and more than <c>_images.Count</c>.
     /// </summary>
     private void TrimList()
     {
-        if (_imageCounter > 0 && _imageCounter < _images.Count)
+        if (imageCounter > 0 && imageCounter < _images.Count)
         {
-            _images.RemoveRange(_imageCounter, _images.Count- _imageCounter);
+            _images.RemoveRange(imageCounter, _images.Count - imageCounter);
         }
     }
 
@@ -80,12 +63,12 @@ public class SessionCollection
         PopulateCollection();
 
 
-        if (_isShuffleEnabled)
+        if (isShuffleEnabled)
         {
             Shuffle();
         }
 
-        Debug.WriteLine($"Image counter: {_imageCounter} Image count {_images.Count}");
+        Debug.WriteLine($"Image counter: {imageCounter} Image count {_images.Count}");
         Debug.WriteLine($"Collection count: {_images.Count}");
 
         TrimList();
