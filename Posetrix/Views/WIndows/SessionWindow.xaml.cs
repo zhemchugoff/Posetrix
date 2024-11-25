@@ -16,20 +16,5 @@ public partial class SessionWindow : Window
     {
         InitializeComponent();
         DataContext = sessionWindowViewModel;
-        
-        //DisplayWebPImage("Images/4.webp");
-        //var bitmap = new bitmapimage(new uri("pack://application:,,,/images/undraw_workout_gcgu.png"));
-        //MyImage.source = bitmap;
-        //ImageSource imageSource = new BitmapImage(new Uri("pack://application:,,,/images/undraw_workout_gcgu.png"));
-        //MyImage.Source = imageSource;
     }
-
-
-    //private void DisplayWebPImage(string imagePath)
-    //{
-    //    using var image = Image.Load<Rgba32>(imagePath);
-    //    // Convert ImageSharp image to BitmapSource
-    //    var bitmapSource = ImageLoader.ConvertToBitmapSource(image);
-    //    MyImage.Source = bitmapSource;
-    //}
 }

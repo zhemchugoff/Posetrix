@@ -4,7 +4,6 @@ using System.Windows.Media.Imaging;
 
 namespace Posetrix.Converters;
 
-
 /// <summary>
 /// A class <c>BitmapImageLoader</c> used for loading images and reducing memory consumption.
 /// </summary>
