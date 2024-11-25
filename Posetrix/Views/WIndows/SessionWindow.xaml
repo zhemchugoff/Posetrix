@@ -49,8 +49,8 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <UniformGrid Grid.Row="0" Columns="2">
-            <TextBlock Text="Text" />
-            <TextBlock HorizontalAlignment="Right" Text="{Binding Seconds}" />
+            <TextBlock Text="{Binding SessionInfo}" />
+            <TextBlock HorizontalAlignment="Right" Text="HH:MM:SS" />
         </UniformGrid>
         <Image
             Name="SessionImage"

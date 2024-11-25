@@ -27,7 +27,6 @@ public class SessionCollection(ObservableCollection<ImageFolder> imageFolders, b
         }
     }
 
-
     /// <summary>
     /// Shuffle the list using Fisher-Yates algorithm.
     /// </summary>
@@ -39,7 +38,7 @@ public class SessionCollection(ObservableCollection<ImageFolder> imageFolders, b
         for (int i = n - 1; i > 0; i--)
         {
             int j = rng.Next(0, i + 1);
-            // Swap list[i] with the element at random index.
+            // Swap list[i] with the element at random index using tuples.
             (_images[j], _images[i]) = (_images[i], _images[j]);
         }
     }
@@ -68,12 +67,7 @@ public class SessionCollection(ObservableCollection<ImageFolder> imageFolders, b
             Shuffle();
         }
 
-        Debug.WriteLine($"Image counter: {imageCounter} Image count {_images.Count}");
-        Debug.WriteLine($"Collection count: {_images.Count}");
-
         TrimList();
-
-        Debug.WriteLine($"Collection count: {_images.Count}");
 
         return new ObservableCollection<string>(_images);
     }

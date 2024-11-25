@@ -27,21 +27,27 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
     private string? _currentImage;
 
     [ObservableProperty]
-    private int _timer;
+    [NotifyPropertyChangedFor(nameof(SessionInfo))]
+    private int _sessionImageCounter;
 
-    [ObservableProperty]
-    private int _seconds;
+    private readonly int _sessionCollectionCount;
+
+    public string SessionInfo => $"{SessionImageCounter}/{_sessionCollectionCount}";
 
     public SessionWindowViewModel(MainWindowViewModel mainWindowViewModel)
     {
         _mainWindowViewModel = mainWindowViewModel;
         _sessionCollection = new SessionCollection(_mainWindowViewModel.ReferenceFolders, _mainWindowViewModel.IsShuffleEnabled, _mainWindowViewModel.SessionImageCounter);
+
         _sessionImages = _sessionCollection.GetImageCollection();
+        _sessionCollectionCount = _sessionImages.Count;
+
         _currentImageIndex = 0;
         CurrentImage = _sessionImages[_currentImageIndex];
-        
-        UpdateNextImageStatus();
-        UpdatePreviousImageStatus();
+
+        SessionImageCounter = 1;
+
+        UpdateImageStatus();
 
     }
 
@@ -51,10 +57,10 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
         if (CanSelectNextImage)
         {
             _currentImageIndex++;
+            SessionImageCounter++;
             CurrentImage = _sessionImages[_currentImageIndex];
         }
-        UpdateNextImageStatus();
-        UpdatePreviousImageStatus();
+        UpdateImageStatus();
     }
 
     [RelayCommand]
@@ -63,25 +69,13 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
         if (CanSelectPreviousImage)
         {
             _currentImageIndex--;
+            SessionImageCounter--;
             CurrentImage = _sessionImages[_currentImageIndex];
         }
-        UpdateNextImageStatus();
-        UpdatePreviousImageStatus();
+        UpdateImageStatus();
     }
 
-    private void UpdateNextImageStatus()
-    {
-        if (_currentImageIndex < _sessionImages.Count - 1)
-        {
-            CanSelectNextImage = true;
-        }
-        else
-        {
-            CanSelectNextImage = false;
-        }
-    }
-
-    private void UpdatePreviousImageStatus()
+    private void UpdateImageStatus()
     {
         if (_currentImageIndex > 0)
         {
@@ -90,6 +84,15 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
         else
         {
             CanSelectPreviousImage = false;
+        }
+
+        if (_currentImageIndex < _sessionImages.Count - 1)
+        {
+            CanSelectNextImage = true;
+        }
+        else
+        {
+            CanSelectNextImage = false;
         }
     }
 }
