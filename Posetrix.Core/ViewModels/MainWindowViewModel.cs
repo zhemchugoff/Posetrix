@@ -16,13 +16,13 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
     private readonly PredefinedIntervalsViewModel _predefinedIntervalsViewModel;
     private readonly CustomIntervalViewModel _customIntervalViewModel;
 
-    public ObservableCollection<ReferencesFolder> ReferenceFolders { get; } = new ObservableCollection<ReferencesFolder>();
+    public ObservableCollection<ImageFolder> ReferenceFolders { get; } = new ObservableCollection<ImageFolder>();
 
     [ObservableProperty]
     public string _folderCount;
 
     [ObservableProperty]
-    private ReferencesFolder? _selectedFolder;
+    private ImageFolder? _selectedFolder;
 
     // ComboBox
 
@@ -65,7 +65,7 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
     }
 
     [RelayCommand]
-    private void RemoveFolder(ReferencesFolder referencesFolder)
+    private void RemoveFolder(ImageFolder referencesFolder)
     {
         ReferenceFolders.Remove(referencesFolder);
     }
@@ -78,11 +78,11 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
         if (!string.IsNullOrEmpty(folderPath))
         {
             string folderName = Path.GetFileName(folderPath);
-            List<string> references = ReferencesFolder.GetImageFiles(folderPath);
+            List<string> references = ImageFolder.GetImageFiles(folderPath);
 
             if (!string.IsNullOrEmpty(folderName) && references.Count > 0 && references is not null)
             {
-                ReferencesFolder folderObject = CreateFolderObject(folderPath, folderName, references);
+                ImageFolder folderObject = CreateFolderObject(folderPath, folderName, references);
 
                 if (!ReferenceFolders.Contains(folderObject))
                 {
@@ -92,9 +92,9 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
         }
     }
 
-    private static ReferencesFolder CreateFolderObject(string folderPath, string folderName, List<string> files)
+    private static ImageFolder CreateFolderObject(string folderPath, string folderName, List<string> files)
     {
-        ReferencesFolder referencesFolder = new ReferencesFolder()
+        ImageFolder referencesFolder = new ImageFolder()
         {
             FullFolderPath = folderPath,
             FolderName = folderName,

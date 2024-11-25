@@ -27,7 +27,7 @@
             SelectedIndex="1"
             SelectedItem="{Binding SelectedFolder}">
             <ListView.ItemTemplate>
-                <DataTemplate DataType="{x:Type models:ReferencesFolder}">
+                <DataTemplate DataType="{x:Type models:ImageFolder}">
                     <Grid Margin="8,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
