@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace Posetrix.Core.ViewModels;
 
@@ -40,6 +39,7 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
         _sessionImages = _sessionCollection.GetImageCollection();
         _currentImageIndex = 0;
         CurrentImage = _sessionImages[_currentImageIndex];
+        
         UpdateNextImageStatus();
         UpdatePreviousImageStatus();
 

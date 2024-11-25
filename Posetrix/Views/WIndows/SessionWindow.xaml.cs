@@ -25,11 +25,11 @@ public partial class SessionWindow : Window
     }
 
 
-    private void DisplayWebPImage(string imagePath)
-    {
-        using var image = Image.Load<Rgba32>(imagePath);
-        // Convert ImageSharp image to BitmapSource
-        var bitmapSource = ImageLoader.ConvertToBitmapSource(image);
-        MyImage.Source = bitmapSource;
-    }
+    //private void DisplayWebPImage(string imagePath)
+    //{
+    //    using var image = Image.Load<Rgba32>(imagePath);
+    //    // Convert ImageSharp image to BitmapSource
+    //    var bitmapSource = ImageLoader.ConvertToBitmapSource(image);
+    //    MyImage.Source = bitmapSource;
+    //}
 }
