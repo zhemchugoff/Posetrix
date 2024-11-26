@@ -6,11 +6,13 @@ public class ImageFolder
     public string? FolderName { get; set; }
     public List<string>? References { get; set; }
 
+    public int ImageCounter => References?.Count ?? 0;
+
 
     /// <summary>
     /// Supported extensions that WPF can display out of the box.
     /// </summary>
-    public static string[] SupportedImageExtensions { get; } = { ".bmp", ".jpg", ".jpeg", ".png", ".gif", ".tiff", ".wdp" };
+    public static string[] SupportedImageExtensions { get; } = [".bmp", ".jpg", ".jpeg", ".png", ".gif", ".tiff", ".wdp"];
 
     /// <summary>
     /// Returns a list of image files in a folder with supported extensions from <c>SupportedImageExtensions</c>.

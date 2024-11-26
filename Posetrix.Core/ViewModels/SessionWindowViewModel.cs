@@ -45,7 +45,7 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
     public SessionWindowViewModel(MainWindowViewModel mainWindowViewModel)
     {
         _mainWindowViewModel = mainWindowViewModel;
-        _sessionCollection = new SessionCollection(_mainWindowViewModel.ReferenceFolders, _mainWindowViewModel.IsShuffleEnabled, _mainWindowViewModel.SessionImageCounter);
+        _sessionCollection = new SessionCollection(_mainWindowViewModel.ReferenceFolders, _mainWindowViewModel.IsShuffleEnabled, _mainWindowViewModel.CustomImageCount);
 
         _sessionImages = _sessionCollection.GetImageCollection();
         _sessionCollectionCount = _sessionImages.Count;

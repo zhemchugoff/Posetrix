@@ -16,10 +16,24 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
     private readonly PredefinedIntervalsViewModel _predefinedIntervalsViewModel;
     private readonly CustomIntervalViewModel _customIntervalViewModel;
 
+
+    /// <summary>
+    /// A collection of folders with image files.
+    /// </summary>
     public ObservableCollection<ImageFolder> ReferenceFolders { get; } = [];
 
     [ObservableProperty]
-    public string _folderCount;
+    [NotifyPropertyChangedFor(nameof(FoldersInfo))]
+    private int _folderCount;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(FoldersInfo))]
+    private int _folderImageCounter;
+
+    public string FoldersInfo => $" Folders: {FolderCount} Images: {FolderImageCounter}";
+
+    [ObservableProperty]
+    private int _customImageCount;
 
     [ObservableProperty]
     private ImageFolder? _selectedFolder;
@@ -29,8 +43,6 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
     [ObservableProperty]
     private ComboBoxItem? _selectedItem;
 
-    [ObservableProperty]
-    private int _sessionImageCounter;
 
     [ObservableProperty]
     private object? _selectedViewModel;
@@ -45,9 +57,13 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
         _folderBrowserService = folderBrowserService;
         _predefinedIntervalsViewModel = predefinedIntervalsViewModel;
         _customIntervalViewModel = customIntervalViewModel;
-        SessionImageCounter = 0;
-        FolderCount = $"Folders: 0";
+
+        // Default value for a folder view.
+        FolderCount = 0;
+        FolderImageCounter = 0;
         ReferenceFolders.CollectionChanged += ReferenceFolders_CollectionChanged;
+
+        CustomImageCount = 0; // Number of images, defined by a user. Default is 0: endless mode.
         IsShuffleEnabled = true;
 
         ViewModelsCollection =
@@ -61,13 +77,14 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
 
     private void ReferenceFolders_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
-        FolderCount = $"Folders: {ReferenceFolders.Count}";
+        FolderCount = ReferenceFolders.Count;
     }
 
     [RelayCommand]
     private void RemoveFolder(ImageFolder referencesFolder)
     {
         ReferenceFolders.Remove(referencesFolder);
+        FolderImageCounter -= referencesFolder.ImageCounter;
     }
 
     [RelayCommand]
@@ -87,6 +104,7 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
                 if (!ReferenceFolders.Contains(folderObject))
                 {
                     ReferenceFolders.Add(folderObject);
+                    FolderImageCounter += folderObject.ImageCounter;
                 }
             }
         }
