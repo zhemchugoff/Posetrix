@@ -169,13 +169,17 @@
                     </ToolTip>
                 </Button.ToolTip>
             </Button>
-            <Button Content="&#xE893;" Style="{StaticResource ControlButton}">
+            <Button
+                Command="{Binding SkipImageCommand}"
+                Content="&#xE893;"
+                IsEnabled="{Binding CanDeleteImage}"
+                Style="{StaticResource ControlButton}">
                 <Button.ToolTip>
                     <ToolTip>
                         <TextBlock
                             FontFamily="Segoe UI"
                             FontSize="12"
-                            Text="Next image" />
+                            Text="Remove image" />
                     </ToolTip>
                 </Button.ToolTip>
             </Button>

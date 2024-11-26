@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace Posetrix.Core.ViewModels;
 
@@ -17,6 +18,8 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
 
     private int _currentImageIndex;
 
+    private readonly List<string> _completedImages;
+
     [ObservableProperty]
     private bool _canSelectNextImage;
 
@@ -24,15 +27,20 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
     private bool _canSelectPreviousImage;
 
     [ObservableProperty]
+    private bool _canDeleteImage;
+
+    [ObservableProperty]
     private string? _currentImage;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SessionInfo))]
-    private int _sessionImageCounter;
+    private int _completedImagesCounter;
 
-    private readonly int _sessionCollectionCount;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SessionInfo))]
+    private int _sessionCollectionCount;
 
-    public string SessionInfo => $"{SessionImageCounter}/{_sessionCollectionCount}";
+    public string SessionInfo => $"Completed: {CompletedImagesCounter} Total: {SessionCollectionCount+1}";
 
     public SessionWindowViewModel(MainWindowViewModel mainWindowViewModel)
     {
@@ -42,13 +50,13 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
         _sessionImages = _sessionCollection.GetImageCollection();
         _sessionCollectionCount = _sessionImages.Count;
 
+        _completedImages = [];
+
         _currentImageIndex = 0;
+
         CurrentImage = _sessionImages[_currentImageIndex];
 
-        SessionImageCounter = 1;
-
         UpdateImageStatus();
-
     }
 
     [RelayCommand]
@@ -57,9 +65,14 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
         if (CanSelectNextImage)
         {
             _currentImageIndex++;
-            SessionImageCounter++;
             CurrentImage = _sessionImages[_currentImageIndex];
+
+            if (!_completedImages.Contains(CurrentImage))
+            {
+                _completedImages.Add(_sessionImages[_currentImageIndex - 1]);
+            }
         }
+
         UpdateImageStatus();
     }
 
@@ -69,14 +82,48 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
         if (CanSelectPreviousImage)
         {
             _currentImageIndex--;
-            SessionImageCounter--;
             CurrentImage = _sessionImages[_currentImageIndex];
         }
         UpdateImageStatus();
     }
 
+
+    /// <summary>
+    /// Deletes image from session collection.
+    /// </summary>
+    [RelayCommand]
+    private void SkipImage()
+    {
+        if (CanDeleteImage)
+        {
+            _sessionImages.RemoveAt(_currentImageIndex);
+            CurrentImage = _sessionImages[_currentImageIndex];
+
+        }
+        UpdateImageStatus();
+    }
+
+
+    /// <summary>
+    /// Checks statuses for view buttons.
+    /// </summary>
     private void UpdateImageStatus()
     {
+
+        CompletedImagesCounter = _completedImages.Count;
+        SessionCollectionCount = _sessionImages.Count - 1;
+
+        // Checks next image status.
+        if (_currentImageIndex < SessionCollectionCount)
+        {
+            CanSelectNextImage = true;
+        }
+        else
+        {
+            CanSelectNextImage = false;
+        }
+
+        // Checks previous image status.
         if (_currentImageIndex > 0)
         {
             CanSelectPreviousImage = true;
@@ -86,13 +133,14 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
             CanSelectPreviousImage = false;
         }
 
-        if (_currentImageIndex < _sessionImages.Count - 1)
+        // Checks deletion status.
+        if (SessionCollectionCount > _currentImageIndex)
         {
-            CanSelectNextImage = true;
+            CanDeleteImage = true;
         }
         else
         {
-            CanSelectNextImage = false;
+            CanDeleteImage = false;
         }
     }
 }

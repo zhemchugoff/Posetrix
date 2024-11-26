@@ -1,19 +1,10 @@
-﻿using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace Posetrix.Core.Models;
 
 public class SessionCollection(ObservableCollection<ImageFolder> imageFolders, bool isShuffleEnabled, int imageCounter)
 {
     private readonly List<string> _images = [];
-
 
     /// <summary>
     /// Get images from all folders and add them to a list.
