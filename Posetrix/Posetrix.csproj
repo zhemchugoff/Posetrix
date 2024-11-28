@@ -9,17 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Configs\ImageExtensions.json" />
     <None Remove="Images\Icons\book%281%29.png" />
     <None Remove="Images\Icons\book.png" />
     <None Remove="Images\undraw_walk_ing_qkyj.png" />
     <None Remove="Images\undraw_workout_gcgu.svg" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Configs\ImageExtensions.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>

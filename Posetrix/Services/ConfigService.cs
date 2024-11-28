@@ -5,19 +5,23 @@ using System.Text.Json;
 
 namespace Posetrix.Services;
 
-public class ConfigService: IConfigService
+public class ConfigService : IConfigService
 {
-    private const string JsonFilePath = "Configs/ImageExtensions.json";
+    readonly FileExtensionConfig extensionConfig = new();
 
     public FileExtensionConfig LoadConfig()
     {
-        if (!File.Exists(JsonFilePath))
-        {
-            // Handle the case where the config file does not exist
-            return new FileExtensionConfig { FileExtensions = [] };
-        }
+        extensionConfig.FileExtensions =
+        [
+            ".bmp",
+            ".jpg",
+            ".jpeg",
+            ".png",
+            ".gif",
+            ".tiff",
+            ".wdp"
+        ];
 
-        string? jsonString = File.ReadAllText(JsonFilePath);
-        return JsonSerializer.Deserialize<FileExtensionConfig>(jsonString);
+        return extensionConfig;
     }
 }

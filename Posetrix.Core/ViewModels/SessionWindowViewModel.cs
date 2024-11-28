@@ -40,7 +40,7 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
     [NotifyPropertyChangedFor(nameof(SessionInfo))]
     private int _sessionCollectionCount;
 
-    public string SessionInfo => $"Completed: {CompletedImagesCounter} Total: {SessionCollectionCount + 1}";
+    public string SessionInfo => $"Completed: {CompletedImagesCounter} Total: {SessionCollectionCount}";
 
     public SessionWindowViewModel(MainWindowViewModel mainWindowViewModel)
     {
@@ -68,16 +68,28 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
     {
         if (CanSelectNextImage)
         {
-            _currentImageIndex++;
-            CurrentImage = _sessionImages[_currentImageIndex];
-
             if (!_completedImages.Contains(CurrentImage))
             {
-                _completedImages.Add(_sessionImages[_currentImageIndex - 1]);
+                _completedImages.Add(_sessionImages[_currentImageIndex]);
+                UpdateImageStatus();
+
             }
+
+            if (_currentImageIndex != SessionCollectionCount - 1)
+            {
+                _currentImageIndex++;
+                CurrentImage = _sessionImages[_currentImageIndex];
+                UpdateImageStatus();
+
+            }
+            else
+            {
+                _currentImageIndex++;
+                StopSession();
+            }
+
         }
 
-        UpdateImageStatus();
     }
 
     [RelayCommand]
@@ -102,24 +114,33 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
         {
             if (SessionCollectionCount > 1)
             {
-                _sessionImages.RemoveAt(_currentImageIndex);
-                CurrentImage = _sessionImages[_currentImageIndex];
 
-            }
-            else
+                if (_currentImageIndex == SessionCollectionCount - 1)
+                {
+                    _sessionImages.RemoveAt(_currentImageIndex);
+                    _currentImageIndex--;
+                    CurrentImage = _sessionImages[_currentImageIndex];
+                }
+                else
+                {
+                    _sessionImages.RemoveAt(_currentImageIndex);
+                    CurrentImage = _sessionImages[_currentImageIndex];
+
+                }
+                UpdateImageStatus();
+            } else if (SessionCollectionCount == 1)
             {
+                _sessionImages.RemoveAt(_currentImageIndex);
                 StopSession();
             }
-
         }
-        UpdateImageStatus();
     }
 
     [RelayCommand]
     private void StopSession()
     {
         CurrentImage = _mainWindowViewModel.SessionEndImagePath;
-        _sessionImages.Clear();
+        //_sessionImages.Clear();
         CanDeleteImage = false;
         CanSelectNextImage = false;
         CanSelectPreviousImage = false;
@@ -135,7 +156,7 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
         SessionCollectionCount = _sessionImages.Count;
 
         // Checks next image status.
-        if (_currentImageIndex < SessionCollectionCount - 1 && SessionCollectionCount > 0)
+        if (_currentImageIndex < SessionCollectionCount && SessionCollectionCount > 0)
         {
             CanSelectNextImage = true;
         }
@@ -155,7 +176,7 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
         }
 
         // Checks deletion status.
-        if (SessionCollectionCount - 1 >= _currentImageIndex && SessionCollectionCount > 0)
+        if (SessionCollectionCount > 0)
         {
             CanDeleteImage = true;
         }
@@ -163,11 +184,6 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
         else
         {
             CanDeleteImage = false;
-        }
-
-        if (SessionCollectionCount == 0)
-        {
-            StopSession();
         }
 
     }
