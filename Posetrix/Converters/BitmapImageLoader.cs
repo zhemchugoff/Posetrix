@@ -1,7 +1,4 @@
-﻿using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Windows;
+﻿using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
@@ -19,21 +16,33 @@ public class BitmapImageLoader : IValueConverter
     /// <returns>bitmap image or null</returns>
     public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is string filePath && !string.IsNullOrEmpty(filePath) && File.Exists(filePath))
+        if (value is string filePath && !string.IsNullOrEmpty(filePath))
         {
 
-                var bitmap = new BitmapImage();
-                bitmap.BeginInit(); // Starts the initialization process for this element.
-                bitmap.UriSource = new Uri(filePath);
-                bitmap.DecodePixelWidth = 1920; // Adjust for optimization
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit(); // Starts the initialization process for this element.
 
-                // Caches the entire image into memory at load time.
-                // All requests for image data are filled from the memory store.
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            // Convert relative path.
+            if (System.IO.Path.IsPathRooted(filePath))
+            {
 
-                bitmap.EndInit(); // Indicates that the initialization process for the element is complete.
-                bitmap.Freeze(); // Makes the current object unmodifiable and sets its IsFrozen property to true.
-                return bitmap;
+                bitmap.UriSource = new Uri(filePath, UriKind.Absolute);
+            }
+            else
+            {
+                // Resolve relative paths as pack URIs
+                bitmap.UriSource = new Uri($"pack://application:,,,/{filePath}", UriKind.Absolute);
+            }
+
+            bitmap.DecodePixelWidth = 1920; // Adjust for optimization
+
+            // Caches the entire image into memory at load time.
+            // All requests for image data are filled from the memory store.
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+
+            bitmap.EndInit(); // Indicates that the initialization process for the element is complete.
+            bitmap.Freeze(); // Makes the current object unmodifiable and sets its IsFrozen property to true.
+            return bitmap;
         }
 
         return null;
