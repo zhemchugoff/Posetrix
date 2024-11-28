@@ -31,12 +31,14 @@ namespace Posetrix
 
         private static void ConfigureServices(ServiceCollection serviceCollection)
         {
-            // Main application window
+            // Main application window.
             serviceCollection.AddTransient<MainWindow>();
             serviceCollection.AddSingleton<MainWindowViewModel>();
-            // Windows with add references button and settings button
-            serviceCollection.AddTransient<IFolderBrowserService, FolderBrowserService>();
             serviceCollection.AddTransient<IConfigService, ConfigService>();
+            serviceCollection.AddTransient<IContentService, ContentService>();
+
+            // Windows with add references button and settings button.
+            serviceCollection.AddTransient<IFolderBrowserService, FolderBrowserService>();
             serviceCollection.AddTransient<FoldersAddWindow>();
 
             serviceCollection.AddTransient<SettingsWindow>();

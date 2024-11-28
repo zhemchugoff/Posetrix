@@ -14,7 +14,7 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
     private readonly MainWindowViewModel _mainWindowViewModel;
 
     private readonly SessionCollection _sessionCollection;
-    private readonly ObservableCollection<string> _sessionImages;
+    private ObservableCollection<string> _sessionImages;
 
     private int _currentImageIndex;
 
@@ -40,7 +40,7 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
     [NotifyPropertyChangedFor(nameof(SessionInfo))]
     private int _sessionCollectionCount;
 
-    public string SessionInfo => $"Completed: {CompletedImagesCounter} Total: {SessionCollectionCount+1}";
+    public string SessionInfo => $"Completed: {CompletedImagesCounter} Total: {SessionCollectionCount + 1}";
 
     public SessionWindowViewModel(MainWindowViewModel mainWindowViewModel)
     {
@@ -100,13 +100,30 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
     {
         if (CanDeleteImage)
         {
-            _sessionImages.RemoveAt(_currentImageIndex);
-            CurrentImage = _sessionImages[_currentImageIndex];
+            if (SessionCollectionCount > 1)
+            {
+                _sessionImages.RemoveAt(_currentImageIndex);
+                CurrentImage = _sessionImages[_currentImageIndex];
+
+            }
+            else
+            {
+                StopSession();
+            }
 
         }
         UpdateImageStatus();
     }
 
+    [RelayCommand]
+    private void StopSession()
+    {
+        CurrentImage = _mainWindowViewModel.SessionEndImagePath;
+        _sessionImages.Clear();
+        CanDeleteImage = false;
+        CanSelectNextImage = false;
+        CanSelectPreviousImage = false;
+    }
 
     /// <summary>
     /// Checks statuses for view buttons.
@@ -115,10 +132,10 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
     {
 
         CompletedImagesCounter = _completedImages.Count;
-        SessionCollectionCount = _sessionImages.Count - 1;
+        SessionCollectionCount = _sessionImages.Count;
 
         // Checks next image status.
-        if (_currentImageIndex < SessionCollectionCount)
+        if (_currentImageIndex < SessionCollectionCount - 1 && SessionCollectionCount > 0)
         {
             CanSelectNextImage = true;
         }
@@ -128,7 +145,7 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
         }
 
         // Checks previous image status.
-        if (_currentImageIndex > 0)
+        if (_currentImageIndex > 0 && SessionCollectionCount > 0)
         {
             CanSelectPreviousImage = true;
         }
@@ -138,13 +155,20 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
         }
 
         // Checks deletion status.
-        if (SessionCollectionCount > _currentImageIndex)
+        if (SessionCollectionCount - 1 >= _currentImageIndex && SessionCollectionCount > 0)
         {
             CanDeleteImage = true;
         }
+
         else
         {
             CanDeleteImage = false;
         }
+
+        if (SessionCollectionCount == 0)
+        {
+            StopSession();
+        }
+
     }
 }

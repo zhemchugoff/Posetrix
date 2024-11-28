@@ -145,13 +145,16 @@
                     </ToolTip>
                 </Button.ToolTip>
             </Button>
-            <Button Content="&#xE71A;" Style="{StaticResource ControlButton}">
+            <Button
+                Command="{Binding StopSessionCommand}"
+                Content="&#xE71A;"
+                Style="{StaticResource ControlButton}">
                 <Button.ToolTip>
                     <ToolTip>
                         <TextBlock
                             FontFamily="Segoe UI"
                             FontSize="12"
-                            Text="Stop" />
+                            Text="Stop session" />
                     </ToolTip>
                 </Button.ToolTip>
             </Button>

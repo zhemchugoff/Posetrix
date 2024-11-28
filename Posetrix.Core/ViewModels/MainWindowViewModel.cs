@@ -11,6 +11,7 @@ namespace Posetrix.Core.ViewModels;
 public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
 {
     public string WindowTitle => "Posetrix";
+    public string SessionEndImagePath { get; }
 
     //private readonly IConfigService _configService;
     private readonly IFolderBrowserService _folderBrowserService;
@@ -53,13 +54,15 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
     [ObservableProperty]
     private bool _isShuffleEnabled;
 
-    public MainWindowViewModel(IConfigService configService,IFolderBrowserService folderBrowserService, PredefinedIntervalsViewModel predefinedIntervalsViewModel, CustomIntervalViewModel customIntervalViewModel)
+    public MainWindowViewModel(IConfigService configService, IContentService contentService, IFolderBrowserService folderBrowserService, PredefinedIntervalsViewModel predefinedIntervalsViewModel, CustomIntervalViewModel customIntervalViewModel)
     {
         //_configService = configService;
         _fileExtensionConfig = configService.LoadConfig();
         _folderBrowserService = folderBrowserService;
         _predefinedIntervalsViewModel = predefinedIntervalsViewModel;
         _customIntervalViewModel = customIntervalViewModel;
+
+        SessionEndImagePath = contentService.GetImagePath();
 
         // Default value for a folder view.
         FolderCount = 0;

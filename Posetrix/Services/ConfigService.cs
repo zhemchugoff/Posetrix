@@ -1,6 +1,5 @@
 ﻿using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
-using System;
 using System.IO;
 using System.Text.Json;
 
