@@ -59,6 +59,10 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
         UpdateImageStatus();
     }
 
+
+    /// <summary>
+    /// Selects next image and increments completed images.
+    /// </summary>
     [RelayCommand]
     private void SelectNextImage()
     {

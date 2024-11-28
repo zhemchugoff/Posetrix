@@ -12,10 +12,11 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
 {
     public string WindowTitle => "Posetrix";
 
+    //private readonly IConfigService _configService;
     private readonly IFolderBrowserService _folderBrowserService;
     private readonly PredefinedIntervalsViewModel _predefinedIntervalsViewModel;
     private readonly CustomIntervalViewModel _customIntervalViewModel;
-
+    private readonly FileExtensionConfig _fileExtensionConfig;
 
     /// <summary>
     /// A collection of folders with image files.
@@ -52,8 +53,10 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
     [ObservableProperty]
     private bool _isShuffleEnabled;
 
-    public MainWindowViewModel(IFolderBrowserService folderBrowserService, PredefinedIntervalsViewModel predefinedIntervalsViewModel, CustomIntervalViewModel customIntervalViewModel)
+    public MainWindowViewModel(IConfigService configService,IFolderBrowserService folderBrowserService, PredefinedIntervalsViewModel predefinedIntervalsViewModel, CustomIntervalViewModel customIntervalViewModel)
     {
+        //_configService = configService;
+        _fileExtensionConfig = configService.LoadConfig();
         _folderBrowserService = folderBrowserService;
         _predefinedIntervalsViewModel = predefinedIntervalsViewModel;
         _customIntervalViewModel = customIntervalViewModel;
@@ -61,6 +64,7 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
         // Default value for a folder view.
         FolderCount = 0;
         FolderImageCounter = 0;
+
         ReferenceFolders.CollectionChanged += ReferenceFolders_CollectionChanged;
 
         CustomImageCount = 0; // Number of images, defined by a user. Default is 0: endless mode.
@@ -95,7 +99,7 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
         if (!string.IsNullOrEmpty(folderPath))
         {
             string folderName = Path.GetFileName(folderPath);
-            List<string> references = ImageFolder.GetImageFiles(folderPath);
+            List<string> references = ImageFolder.GetImageFiles(folderPath, _fileExtensionConfig.FileExtensions);
 
             if (!string.IsNullOrEmpty(folderName) && references.Count > 0 && references is not null)
             {
