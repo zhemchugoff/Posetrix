@@ -1,17 +1,13 @@
 ﻿<Application
     x:Class="Posetrix.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:Posetrix"
-    ThemeMode="System">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <FontFamily x:Key="SegoeUIIcons">pack://application:,,,/Fonts/#Segoe Fluent Icons</FontFamily>
+            <FontFamily x:Key="SegoeUiIcons">pack://application:,,,/Fonts/#Segoe Fluent Icons</FontFamily>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Themes/Fluent.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <!--<services:ViewModelLocator x:Key="Locator" />-->
-
         </ResourceDictionary>
     </Application.Resources>
 </Application>

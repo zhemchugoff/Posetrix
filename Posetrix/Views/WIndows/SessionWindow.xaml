@@ -21,7 +21,7 @@
             <Setter Property="Width" Value="50" />
             <Setter Property="Height" Value="50" />
             <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="FontFamily" Value="{StaticResource SegoeUIIcons}" />
+            <Setter Property="FontFamily" Value="{StaticResource SegoeUiIcons}" />
             <Setter Property="FontSize" Value="24" />
             <Setter Property="Margin" Value="4,0" />
 
@@ -33,7 +33,7 @@
             <Setter Property="Width" Value="24" />
             <Setter Property="Height" Value="24" />
             <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="FontFamily" Value="{StaticResource SegoeUIIcons}" />
+            <Setter Property="FontFamily" Value="{StaticResource SegoeUiIcons}" />
             <Setter Property="FontSize" Value="16" />
             <Setter Property="Margin" Value="4,0" />
             <Setter Property="Padding" Value="0" />

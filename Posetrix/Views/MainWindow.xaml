@@ -58,7 +58,7 @@
                     VerticalAlignment="Center"
                     Click="ShowSettingsWindow_Click"
                     Content="&#xE713;"
-                    FontFamily="{StaticResource SegoeUIIcons}"
+                    FontFamily="{StaticResource SegoeUiIcons}"
                     FontSize="16">
                     <Button.ToolTip>
                         <ToolTip>
@@ -85,7 +85,7 @@
                 HorizontalAlignment="Stretch"
                 Click="AddReferencesButton_Click"
                 Content="&#xE710;"
-                FontFamily="{StaticResource SegoeUIIcons}"
+                FontFamily="{StaticResource SegoeUiIcons}"
                 FontSize="20"
                 Style="{DynamicResource AccentButtonStyle}" />
             <TextBlock
