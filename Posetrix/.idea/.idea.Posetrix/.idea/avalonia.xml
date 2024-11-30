@@ -8,6 +8,7 @@
         <entry key="../Posetrix.Avalonia/Controls/PredefinedIntervalsControl.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
         <entry key="../Posetrix.Avalonia/Views/FolderAddWindow.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
         <entry key="../Posetrix.Avalonia/Views/MainWindow.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
+        <entry key="../Posetrix.Avalonia/Views/SessionWindow.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
         <entry key="../Posetrix.Avalonia/Views/SettingsWindow.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
       </map>
     </option>
