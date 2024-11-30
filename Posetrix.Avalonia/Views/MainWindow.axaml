@@ -3,18 +3,55 @@
         xmlns:vm="using:Posetrix.Avalonia.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:cc="using:Posetrix.Avalonia.Controls"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="600"
         x:Class="Posetrix.Avalonia.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="Posetrix.Avalonia">
+        Title="Posetrix.Avalonia"
+        Width="400"
+        Height="600"
+        MinWidth="400"
+        MinHeight="600">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+     <Grid Margin="20">
+        <Grid RowDefinitions="Auto, 4*, 2*, 2*, Auto" ShowGridLines="True">
+            <Grid RowDefinitions="*,*,*">
+                <Grid ColumnDefinitions="*,*">
+                    <Button Grid.Column="0" Click="OpenSettingsButton_OnClick" Name="OpenSettingsButton" Width="28" Height="28" Content="S"></Button>
+                    <TextBlock Grid.Column="1" FontFamily="{StaticResource UbuntuFont}">Add your reference images</TextBlock>
+                </Grid>
+                <Button Grid.Row="1" Name="AddFolderButton" Click="AddFolderButton_OnClick" Height="46" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center" Content="Add">
+                </Button>
+                <TextBlock Grid.Row="2" HorizontalAlignment="Center" Text="Folders: 0 Files: 0"></TextBlock>
+            </Grid>
+            <Grid Grid.Row="1" RowDefinitions="*,*,*">
+                <TextBlock Grid.Row="0" Text="Practice modes" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                <ComboBox Grid.Row="1" SelectedIndex="0" MaxDropDownHeight="100" HorizontalAlignment="Stretch">
+                    <ComboBoxItem>Item 1</ComboBoxItem>
+                    <ComboBoxItem>Item 2</ComboBoxItem>
+                </ComboBox>
+                <!-- TODO: Add controls switch -->
+                <cc:PredefinedIntervalsControl Grid.Row="2"></cc:PredefinedIntervalsControl>
+            </Grid>
+            <UniformGrid Grid.Row="2">
+                <TextBlock Text="I want to draw" VerticalAlignment="Center"></TextBlock>
+                <TextBox Text="0" VerticalAlignment="Center"></TextBox>
+            </UniformGrid>
+            <UniformGrid Grid.Row="3">
+                <TextBlock Text="Shuffle images" VerticalAlignment="Center"></TextBlock>
+                <CheckBox IsChecked="True"></CheckBox>
+            </UniformGrid>
+            <Button Grid.Row="4" Name="StartNewSession" Click="StartNewSession_OnClick" HorizontalAlignment="Stretch" Height="46" Content="Start a drawing session"
+                    VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+            </Button>
+        </Grid>
+    </Grid>
 
 </Window>

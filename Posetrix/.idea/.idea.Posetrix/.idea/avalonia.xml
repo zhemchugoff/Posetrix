@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="../Posetrix.Avalonia/App.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
+        <entry key="../Posetrix.Avalonia/Controls/CustomIntervalControl.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
+        <entry key="../Posetrix.Avalonia/Controls/PredefinedIntervalsControl.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
+        <entry key="../Posetrix.Avalonia/Views/FolderAddWindow.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
+        <entry key="../Posetrix.Avalonia/Views/MainWindow.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
+        <entry key="../Posetrix.Avalonia/Views/SettingsWindow.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
+      </map>
+    </option>
+  </component>
+</project>
