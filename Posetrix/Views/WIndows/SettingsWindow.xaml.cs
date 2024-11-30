@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Posetrix.Core.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Posetrix.Core.ViewModels;
+using System.Windows.Controls;
 
 namespace Posetrix.Views;
 
@@ -27,5 +28,28 @@ public partial class SettingsWindow : Window
         });
 
         e.Handled = true;
+    }
+
+    private void ComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    {
+        if (ChangeTheme.SelectedItem is ComboBoxItem selectedItem)
+        {
+            string selectedValue = selectedItem.Content.ToString();
+
+            switch (selectedValue)
+            {
+                case "Light":
+                    Application.Current.ThemeMode = ThemeMode.Light;
+                    break;
+                case "Dark":
+                    Application.Current.ThemeMode = ThemeMode.Dark;
+                    break;
+                case "System":
+                    Application.Current.ThemeMode = ThemeMode.System;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

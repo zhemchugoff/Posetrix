@@ -19,25 +19,44 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBlock
+        <Grid
             Grid.Row="0"
-            Grid.Column="0"
-            VerticalAlignment="Center"
-            Text="Theme" />
-        <ComboBox
-            Grid.Row="0"
-            Grid.Column="1"
-            SelectedIndex="0">
-            <ComboBoxItem Content="System" />
-            <ComboBoxItem Content="Light" />
-            <ComboBoxItem Content="Dark" />
-        </ComboBox>
+            Grid.ColumnSpan="2"
+            Margin="0,0,0,20"
+            Background="Transparent">
+            <Border
+                Padding="{StaticResource ExpanderPadding}"
+                Background="{DynamicResource ExpanderHeaderBackground}"
+                BorderBrush="{DynamicResource ExpanderHeaderBorderBrush}"
+                BorderThickness="{StaticResource ExpanderBorderThemeThickness}"
+                CornerRadius="{DynamicResource ControlCornerRadius}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="Theme" />
+                    <ComboBox
+                        Name="ChangeTheme"
+                        Grid.Column="1"
+                        SelectedIndex="0"
+                        SelectionChanged="ComboBox_SelectionChanged">
+                        <ComboBoxItem Content="System" />
+                        <ComboBoxItem Content="Light" />
+                        <ComboBoxItem Content="Dark" />
+                    </ComboBox>
+                </Grid>
+            </Border>
+        </Grid>
         <TextBlock
             Grid.Row="1"
             Grid.Column="0"
