@@ -2,57 +2,56 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="400"
+        mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="400"
         x:Class="Posetrix.Avalonia.Views.SettingsWindow"
         Title="Settings"
-        Width="400"
+        Width="480"
         Height="400">
-        <Grid Margin="20">
-                <Grid ColumnDefinitions="*,*" RowDefinitions="*,*,*,*,*">
-                        <TextBlock
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                VerticalAlignment="Center"
-                                Text="Theme" />
-                        <ComboBox
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                VerticalAlignment="Center"
-                                SelectedIndex="0">
-                                <ComboBoxItem Content="System" />
-                                <ComboBoxItem Content="Light" />
-                                <ComboBoxItem Content="Dark" />
-                        </ComboBox>
-                        <TextBlock
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                VerticalAlignment="Center"
-                                Text="Sounds" />
-                        <ComboBox
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                SelectedIndex="0"
-                                VerticalAlignment="Center">
-                                <ComboBoxItem Content="Sound 1" />
-                                <ComboBoxItem Content="Sound 2" />
-                                <ComboBoxItem Content="Off" />
-                        </ComboBox>
-                        <TextBlock
-                                Grid.Row="2"
-                                Grid.ColumnSpan="2" Grid.Column="0"
-                                HorizontalAlignment="Center"
-                                Text="Application name" />
-                        <TextBlock
-                                Grid.Row="3"
-                                Grid.ColumnSpan="2" Grid.Column="0"
-                                HorizontalAlignment="Center"
-                                Text="Application version" />
-                        <TextBlock
-                                Grid.Row="4"
-                                Grid.ColumnSpan="2" Grid.Column="0"
-                                HorizontalAlignment="Center">
-                                Source: http://www.example.com www.example.com
-                        </TextBlock>
-                </Grid>
+    <Grid Margin="20">
+        <Grid RowDefinitions="*,*,*,*,*">
+            <Grid Grid.Row="0">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Text="App theme" />
+                <ComboBox
+                    Name="ChangeTheme"
+                    SelectionChanged="ChangeTheme_OnSelectionChanged"
+                    HorizontalAlignment="Right"
+                    MinWidth="200"
+                    VerticalAlignment="Center"
+                    SelectedIndex="0">
+                    <ComboBoxItem Content="System" />
+                    <ComboBoxItem Content="Light" />
+                    <ComboBoxItem Content="Dark" />
+                </ComboBox>
+            </Grid>
+            <Grid Grid.Row="1">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Text="Sounds" />
+                <ComboBox
+                    SelectedIndex="0"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Right"
+                    MinWidth="200">
+                    <ComboBoxItem Content="Sound 1" />
+                    <ComboBoxItem Content="Sound 2" />
+                    <ComboBoxItem Content="Off" />
+                </ComboBox>
+            </Grid>
+            <TextBlock
+                Grid.Row="2"
+                HorizontalAlignment="Center"
+                Text="Application name" />
+            <TextBlock
+                Grid.Row="3"
+                HorizontalAlignment="Center"
+                Text="Application version" />
+            <TextBlock
+                Grid.Row="4"
+                HorizontalAlignment="Center">
+                Source: http://www.example.com www.example.com
+            </TextBlock>
         </Grid>
+    </Grid>
 </Window>

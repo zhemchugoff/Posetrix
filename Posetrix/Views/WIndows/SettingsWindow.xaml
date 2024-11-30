@@ -99,7 +99,8 @@
             Grid.Row="4"
             Grid.ColumnSpan="2"
             HorizontalAlignment="Center">
-            Source:<Hyperlink NavigateUri="http://www.example.com" RequestNavigate="Hyperlink_RequestNavigate">www.example.com</Hyperlink>
+            Source:
+            <Hyperlink NavigateUri="http://www.example.com" RequestNavigate="Hyperlink_RequestNavigate">www.example.com</Hyperlink>
         </TextBlock>
     </Grid>
 </Window>
