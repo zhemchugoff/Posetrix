@@ -1,11 +1,12 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
-using Posetrix.Avalonia.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using Posetrix.Avalonia.Views;
+using Posetrix.Core.Services;
+using Posetrix.Core.ViewModels;
 
 namespace Posetrix.Avalonia;
 
@@ -18,6 +19,19 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        // Without this line you will get duplicate validations from both Avalonia and CT
+        BindingPlugins.DataValidators.RemoveAt(0);
+        
+        // Register all the services needed for the application to run
+        var collection = new ServiceCollection();
+        collection.AddCommonServices();
+        
+        // Creates a ServiceProvider containing services from the provided IServiceCollection
+        var services = collection.BuildServiceProvider();
+        
+        var vm = services.GetRequiredService<MainWindowViewModel>();
+
+        
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
@@ -25,7 +39,7 @@ public partial class App : Application
             DisableAvaloniaDataAnnotationValidation();
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel(),
+                DataContext = new MainWindowViewModel();
             };
         }
 

@@ -1,7 +1,7 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using Posetrix.Avalonia.ViewModels;
+using Posetrix.Core.ViewModels;
 
 namespace Posetrix.Avalonia;
 
@@ -25,6 +25,6 @@ public class ViewLocator : IDataTemplate
 
     public bool Match(object? data)
     {
-        return data is ViewModelBase;
+        return data is BaseViewModel;
     }
 }

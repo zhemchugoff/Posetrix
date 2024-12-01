@@ -1,9 +1,11 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Microsoft.Extensions.DependencyInjection;
+using Posetrix.Core.Interfaces;
 
 namespace Posetrix.Avalonia.Views;
 
-public partial class MainWindow : Window
+public partial class MainWindow : Window, IMainWindow
 {
     public MainWindow()
     {
@@ -27,4 +29,6 @@ public partial class MainWindow : Window
         var sessionWindow = new SessionWindow();
         sessionWindow.Show();
     }
+
+    public string WindowTitle { get; } = "Posetrix Posetrix";
 }

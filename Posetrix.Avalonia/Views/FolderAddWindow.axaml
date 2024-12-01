@@ -2,6 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:lucideAvalonia="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
         mc:Ignorable="d"
         x:Class="Posetrix.Avalonia.Views.FolderAddWindow"
         Title="Add folders"
@@ -13,6 +14,9 @@
         <Style Selector="TextBlock.list">
             <Setter Property="FontSize" Value="14" />
             <Setter Property="FontFamily" Value="{StaticResource UbuntuFont}" />
+        </Style>
+        <Style Selector="lucideAvalonia|Lucide">
+            <Setter Property="StrokeBrush" Value="{DynamicResource SystemControlForegroundBaseHighBrush}"></Setter>
         </Style>
     </Window.Styles>
     <Grid RowDefinitions="8*,Auto" Margin="20">
@@ -46,8 +50,8 @@
                 Height="40"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Content="Add"
                 FontSize="16">
+                <lucideAvalonia:Lucide Icon="Plus"></lucideAvalonia:Lucide>
             </Button>
             <Button
                 Name="RemoveFolder"
@@ -56,8 +60,8 @@
                 Height="40"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Content="Remove"
                 FontSize="16">
+                <lucideAvalonia:Lucide Icon="Minus"></lucideAvalonia:Lucide>
             </Button>
         </Grid>
     </Grid>
