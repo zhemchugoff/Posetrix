@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:svg="using:Avalonia.Svg"
         xmlns:lucideAvalonia="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
-        xmlns:i="https://github.com/projektanker/icons.avalonia"
         xmlns:cc="using:Posetrix.Avalonia.Controls"
         mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="600"
         x:Class="Posetrix.Avalonia.Views.MainWindow"
@@ -29,14 +28,18 @@
                 <Grid ColumnDefinitions="*,*">
                     <Button Grid.Column="0" Click="OpenSettingsButton_OnClick" Name="OpenSettingsButton" Width="28"
                             Height="28">
-                        <lucideAvalonia:Lucide Icon="Settings" Width="16" Height="16" StrokeBrush="{DynamicResource SystemControlForegroundBaseHighBrush}"></lucideAvalonia:Lucide>
+                        <lucideAvalonia:Lucide Icon="Settings" Width="16" Height="16"
+                                               StrokeBrush="{DynamicResource SystemControlForegroundBaseHighBrush}">
+                        </lucideAvalonia:Lucide>
                     </Button>
                     <TextBlock Grid.Column="1" FontFamily="{StaticResource UbuntuFont}">Add your reference images</TextBlock>
                 </Grid>
                 <Button Grid.Row="1" Name="AddFolderButton" Click="AddFolderButton_OnClick" Height="46"
                         HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center" Margin="0 10">
-                    <lucideAvalonia:Lucide Icon="Plus" StrokeThickness="1.5" StrokeBrush="{DynamicResource SystemControlForegroundBaseHighBrush}"></lucideAvalonia:Lucide>
+                    <lucideAvalonia:Lucide Icon="Plus" StrokeThickness="1.5"
+                                           StrokeBrush="{DynamicResource SystemControlForegroundBaseHighBrush}">
+                    </lucideAvalonia:Lucide>
                     <!-- <svg:Svg Path="avares://Posetrix.Avalonia/Assets/Icons/settings.svg" Width="28" Height="28"/> -->
                 </Button>
                 <TextBlock Grid.Row="2" HorizontalAlignment="Center" Text="Folders: 0 Files: 0"></TextBlock>

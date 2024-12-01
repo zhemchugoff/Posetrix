@@ -6,10 +6,9 @@ namespace Posetrix.Core.ViewModels;
 
 public partial class SettingsWindowViewModel : BaseViewModel, ICustomWindow
 {
-
     public string WindowTitle => "Settings";
 
-    public ObservableCollection<Theme> Themes { get; set; } =
+    public ObservableCollection<Theme> Themes { get; } =
     [
         new() { Name = "System" },
         new() { Name = "Light" },

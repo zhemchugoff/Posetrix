@@ -50,9 +50,6 @@
                         MinWidth="180"
                         HorizontalAlignment="Right"
                         SelectionChanged="ComboBox_SelectionChanged">
-                        <!-- <ComboBoxItem Content="System" /> -->
-                        <!-- <ComboBoxItem Content="Light" /> -->
-                        <!-- <ComboBoxItem Content="Dark" /> -->
                     </ComboBox>
                 </Grid>
             </Border>
