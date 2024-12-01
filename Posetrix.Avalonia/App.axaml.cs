@@ -4,7 +4,10 @@ using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
+using Posetrix.Avalonia.Controls;
+using Posetrix.Avalonia.Services;
 using Posetrix.Avalonia.Views;
+using Posetrix.Core.Interfaces;
 using Posetrix.Core.Services;
 using Posetrix.Core.ViewModels;
 
@@ -19,28 +22,37 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        // Without this line you will get duplicate validations from both Avalonia and CT
+        // Without this line you will get duplicate validations from both Avalonia and CT.
         BindingPlugins.DataValidators.RemoveAt(0);
         
-        // Register all the services needed for the application to run
+        // Register all the services needed for the application to run.
         var collection = new ServiceCollection();
         collection.AddCommonServices();
         
-        // Creates a ServiceProvider containing services from the provided IServiceCollection
+        // Add shared services.
+        collection.AddTransient<MainWindow>();
+        collection.AddTransient<IFolderBrowserService, FolderBrowserService>();
+        collection.AddTransient<FolderAddWindow>();
+        collection.AddTransient<SettingsWindow>();
+        collection.AddTransient<CustomIntervalControl>();
+        collection.AddTransient<PredefinedIntervalsControl>();
+        
+        // Creates a ServiceProvider containing services from the provided IServiceCollection.
         var services = collection.BuildServiceProvider();
         
-        var vm = services.GetRequiredService<MainWindowViewModel>();
-
+        // var vm = services.GetRequiredService<MainWindowViewModel>();
         
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
             // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
             DisableAvaloniaDataAnnotationValidation();
-            desktop.MainWindow = new MainWindow
-            {
-                DataContext = new MainWindowViewModel();
-            };
+            
+            desktop.MainWindow = services.GetRequiredService<MainWindow>();
+            // desktop.MainWindow = new MainWindow
+            // {
+            //     DataContext = new MainWindowViewModel();
+            // };
         }
 
         base.OnFrameworkInitializationCompleted();
@@ -48,11 +60,11 @@ public partial class App : Application
 
     private void DisableAvaloniaDataAnnotationValidation()
     {
-        // Get an array of plugins to remove
+        // Get an array of plugins to remove.
         var dataValidationPluginsToRemove =
             BindingPlugins.DataValidators.OfType<DataAnnotationsValidationPlugin>().ToArray();
 
-        // remove each entry found
+        // remove each entry found.
         foreach (var plugin in dataValidationPluginsToRemove)
         {
             BindingPlugins.DataValidators.Remove(plugin);

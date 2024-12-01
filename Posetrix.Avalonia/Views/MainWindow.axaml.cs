@@ -1,15 +1,19 @@
+using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Microsoft.Extensions.DependencyInjection;
 using Posetrix.Core.Interfaces;
+using Posetrix.Core.ViewModels;
 
 namespace Posetrix.Avalonia.Views;
 
 public partial class MainWindow : Window, IMainWindow
 {
-    public MainWindow()
+    private IServiceProvider _serviceProvider;
+    public MainWindow(IServiceProvider serviceProvider, MainWindowViewModel viewModel)
     {
         InitializeComponent();
+        DataContext = viewModel;
     }
 
     private void OpenSettingsButton_OnClick(object? sender, RoutedEventArgs e)

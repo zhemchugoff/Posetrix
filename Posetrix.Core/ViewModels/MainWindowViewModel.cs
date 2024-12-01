@@ -41,11 +41,9 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
     private ImageFolder? _selectedFolder;
 
     // ComboBox
-
     [ObservableProperty]
     private ComboBoxItem? _selectedItem;
-
-
+    
     [ObservableProperty]
     private object? _selectedViewModel;
 
@@ -71,7 +69,7 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
         ReferenceFolders.CollectionChanged += ReferenceFolders_CollectionChanged;
 
         CustomImageCount = 0; // Number of images, defined by a user. Default is 0: endless mode.
-        IsShuffleEnabled = true;
+        IsShuffleEnabled = false;
 
         ViewModelsCollection =
             [

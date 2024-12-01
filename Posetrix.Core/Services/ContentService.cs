@@ -2,6 +2,9 @@
 
 namespace Posetrix.Core.Services;
 
+/// <summary>
+/// Class <c>ContentService</c> provides shared resources.
+/// </summary>
 public class ContentService : IContentService
 {
     public string GetImagePath()
