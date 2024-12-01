@@ -43,14 +43,16 @@
                         Text="App theme" />
                     <ComboBox
                         Name="ChangeTheme"
+                        ItemsSource="{Binding Themes}"
+                        SelectedItem="{Binding SelectedTheme}"
+                        DisplayMemberPath="Name"
                         Grid.Column="1"
                         MinWidth="180"
                         HorizontalAlignment="Right"
-                        SelectedIndex="0"
                         SelectionChanged="ComboBox_SelectionChanged">
-                        <ComboBoxItem Content="System" />
-                        <ComboBoxItem Content="Light" />
-                        <ComboBoxItem Content="Dark" />
+                        <!-- <ComboBoxItem Content="System" /> -->
+                        <!-- <ComboBoxItem Content="Light" /> -->
+                        <!-- <ComboBoxItem Content="Dark" /> -->
                     </ComboBox>
                 </Grid>
             </Border>

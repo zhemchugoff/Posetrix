@@ -4,6 +4,7 @@ using Posetrix.Core.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Posetrix.Core.ViewModels;
 using System.Windows.Controls;
+using Posetrix.Core.Models;
 
 namespace Posetrix.Views;
 
@@ -32,9 +33,9 @@ public partial class SettingsWindow : Window
 
     private void ComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
     {
-        if (ChangeTheme.SelectedItem is ComboBoxItem selectedItem)
+        if (ChangeTheme.SelectedItem is Theme theme)
         {
-            string selectedValue = selectedItem.Content.ToString();
+            var selectedValue = theme.Name;
 
             switch (selectedValue)
             {
