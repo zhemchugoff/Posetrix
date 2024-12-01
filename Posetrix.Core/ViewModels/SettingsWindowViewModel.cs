@@ -7,6 +7,7 @@ namespace Posetrix.Core.ViewModels;
 public partial class SettingsWindowViewModel : BaseViewModel, ICustomWindow
 {
     public string WindowTitle => "Settings";
+    public Theme SelectedTheme { get; set; }
 
     public ObservableCollection<Theme> Themes { get; } =
     [
@@ -14,7 +15,7 @@ public partial class SettingsWindowViewModel : BaseViewModel, ICustomWindow
         new() { Name = "Light" },
         new() { Name = "Dark" }
     ];
-    public Theme SelectedTheme { get; set; }
+
     public SettingsWindowViewModel()
     {
         SelectedTheme = Themes.First();

@@ -10,7 +10,7 @@ namespace Posetrix.Core.ViewModels;
 
 public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
 {
-    public string WindowTitle => "Posetrix";
+    public string WindowTitle => "Posetrix Test";
     public string SessionEndImagePath { get; }
 
     //private readonly IConfigService _configService;
@@ -24,35 +24,27 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
     /// </summary>
     public ObservableCollection<ImageFolder> ReferenceFolders { get; } = [];
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(FoldersInfo))]
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(FoldersInfo))]
     private int _folderCount;
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(FoldersInfo))]
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(FoldersInfo))]
     private int _folderImageCounter;
 
     public string FoldersInfo => $" Folders: {FolderCount} Images: {FolderImageCounter}";
 
-    [ObservableProperty]
-    private int _customImageCount;
 
-    [ObservableProperty]
-    private ImageFolder? _selectedFolder;
+    [ObservableProperty] private ImageFolder? _selectedFolder;
 
     // ComboBox
-    [ObservableProperty]
-    private ComboBoxItem? _selectedItem;
-    
-    [ObservableProperty]
-    private object? _selectedViewModel;
-
+    [ObservableProperty] private ComboBoxViewModel? _selectedViewModel;
     public ObservableCollection<ComboBoxViewModel> ViewModelsCollection { get; set; }
 
-    [ObservableProperty]
-    private bool _isShuffleEnabled;
+    [ObservableProperty] private int _customImageCount;
+    [ObservableProperty] private bool _isShuffleEnabled;
 
-    public MainWindowViewModel(IConfigService configService, IContentService contentService, IFolderBrowserService folderBrowserService, PredefinedIntervalsViewModel predefinedIntervalsViewModel, CustomIntervalViewModel customIntervalViewModel)
+    public MainWindowViewModel(IConfigService configService, IContentService contentService,
+        IFolderBrowserService folderBrowserService, PredefinedIntervalsViewModel predefinedIntervalsViewModel,
+        CustomIntervalViewModel customIntervalViewModel)
     {
         //_configService = configService;
         _fileExtensionConfig = configService.LoadConfig();
@@ -67,17 +59,18 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
         FolderImageCounter = 0;
 
         ReferenceFolders.CollectionChanged += ReferenceFolders_CollectionChanged;
-
-        CustomImageCount = 0; // Number of images, defined by a user. Default is 0: endless mode.
-        IsShuffleEnabled = false;
-
+        
         ViewModelsCollection =
-            [
-                new() {ViewModelName = "Predefined intervals", ViewModelObject = _predefinedIntervalsViewModel},
-                new() {ViewModelName = "Custom Intervals", ViewModelObject = _customIntervalViewModel}
-            ];
-
-        SelectedViewModel = ViewModelsCollection[0];
+        [
+            new ComboBoxViewModel { ViewModelName = "Predefined intervals", ViewModelObject = _predefinedIntervalsViewModel },
+            new ComboBoxViewModel { ViewModelName = "Custom Intervals", ViewModelObject = _customIntervalViewModel }
+        ];
+        
+        SelectedViewModel = ViewModelsCollection.First();
+        
+        CustomImageCount = 0; // Number of images, defined by a user. Default is 0: endless mode.
+        
+        IsShuffleEnabled = false;
     }
 
     private void ReferenceFolders_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -102,7 +95,7 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
             string folderName = Path.GetFileName(folderPath);
             List<string> references = ImageFolder.GetImageFiles(folderPath, _fileExtensionConfig.FileExtensions);
 
-            if (!string.IsNullOrEmpty(folderName) && references.Count > 0 && references is not null)
+            if (!string.IsNullOrEmpty(folderName) && references.Count > 0)
             {
                 ImageFolder folderObject = CreateFolderObject(folderPath, folderName, references);
 

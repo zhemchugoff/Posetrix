@@ -1,3 +1,4 @@
+using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
@@ -15,6 +16,7 @@ namespace Posetrix.Avalonia;
 
 public partial class App : Application
 {
+    public static IServiceProvider ServiceProvider { get; private set; }
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -35,12 +37,14 @@ public partial class App : Application
         collection.AddTransient<FolderAddWindow>();
         collection.AddTransient<SettingsWindow>();
         collection.AddTransient<CustomIntervalControl>();
+        collection.AddTransient<SessionWindow>();
         collection.AddTransient<PredefinedIntervalsControl>();
         
         // Creates a ServiceProvider containing services from the provided IServiceCollection.
         var services = collection.BuildServiceProvider();
+        ServiceProvider = services;
         
-        // var vm = services.GetRequiredService<MainWindowViewModel>();
+        var vm = services.GetRequiredService<MainWindowViewModel>();
         
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
@@ -48,11 +52,10 @@ public partial class App : Application
             // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
             DisableAvaloniaDataAnnotationValidation();
             
-            desktop.MainWindow = services.GetRequiredService<MainWindow>();
-            // desktop.MainWindow = new MainWindow
-            // {
-            //     DataContext = new MainWindowViewModel();
-            // };
+            desktop.MainWindow = new MainWindow()
+            {
+                DataContext = vm
+            };
         }
 
         base.OnFrameworkInitializationCompleted();

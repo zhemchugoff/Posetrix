@@ -27,7 +27,7 @@
     </Window.Resources>
     <Grid Margin="20" ShowGridLines="True">
         <Grid.RowDefinitions>
-            <!--  Add referenced button  -->
+            <!--  Add references button  -->
             <RowDefinition Height="Auto" />
             <!--  Practice modes  -->
             <RowDefinition Height="4*" />

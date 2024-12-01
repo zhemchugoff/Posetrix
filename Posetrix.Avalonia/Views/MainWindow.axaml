@@ -10,7 +10,7 @@
         x:Class="Posetrix.Avalonia.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="Posetrix.Avalonia"
+        Title="{Binding WindowTitle}"
         Width="400"
         Height="600"
         MinWidth="400"
@@ -21,11 +21,20 @@
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel />
     </Design.DataContext>
-
+    <Window.DataTemplates>
+        <!--  Template for dynamic custom views display  -->
+        <DataTemplate DataType="{x:Type vm:CustomIntervalViewModel}">
+            <cc:CustomIntervalControl />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:PredefinedIntervalsViewModel}">
+            <cc:PredefinedIntervalsControl />
+        </DataTemplate>
+    </Window.DataTemplates>
     <Grid Margin="20">
         <Grid RowDefinitions="Auto, 4*, 2*, 2*, Auto" ShowGridLines="True">
             <Grid RowDefinitions="*,*,*">
                 <Grid ColumnDefinitions="*,*">
+                    <!-- Open settings button -->
                     <Button Grid.Column="0" Click="OpenSettingsButton_OnClick" Name="OpenSettingsButton" Width="28"
                             Height="28">
                         <lucideAvalonia:Lucide Icon="Settings" Width="16" Height="16"
@@ -34,6 +43,7 @@
                     </Button>
                     <TextBlock Grid.Column="1" FontFamily="{StaticResource UbuntuFont}">Add your reference images</TextBlock>
                 </Grid>
+                <!-- Add folder button -->
                 <Button Grid.Row="1" Name="AddFolderButton" Click="AddFolderButton_OnClick" Height="46"
                         HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center" Margin="0 10">
@@ -44,14 +54,23 @@
                 </Button>
                 <TextBlock Grid.Row="2" HorizontalAlignment="Center" Text="Folders: 0 Files: 0"></TextBlock>
             </Grid>
+            <!-- Custom controls combobox -->
             <Grid Grid.Row="1" RowDefinitions="*,*,*">
                 <TextBlock Grid.Row="0" Text="Practice modes" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                <ComboBox Grid.Row="1" SelectedIndex="0" MaxDropDownHeight="100" HorizontalAlignment="Stretch">
-                    <ComboBoxItem>Item 1</ComboBoxItem>
-                    <ComboBoxItem>Item 2</ComboBoxItem>
+                <ComboBox Grid.Row="1"
+                          ItemsSource="{Binding ViewModelsCollection}"
+                          SelectedItem="{Binding SelectedViewModel}"
+                          SelectedIndex="0"
+                          MaxDropDownHeight="100"
+                          HorizontalAlignment="Stretch">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding ViewModelName}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
                 </ComboBox>
                 <!-- TODO: Add controls switch -->
-                <cc:PredefinedIntervalsControl Grid.Row="2"></cc:PredefinedIntervalsControl>
+                <ContentControl Grid.Row="2" Content="{Binding SelectedViewModel.ViewModelObject}" />
             </Grid>
             <UniformGrid Grid.Row="2">
                 <TextBlock Text="I want to draw" VerticalAlignment="Center"></TextBlock>
@@ -67,5 +86,4 @@
             </Button>
         </Grid>
     </Grid>
-
 </Window>

@@ -1,4 +1,3 @@
-using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,28 +8,27 @@ namespace Posetrix.Avalonia.Views;
 
 public partial class MainWindow : Window, IMainWindow
 {
-    private IServiceProvider _serviceProvider;
-    public MainWindow(IServiceProvider serviceProvider, MainWindowViewModel viewModel)
+    public MainWindow()
     {
         InitializeComponent();
-        DataContext = viewModel;
     }
 
     private void OpenSettingsButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        var settingsWindow = new SettingsWindow();
+        var settingsWindow = App.ServiceProvider.GetRequiredService<SettingsWindow>();
+        settingsWindow.DataContext = App.ServiceProvider.GetRequiredService<SettingsWindowViewModel>();
         settingsWindow.Show();
     }
     
     private void AddFolderButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        var folderButton = new FolderAddWindow();
+        var folderButton = App.ServiceProvider.GetRequiredService<FolderAddWindow>();
         folderButton.Show();
     }
 
     private void StartNewSession_OnClick(object? sender, RoutedEventArgs e)
     {
-        var sessionWindow = new SessionWindow();
+        var sessionWindow = App.ServiceProvider.GetRequiredService<SessionWindow>();
         sessionWindow.Show();
     }
 

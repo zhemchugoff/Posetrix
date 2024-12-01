@@ -1,7 +1,7 @@
-﻿using System.Diagnostics;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Styling;
+using Posetrix.Core.Models;
 
 namespace Posetrix.Avalonia.Views;
 
@@ -14,17 +14,14 @@ public partial class SettingsWindow : Window
 
     private void ChangeTheme_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (e.AddedItems.Count > 0 && (ComboBoxItem)e.AddedItems[0] is not null)
+        if (ChangeTheme.SelectedItem is Theme theme && Application.Current != null)
         {
-            ComboBoxItem selectedItem = (ComboBoxItem)e.AddedItems[0];
+            var selectedValue = theme.Name;
 
-            string selectedValue = selectedItem.Content.ToString();
-
-            if (Application.Current == null) return;
             Application.Current.RequestedThemeVariant = selectedValue switch
             {
-                "Light" => ThemeVariant.Light,
                 "Dark" => ThemeVariant.Dark,
+                "Light" => ThemeVariant.Light,
                 "System" => ThemeVariant.Default,
                 _ => Application.Current.RequestedThemeVariant
             };
