@@ -7,11 +7,11 @@ using System.Diagnostics;
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
+public partial class SessionViewModel : BaseViewModel, ICustomWindow
 {
     public string WindowTitle => "Drawing session";
 
-    private readonly MainWindowViewModel _mainWindowViewModel;
+    private readonly MainViewModel _mainViewModel;
 
     private readonly SessionCollection _sessionCollection;
     private ObservableCollection<string> _sessionImages;
@@ -20,32 +20,27 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
 
     private readonly List<string> _completedImages;
 
-    [ObservableProperty]
-    private bool _canSelectNextImage;
+    [ObservableProperty] private bool _canSelectNextImage;
 
-    [ObservableProperty]
-    private bool _canSelectPreviousImage;
+    [ObservableProperty] private bool _canSelectPreviousImage;
 
-    [ObservableProperty]
-    private bool _canDeleteImage;
+    [ObservableProperty] private bool _canDeleteImage;
 
-    [ObservableProperty]
-    private string? _currentImage;
+    [ObservableProperty] private string? _currentImage;
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(SessionInfo))]
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(SessionInfo))]
     private int _completedImagesCounter;
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(SessionInfo))]
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(SessionInfo))]
     private int _sessionCollectionCount;
 
     public string SessionInfo => $"Completed: {CompletedImagesCounter} Total: {SessionCollectionCount}";
 
-    public SessionWindowViewModel(MainWindowViewModel mainWindowViewModel)
+    public SessionViewModel(MainViewModel mainViewModel)
     {
-        _mainWindowViewModel = mainWindowViewModel;
-        _sessionCollection = new SessionCollection(_mainWindowViewModel.ReferenceFolders, _mainWindowViewModel.IsShuffleEnabled, _mainWindowViewModel.CustomImageCount);
+        _mainViewModel = mainViewModel;
+        _sessionCollection = new SessionCollection(_mainViewModel.ReferenceFolders,
+            _mainViewModel.IsShuffleEnabled, _mainViewModel.CustomImageCount);
 
         _sessionImages = _sessionCollection.GetImageCollection();
         _sessionCollectionCount = _sessionImages.Count;
@@ -72,7 +67,6 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
             {
                 _completedImages.Add(_sessionImages[_currentImageIndex]);
                 UpdateImageStatus();
-
             }
 
             if (_currentImageIndex != SessionCollectionCount - 1)
@@ -80,16 +74,13 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
                 _currentImageIndex++;
                 CurrentImage = _sessionImages[_currentImageIndex];
                 UpdateImageStatus();
-
             }
             else
             {
                 _currentImageIndex++;
                 StopSession();
             }
-
         }
-
     }
 
     [RelayCommand]
@@ -100,6 +91,7 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
             _currentImageIndex--;
             CurrentImage = _sessionImages[_currentImageIndex];
         }
+
         UpdateImageStatus();
     }
 
@@ -114,7 +106,6 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
         {
             if (SessionCollectionCount > 1)
             {
-
                 if (_currentImageIndex == SessionCollectionCount - 1)
                 {
                     _sessionImages.RemoveAt(_currentImageIndex);
@@ -125,10 +116,11 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
                 {
                     _sessionImages.RemoveAt(_currentImageIndex);
                     CurrentImage = _sessionImages[_currentImageIndex];
-
                 }
+
                 UpdateImageStatus();
-            } else if (SessionCollectionCount == 1)
+            }
+            else if (SessionCollectionCount == 1)
             {
                 _sessionImages.RemoveAt(_currentImageIndex);
                 StopSession();
@@ -139,7 +131,7 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
     [RelayCommand]
     private void StopSession()
     {
-        CurrentImage = _mainWindowViewModel.SessionEndImagePath;
+        CurrentImage = _mainViewModel.SessionEndImagePath;
         //_sessionImages.Clear();
         CanDeleteImage = false;
         CanSelectNextImage = false;
@@ -151,7 +143,6 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
     /// </summary>
     private void UpdateImageStatus()
     {
-
         CompletedImagesCounter = _completedImages.Count;
         SessionCollectionCount = _sessionImages.Count;
 
@@ -185,6 +176,5 @@ public partial class SessionWindowViewModel : BaseViewModel, ICustomWindow
         {
             CanDeleteImage = false;
         }
-
     }
 }

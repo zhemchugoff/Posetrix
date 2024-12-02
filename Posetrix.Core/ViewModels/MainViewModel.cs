@@ -8,7 +8,7 @@ using System.Collections.Specialized;
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
+public partial class MainViewModel : BaseViewModel, ICustomWindow
 {
     public string WindowTitle => "Posetrix Test";
     public string SessionEndImagePath { get; }
@@ -42,7 +42,7 @@ public partial class MainWindowViewModel : BaseViewModel, ICustomWindow
     [ObservableProperty] private int _customImageCount;
     [ObservableProperty] private bool _isShuffleEnabled;
 
-    public MainWindowViewModel(IConfigService configService, IContentService contentService,
+    public MainViewModel(IConfigService configService, IContentService contentService,
         IFolderBrowserService folderBrowserService, PredefinedIntervalsViewModel predefinedIntervalsViewModel,
         CustomIntervalViewModel customIntervalViewModel)
     {

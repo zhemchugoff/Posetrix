@@ -14,10 +14,10 @@ namespace Posetrix
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public MainWindow(MainWindowViewModel mainWindowViewModel, IServiceProvider serviceProvider)
+        public MainWindow(MainViewModel mainViewModel, IServiceProvider serviceProvider)
         {
             InitializeComponent();
-            DataContext = mainWindowViewModel;
+            DataContext = mainViewModel;
             _serviceProvider = serviceProvider;
         }
 

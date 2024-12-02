@@ -16,7 +16,7 @@ public partial class MainWindow : Window, IMainWindow
     private void OpenSettingsButton_OnClick(object? sender, RoutedEventArgs e)
     {
         var settingsWindow = App.ServiceProvider.GetRequiredService<SettingsWindow>();
-        settingsWindow.DataContext = App.ServiceProvider.GetRequiredService<SettingsWindowViewModel>();
+        settingsWindow.DataContext = App.ServiceProvider.GetRequiredService<SettingsViewModel>();
         settingsWindow.Show();
     }
     

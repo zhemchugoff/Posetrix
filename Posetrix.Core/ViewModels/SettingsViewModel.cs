@@ -4,7 +4,7 @@ using Posetrix.Core.Models;
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class SettingsWindowViewModel : BaseViewModel, ICustomWindow
+public partial class SettingsViewModel : BaseViewModel, ICustomWindow
 {
     public string WindowTitle => "Settings";
     public Theme SelectedTheme { get; set; }
@@ -16,7 +16,7 @@ public partial class SettingsWindowViewModel : BaseViewModel, ICustomWindow
         new() { Name = "Dark" }
     ];
 
-    public SettingsWindowViewModel()
+    public SettingsViewModel()
     {
         SelectedTheme = Themes.First();
     }

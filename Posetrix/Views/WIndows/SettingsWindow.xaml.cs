@@ -13,10 +13,10 @@ namespace Posetrix.Views;
 /// </summary>
 public partial class SettingsWindow : Window
 {
-    public SettingsWindow(SettingsWindowViewModel settingsWindowViewModel)
+    public SettingsWindow(SettingsViewModel settingsViewModel)
     {
         InitializeComponent();
-        DataContext = settingsWindowViewModel;
+        DataContext = settingsViewModel;
     }
 
     private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)

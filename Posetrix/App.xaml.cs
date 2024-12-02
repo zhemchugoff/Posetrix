@@ -33,7 +33,7 @@ namespace Posetrix
         {
             // Main application window.
             serviceCollection.AddTransient<MainWindow>();
-            serviceCollection.AddSingleton<MainWindowViewModel>();
+            serviceCollection.AddSingleton<MainViewModel>();
             serviceCollection.AddTransient<IConfigService, ConfigService>();
             serviceCollection.AddTransient<IContentService, ContentService>();
 
@@ -42,7 +42,7 @@ namespace Posetrix
             serviceCollection.AddTransient<FoldersAddWindow>();
 
             serviceCollection.AddTransient<SettingsWindow>();
-            serviceCollection.AddSingleton<SettingsWindowViewModel>();
+            serviceCollection.AddSingleton<SettingsViewModel>();
 
 
             serviceCollection.AddTransient<CustomInterval>();
@@ -51,7 +51,7 @@ namespace Posetrix
             serviceCollection.AddSingleton<PredefinedIntervalsViewModel>();
 
             serviceCollection.AddTransient<SessionWindow>();
-            serviceCollection.AddTransient<SessionWindowViewModel>();
+            serviceCollection.AddTransient<SessionViewModel>();
         }
     }
 

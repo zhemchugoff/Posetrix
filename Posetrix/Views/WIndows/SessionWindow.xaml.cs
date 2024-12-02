@@ -10,9 +10,9 @@ namespace Posetrix.Views;
 /// </summary>
 public partial class SessionWindow : Window
 {
-    public SessionWindow(SessionWindowViewModel sessionWindowViewModel)
+    public SessionWindow(SessionViewModel sessionViewModel)
     {
         InitializeComponent();
-        DataContext = sessionWindowViewModel;
+        DataContext = sessionViewModel;
     }
 }
