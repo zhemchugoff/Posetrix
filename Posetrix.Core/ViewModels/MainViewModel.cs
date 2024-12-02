@@ -4,6 +4,7 @@ using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
 
 
 namespace Posetrix.Core.ViewModels;
@@ -14,9 +15,7 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
     public string SessionEndImagePath { get; }
 
     //private readonly IConfigService _configService;
-    private readonly IFolderBrowserService _folderBrowserService;
-    private readonly PredefinedIntervalsViewModel _predefinedIntervalsViewModel;
-    private readonly CustomIntervalViewModel _customIntervalViewModel;
+    private readonly IFolderBrowserServiceAsync _folderBrowserService;
     private readonly FileExtensionConfig _fileExtensionConfig;
 
     /// <summary>
@@ -43,14 +42,12 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
     [ObservableProperty] private bool _isShuffleEnabled;
 
     public MainViewModel(IConfigService configService, IContentService contentService,
-        IFolderBrowserService folderBrowserService, PredefinedIntervalsViewModel predefinedIntervalsViewModel,
+        IFolderBrowserServiceAsync folderBrowserService, PredefinedIntervalsViewModel predefinedIntervalsViewModel,
         CustomIntervalViewModel customIntervalViewModel)
     {
         //_configService = configService;
         _fileExtensionConfig = configService.LoadConfig();
         _folderBrowserService = folderBrowserService;
-        _predefinedIntervalsViewModel = predefinedIntervalsViewModel;
-        _customIntervalViewModel = customIntervalViewModel;
 
         SessionEndImagePath = contentService.GetImagePath();
 
@@ -62,8 +59,8 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
         
         ViewModelsCollection =
         [
-            new ComboBoxViewModel { ViewModelName = "Predefined intervals", ViewModelObject = _predefinedIntervalsViewModel },
-            new ComboBoxViewModel { ViewModelName = "Custom Intervals", ViewModelObject = _customIntervalViewModel }
+            new ComboBoxViewModel { ViewModelName = "Predefined intervals", ViewModelObject = predefinedIntervalsViewModel },
+            new ComboBoxViewModel { ViewModelName = "Custom Intervals", ViewModelObject = customIntervalViewModel }
         ];
         
         SelectedViewModel = ViewModelsCollection.First();
@@ -86,13 +83,17 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
     }
 
     [RelayCommand]
-    private void OpenFolder()
+    private async Task OpenFolder()
     {
-        var folderPath = _folderBrowserService.OpenFolderDialog();
+        var folderPath = await _folderBrowserService.SelectFolderAsync();
 
         if (!string.IsNullOrEmpty(folderPath))
         {
-            string folderName = Path.GetFileName(folderPath);
+            // Gets a folder name from a full path and removes any trailing separators.
+            DirectoryInfo directoryInfo = new DirectoryInfo(folderPath);
+            var folderName = directoryInfo.Name;
+            // var folderName = Path.GetFileName(folderPath.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
+            Debug.WriteLine($"Folder name: {folderName}");
             List<string> references = ImageFolder.GetImageFiles(folderPath, _fileExtensionConfig.FileExtensions);
 
             if (!string.IsNullOrEmpty(folderName) && references.Count > 0)
@@ -103,6 +104,8 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
                 {
                     ReferenceFolders.Add(folderObject);
                     FolderImageCounter += folderObject.ImageCounter;
+                    Debug.WriteLine($"Items: {ReferenceFolders.Count}");
+
                 }
             }
         }

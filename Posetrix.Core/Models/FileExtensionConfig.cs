@@ -2,5 +2,5 @@
 
 public class FileExtensionConfig
 {
-    public List<string>? FileExtensions { get; set; }
+    public required List<string> FileExtensions { get; set; }
 }

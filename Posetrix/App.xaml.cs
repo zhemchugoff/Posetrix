@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Posetrix.Core.Interfaces;
-using Posetrix.Core.ViewModels;
+using Posetrix.Core.Services;
 using Posetrix.Services;
 using Posetrix.Views;
 using Posetrix.Views.UserControls;
@@ -22,7 +22,12 @@ namespace Posetrix
 
             // Configure services
             var serviceCollection = new ServiceCollection();
+            
+            // Add viewmodels.
+            serviceCollection.AddCommonServices();
+            
             ConfigureServices(serviceCollection);
+            
             ServiceProvider = serviceCollection.BuildServiceProvider();
 
             var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
@@ -31,27 +36,16 @@ namespace Posetrix
 
         private static void ConfigureServices(ServiceCollection serviceCollection)
         {
-            // Main application window.
+            // Add windows.
             serviceCollection.AddTransient<MainWindow>();
-            serviceCollection.AddSingleton<MainViewModel>();
-            serviceCollection.AddTransient<IConfigService, ConfigService>();
-            serviceCollection.AddTransient<IContentService, ContentService>();
-
-            // Windows with add references button and settings button.
-            serviceCollection.AddTransient<IFolderBrowserService, FolderBrowserService>();
             serviceCollection.AddTransient<FoldersAddWindow>();
-
             serviceCollection.AddTransient<SettingsWindow>();
-            serviceCollection.AddSingleton<SettingsViewModel>();
-
-
             serviceCollection.AddTransient<CustomInterval>();
-            serviceCollection.AddSingleton<CustomIntervalViewModel>();
             serviceCollection.AddTransient<PredefinedIntervals>();
-            serviceCollection.AddSingleton<PredefinedIntervalsViewModel>();
-
             serviceCollection.AddTransient<SessionWindow>();
-            serviceCollection.AddTransient<SessionViewModel>();
+            
+            // Add open folder dialog.
+            serviceCollection.AddTransient<IFolderBrowserServiceAsync, FolderBrowserService>();
         }
     }
 

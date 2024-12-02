@@ -28,29 +28,6 @@ public partial class App : Application
         // Without this line you will get duplicate validations from both Avalonia and CT.
         BindingPlugins.DataValidators.RemoveAt(0);
 
-        // Register all the services needed for the application to run.
-        var collection = new ServiceCollection();
-        
-        // Add viewodels.
-        collection.AddCommonServices();
-
-        // Add windows.
-        collection.AddTransient<FolderAddWindow>();
-        collection.AddTransient<SettingsWindow>();
-        collection.AddTransient<SessionWindow>();
-
-        // Add custom controls.
-        collection.AddTransient<CustomIntervalControl>();
-        collection.AddTransient<PredefinedIntervalsControl>();
-
-        // Add services.
-        collection.AddTransient<IFolderBrowserService, FolderBrowserService>();
-
-        // Creates a ServiceProvider containing services from the provided IServiceCollection.
-        var services = collection.BuildServiceProvider();
-        ServiceProvider = services;
-
-        var vm = services.GetRequiredService<MainViewModel>();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
@@ -58,10 +35,32 @@ public partial class App : Application
             // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
             DisableAvaloniaDataAnnotationValidation();
 
-            desktop.MainWindow = new MainWindow()
-            {
-                DataContext = vm
-            };
+            // Register all the services needed for the application to run.
+            var collection = new ServiceCollection();
+
+            // Add viewodels.
+            collection.AddCommonServices();
+
+            // Add windows.
+            collection.AddSingleton<MainWindow>();
+            collection.AddTransient<FolderAddWindow>();
+            collection.AddTransient<SettingsWindow>();
+            collection.AddTransient<SessionWindow>();
+
+            // Add custom controls.
+            collection.AddTransient<CustomIntervalControl>();
+            collection.AddTransient<PredefinedIntervalsControl>();
+
+            // Add services.
+            // collection.AddTransient<IFolderBrowserServiceAsync, FolderBrowserService>();
+            collection.AddTransient<IFolderBrowserServiceAsync>(sp => new FolderBrowserService(sp.GetRequiredService<FolderAddWindow>));
+
+            // Creates a ServiceProvider containing services from the provided IServiceCollection.
+            ServiceProvider = collection.BuildServiceProvider();
+
+            desktop.MainWindow = ServiceProvider.GetRequiredService<MainWindow>();
+            ;
+            desktop.MainWindow.DataContext = ServiceProvider.GetRequiredService<MainViewModel>();
         }
 
         base.OnFrameworkInitializationCompleted();

@@ -22,8 +22,9 @@ public partial class MainWindow : Window, IMainWindow
     
     private void AddFolderButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        var folderButton = App.ServiceProvider.GetRequiredService<FolderAddWindow>();
-        folderButton.Show();
+        var foldersAddWindow = App.ServiceProvider.GetRequiredService<FolderAddWindow>();
+        foldersAddWindow.DataContext = App.ServiceProvider.GetRequiredService<MainViewModel>();
+        foldersAddWindow.Show();
     }
 
     private void StartNewSession_OnClick(object? sender, RoutedEventArgs e)

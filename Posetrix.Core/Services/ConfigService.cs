@@ -8,21 +8,21 @@ namespace Posetrix.Core.Services;
 /// </summary>
 public class ConfigService : IConfigService
 {
-    readonly FileExtensionConfig extensionConfig = new();
-
     public FileExtensionConfig LoadConfig()
     {
-        extensionConfig.FileExtensions =
-        [
-            ".bmp",
-            ".jpg",
-            ".jpeg",
-            ".png",
-            ".gif",
-            ".tiff",
-            ".wdp"
-        ];
-
-        return extensionConfig;
+        var fileExtensionConfig = new FileExtensionConfig
+        {
+            FileExtensions =
+            [
+                ".bmp",
+                ".jpg",
+                ".jpeg",
+                ".png",
+                ".gif",
+                ".tiff",
+                ".wdp"
+            ]
+        };   
+        return fileExtensionConfig;
     }
 }

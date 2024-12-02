@@ -3,13 +3,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:lucideAvalonia="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
+        xmlns:viewModels="clr-namespace:Posetrix.Core.ViewModels;assembly=Posetrix.Core"
         mc:Ignorable="d"
         x:Class="Posetrix.Avalonia.Views.FolderAddWindow"
         Title="Add folders"
         Width="600"
         Height="400"
         MinWidth="600"
-        MinHeight="400">
+        MinHeight="400"
+        x:DataType="viewModels:MainViewModel">
     <Window.Styles>
         <Style Selector="TextBlock.list">
             <Setter Property="FontSize" Value="14" />
@@ -20,27 +22,16 @@
         </Style>
     </Window.Styles>
     <Grid RowDefinitions="8*,Auto" Margin="20">
-        <ListBox Grid.Row="0">
-            <ListBox.Items>
-                <ListBoxItem>
+        <ListBox Grid.Row="0" ItemsSource="{Binding ReferenceFolders}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
                     <StackPanel>
-                        <TextBlock Classes="list">Folder name</TextBlock>
-                        <TextBlock Classes="list">Folder path</TextBlock>
+                    <TextBlock Text="{Binding FolderName}"></TextBlock> 
+                    <TextBlock Text="{Binding FullFolderPath}"></TextBlock> 
+                        
                     </StackPanel>
-                </ListBoxItem>
-                <ListBoxItem>
-                    <StackPanel>
-                        <TextBlock Classes="list">Folder name</TextBlock>
-                        <TextBlock Classes="list">Folder path</TextBlock>
-                    </StackPanel>
-                </ListBoxItem>
-                <ListBoxItem>
-                    <StackPanel>
-                        <TextBlock Classes="list">Folder name</TextBlock>
-                        <TextBlock Classes="list">Folder path</TextBlock>
-                    </StackPanel>
-                </ListBoxItem>
-            </ListBox.Items>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
         <Grid Grid.Row="1" ColumnDefinitions="*,*" Margin="0 20 0 0">
             <Button
@@ -50,7 +41,8 @@
                 Height="40"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontSize="16">
+                FontSize="16"
+                Command="{Binding OpenFolderCommand}">
                 <lucideAvalonia:Lucide Icon="Plus"></lucideAvalonia:Lucide>
             </Button>
             <Button
