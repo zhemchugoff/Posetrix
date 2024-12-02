@@ -69,7 +69,7 @@
                 <Button.ToolTip>
                     <ToolTip>
                         <TextBlock
-                            FontFamily="Segoe UI"
+                            FontFamily="{StaticResource SegoeUi}"
                             FontSize="12"
                             Text="Always on top" />
                     </ToolTip>

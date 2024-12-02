@@ -4,9 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <FontFamily x:Key="SegoeUiIcons">pack://application:,,,/Fonts/#Segoe Fluent Icons</FontFamily>
+            <FontFamily x:Key="SegoeUiIcons">pack://application:,,,/Assets/Fonts/#Segoe Fluent Icons</FontFamily>
+            <FontFamily x:Key="SegoeUi">pack://application:,,,/Assets/Fonts/#Segoe UI</FontFamily>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Themes/Fluent.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/PresentationFramework.Fluent;component/Themes/Fluent.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

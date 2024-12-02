@@ -27,22 +27,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Fonts\SegoeFluentIcons.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\Icons\book(1).png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\Icons\book.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\undraw_walk_ing_qkyj.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\undraw_workout_gcgu.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\undraw_workout_gcgu.svg" />
+    <Resource Include="Assets\Fonts\SegoeFluentIcons.ttf" />
+    <Resource Include="Assets\Images\Icons\book(1).png" />
+    <Resource Include="Assets\Images\Icons\book.png" />
+    <Resource Include="Assets\Images\undraw_walk_ing_qkyj.png" />
+    <Resource Include="Assets\Images\undraw_workout_gcgu.png" />
+    <Resource Include="Assets\Images\undraw_workout_gcgu.svg" />
+    <None Remove="Assets\Fonts\Segoe UI.ttf" />
+    <Resource Include="Assets\Fonts\Segoe UI.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\" />
   </ItemGroup>
 
 </Project>
