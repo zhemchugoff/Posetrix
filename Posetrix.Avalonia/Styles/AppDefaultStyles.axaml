@@ -1,0 +1,59 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:lucideAvalonia="clr-namespace:LucideAvalonia;assembly=LucideAvalonia">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!-- Add Controls for Previewer Here -->
+            <StackPanel Orientation="Horizontal">
+                <Button Classes="big">
+                    <lucideAvalonia:Lucide Icon="Ambulance"></lucideAvalonia:Lucide>
+                </Button>
+                <Button Classes="big" Content="WOR"></Button>
+                <Button Classes="small">
+                    <lucideAvalonia:Lucide Icon="Angry"></lucideAvalonia:Lucide>
+                </Button>
+                <Button Classes="small" Content="W"></Button>
+                <Button Classes="icon transparent">
+                    <lucideAvalonia:Lucide Icon="Settings" Height="20" Width="20"></lucideAvalonia:Lucide>
+                </Button>
+            </StackPanel>
+        </Border>
+    </Design.PreviewWith>
+    <!-- Add Styles Here -->
+    <Style Selector="lucideAvalonia|Lucide">
+        <!-- Dynamic icons color -->
+        <Setter Property="StrokeBrush" Value="{DynamicResource SystemControlForegroundBaseHighBrush}" />
+    </Style>
+    <Style Selector="Button.big">
+        <Setter Property="Width" Value="50" />
+        <Setter Property="Height" Value="50" />
+        <Setter Property="Margin" Value="4 0" />
+    </Style>
+    <Style Selector="Button.small">
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Margin" Value="4 0" />
+    </Style>
+    <Style Selector="Window">
+        <Setter Property="FontFamily" Value="{DynamicResource UbuntuFont}"></Setter>
+    </Style>
+    
+    <Style Selector="Button.icon">
+        <Setter Property="RenderTransform" Value="scale(1)"></Setter>
+        <Setter Property="Padding" Value="0"></Setter>
+        
+    </Style>
+    
+    <Style Selector="Button.transparent">
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    
+    <Style Selector="Button.transparent:pointerover">
+        <Setter Property="RenderTransform" Value="scale(1.2)"/>
+
+    </Style>
+    
+    <Style Selector="Button:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+</Styles>

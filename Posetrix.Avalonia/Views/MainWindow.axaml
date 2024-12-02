@@ -33,9 +33,9 @@
             <Grid RowDefinitions="*,*,*">
                 <Grid ColumnDefinitions="*,*">
                     <!-- Open settings button -->
-                    <Button Grid.Column="0" Click="OpenSettingsButton_OnClick" Name="OpenSettingsButton" Width="28"
-                            Height="28">
-                        <lucideAvalonia:Lucide Icon="Settings" Width="16" Height="16"
+                    <Button Grid.Column="0" Click="OpenSettingsButton_OnClick" Name="OpenSettingsButton"
+                            Classes="transparent icon">
+                        <lucideAvalonia:Lucide Icon="Settings" Height="20"
                                                StrokeBrush="{DynamicResource SystemControlForegroundBaseHighBrush}">
                         </lucideAvalonia:Lucide>
                     </Button>

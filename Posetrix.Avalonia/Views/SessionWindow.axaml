@@ -8,29 +8,12 @@
         Title="Session"
         Width="600"
         Height="450">
-    <Window.Styles>
-        <Style Selector="lucideAvalonia|Lucide">
-            <!-- Dynamic icons color -->
-            <Setter Property="StrokeBrush" Value="{DynamicResource SystemControlForegroundBaseHighBrush}" />
-        </Style>
-        <Style Selector="Button.big">
-            <Setter Property="Width" Value="50" />
-            <Setter Property="Height" Value="50" />
-            <Setter Property="Margin" Value="4 0" />
-        </Style>
-        <Style Selector="Button.small">
-            <Setter Property="Width" Value="32" />
-            <Setter Property="Height" Value="32" />
-            <Setter Property="Margin" Value="4 0" />
-        </Style>
-    </Window.Styles>
-
     <Grid RowDefinitions="Auto, 10*, Auto, Auto" Margin="20" ShowGridLines="True">
         <UniformGrid Grid.Row="0" Columns="2">
             <TextBlock Text="Session Info" />
             <TextBlock HorizontalAlignment="Right" Text="HH:MM:SS" />
         </UniformGrid>
-        <Image Grid.Row="1" Stretch="Uniform" Source="/Assets/Enthusiastic-rafiki.png"></Image>
+        <Svg Grid.Row="1" Path="avares://Posetrix.Avalonia/Assets/Images/Enthusiastic-pana.svg" />
         <!-- Image editing buttons -->
         <StackPanel
             Grid.Row="2"
