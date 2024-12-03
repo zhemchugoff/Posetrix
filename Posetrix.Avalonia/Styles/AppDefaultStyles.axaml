@@ -5,6 +5,9 @@
         <Border Padding="20">
             <!-- Add Controls for Previewer Here -->
             <StackPanel Orientation="Horizontal">
+                <TextBlock>
+                    This is a text
+                </TextBlock>
                 <Button Classes="big">
                     <lucideAvalonia:Lucide Icon="Ambulance"></lucideAvalonia:Lucide>
                 </Button>
@@ -23,22 +26,36 @@
         </Border>
     </Design.PreviewWith>
     <!-- Add Styles Here -->
+    
+    <!-- Fonts. -->
+    <Style Selector="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource CustomTextFont}"></Setter>
+    </Style>
+    <Style Selector="Button">
+        <Setter Property="FontFamily" Value="{StaticResource CustomTextFont}"></Setter>
+    </Style>
+    <Style Selector="ToggleButton">
+        <Setter Property="FontFamily" Value="{StaticResource CustomTextFont}"></Setter>
+    </Style>
+    <Style Selector="TitleBar">
+        <Setter Property="FontFamily" Value="{DynamicResource UbuntuFont}"></Setter>
+    </Style>
+
+    <!-- Dynamic icons color. -->
     <Style Selector="lucideAvalonia|Lucide">
-        <!-- Dynamic icons color -->
         <Setter Property="StrokeBrush" Value="{DynamicResource SystemControlForegroundBaseHighBrush}" />
     </Style>
-    <Style Selector="Button.big">
-        <Setter Property="Width" Value="50" />
-        <Setter Property="Height" Value="50" />
-        <Setter Property="Margin" Value="4 0" />
-    </Style>
+    
+    <!-- Buttons. -->
     <Style Selector="Button.small">
         <Setter Property="Width" Value="32" />
         <Setter Property="Height" Value="32" />
         <Setter Property="Margin" Value="4 0" />
     </Style>
-    <Style Selector="Window">
-        <Setter Property="FontFamily" Value="{DynamicResource UbuntuFont}"></Setter>
+    <Style Selector="Button.big">
+        <Setter Property="Width" Value="50" />
+        <Setter Property="Height" Value="50" />
+        <Setter Property="Margin" Value="4 0" />
     </Style>
 
     <Style Selector="Button.icon">
@@ -57,7 +74,7 @@
     <Style Selector="Button.transparent:pointerover /template/ ContentPresenter">
         <Setter Property="Background" Value="Transparent" />
     </Style>
-    
+
     <Style Selector="Button.accent-button">
         <Setter Property="Background" Value="{DynamicResource AccentButtonBackground}"></Setter>
         <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}"></Setter>

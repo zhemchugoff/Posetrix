@@ -15,7 +15,6 @@
     <Window.Styles>
         <Style Selector="TextBlock.list">
             <Setter Property="FontSize" Value="14" />
-            <Setter Property="FontFamily" Value="{StaticResource UbuntuFont}" />
         </Style>
         <Style Selector="lucideAvalonia|Lucide">
             <Setter Property="StrokeBrush" Value="{DynamicResource SystemControlForegroundBaseHighBrush}"></Setter>
