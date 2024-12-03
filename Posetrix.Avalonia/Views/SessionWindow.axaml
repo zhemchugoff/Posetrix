@@ -3,7 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:Posetrix.Core.ViewModels"
-        xmlns:converters="using:Posetrix.Avalonia.Converterts"
+        xmlns:converters="clr-namespace:Posetrix.Avalonia.Converters"
         mc:Ignorable="d"
         x:Class="Posetrix.Avalonia.Views.SessionWindow"
         Title="{Binding WindowTitle}"
@@ -13,7 +13,7 @@
         x:DataType="vm:SessionViewModel">
     <Window.Resources>
         <ResourceDictionary>
-            <converters:ImageHelper x:Key="ImageLoader" />
+            <converters:ImageSharpLoader x:Key="ImageLoader" />
         </ResourceDictionary>
     </Window.Resources>
     <Grid RowDefinitions="Auto, 10*, Auto, Auto" Margin="20" ShowGridLines="True">
@@ -22,7 +22,7 @@
             <TextBlock HorizontalAlignment="Right" Text="HH:MM:SS" />
         </UniformGrid>
         <!-- <Svg Grid.Row="1" Path="avares://Posetrix.Avalonia/Assets/Images/Enthusiastic-pana.svg" /> -->
-        <Image Grid.Row="1" Source="{Binding CurrentImage, Converter={StaticResource ImageLoader}}"></Image>
+        <Image Grid.Row="1" Source="{Binding CurrentImage, Converter={StaticResource ImageLoader}}" />
 
         <!-- Image editing buttons -->
         <StackPanel
@@ -31,11 +31,11 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Orientation="Horizontal">
-            <Button Classes="small button-icon" Content="&#xE3E2;"/> 
-            <Button Classes="small button-icon" Content="&#xEC8C;"/> 
-            <Button Classes="small button-icon" Content="&#xED6A;"/> 
-            <Button Classes="small button-icon" Content="&#xE492;"/> 
-            <Button Classes="small button-icon" Content="&#xE92A;"/> 
+            <Button Classes="small button-icon" Content="&#xE3E2;" />
+            <Button Classes="small button-icon" Content="&#xEC8C;" />
+            <Button Classes="small button-icon" Content="&#xED6A;" />
+            <Button Classes="small button-icon" Content="&#xE492;" />
+            <Button Classes="small button-icon" Content="&#xE92A;" />
         </StackPanel>
 
         <!-- Control buttons. -->
