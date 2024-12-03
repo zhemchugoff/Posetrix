@@ -16,6 +16,9 @@
                 <Button Classes="icon transparent">
                     <lucideAvalonia:Lucide Icon="Settings" Height="20" Width="20"></lucideAvalonia:Lucide>
                 </Button>
+                <Button Classes="accent-button">
+                    Text
+                </Button>
             </StackPanel>
         </Border>
     </Design.PreviewWith>
@@ -37,23 +40,31 @@
     <Style Selector="Window">
         <Setter Property="FontFamily" Value="{DynamicResource UbuntuFont}"></Setter>
     </Style>
-    
+
     <Style Selector="Button.icon">
         <Setter Property="RenderTransform" Value="scale(1)"></Setter>
         <Setter Property="Padding" Value="0"></Setter>
-        
     </Style>
-    
-    <Style Selector="Button.transparent">
-        <Setter Property="Background" Value="Transparent"/>
-    </Style>
-    
-    <Style Selector="Button.transparent:pointerover">
-        <Setter Property="RenderTransform" Value="scale(1.2)"/>
 
+    <Style Selector="Button.transparent">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+    <Style Selector="Button.transparent:pointerover">
+        <Setter Property="RenderTransform" Value="scale(1.2)" />
+    </Style>
+
+    <Style Selector="Button.transparent:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="Transparent" />
     </Style>
     
-    <Style Selector="Button:pointerover /template/ ContentPresenter">
-        <Setter Property="Background" Value="Transparent"/>
+    <Style Selector="Button.accent-button">
+        <Setter Property="Background" Value="{DynamicResource AccentButtonBackground}"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}"></Setter>
+    </Style>
+    <Style Selector="Button.accent-button:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource SystemAccentColorLight1}"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}"></Setter>
+
     </Style>
 </Styles>
