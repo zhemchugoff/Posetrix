@@ -30,8 +30,11 @@ public class FolderBrowserService : IFolderBrowserServiceAsync
                 Title = "Select a folder",
                 AllowMultiple = false // Set to true if you want to allow selecting multiple folders
             });
-            
-            return folder[0].Path.LocalPath;
+
+            if (folder.Count > 0)
+            {
+                return folder[0].Path.LocalPath;
+            }
         }
 
         return null;
