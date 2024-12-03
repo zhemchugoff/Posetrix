@@ -6,7 +6,7 @@ using Posetrix.Core.ViewModels;
 
 namespace Posetrix.Avalonia.Views;
 
-public partial class MainWindow : Window, IMainWindow
+public partial class MainWindow : Window
 {
     public MainWindow()
     {
@@ -17,21 +17,20 @@ public partial class MainWindow : Window, IMainWindow
     {
         var settingsWindow = App.ServiceProvider.GetRequiredService<SettingsWindow>();
         settingsWindow.DataContext = App.ServiceProvider.GetRequiredService<SettingsViewModel>();
-        settingsWindow.Show();
+        settingsWindow.ShowDialog(this);
     }
-    
+
     private void AddFolderButton_OnClick(object? sender, RoutedEventArgs e)
     {
         var foldersAddWindow = App.ServiceProvider.GetRequiredService<FolderAddWindow>();
         foldersAddWindow.DataContext = App.ServiceProvider.GetRequiredService<MainViewModel>();
-        foldersAddWindow.Show();
+        foldersAddWindow.ShowDialog(this);
     }
 
     private void StartNewSession_OnClick(object? sender, RoutedEventArgs e)
     {
         var sessionWindow = App.ServiceProvider.GetRequiredService<SessionWindow>();
-        sessionWindow.Show();
+        sessionWindow.DataContext = App.ServiceProvider.GetRequiredService<SessionViewModel>();
+        sessionWindow.ShowDialog(this);
     }
-
-    public string WindowTitle { get; } = "Posetrix Posetrix";
 }
