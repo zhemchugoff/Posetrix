@@ -2,18 +2,28 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:lucideAvalonia="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
+        xmlns:vm="using:Posetrix.Core.ViewModels"
+        xmlns:converters="using:Posetrix.Avalonia.Converterts"
         mc:Ignorable="d"
         x:Class="Posetrix.Avalonia.Views.SessionWindow"
-        Title="Session"
+        Title="{Binding WindowTitle}"
+        Icon="/Assets/avalonia-logo.ico"
         Width="600"
-        Height="450">
+        Height="450"
+        x:DataType="vm:SessionViewModel">
+    <Window.Resources>
+        <ResourceDictionary>
+            <converters:ImageHelper x:Key="ImageLoader" />
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid RowDefinitions="Auto, 10*, Auto, Auto" Margin="20" ShowGridLines="True">
         <UniformGrid Grid.Row="0" Columns="2">
-            <TextBlock Text="Session Info" />
+            <TextBlock Text="{Binding SessionInfo}" />
             <TextBlock HorizontalAlignment="Right" Text="HH:MM:SS" />
         </UniformGrid>
-        <Svg Grid.Row="1" Path="avares://Posetrix.Avalonia/Assets/Images/Enthusiastic-pana.svg" />
+        <!-- <Svg Grid.Row="1" Path="avares://Posetrix.Avalonia/Assets/Images/Enthusiastic-pana.svg" /> -->
+        <Image Grid.Row="1" Source="{Binding CurrentImage, Converter={StaticResource ImageLoader}}"></Image>
+
         <!-- Image editing buttons -->
         <StackPanel
             Grid.Row="2"
@@ -21,43 +31,28 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Orientation="Horizontal">
-            <Button Classes="small">
-                <lucideAvalonia:Lucide Icon="Pin" Width="16"></lucideAvalonia:Lucide>
-            </Button>
-            <Button Classes="small">
-                <lucideAvalonia:Lucide Icon="Grid3X3" Width="16"></lucideAvalonia:Lucide>
-            </Button>
-            <Button Classes="small">
-                <lucideAvalonia:Lucide Icon="FlipHorizontal" Width="16"></lucideAvalonia:Lucide>
-            </Button>
-            <Button Classes="small">
-                <lucideAvalonia:Lucide Icon="Timer" Width="16"></lucideAvalonia:Lucide>
-            </Button>
-            <Button Classes="small">
-                <lucideAvalonia:Lucide Icon="CircleSlash" Width="16"></lucideAvalonia:Lucide>
-            </Button>
+            <Button Classes="small button-icon" Content="&#xE3E2;"/> 
+            <Button Classes="small button-icon" Content="&#xEC8C;"/> 
+            <Button Classes="small button-icon" Content="&#xED6A;"/> 
+            <Button Classes="small button-icon" Content="&#xE492;"/> 
+            <Button Classes="small button-icon" Content="&#xE92A;"/> 
         </StackPanel>
+
         <!-- Control buttons. -->
         <StackPanel
             Grid.Row="3"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Orientation="Horizontal">
-            <Button Classes="big">
-                <lucideAvalonia:Lucide Icon="ChevronLeft"></lucideAvalonia:Lucide>
-            </Button>
-            <Button Classes="big">
-                <lucideAvalonia:Lucide Icon="Pause"></lucideAvalonia:Lucide>
-            </Button>
-            <Button Classes="big">
-                <lucideAvalonia:Lucide Icon="Square"></lucideAvalonia:Lucide>
-            </Button>
-            <Button Classes="big">
-                <lucideAvalonia:Lucide Icon="ChevronRight"></lucideAvalonia:Lucide>
-            </Button>
-            <Button Classes="big">
-                <lucideAvalonia:Lucide Icon="ChevronLast"></lucideAvalonia:Lucide>
-            </Button>
+            <Button Classes="big button-icon" Content="&#xE138;" Command="{Binding SelectPreviousImageCommand}"
+                    IsEnabled="{Binding CanSelectPreviousImage}" />
+            <Button Classes="big button-icon" Content="&#xE39E;" />
+            <Button Classes="big button-icon" Content="&#xE46C;" Command="{Binding StopSessionCommand}" />
+            <Button Classes="big button-icon" Content="&#xE13A;" Command="{Binding SelectNextImageCommand}"
+                    IsEnabled="{Binding CanSelectNextImage}" />
+
+            <Button Classes="big button-icon" Content="&#xE5A6;" Command="{Binding SkipImageCommand}"
+                    IsEnabled="{Binding CanDeleteImage}" />
         </StackPanel>
     </Grid>
 </Window>

@@ -95,7 +95,6 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
         UpdateImageStatus();
     }
 
-
     /// <summary>
     /// Deletes image from session collection.
     /// </summary>

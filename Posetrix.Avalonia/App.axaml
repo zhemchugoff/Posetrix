@@ -10,6 +10,7 @@
     </Application.DataTemplates>
     <Application.Resources>
         <FontFamily x:Key="CustomTextFont">avares://Posetrix.Avalonia/Assets/Fonts#Ubuntu</FontFamily>
+        <FontFamily x:Key="CustomIconsFont">avares://Posetrix.Avalonia/Assets/Fonts#Phosphor</FontFamily>
     </Application.Resources>
     <Application.Styles>
         <FluentTheme>

@@ -1,6 +1,5 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:lucideAvalonia="clr-namespace:LucideAvalonia;assembly=LucideAvalonia">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Design.PreviewWith>
         <Border Padding="20">
             <!-- Add Controls for Previewer Here -->
@@ -8,17 +7,10 @@
                 <TextBlock>
                     This is a text
                 </TextBlock>
-                <Button Classes="big">
-                    <lucideAvalonia:Lucide Icon="Ambulance"></lucideAvalonia:Lucide>
+                <Button Classes="big button-icon" Content="&#xEB9A;" />
+                <Button Classes="small button-icon" Content="&#xEB9A;">
                 </Button>
-                <Button Classes="big" Content="WOR"></Button>
-                <Button Classes="small">
-                    <lucideAvalonia:Lucide Icon="Angry"></lucideAvalonia:Lucide>
-                </Button>
-                <Button Classes="small" Content="W"></Button>
-                <Button Classes="icon transparent">
-                    <lucideAvalonia:Lucide Icon="Settings" Height="20" Width="20"></lucideAvalonia:Lucide>
-                </Button>
+                <Button Classes="icon-only transparent" Content="&#xE272;" FontSize="40"/>
                 <Button Classes="accent-button">
                     Text
                 </Button>
@@ -26,7 +18,7 @@
         </Border>
     </Design.PreviewWith>
     <!-- Add Styles Here -->
-    
+
     <!-- Fonts. -->
     <Style Selector="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource CustomTextFont}"></Setter>
@@ -38,29 +30,36 @@
         <Setter Property="FontFamily" Value="{StaticResource CustomTextFont}"></Setter>
     </Style>
     <Style Selector="TitleBar">
-        <Setter Property="FontFamily" Value="{DynamicResource UbuntuFont}"></Setter>
+        <Setter Property="FontFamily" Value="{DynamicResource CustomTextFont}"></Setter>
     </Style>
 
-    <!-- Dynamic icons color. -->
-    <Style Selector="lucideAvalonia|Lucide">
-        <Setter Property="StrokeBrush" Value="{DynamicResource SystemControlForegroundBaseHighBrush}" />
-    </Style>
-    
     <!-- Buttons. -->
     <Style Selector="Button.small">
+        <Setter Property="FontFamily" Value="{DynamicResource CustomIconsFont}" />
+        <Setter Property="FontSize" Value="20" />
         <Setter Property="Width" Value="32" />
         <Setter Property="Height" Value="32" />
         <Setter Property="Margin" Value="4 0" />
     </Style>
     <Style Selector="Button.big">
+        <Setter Property="FontFamily" Value="{DynamicResource CustomIconsFont}" />
+        <Setter Property="FontSize" Value="40" />
         <Setter Property="Width" Value="50" />
         <Setter Property="Height" Value="50" />
         <Setter Property="Margin" Value="4 0" />
     </Style>
 
-    <Style Selector="Button.icon">
+    <Style Selector="Button.icon-only">
+        <Setter Property="FontFamily" Value="{StaticResource CustomIconsFont}"></Setter>
         <Setter Property="RenderTransform" Value="scale(1)"></Setter>
         <Setter Property="Padding" Value="0"></Setter>
+    </Style>
+
+    <Style Selector="Button.button-icon">
+        <Setter Property="FontFamily" Value="{StaticResource CustomIconsFont}"></Setter>
+        <Setter Property="Padding" Value="0"></Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
     <Style Selector="Button.transparent">

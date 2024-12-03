@@ -3,7 +3,6 @@
         xmlns:vm="using:Posetrix.Core.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:lucideAvalonia="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
         xmlns:cc="using:Posetrix.Avalonia.Controls"
         mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="600"
         x:Class="Posetrix.Avalonia.Views.MainWindow"
@@ -23,7 +22,7 @@
             <cc:PredefinedIntervalsControl />
         </DataTemplate>
     </Window.DataTemplates>
-    <Grid Margin="20">
+    <Grid Margin="20" ShowGridLines="True">
         <Grid RowDefinitions="Auto, *, *, *, Auto" ShowGridLines="True">
             <Grid RowDefinitions="*,*,*">
                 <Grid ColumnDefinitions="Auto,*">
@@ -31,26 +30,23 @@
                     <Button Grid.Column="0"
                             Click="OpenSettingsButton_OnClick"
                             Name="OpenSettingsButton"
-                            Classes="transparent icon">
-                        <lucideAvalonia:Lucide Icon="Settings" Height="20"
-                                               StrokeBrush="{DynamicResource SystemControlForegroundBaseHighBrush}">
-                        </lucideAvalonia:Lucide>
-                    </Button>
+                            Classes="transparent icon-only"
+                            Content="&#xE272;"
+                            FontSize="24"/>
                     <TextBlock Grid.Column="1" Text="Add your reference images" Margin="-20 0 0 0"
-                               HorizontalAlignment="Center" />
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
                 <!-- Add folder button -->
                 <Button Grid.Row="1" Name="AddFolderButton"
                         Click="AddFolderButton_OnClick"
-                        Classes="accent-button"
+                        Classes="accent-button button-icon"
                         Height="46"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
-                        Margin="0 10">
-                    <lucideAvalonia:Lucide Icon="Plus" StrokeThickness="1.5"
-                                           StrokeBrush="{DynamicResource AccentButtonForeground}">
-                    </lucideAvalonia:Lucide>
+                        Margin="0 10"
+                        Content="&#xE3D4;"
+                        FontSize="24">
                 </Button>
                 <TextBlock Grid.Row="2" HorizontalAlignment="Center" Text="{Binding FoldersInfo}"></TextBlock>
             </Grid>
@@ -84,6 +80,7 @@
             <!-- Starting session button. -->
             <Button Classes="accent-button" Grid.Row="4" Name="StartNewSession"
                     Click="StartNewSession_OnClick"
+                    IsEnabled="{Binding CanStartSession}"
                     HorizontalAlignment="Stretch"
                     Height="46"
                     Content="Start a drawing session"
