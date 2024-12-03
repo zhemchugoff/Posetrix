@@ -13,7 +13,8 @@
         x:DataType="vm:SessionViewModel">
     <Window.Resources>
         <ResourceDictionary>
-            <converters:ImageSharpLoader x:Key="ImageLoader" />
+            <!-- TODO: Add a placeholder in case there is a problem with getting a bitmap image.  -->
+            <converters:SkiaSharpImageLoader x:Key="ImageLoader" />
         </ResourceDictionary>
     </Window.Resources>
     <Grid RowDefinitions="Auto, 10*, Auto, Auto" Margin="20" ShowGridLines="True">
