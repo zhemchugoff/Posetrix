@@ -9,7 +9,7 @@ public class ContentService : IContentService
 {
     public string GetImagePath()
     {
-        var imagePath = "Assets/Enthusiastic-rafiki.png";
+        const string imagePath = "avares://Posetrix.Avalonia/Assets/Images/Happy-Earth-rafiki.png";
         return imagePath;
     }
 }

@@ -1,16 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using SkiaSharp;
 
 namespace Posetrix.Avalonia.Converters;
 
 public class SkiaSharpImageLoader : IValueConverter
 {
-
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is string imagePath && !string.IsNullOrEmpty(imagePath))
@@ -18,7 +19,6 @@ public class SkiaSharpImageLoader : IValueConverter
             // Return a placeholder while the image is being processed
             return LoadImage(imagePath, 1920, 1080);
         }
-
         return null;
     }
 
@@ -27,32 +27,52 @@ public class SkiaSharpImageLoader : IValueConverter
     /// </summary>
     private Bitmap LoadImage(string imagePath, int maxWidth, int maxHeight)
     {
+        // Load Avalonia asset.
+        if (imagePath.StartsWith("avares://"))
+        {
+            try
+            {
+                using var stream = AssetLoader.Open(new Uri(imagePath));
+                var bitmap = new Bitmap(stream);
+                bitmap.CreateScaledBitmap(new PixelSize(maxWidth, maxHeight),
+                    BitmapInterpolationMode.HighQuality);
+                return bitmap;
+            }
+
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
         // Load the original image.
-        using var skBitmap = SKBitmap.Decode(imagePath);
-        var orientation = GetImageOrientation(imagePath);
-        var rotetedSkBitmap = AutoOrient(skBitmap, orientation);
+        using (var skBitmap = SKBitmap.Decode(imagePath))
+        {
+            var orientation = GetImageOrientation(imagePath);
+            var rotetedSkBitmap = AutoOrient(skBitmap, orientation);
 
-        // Calculate new dimensions.
-        var (newWidth, newHeight) =
-            CalculateNewDimensions(rotetedSkBitmap.Width, rotetedSkBitmap.Height, maxWidth, maxHeight);
+            // Calculate new dimensions.
+            var (newWidth, newHeight) =
+                CalculateNewDimensions(rotetedSkBitmap.Width, rotetedSkBitmap.Height, maxWidth, maxHeight);
 
-        // TODO: add cache for images.
+            // TODO: add cache for images.
 
-        // Resize the image.
-        using var resizedBitmap = rotetedSkBitmap.Resize(
-            new SKImageInfo(newWidth, newHeight),
-            SKFilterQuality.Medium
-        );
+            // Resize the image.
+            using var resizedBitmap = rotetedSkBitmap.Resize(
+                new SKImageInfo(newWidth, newHeight),
+                SKFilterQuality.Medium
+            );
 
-        if (resizedBitmap == null)
-            throw new Exception("Image resizing failed.");
+            if (resizedBitmap == null)
+                throw new Exception("Image resizing failed.");
 
-        // Convert to Avalonia Bitmap.
-        using var skImage = SKImage.FromBitmap(resizedBitmap);
-        using var data = skImage.Encode(SKEncodedImageFormat.Jpeg, 100);
-        using var stream = new MemoryStream(data.ToArray());
-        // Return the resized Avalonia bitmap.
-        return new Bitmap(stream);
+            // Convert to Avalonia Bitmap.
+            using var skImage = SKImage.FromBitmap(resizedBitmap);
+            using var data = skImage.Encode(SKEncodedImageFormat.Jpeg, 100);
+            using var stream = new MemoryStream(data.ToArray());
+            // Return the resized Avalonia bitmap.
+            return new Bitmap(stream);
+        }
     }
 
     /// <summary>
@@ -127,7 +147,7 @@ public class SkiaSharpImageLoader : IValueConverter
     }
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+    {
+        throw new NotImplementedException();
     }
+}

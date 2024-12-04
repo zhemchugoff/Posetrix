@@ -166,14 +166,6 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
         }
 
         // Checks deletion status.
-        if (SessionCollectionCount > 0)
-        {
-            CanDeleteImage = true;
-        }
-
-        else
-        {
-            CanDeleteImage = false;
-        }
+        CanDeleteImage = SessionCollectionCount > 0;
     }
 }

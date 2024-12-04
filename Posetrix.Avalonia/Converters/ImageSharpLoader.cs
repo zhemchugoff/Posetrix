@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using Avalonia.Data.Converters;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Metadata.Profiles.Exif;
@@ -20,6 +22,48 @@ public class ImageSharpLoader : IValueConverter
         }
 
         return null;
+    }
+
+    private static Bitmap DownscaleImage(string imagePath, int maxWidth, int maxHeight)
+    {
+
+        using var image = Image.Load(imagePath);
+
+        FixOrientation(image);
+
+        // Calculate new dimensions to maintain aspect ratio.
+        var (newWidth, newHeight) = CalculateNewDimensions(image.Width, image.Height, maxWidth, maxHeight);
+
+        // Resize the image.
+        image.Mutate(x => x.Resize(newWidth, newHeight));
+
+        // Convert ImageSharp image to Avalonia Bitmap.
+        using var stream = new MemoryStream();
+
+        // Set JPEG encoder options to adjust quality.
+        var jpegEncoder = new JpegEncoder
+        {
+            Quality = 100 // Set desired quality (1-100).
+        };
+
+        // Save the image to a memory stream with the adjusted quality.
+        image.Save(stream, jpegEncoder);
+        stream.Seek(0, SeekOrigin.Begin); // Reset the stream position.
+        return new Bitmap(stream); // Return an Avalonia Bitmap.
+    }
+
+    private static (int Width, int Height) CalculateNewDimensions(int originalWidth, int originalHeight,
+        int maxWidth,
+        int maxHeight)
+    {
+        double widthScale = (double)maxWidth / originalWidth;
+        double heightScale = (double)maxHeight / originalHeight;
+        double scale = Math.Min(widthScale, heightScale);
+
+        int newWidth = (int)(originalWidth * scale);
+        int newHeight = (int)(originalHeight * scale);
+
+        return (newWidth, newHeight);
     }
 
     /// <summary>
@@ -63,48 +107,6 @@ public class ImageSharpLoader : IValueConverter
                 image.Metadata.ExifProfile.RemoveValue(ExifTag.Orientation);
             }
         }
-    }
-
-
-    private static Bitmap DownscaleImage(string imagePath, int maxWidth, int maxHeight)
-    {
-        using var image = Image.Load(imagePath);
-
-        FixOrientation(image);
-
-        // Calculate new dimensions to maintain aspect ratio.
-        var (newWidth, newHeight) = CalculateNewDimensions(image.Width, image.Height, maxWidth, maxHeight);
-
-        // Resize the image.
-        image.Mutate(x => x.Resize(newWidth, newHeight));
-
-        // Convert ImageSharp image to Avalonia Bitmap.
-        using var stream = new MemoryStream();
-
-        // Set JPEG encoder options to adjust quality.
-        var jpegEncoder = new JpegEncoder
-        {
-            Quality = 100 // Set desired quality (1-100).
-        };
-
-        // Save the image to a memory stream with the adjusted quality.
-        image.Save(stream, jpegEncoder);
-        stream.Seek(0, SeekOrigin.Begin); // Reset the stream position.
-        return new Bitmap(stream); // Return an Avalonia Bitmap.
-    }
-
-    private static (int Width, int Height) CalculateNewDimensions(int originalWidth, int originalHeight,
-        int maxWidth,
-        int maxHeight)
-    {
-        double widthScale = (double)maxWidth / originalWidth;
-        double heightScale = (double)maxHeight / originalHeight;
-        double scale = Math.Min(widthScale, heightScale);
-
-        int newWidth = (int)(originalWidth * scale);
-        int newHeight = (int)(originalHeight * scale);
-
-        return (newWidth, newHeight);
     }
 
 
