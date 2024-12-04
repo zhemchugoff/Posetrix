@@ -10,7 +10,7 @@
                 <Button Classes="big button-icon" Content="&#xEB9A;" />
                 <Button Classes="small button-icon" Content="&#xEB9A;">
                 </Button>
-                <Button Classes="icon-only transparent" Content="&#xE272;" FontSize="40"/>
+                <Button Classes="icon-only transparent" Content="&#xE272;" FontSize="40" />
                 <Button Classes="accent-button">
                     Text
                 </Button>
@@ -21,16 +21,16 @@
 
     <!-- Fonts. -->
     <Style Selector="TextBlock">
-        <Setter Property="FontFamily" Value="{StaticResource CustomTextFont}"></Setter>
+        <Setter Property="FontFamily" Value="{StaticResource InterFont}"></Setter>
     </Style>
     <Style Selector="Button">
-        <Setter Property="FontFamily" Value="{StaticResource CustomTextFont}"></Setter>
+        <Setter Property="FontFamily" Value="{StaticResource InterFont}"></Setter>
     </Style>
     <Style Selector="ToggleButton">
-        <Setter Property="FontFamily" Value="{StaticResource CustomTextFont}"></Setter>
+        <Setter Property="FontFamily" Value="{StaticResource InterFont}"></Setter>
     </Style>
     <Style Selector="TitleBar">
-        <Setter Property="FontFamily" Value="{DynamicResource CustomTextFont}"></Setter>
+        <Setter Property="FontFamily" Value="{DynamicResource InterFont}"></Setter>
     </Style>
 
     <!-- Buttons. -->

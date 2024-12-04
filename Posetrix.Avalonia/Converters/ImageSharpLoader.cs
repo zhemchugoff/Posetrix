@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using Avalonia.Data.Converters;
 using Avalonia.Media.Imaging;
-using Avalonia.Platform;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Metadata.Profiles.Exif;

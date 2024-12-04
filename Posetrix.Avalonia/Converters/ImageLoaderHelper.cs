@@ -34,7 +34,7 @@ public class ImageHelper : IValueConverter
             }
         }
 
-        return null; // Return null if file path is invalid or file does not exist
+        return null; // Return null if file path is invalid or file does not exist.
     }
 
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

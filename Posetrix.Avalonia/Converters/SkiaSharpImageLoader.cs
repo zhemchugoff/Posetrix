@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using Avalonia;
@@ -16,9 +15,9 @@ public class SkiaSharpImageLoader : IValueConverter
     {
         if (value is string imagePath && !string.IsNullOrEmpty(imagePath))
         {
-            // Return a placeholder while the image is being processed
             return LoadImage(imagePath, 1920, 1080);
         }
+
         return null;
     }
 
@@ -30,19 +29,15 @@ public class SkiaSharpImageLoader : IValueConverter
         // Load Avalonia asset.
         if (imagePath.StartsWith("avares://"))
         {
-            try
-            {
-                using var stream = AssetLoader.Open(new Uri(imagePath));
-                var bitmap = new Bitmap(stream);
-                bitmap.CreateScaledBitmap(new PixelSize(maxWidth, maxHeight),
-                    BitmapInterpolationMode.HighQuality);
-                return bitmap;
-            }
+            Uri uri = new(imagePath);
 
-            catch (Exception e)
-            {
-                return null;
-            }
+            if (!AssetLoader.Exists(uri)) return null;
+
+            using var stream = AssetLoader.Open(uri);
+            var bitmap = new Bitmap(stream);
+            bitmap.CreateScaledBitmap(new PixelSize(maxWidth, maxHeight),
+                BitmapInterpolationMode.HighQuality);
+            return bitmap;
         }
 
         // Load the original image.
