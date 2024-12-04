@@ -5,7 +5,7 @@
         xmlns:vm="using:Posetrix.Core.ViewModels"
         xmlns:converters="clr-namespace:Posetrix.Avalonia.Converters"
         mc:Ignorable="d"
-        x:Class="Posetrix.Avalonia.Views.SessionWindow"
+        x:Class="Posetrix.Avalonia.Views.SessionView"
         Title="{Binding WindowTitle}"
         Icon="/Assets/avalonia-logo.ico"
         Width="600"
@@ -48,7 +48,8 @@
             <Button Classes="big button-icon" Content="&#xE138;" Command="{Binding SelectPreviousImageCommand}"
                     IsEnabled="{Binding CanSelectPreviousImage}" />
             <Button Classes="big button-icon" Content="&#xE39E;" />
-            <Button Classes="big button-icon" Content="&#xE46C;" Command="{Binding StopSessionCommand}" />
+            <Button Classes="big button-icon" Content="&#xE46C;" Command="{Binding StopSessionCommand}"
+                    IsEnabled="{Binding IsStopEnabled}" />
             <Button Classes="big button-icon" Content="&#xE13A;" Command="{Binding SelectNextImageCommand}"
                     IsEnabled="{Binding CanSelectNextImage}" />
 

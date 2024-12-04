@@ -5,12 +5,14 @@ using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
-using Posetrix.Avalonia.Controls;
 using Posetrix.Avalonia.Services;
 using Posetrix.Avalonia.Views;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Services;
 using Posetrix.Core.ViewModels;
+using CustomIntervalView = Posetrix.Avalonia.Views.CustomIntervalView;
+using PredefinedIntervalsView = Posetrix.Avalonia.Views.PredefinedIntervalsView;
+
 
 namespace Posetrix.Avalonia;
 
@@ -42,14 +44,14 @@ public partial class App : Application
             collection.AddCommonServices();
 
             // Add windows.
-            collection.AddSingleton<MainWindow>();
-            collection.AddTransient<FolderAddWindow>();
-            collection.AddTransient<SettingsWindow>();
-            collection.AddTransient<SessionWindow>();
+            collection.AddSingleton<MainView>();
+            collection.AddTransient<FolderAddView>();
+            collection.AddTransient<SettingsView>();
+            collection.AddTransient<SessionView>();
 
             // Add custom controls.
-            collection.AddTransient<CustomIntervalControl>();
-            collection.AddTransient<PredefinedIntervalsControl>();
+            collection.AddTransient<CustomIntervalView>();
+            collection.AddTransient<PredefinedIntervalsView>();
 
             // Add services.
 
@@ -57,12 +59,12 @@ public partial class App : Application
             collection.AddTransient<IContentService, PlaceHolderImageService>();
 
             collection.AddTransient<IFolderBrowserServiceAsync>(sp =>
-                new FolderBrowserService(sp.GetRequiredService<FolderAddWindow>));
+                new FolderBrowserService(sp.GetRequiredService<FolderAddView>));
 
             // Creates a ServiceProvider containing services from the provided IServiceCollection.
             ServiceProvider = collection.BuildServiceProvider();
 
-            desktop.MainWindow = ServiceProvider.GetRequiredService<MainWindow>();
+            desktop.MainWindow = ServiceProvider.GetRequiredService<MainView>();
             ;
             desktop.MainWindow.DataContext = ServiceProvider.GetRequiredService<MainViewModel>();
         }

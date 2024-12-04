@@ -3,9 +3,8 @@
         xmlns:vm="using:Posetrix.Core.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:cc="using:Posetrix.Avalonia.Controls"
         mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="600"
-        x:Class="Posetrix.Avalonia.Views.MainWindow"
+        x:Class="Posetrix.Avalonia.Views.MainView"
         x:DataType="vm:MainViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="{Binding WindowTitle}"
@@ -13,17 +12,8 @@
         Height="600"
         MinWidth="400"
         MinHeight="600">
-    <Window.DataTemplates>
-        <!--  Template for dynamic custom views display  -->
-        <DataTemplate DataType="{x:Type vm:CustomIntervalViewModel}">
-            <cc:CustomIntervalControl />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:PredefinedIntervalsViewModel}">
-            <cc:PredefinedIntervalsControl />
-        </DataTemplate>
-    </Window.DataTemplates>
     <Grid Margin="20" ShowGridLines="True">
-        <Grid RowDefinitions="Auto, *, *, *, Auto" ShowGridLines="True">
+        <Grid RowDefinitions="Auto, *, Auto, *, Auto" ShowGridLines="True">
             <Grid RowDefinitions="*,*,*">
                 <Grid ColumnDefinitions="Auto,*">
                     <!-- Open settings button -->
@@ -57,7 +47,6 @@
                           ItemsSource="{Binding ViewModelsCollection}"
                           SelectedItem="{Binding SelectedViewModel}"
                           SelectedIndex="0"
-                          MaxDropDownHeight="100"
                           HorizontalAlignment="Stretch">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
@@ -70,7 +59,7 @@
             </Grid>
             <UniformGrid Grid.Row="2">
                 <TextBlock Text="I want to draw" VerticalAlignment="Center"></TextBlock>
-                <TextBox Text="0" VerticalAlignment="Center"></TextBox>
+                <TextBox Text="{Binding CustomImageCount}" VerticalAlignment="Center"></TextBox>
             </UniformGrid>
             <!-- Shuffle images. -->
             <UniformGrid Grid.Row="3">

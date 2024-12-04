@@ -13,14 +13,20 @@ public class ViewLocator : IDataTemplate
             return null;
 
         var name = param.GetType().FullName!.Replace("ViewModel", "View", StringComparison.Ordinal);
-        var type = Type.GetType(name);
+
+        // Replace "ViewModel" with "View" and adjust the namespace.
+        var viewName = name
+            .Replace("Posetrix.Core", "Posetrix.Avalonia") // Adjust namespaces
+            .Replace("ViewModel", "View");
+
+        var type = Type.GetType(viewName);
 
         if (type != null)
         {
             return (Control)Activator.CreateInstance(type)!;
         }
 
-        return new TextBlock { Text = "Not Found: " + name };
+        return new TextBlock { Text = "Not Found: " + viewName };
     }
 
     public bool Match(object? data)

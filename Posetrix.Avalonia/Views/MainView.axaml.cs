@@ -6,30 +6,30 @@ using Posetrix.Core.ViewModels;
 
 namespace Posetrix.Avalonia.Views;
 
-public partial class MainWindow : Window
+public partial class MainView : Window
 {
-    public MainWindow()
+    public MainView()
     {
         InitializeComponent();
     }
 
     private void OpenSettingsButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        var settingsWindow = App.ServiceProvider.GetRequiredService<SettingsWindow>();
+        var settingsWindow = App.ServiceProvider.GetRequiredService<SettingsView>();
         settingsWindow.DataContext = App.ServiceProvider.GetRequiredService<SettingsViewModel>();
         settingsWindow.ShowDialog(this);
     }
 
     private void AddFolderButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        var foldersAddWindow = App.ServiceProvider.GetRequiredService<FolderAddWindow>();
+        var foldersAddWindow = App.ServiceProvider.GetRequiredService<FolderAddView>();
         foldersAddWindow.DataContext = App.ServiceProvider.GetRequiredService<MainViewModel>();
         foldersAddWindow.ShowDialog(this);
     }
 
     private void StartNewSession_OnClick(object? sender, RoutedEventArgs e)
     {
-        var sessionWindow = App.ServiceProvider.GetRequiredService<SessionWindow>();
+        var sessionWindow = App.ServiceProvider.GetRequiredService<SessionView>();
         sessionWindow.DataContext = App.ServiceProvider.GetRequiredService<SessionViewModel>();
         sessionWindow.ShowDialog(this);
     }

@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace Posetrix.Core.ViewModels;
 
@@ -13,19 +12,15 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
 
     private readonly MainViewModel _mainViewModel;
 
-    private readonly SessionCollection _sessionCollection;
-    private ObservableCollection<string> _sessionImages;
+    private readonly ObservableCollection<string> _sessionImages;
 
     private int _currentImageIndex;
 
     private readonly List<string> _completedImages;
 
     [ObservableProperty] private bool _canSelectNextImage;
-
     [ObservableProperty] private bool _canSelectPreviousImage;
-
     [ObservableProperty] private bool _canDeleteImage;
-
     [ObservableProperty] private string? _currentImage;
 
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(SessionInfo))]
@@ -35,19 +30,23 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
     private int _sessionCollectionCount;
 
     public string SessionInfo => $"Completed: {CompletedImagesCounter} Total: {SessionCollectionCount}";
+    
+    [ObservableProperty]
+    private bool _isStopEnabled;
 
     public SessionViewModel(MainViewModel mainViewModel)
     {
         _mainViewModel = mainViewModel;
-        _sessionCollection = new SessionCollection(_mainViewModel.ReferenceFolders,
-            _mainViewModel.IsShuffleEnabled, _mainViewModel.CustomImageCount);
 
-        _sessionImages = _sessionCollection.GetImageCollection();
+        _sessionImages = SessionCollectionStatic.GetImageCollection(_mainViewModel.ReferenceFolders,
+            _mainViewModel.IsShuffleEnabled, _mainViewModel.CustomImageCount);
         _sessionCollectionCount = _sessionImages.Count;
 
         _completedImages = [];
 
         _currentImageIndex = 0;
+        
+        IsStopEnabled = true;
 
         CurrentImage = _sessionImages[_currentImageIndex];
 
@@ -135,6 +134,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
         CanDeleteImage = false;
         CanSelectNextImage = false;
         CanSelectPreviousImage = false;
+        IsStopEnabled = false;
     }
 
     /// <summary>

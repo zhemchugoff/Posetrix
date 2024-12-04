@@ -2,9 +2,9 @@
 
 namespace Posetrix.Avalonia.Views;
 
-public partial class SessionWindow : Window
+public partial class PredefinedIntervalsView : UserControl
 {
-    public SessionWindow()
+    public PredefinedIntervalsView()
     {
         InitializeComponent();
     }

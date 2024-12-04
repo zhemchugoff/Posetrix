@@ -39,10 +39,10 @@ public class SkiaSharpImageLoader : IValueConverter
                 BitmapInterpolationMode.HighQuality);
             return bitmap;
         }
-
-        // Load the original image.
-        using (var skBitmap = SKBitmap.Decode(imagePath))
+        else
         {
+            // Load the original image.
+            using var skBitmap = SKBitmap.Decode(imagePath);
             var orientation = GetImageOrientation(imagePath);
             var rotetedSkBitmap = AutoOrient(skBitmap, orientation);
 
@@ -93,13 +93,11 @@ public class SkiaSharpImageLoader : IValueConverter
     /// <summary>
     /// Method <c>GetImageOrientation</c> returns an orientation of an encoded image from EXIF data.
     /// </summary>
-    public static SKEncodedOrigin GetImageOrientation(string imagePath)
+    private static SKEncodedOrigin GetImageOrientation(string imagePath)
     {
-        using (var stream = File.OpenRead(imagePath))
-        {
-            var codec = SKCodec.Create(stream);
-            return codec.EncodedOrigin;
-        }
+        using var stream = File.OpenRead(imagePath);
+        var codec = SKCodec.Create(stream);
+        return codec.EncodedOrigin;
     }
 
     /// <summary>

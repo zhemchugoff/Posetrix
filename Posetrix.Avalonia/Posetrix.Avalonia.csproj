@@ -29,9 +29,21 @@
 
     <ItemGroup>
       <Compile Remove="ViewModels\MainWindowViewModel.cs" />
+      <Compile Update="Views\CustomIntervalView.axaml.cs">
+        <DependentUpon>CustomIntervalView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\PredefinedIntervalsView.axaml.cs">
+        <DependentUpon>PredefinedIntervalsView.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Posetrix.Core\Posetrix.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Controls\" />
     </ItemGroup>
 </Project>

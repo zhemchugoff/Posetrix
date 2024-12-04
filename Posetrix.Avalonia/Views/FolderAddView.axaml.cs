@@ -5,9 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Posetrix.Avalonia.Views;
 
-public partial class FolderAddWindow : Window
+public partial class FolderAddView : Window
 {
-    public FolderAddWindow()
+    public FolderAddView()
     {
         InitializeComponent();
     }

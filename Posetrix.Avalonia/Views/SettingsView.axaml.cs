@@ -5,9 +5,9 @@ using Posetrix.Core.Models;
 
 namespace Posetrix.Avalonia.Views;
 
-public partial class SettingsWindow : Window
+public partial class SettingsView : Window
 {
-    public SettingsWindow()
+    public SettingsView()
     {
         InitializeComponent();
     }
