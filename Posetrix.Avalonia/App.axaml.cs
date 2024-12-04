@@ -52,8 +52,12 @@ public partial class App : Application
             collection.AddTransient<PredefinedIntervalsControl>();
 
             // Add services.
-            // collection.AddTransient<IFolderBrowserServiceAsync, FolderBrowserService>();
-            collection.AddTransient<IFolderBrowserServiceAsync>(sp => new FolderBrowserService(sp.GetRequiredService<FolderAddWindow>));
+
+            collection.AddTransient<IExtensionsService, SupportedExtensionsService>();
+            collection.AddTransient<IContentService, PlaceHolderImageService>();
+
+            collection.AddTransient<IFolderBrowserServiceAsync>(sp =>
+                new FolderBrowserService(sp.GetRequiredService<FolderAddWindow>));
 
             // Creates a ServiceProvider containing services from the provided IServiceCollection.
             ServiceProvider = collection.BuildServiceProvider();

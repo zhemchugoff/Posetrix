@@ -13,21 +13,20 @@ namespace Posetrix
     /// </summary>
     public partial class App : Application
     {
-
         public IServiceProvider? ServiceProvider { get; private set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            // Configure services
+            // Configure services.
             var serviceCollection = new ServiceCollection();
-            
+
             // Add viewmodels.
             serviceCollection.AddCommonServices();
-            
+
             ConfigureServices(serviceCollection);
-            
+
             ServiceProvider = serviceCollection.BuildServiceProvider();
 
             var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
@@ -43,10 +42,11 @@ namespace Posetrix
             serviceCollection.AddTransient<CustomInterval>();
             serviceCollection.AddTransient<PredefinedIntervals>();
             serviceCollection.AddTransient<SessionWindow>();
-            
-            // Add open folder dialog.
+
+            // Add services.
             serviceCollection.AddTransient<IFolderBrowserServiceAsync, FolderBrowserService>();
+            serviceCollection.AddTransient<IExtensionsService, SupportedExtensionsService>();
+            serviceCollection.AddTransient<IContentService, PlaceHolderImageService>();
         }
     }
-
 }

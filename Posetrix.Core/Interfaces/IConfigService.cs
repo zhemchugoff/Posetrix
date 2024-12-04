@@ -2,7 +2,7 @@
 
 namespace Posetrix.Core.Interfaces;
 
-public interface IConfigService
+public interface IExtensionsService
 {
-    FileExtensionConfig LoadConfig();
+    List<string> LoadExtensions();
 }

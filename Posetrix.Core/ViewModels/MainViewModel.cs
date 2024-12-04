@@ -17,7 +17,7 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
 
     //private readonly IConfigService _configService;
     private readonly IFolderBrowserServiceAsync _folderBrowserService;
-    private readonly FileExtensionConfig _fileExtensionConfig;
+    private readonly IExtensionsService _extensionsService;
 
     /// <summary>
     /// A collection of folders with image files.
@@ -49,12 +49,12 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
     public bool CanStartSession => FolderCount > 0;
     public bool CanDeleteFolder => FolderCount > 0 && SelectedFolder is not null;
 
-    public MainViewModel(IConfigService configService, IContentService contentService,
+    public MainViewModel(IExtensionsService extensionsService, IContentService contentService,
         IFolderBrowserServiceAsync folderBrowserService, PredefinedIntervalsViewModel predefinedIntervalsViewModel,
         CustomIntervalViewModel customIntervalViewModel)
     {
         //_configService = configService;
-        _fileExtensionConfig = configService.LoadConfig();
+        _extensionsService = extensionsService;
         _folderBrowserService = folderBrowserService;
 
         SessionEndImagePath = contentService.GetImagePath();
@@ -103,7 +103,7 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
             DirectoryInfo directoryInfo = new DirectoryInfo(folderPath);
             var folderName = directoryInfo.Name;
 
-            List<string> references = ImageFolder.GetImageFiles(folderPath, _fileExtensionConfig.FileExtensions);
+            List<string> references = ImageFolder.GetImageFiles(folderPath, _extensionsService.LoadExtensions());
 
             if (!string.IsNullOrEmpty(folderName) && references.Count > 0)
             {

@@ -28,17 +28,44 @@
 
   <ItemGroup>
     <Resource Include="Assets\Fonts\SegoeFluentIcons.ttf" />
-    <Resource Include="Assets\Images\Icons\book(1).png" />
-    <Resource Include="Assets\Images\Icons\book.png" />
-    <Resource Include="Assets\Images\undraw_walk_ing_qkyj.png" />
-    <Resource Include="Assets\Images\undraw_workout_gcgu.png" />
-    <Resource Include="Assets\Images\undraw_workout_gcgu.svg" />
     <None Remove="Assets\Fonts\Segoe UI.ttf" />
     <Resource Include="Assets\Fonts\Segoe UI.ttf" />
+    <Resource Include="Assets\Icons\book(1).png" />
+    <Resource Include="Assets\Icons\book.png" />
+    <None Remove="Assets\Images\Happy Earth-bro.png" />
+    <Resource Include="Assets\Images\Happy-Earth-bro.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Assets\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Controls\CustomInterval.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\PredefinedIntervals.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\FoldersAddWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\SessionWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\SettingsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

@@ -12,8 +12,8 @@
     MinWidth="400"
     MinHeight="680"
     d:DataContext="{d:DesignInstance Type=core:MainViewModel}"
-    Icon="pack://application:,,,/Assets/Images/Icons/book(1).png"
-    ResizeMode="CanResize"
+    Icon="pack://application:,,,/Assets/Icons/book(1).png"
+    ResizeMode="NoResize"
     mc:Ignorable="d">
     <Window.Resources>
         <!--  Template for dynamic custom views display  -->
@@ -24,7 +24,7 @@
             <usercontrols:PredefinedIntervals />
         </DataTemplate>
     </Window.Resources>
-    <Grid Margin="20" ShowGridLines="True">
+    <Grid Margin="20">
         <Grid.RowDefinitions>
             <!--  Add references button  -->
             <RowDefinition Height="Auto" />
