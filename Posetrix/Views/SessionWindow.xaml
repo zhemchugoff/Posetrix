@@ -4,15 +4,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:Posetrix.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Posetrix.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:svg="http://sharpvectors.codeplex.com/svgc/"
     xmlns:viewmodels="clr-namespace:Posetrix.Core.ViewModels;assembly=Posetrix.Core"
     Title="{Binding WindowTitle}"
     Width="600"
     Height="450"
-    d:DataContext="{d:DesignInstance Type=viewmodels:SessionViewModel}"
-    mc:Ignorable="d">
+    d:DataContext="{d:DesignInstance viewmodels:SessionViewModel}"
+    mc:Ignorable="d"
+    SizeChanged="SessionWindow_OnSizeChanged">
     <Window.Resources>
         <Style
             x:Key="ControlButton"
@@ -40,6 +39,7 @@
 
         </Style>
         <converters:BitmapImageLoader x:Key="ImageLoader" />
+        <converters:BooleanToXScaleConverter x:Key="MirrorX" />
     </Window.Resources>
     <Grid Margin="20" ShowGridLines="False">
         <Grid.RowDefinitions>
@@ -56,7 +56,14 @@
             Name="SessionImage"
             Grid.Row="1"
             Source="{Binding CurrentImage, Converter={StaticResource ImageLoader}}"
-            Stretch="Uniform" />
+            Stretch="Uniform">
+            <Image.RenderTransform>
+                <ScaleTransform x:Name="MirrorTransform"
+                                ScaleX="{Binding IsMirroredX, Converter={StaticResource MirrorX}}"
+                                ScaleY="{Binding IsMirroredY, Converter={StaticResource MirrorX}}">
+                </ScaleTransform>
+            </Image.RenderTransform>
+        </Image>
         <!--<svg:SvgViewbox Source="Images/undraw_workout_gcgu.svg" Stretch="Uniform" />-->
         <!--<Image Grid.Row="0" Source="pack://application:,,,/Images/undraw_workout_gcgu.png" />-->
         <StackPanel
@@ -85,13 +92,23 @@
                     </ToolTip>
                 </Button.ToolTip>
             </Button>
-            <Button Content="&#xE7C6;" Style="{StaticResource ImageEditButton}">
+            <Button Content="&#xE784;" Style="{StaticResource ImageEditButton}" Command="{Binding MirrorImageXCommand}">
                 <Button.ToolTip>
                     <ToolTip>
                         <TextBlock
                             FontFamily="Segoe UI"
                             FontSize="12"
-                            Text="Mirror" />
+                            Text="Mirror X" />
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
+            <Button Content="&#xe76f;" Style="{StaticResource ImageEditButton}" Command="{Binding MirrorImageYCommand}">
+                <Button.ToolTip>
+                    <ToolTip>
+                        <TextBlock
+                            FontFamily="Segoe UI"
+                            FontSize="12"
+                            Text="Mirror Y" />
                     </ToolTip>
                 </Button.ToolTip>
             </Button>

@@ -22,6 +22,10 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
     [ObservableProperty] private bool _canSelectPreviousImage;
     [ObservableProperty] private bool _canDeleteImage;
     [ObservableProperty] private string? _currentImage;
+    
+    // Image properties.
+    [ObservableProperty] private bool _isMirroredX;
+    [ObservableProperty] private bool _isMirroredY;
 
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(SessionInfo))]
     private int _completedImagesCounter;
@@ -49,6 +53,9 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
         IsStopEnabled = true;
 
         CurrentImage = _sessionImages[_currentImageIndex];
+
+        IsMirroredX = false;
+        IsMirroredY = false;
 
         UpdateImageStatus();
     }
@@ -167,5 +174,17 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
 
         // Checks deletion status.
         CanDeleteImage = SessionCollectionCount > 0;
+    }
+
+    [RelayCommand]
+    private void MirrorImageX()
+    {
+        IsMirroredX = !IsMirroredX;
+    }
+    
+    [RelayCommand]
+    private void MirrorImageY()
+    {
+        IsMirroredY = !IsMirroredY;
     }
 }

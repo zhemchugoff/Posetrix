@@ -46,6 +46,7 @@ public static class SessionCollectionStatic
         }
     }
 
+    // TODO: Async?
     /// <summary>
     /// Get populated collection based on provided conditions in the class constructor.
     /// </summary>
