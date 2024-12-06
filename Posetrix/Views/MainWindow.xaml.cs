@@ -1,42 +1,38 @@
-﻿using Posetrix.Core.ViewModels;
-using System.Windows;
-using Posetrix.Views;
-using Posetrix.Views.UserControls;
+﻿using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
-using Posetrix.Core.Interfaces;
+using Posetrix.Core.ViewModels;
 
-namespace Posetrix
+namespace Posetrix.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
-        private readonly IServiceProvider _serviceProvider;
-
-        public MainWindow(MainViewModel mainViewModel, IServiceProvider serviceProvider)
+        public MainWindow()
         {
             InitializeComponent();
-            DataContext = mainViewModel;
-            _serviceProvider = serviceProvider;
         }
 
-        private void ShowSettingsWindow_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void ShowSettingsWindow_Click(object sender, RoutedEventArgs e)
         {
-            var settingsWindow = _serviceProvider.GetRequiredService<SettingsWindow>();
+            var settingsWindow = App.ServiceProvider.GetRequiredService<SettingsWindow>();
+            settingsWindow.DataContext = App.ServiceProvider.GetRequiredService<SettingsViewModel>();
             settingsWindow.Show();
         }
 
-        private void AddReferencesButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void AddReferencesButton_Click(object sender, RoutedEventArgs e)
         {
-            var foldersAddWindow = _serviceProvider.GetRequiredService<FoldersAddWindow>();
+            var foldersAddWindow = App.ServiceProvider.GetRequiredService<FoldersAddWindow>();
+            foldersAddWindow.DataContext = App.ServiceProvider.GetService<MainViewModel>();
             foldersAddWindow.Show();
         }
+
         private void ShowDrawingSessionWindow_Click(object sender, RoutedEventArgs e)
         {
-            var drawingSessionWindow = _serviceProvider.GetRequiredService<SessionWindow>();
+            var drawingSessionWindow = App.ServiceProvider.GetRequiredService<SessionWindow>();
+            drawingSessionWindow.DataContext = App.ServiceProvider.GetRequiredService<SessionViewModel>();
             drawingSessionWindow.Show();
         }
-
     }
 }

@@ -13,7 +13,7 @@
         MinWidth="400"
         MinHeight="600">
     <Grid Margin="20" ShowGridLines="True">
-        <Grid RowDefinitions="Auto, *, Auto, *, Auto" ShowGridLines="True">
+        <Grid RowDefinitions="Auto, *, Auto, *,*, Auto" ShowGridLines="True">
             <Grid RowDefinitions="*,*,*">
                 <Grid ColumnDefinitions="Auto,*">
                     <!-- Open settings button -->
@@ -64,10 +64,14 @@
             <!-- Shuffle images. -->
             <UniformGrid Grid.Row="3">
                 <TextBlock Text="Shuffle images" VerticalAlignment="Center"></TextBlock>
-                <CheckBox IsChecked="{Binding IsShuffleEnabled}"></CheckBox>
+                <CheckBox IsChecked="{Binding IsShuffleEnabled}" HorizontalAlignment="Center"></CheckBox>
+            </UniformGrid>
+            <UniformGrid Grid.Row="4">
+                <TextBlock Text="Endless mode" VerticalAlignment="Center"></TextBlock>
+                <CheckBox IsChecked="True" HorizontalAlignment="Center"></CheckBox>
             </UniformGrid>
             <!-- Starting session button. -->
-            <Button Classes="accent-button" Grid.Row="4" Name="StartNewSession"
+            <Button Classes="accent-button" Grid.Row="5" Name="StartNewSession"
                     Click="StartNewSession_OnClick"
                     IsEnabled="{Binding CanStartSession}"
                     HorizontalAlignment="Stretch"

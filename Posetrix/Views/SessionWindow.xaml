@@ -23,7 +23,6 @@
             <Setter Property="FontFamily" Value="{StaticResource SegoeUiIcons}" />
             <Setter Property="FontSize" Value="24" />
             <Setter Property="Margin" Value="4,0" />
-
         </Style>
         <Style
             x:Key="ImageEditButton"
@@ -36,7 +35,6 @@
             <Setter Property="FontSize" Value="16" />
             <Setter Property="Margin" Value="4,0" />
             <Setter Property="Padding" Value="0" />
-
         </Style>
         <converters:BitmapImageLoader x:Key="ImageLoader" />
         <converters:BooleanToXScaleConverter x:Key="MirrorX" />
@@ -46,17 +44,84 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="10*" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <UniformGrid Grid.Row="0" Columns="2">
-            <TextBlock Text="{Binding SessionInfo}" />
-            <TextBlock HorizontalAlignment="Right" Text="HH:MM:SS" />
+        <UniformGrid Grid.Row="0" Columns="3">
+            <TextBlock Text="{Binding SessionInfo}" VerticalAlignment="Center"/>
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <Button Content="&#xe718;" Style="{StaticResource ImageEditButton}">
+                    <Button.ToolTip>
+                        <ToolTip>
+                            <TextBlock
+                                FontFamily="{StaticResource SegoeUi}"
+                                FontSize="12"
+                                Text="Always on top" />
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+                <Button Content="&#xE80A;" Style="{StaticResource ImageEditButton}">
+                    <Button.ToolTip>
+                        <ToolTip>
+                            <TextBlock
+                                FontFamily="Segoe UI"
+                                FontSize="12"
+                                Text="Grid" />
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+                <Button Content="&#xE784;" Style="{StaticResource ImageEditButton}"
+                        Command="{Binding MirrorImageXCommand}">
+                    <Button.ToolTip>
+                        <ToolTip>
+                            <TextBlock
+                                FontFamily="Segoe UI"
+                                FontSize="12"
+                                Text="Mirror X" />
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+                <Button Content="&#xe76f;" Style="{StaticResource ImageEditButton}"
+                        Command="{Binding MirrorImageYCommand}">
+                    <Button.ToolTip>
+                        <ToolTip>
+                            <TextBlock
+                                FontFamily="Segoe UI"
+                                FontSize="12"
+                                Text="Mirror Y" />
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+                <Button Content="&#xe916;" Style="{StaticResource ImageEditButton}">
+                    <Button.ToolTip>
+                        <ToolTip>
+                            <TextBlock
+                                FontFamily="Segoe UI"
+                                FontSize="12"
+                                Text="Timer visibility" />
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+                <Button Content="&#xe746;" Style="{StaticResource ImageEditButton}">
+                    <Button.ToolTip>
+                        <ToolTip>
+                            <TextBlock
+                                FontFamily="Segoe UI"
+                                FontSize="12"
+                                Text="Black and white" />
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+            </StackPanel>
+            <TextBlock HorizontalAlignment="Right" Text="HH:MM:SS" VerticalAlignment="Center"/>
         </UniformGrid>
         <Image
             Name="SessionImage"
             Grid.Row="1"
             Source="{Binding CurrentImage, Converter={StaticResource ImageLoader}}"
-            Stretch="Uniform">
+            Stretch="Uniform"
+            Margin="0 20">
             <Image.RenderTransform>
                 <ScaleTransform x:Name="MirrorTransform"
                                 ScaleX="{Binding IsMirroredX, Converter={StaticResource MirrorX}}"
@@ -68,74 +133,6 @@
         <!--<Image Grid.Row="0" Source="pack://application:,,,/Images/undraw_workout_gcgu.png" />-->
         <StackPanel
             Grid.Row="2"
-            Margin="0,10"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Orientation="Horizontal">
-            <Button Content="&#xe718;" Style="{StaticResource ImageEditButton}">
-                <Button.ToolTip>
-                    <ToolTip>
-                        <TextBlock
-                            FontFamily="{StaticResource SegoeUi}"
-                            FontSize="12"
-                            Text="Always on top" />
-                    </ToolTip>
-                </Button.ToolTip>
-            </Button>
-            <Button Content="&#xE80A;" Style="{StaticResource ImageEditButton}">
-                <Button.ToolTip>
-                    <ToolTip>
-                        <TextBlock
-                            FontFamily="Segoe UI"
-                            FontSize="12"
-                            Text="Grid" />
-                    </ToolTip>
-                </Button.ToolTip>
-            </Button>
-            <Button Content="&#xE784;" Style="{StaticResource ImageEditButton}" Command="{Binding MirrorImageXCommand}">
-                <Button.ToolTip>
-                    <ToolTip>
-                        <TextBlock
-                            FontFamily="Segoe UI"
-                            FontSize="12"
-                            Text="Mirror X" />
-                    </ToolTip>
-                </Button.ToolTip>
-            </Button>
-            <Button Content="&#xe76f;" Style="{StaticResource ImageEditButton}" Command="{Binding MirrorImageYCommand}">
-                <Button.ToolTip>
-                    <ToolTip>
-                        <TextBlock
-                            FontFamily="Segoe UI"
-                            FontSize="12"
-                            Text="Mirror Y" />
-                    </ToolTip>
-                </Button.ToolTip>
-            </Button>
-            <Button Content="&#xe916;" Style="{StaticResource ImageEditButton}">
-                <Button.ToolTip>
-                    <ToolTip>
-                        <TextBlock
-                            FontFamily="Segoe UI"
-                            FontSize="12"
-                            Text="Timer visibility" />
-                    </ToolTip>
-                </Button.ToolTip>
-            </Button>
-            <Button Content="&#xe746;" Style="{StaticResource ImageEditButton}">
-                <Button.ToolTip>
-                    <ToolTip>
-                        <TextBlock
-                            FontFamily="Segoe UI"
-                            FontSize="12"
-                            Text="Black and white" />
-                    </ToolTip>
-                </Button.ToolTip>
-            </Button>
-
-        </StackPanel>
-        <StackPanel
-            Grid.Row="3"
             HorizontalAlignment="Center"
             Orientation="Horizontal">
             <Button
@@ -165,7 +162,8 @@
             <Button
                 Command="{Binding StopSessionCommand}"
                 Content="&#xE71A;"
-                Style="{StaticResource ControlButton}">
+                Style="{StaticResource ControlButton}"
+                IsEnabled="{Binding IsStopEnabled}">
                 <Button.ToolTip>
                     <ToolTip>
                         <TextBlock
@@ -203,7 +201,6 @@
                     </ToolTip>
                 </Button.ToolTip>
             </Button>
-
         </StackPanel>
     </Grid>
 </Window>

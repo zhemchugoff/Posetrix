@@ -7,6 +7,8 @@ using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using Posetrix.Avalonia.Services;
 using Posetrix.Avalonia.Views;
+using Posetrix.Core.Data;
+using Posetrix.Core.Factories;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Services;
 using Posetrix.Core.ViewModels;
@@ -60,6 +62,16 @@ public partial class App : Application
 
             collection.AddTransient<IFolderBrowserServiceAsync>(sp =>
                 new FolderBrowserService(sp.GetRequiredService<FolderAddView>));
+            
+            
+            collection.AddSingleton<Func<ApplicationModelNames, DynamicViewModel>>(s => name => name switch
+            {
+                ApplicationModelNames.CustomInterval => s.GetRequiredService<CustomIntervalViewModel>(),
+                ApplicationModelNames.PredefinedIntervals => s.GetRequiredService<PredefinedIntervalsViewModel>(),
+                _ => throw new InvalidOperationException()
+            } );
+            
+            collection.AddSingleton<ModelFactory>();
 
             // Creates a ServiceProvider containing services from the provided IServiceCollection.
             ServiceProvider = collection.BuildServiceProvider();

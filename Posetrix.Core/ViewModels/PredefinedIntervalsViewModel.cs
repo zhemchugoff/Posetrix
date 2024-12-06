@@ -1,9 +1,14 @@
-﻿using Posetrix.Core.Interfaces;
+﻿using Posetrix.Core.Data;
+using Posetrix.Core.Interfaces;
 
 namespace Posetrix.Core.ViewModels
 {
-    public partial class PredefinedIntervalsViewModel : BaseViewModel, IMyUserControl
+    public partial class PredefinedIntervalsViewModel : DynamicViewModel
     {
-        public string Name => "Predefined Intervals";
+
+        public PredefinedIntervalsViewModel()
+        {
+            ModelName = ApplicationModelNames.PredefinedIntervals;
+        }
     }
 }

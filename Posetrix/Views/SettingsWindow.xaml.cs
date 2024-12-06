@@ -1,8 +1,5 @@
 ﻿using System.Windows;
 using System.Diagnostics;
-using Posetrix.Core.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
-using Posetrix.Core.ViewModels;
 using System.Windows.Controls;
 using Posetrix.Core.Models;
 
@@ -11,12 +8,11 @@ namespace Posetrix.Views;
 /// <summary>
 /// Interaction logic for SettingsWindow.xaml
 /// </summary>
-public partial class SettingsWindow : Window
+public partial class SettingsWindow
 {
-    public SettingsWindow(SettingsViewModel settingsViewModel)
+    public SettingsWindow()
     {
         InitializeComponent();
-        DataContext = settingsViewModel;
     }
 
     private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
@@ -31,7 +27,7 @@ public partial class SettingsWindow : Window
         e.Handled = true;
     }
 
-    private void ComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (ChangeTheme.SelectedItem is Theme theme)
         {

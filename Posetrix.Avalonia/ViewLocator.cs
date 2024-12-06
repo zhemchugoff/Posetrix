@@ -31,6 +31,6 @@ public class ViewLocator : IDataTemplate
 
     public bool Match(object? data)
     {
-        return data is BaseViewModel;
+        return data is DynamicViewModel;
     }
 }

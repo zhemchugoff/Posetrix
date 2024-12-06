@@ -1,10 +1,12 @@
 ﻿using System.Collections.ObjectModel;
+using Posetrix.Core.Data;
+using Posetrix.Core.Factories;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class SettingsViewModel : BaseViewModel, ICustomWindow
+public class SettingsViewModel : BaseViewModel, ICustomWindow
 {
     public string WindowTitle => "Settings";
     public Theme SelectedTheme { get; set; }

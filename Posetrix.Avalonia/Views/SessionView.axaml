@@ -23,7 +23,13 @@
             <TextBlock HorizontalAlignment="Right" Text="HH:MM:SS" />
         </UniformGrid>
         <!-- <Svg Grid.Row="1" Path="avares://Posetrix.Avalonia/Assets/Images/Enthusiastic-pana.svg" /> -->
-        <Image Grid.Row="1" Source="{Binding CurrentImage, Converter={StaticResource ImageLoader}}" />
+        <Image Name="ImageControl" Grid.Row="1" Source="{Binding CurrentImage, Converter={StaticResource ImageLoader}}">
+            <Image.RenderTransform>
+                <ScaleTransform ScaleX="1" ScaleY="1">
+
+                </ScaleTransform>
+            </Image.RenderTransform>
+        </Image>
 
         <!-- Image editing buttons -->
         <StackPanel
@@ -36,7 +42,7 @@
             <Button Classes="small button-icon" Content="&#xEC8C;" />
             <Button Classes="small button-icon" Content="&#xED6A;" />
             <Button Classes="small button-icon" Content="&#xE492;" />
-            <Button Classes="small button-icon" Content="&#xE92A;" />
+            <Button Classes="small button-icon" Content="&#xE92A;" Click="Button_OnClick" />
         </StackPanel>
 
         <!-- Control buttons. -->

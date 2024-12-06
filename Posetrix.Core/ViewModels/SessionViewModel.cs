@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 using System.Collections.ObjectModel;
+using Posetrix.Core.Data;
 
 namespace Posetrix.Core.ViewModels;
 
@@ -38,6 +39,10 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
     [ObservableProperty]
     private bool _isStopEnabled;
 
+    public SessionViewModel()
+    {
+        
+    }
     public SessionViewModel(MainViewModel mainViewModel)
     {
         _mainViewModel = mainViewModel;
@@ -53,9 +58,6 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
         IsStopEnabled = true;
 
         CurrentImage = _sessionImages[_currentImageIndex];
-
-        IsMirroredX = false;
-        IsMirroredY = false;
 
         UpdateImageStatus();
     }
@@ -149,6 +151,9 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
     /// </summary>
     private void UpdateImageStatus()
     {
+        IsMirroredX = false;
+        IsMirroredY = false;
+        
         CompletedImagesCounter = _completedImages.Count;
         SessionCollectionCount = _sessionImages.Count;
 

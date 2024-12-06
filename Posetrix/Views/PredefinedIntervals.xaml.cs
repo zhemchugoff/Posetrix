@@ -1,11 +1,9 @@
-﻿using System.Windows.Controls;
-
-namespace Posetrix.Views.UserControls
+﻿namespace Posetrix.Views
 {
     /// <summary>
     /// Interaction logic for PredefinedTimes.xaml
     /// </summary>
-    public partial class PredefinedIntervals : UserControl
+    public partial class PredefinedIntervals
     {
         public PredefinedIntervals()
         {

@@ -1,11 +1,11 @@
 ﻿<Window
-    x:Class="Posetrix.MainWindow"
+    x:Class="Posetrix.Views.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:core="clr-namespace:Posetrix.Core.ViewModels;assembly=Posetrix.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:usercontrols="clr-namespace:Posetrix.Views.UserControls"
+    xmlns:views="clr-namespace:Posetrix.Views"
     Title="{Binding WindowTitle}"
     Width="400"
     Height="680"
@@ -18,23 +18,25 @@
     <Window.Resources>
         <!--  Template for dynamic custom views display  -->
         <DataTemplate DataType="{x:Type core:CustomIntervalViewModel}">
-            <usercontrols:CustomInterval />
+            <views:CustomInterval />
         </DataTemplate>
         <DataTemplate DataType="{x:Type core:PredefinedIntervalsViewModel}">
-            <usercontrols:PredefinedIntervals />
+            <views:PredefinedIntervals />
         </DataTemplate>
     </Window.Resources>
     <Grid Margin="20">
         <Grid.RowDefinitions>
-            <!--  Add references button  -->
+            <!--  Add references button.  -->
             <RowDefinition Height="Auto" />
-            <!--  Practice modes  -->
+            <!--  Practice modes.  -->
             <RowDefinition Height="4*" />
-            <!--  References number  -->
+            <!--  References number.  -->
             <RowDefinition Height="2*" />
-            <!--  Shuffle button  -->
+            <!--  Shuffle button.  -->
             <RowDefinition Height="2*" />
-            <!--  Start a sessiom button  -->
+            <!-- Endless mode. -->
+            <RowDefinition Height="2*" />
+            <!--  Start a sessiom button.  -->
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -102,7 +104,6 @@
             </Grid.RowDefinitions>
             <TextBlock
                 Grid.Row="0"
-                Margin="0,20"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Text="Practice modes" />
@@ -111,7 +112,7 @@
                 DisplayMemberPath="ViewModelName"
                 ItemsSource="{Binding ViewModelsCollection}"
                 SelectedItem="{Binding SelectedViewModel}" />
-            <Grid Grid.Row="2" Margin="0,20">
+            <Grid Grid.Row="2">
                 <ContentControl Content="{Binding SelectedViewModel.ViewModelObject}" />
             </Grid>
         </Grid>
@@ -133,16 +134,25 @@
     <Button Command="{Binding DecrementCommand}" Content="Decrement" />-->
         </UniformGrid>
 
-        <!--  Shuffle section  -->
+        <!--  Shuffle section.  -->
         <UniformGrid Grid.Row="3" Columns="2">
             <TextBlock
                 Margin="0,0,10,0"
                 VerticalAlignment="Center"
                 Text="Shuffle images" />
-            <CheckBox IsChecked="{Binding IsShuffleEnabled}" />
+            <CheckBox IsChecked="{Binding IsShuffleEnabled}" HorizontalAlignment="Center" />
         </UniformGrid>
 
-        <Grid Grid.Row="4">
+        <!--  Endless mode section.  -->
+        <UniformGrid Grid.Row="4" Columns="2">
+            <TextBlock
+                Margin="0,0,10,0"
+                VerticalAlignment="Center"
+                Text="Endless mode" />
+            <CheckBox IsChecked="True" HorizontalAlignment="Center" />
+        </UniformGrid>
+
+        <Grid Grid.Row="5">
             <Button
                 Height="46"
                 HorizontalAlignment="Stretch"

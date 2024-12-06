@@ -1,10 +1,12 @@
 ﻿using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
+using Posetrix.Core.Data;
+using Posetrix.Core.Factories;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Services;
+using Posetrix.Core.ViewModels;
 using Posetrix.Services;
 using Posetrix.Views;
-using Posetrix.Views.UserControls;
 
 namespace Posetrix
 {
@@ -13,7 +15,7 @@ namespace Posetrix
     /// </summary>
     public partial class App : Application
     {
-        public IServiceProvider? ServiceProvider { get; private set; }
+        public static IServiceProvider ServiceProvider { get; private set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -24,12 +26,13 @@ namespace Posetrix
 
             // Add viewmodels.
             serviceCollection.AddCommonServices();
-
+            
             ConfigureServices(serviceCollection);
 
             ServiceProvider = serviceCollection.BuildServiceProvider();
 
             var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
+            mainWindow.DataContext = ServiceProvider.GetRequiredService<MainViewModel>();
             mainWindow.Show();
         }
 
@@ -42,6 +45,15 @@ namespace Posetrix
             serviceCollection.AddTransient<CustomInterval>();
             serviceCollection.AddTransient<PredefinedIntervals>();
             serviceCollection.AddTransient<SessionWindow>();
+            
+            serviceCollection.AddSingleton<Func<ApplicationModelNames, DynamicViewModel>>(s => name => name switch
+            {
+                ApplicationModelNames.CustomInterval => s.GetRequiredService<CustomIntervalViewModel>(),
+                ApplicationModelNames.PredefinedIntervals => s.GetRequiredService<PredefinedIntervalsViewModel>(),
+                _ => throw new InvalidOperationException()
+            } );
+
+            serviceCollection.AddSingleton<ModelFactory>();
 
             // Add services.
             serviceCollection.AddTransient<IFolderBrowserServiceAsync, FolderBrowserService>();

@@ -8,12 +8,11 @@ namespace Posetrix.Views;
 /// <summary>
 /// Interaction logic for DrawingSessionWindow.xaml
 /// </summary>
-public partial class SessionWindow : Window
+public partial class SessionWindow
 {
-    public SessionWindow(SessionViewModel sessionViewModel)
+    public SessionWindow()
     {
         InitializeComponent();
-        DataContext = sessionViewModel;
     }
 
     /// <summary>
