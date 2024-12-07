@@ -70,7 +70,7 @@ public partial class App : Application
                 ApplicationModelNames.PredefinedIntervals => s.GetRequiredService<PredefinedIntervalsViewModel>(),
                 _ => throw new InvalidOperationException()
             } );
-            
+
             collection.AddSingleton<ModelFactory>();
 
             // Creates a ServiceProvider containing services from the provided IServiceCollection.

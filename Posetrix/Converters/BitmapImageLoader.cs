@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 using MetadataExtractor;
@@ -14,13 +15,28 @@ public class BitmapImageLoader : IValueConverter
 {
     private int ImageOrientation { get; set; } = 1; // Default orientation.
 
+    // TODO: handle corrupt images
     /// <summary>
     /// Converts <c>path</c> into a bitmap image.
     /// </summary>
     /// <returns>bitmap image or null</returns>
-    public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is string filePath && !string.IsNullOrEmpty(filePath))
+        // Catch corrupt images.
+        if (value is string imagePath && !string.IsNullOrEmpty(imagePath))
+        {
+            var image = LoadImage(imagePath);
+
+            return LoadImage(image != null ? imagePath : "Assets/Images/Happy-Earth-bro.png");
+        }
+        
+        // TODO: handle corrupt path.
+        return null;
+    }
+
+    private object? LoadImage(string filePath)
+    {
+        try
         {
             var bitmap = new BitmapImage();
             bitmap.BeginInit(); // Starts the initialization process for this element.
@@ -47,10 +63,13 @@ public class BitmapImageLoader : IValueConverter
 
             bitmap.EndInit(); // Indicates that the initialization process for the element is complete.
             bitmap.Freeze(); // Makes the current object unmodifiable and sets its IsFrozen property to true.
+
             return bitmap;
         }
-
-        return null;
+        catch (Exception)
+        {
+            return null;
+        }
     }
 
     private void CorrectImageRotation(BitmapImage bitmapImage, int orientation)

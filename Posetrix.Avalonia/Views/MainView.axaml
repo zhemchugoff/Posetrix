@@ -3,7 +3,7 @@
         xmlns:vm="using:Posetrix.Core.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="600"
+        mc:Ignorable="d"
         x:Class="Posetrix.Avalonia.Views.MainView"
         x:DataType="vm:MainViewModel"
         Icon="/Assets/avalonia-logo.ico"
@@ -12,8 +12,12 @@
         Height="600"
         MinWidth="400"
         MinHeight="600">
+    <Design.DataContext>
+        <vm:MainViewModel />
+    </Design.DataContext>
     <Grid Margin="20" ShowGridLines="True">
-        <Grid RowDefinitions="Auto, *, Auto, *,*, Auto" ShowGridLines="True">
+        <Grid RowDefinitions="Auto,2*,*,*,*,Auto" ShowGridLines="False">
+
             <Grid RowDefinitions="*,*,*">
                 <Grid ColumnDefinitions="Auto,*">
                     <!-- Open settings button -->
@@ -22,9 +26,9 @@
                             Name="OpenSettingsButton"
                             Classes="transparent icon-only"
                             Content="&#xE272;"
-                            FontSize="24"/>
+                            FontSize="24" />
                     <TextBlock Grid.Column="1" Text="Add your reference images" Margin="-20 0 0 0"
-                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                               HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Grid>
                 <!-- Add folder button -->
                 <Button Grid.Row="1" Name="AddFolderButton"
@@ -40,7 +44,8 @@
                 </Button>
                 <TextBlock Grid.Row="2" HorizontalAlignment="Center" Text="{Binding FoldersInfo}"></TextBlock>
             </Grid>
-            <!-- Custom controls combobox -->
+            
+            <!-- Custom controls combobox. -->
             <Grid Grid.Row="1" RowDefinitions="*,*,*">
                 <TextBlock Grid.Row="0" Text="Practice modes" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 <ComboBox Grid.Row="1"
@@ -57,19 +62,19 @@
                 <!-- Controls switch. -->
                 <ContentControl Grid.Row="2" Content="{Binding SelectedViewModel.ViewModelObject}" />
             </Grid>
-            <UniformGrid Grid.Row="2">
-                <TextBlock Text="I want to draw" VerticalAlignment="Center"></TextBlock>
-                <TextBox Text="{Binding CustomImageCount}" VerticalAlignment="Center"></TextBox>
-            </UniformGrid>
-            <!-- Shuffle images. -->
-            <UniformGrid Grid.Row="3">
-                <TextBlock Text="Shuffle images" VerticalAlignment="Center"></TextBlock>
-                <CheckBox IsChecked="{Binding IsShuffleEnabled}" HorizontalAlignment="Center"></CheckBox>
-            </UniformGrid>
-            <UniformGrid Grid.Row="4">
-                <TextBlock Text="Endless mode" VerticalAlignment="Center"></TextBlock>
-                <CheckBox IsChecked="True" HorizontalAlignment="Center"></CheckBox>
-            </UniformGrid>
+            <!-- Image count. -->
+            <Grid Row="2" ColumnDefinitions="*,*">
+                <TextBlock Grid.Column="0" Text="References to draw" VerticalAlignment="Center"></TextBlock>
+                <TextBox Grid.Column="1" Text="{Binding CustomImageCount}" VerticalAlignment="Center"></TextBox>
+            </Grid>
+            <Grid Grid.Row="3" ColumnDefinitions="*,*">
+                <TextBlock Grid.Column="0" Text="Shuffle images" VerticalAlignment="Center"></TextBlock>
+                <CheckBox Grid.Column="1" IsChecked="{Binding IsShuffleEnabled}" HorizontalAlignment="Center"></CheckBox>
+            </Grid>
+            <Grid Grid.Row="4" ColumnDefinitions="*,*">
+                <TextBlock Grid.Column="0" Text="Endless mode" VerticalAlignment="Center"></TextBlock>
+                <CheckBox Grid.Column="1" IsChecked="True" HorizontalAlignment="Center"></CheckBox>
+            </Grid>
             <!-- Starting session button. -->
             <Button Classes="accent-button" Grid.Row="5" Name="StartNewSession"
                     Click="StartNewSession_OnClick"

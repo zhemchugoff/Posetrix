@@ -6,6 +6,9 @@
              mc:Ignorable="d"
              x:Class="Posetrix.Avalonia.Views.CustomIntervalView"
              x:DataType="vm:CustomIntervalViewModel">
+    <Design.DataContext>
+        <vm:CustomIntervalViewModel />
+    </Design.DataContext>
     <Grid ColumnDefinitions="*,*,*">
         <TextBox
             Grid.Column="0"

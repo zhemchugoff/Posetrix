@@ -9,7 +9,5 @@ public partial class CustomIntervalView : UserControl
     public CustomIntervalView()
     {
         InitializeComponent();
-        var customInterval = App.ServiceProvider.GetRequiredService<CustomIntervalView>();
-        customInterval.DataContext = App.ServiceProvider.GetRequiredService<CustomIntervalViewModel>();
     }
 }

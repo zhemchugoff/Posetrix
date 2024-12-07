@@ -12,6 +12,7 @@
         <entry key="../Posetrix.Avalonia/Views/FolderAddWindow.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
         <entry key="../Posetrix.Avalonia/Views/MainView.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
         <entry key="../Posetrix.Avalonia/Views/MainWindow.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
+        <entry key="../Posetrix.Avalonia/Views/PredefinedIntervalsView.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
         <entry key="../Posetrix.Avalonia/Views/SessionView.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
         <entry key="../Posetrix.Avalonia/Views/SessionWindow.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
         <entry key="../Posetrix.Avalonia/Views/SettingsView.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />

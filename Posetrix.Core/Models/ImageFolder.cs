@@ -2,9 +2,9 @@
 
 public class ImageFolder
 {
-    public required string FullFolderPath { get; set; }
+    public string? FullFolderPath { get; set; }
     public string? FolderName { get; set; }
-    public List<string>? References { get; set; }
+    public List<string>? References { get; init; }
 
     public int ImageCounter => References?.Count ?? 0;
 
@@ -32,17 +32,15 @@ public class ImageFolder
         }
 
         // If the compared object is null or not of type ReferencesFolder, the objects are not equal.
-        if ((compared == null) || !this.GetType().Equals(compared.GetType()))
+        if ((compared == null) || GetType() != compared.GetType())
         {
             return false;
         }
-        else
-        {
-            // Convert the object to a ReferencesFolder object
-            ImageFolder comparedFolder = (ImageFolder)compared;
-            // If the values of the object variables are equal, the objects are, too.
-            return this.FullFolderPath.Equals(comparedFolder.FullFolderPath);
-        }
+
+        // Convert the object to a ReferencesFolder object
+        var comparedFolder = (ImageFolder)compared;
+        // If the values of the object variables are equal, the objects are, too.
+        return FullFolderPath.Equals(comparedFolder.FullFolderPath);
     }
 
     public override int GetHashCode()

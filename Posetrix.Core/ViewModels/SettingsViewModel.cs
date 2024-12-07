@@ -6,8 +6,9 @@ using Posetrix.Core.Models;
 
 namespace Posetrix.Core.ViewModels;
 
-public class SettingsViewModel : BaseViewModel, ICustomWindow
+public class SettingsViewModel : DynamicWindowViewModel, ICustomWindow
 {
+    
     public string WindowTitle => "Settings";
     public Theme SelectedTheme { get; set; }
 
@@ -20,6 +21,7 @@ public class SettingsViewModel : BaseViewModel, ICustomWindow
 
     public SettingsViewModel()
     {
+        WindowName = ApplicationWindowNames.Settings;
         SelectedTheme = Themes.First();
     }
 }

@@ -37,16 +37,14 @@
     <Style Selector="Button.small">
         <Setter Property="FontFamily" Value="{DynamicResource CustomIconsFont}" />
         <Setter Property="FontSize" Value="20" />
-        <Setter Property="Width" Value="32" />
-        <Setter Property="Height" Value="32" />
-        <Setter Property="Margin" Value="4 0" />
+        <Setter Property="Width" Value="28" />
+        <Setter Property="Height" Value="28" />
     </Style>
     <Style Selector="Button.big">
         <Setter Property="FontFamily" Value="{DynamicResource CustomIconsFont}" />
         <Setter Property="FontSize" Value="40" />
         <Setter Property="Width" Value="50" />
         <Setter Property="Height" Value="50" />
-        <Setter Property="Margin" Value="4 0" />
     </Style>
 
     <Style Selector="Button.icon-only">

@@ -34,7 +34,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
     [ObservableProperty] [NotifyPropertyChangedFor(nameof(SessionInfo))]
     private int _sessionCollectionCount;
 
-    public string SessionInfo => $"Completed: {CompletedImagesCounter} Total: {SessionCollectionCount}";
+    public string SessionInfo => $"{CompletedImagesCounter} / {SessionCollectionCount}";
     
     [ObservableProperty]
     private bool _isStopEnabled;
