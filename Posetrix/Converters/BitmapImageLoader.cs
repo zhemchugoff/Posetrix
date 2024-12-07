@@ -26,12 +26,11 @@ public class BitmapImageLoader : IValueConverter
         if (value is string imagePath && !string.IsNullOrEmpty(imagePath))
         {
             var image = LoadImage(imagePath);
-
-            return LoadImage(image != null ? imagePath : "Assets/Images/Happy-Earth-bro.png");
+            return LoadImage(image != null ? imagePath : "Images/undraw_fixing_bugs.png");
         }
         
         // TODO: handle corrupt path.
-        return null;
+        return LoadImage("Images/undraw_fixing_bugs.png");
     }
 
     private object? LoadImage(string filePath)
@@ -50,7 +49,7 @@ public class BitmapImageLoader : IValueConverter
             else
             {
                 // Resolve relative paths as pack URIs
-                bitmap.UriSource = new Uri($"pack://application:,,,/{filePath}", UriKind.Absolute);
+                bitmap.UriSource = new Uri($"pack://application:,,,/Posetrix.SharedAssets;component/{filePath}", UriKind.Absolute);
             }
 
             CorrectImageRotation(bitmap, ImageOrientation);

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using System.Windows.Media.Imaging;
 using Posetrix.Core.ViewModels;
 
@@ -14,6 +15,8 @@ public partial class SessionWindow
     {
         InitializeComponent();
     }
+    
+    
 
     /// <summary>
     /// <c>UpdateScaleTransformCenter</c> ensures the image is loaded and has actual dimensions.

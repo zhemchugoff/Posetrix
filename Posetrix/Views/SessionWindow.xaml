@@ -9,8 +9,8 @@
     Width="600"
     Height="450"
     d:DataContext="{d:DesignInstance viewmodels:SessionViewModel}"
-    mc:Ignorable="d"
-    SizeChanged="SessionWindow_OnSizeChanged">
+    SizeChanged="SessionWindow_OnSizeChanged"
+    mc:Ignorable="d">
     <Window.Resources>
         <Style
             x:Key="ControlButton"
@@ -45,7 +45,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <UniformGrid Grid.Row="0" Columns="3">
-            <TextBlock Text="{Binding SessionInfo}" VerticalAlignment="Center"/>
+            <TextBlock VerticalAlignment="Center" Text="{Binding SessionInfo}" />
             <StackPanel
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
@@ -70,8 +70,10 @@
                         </ToolTip>
                     </Button.ToolTip>
                 </Button>
-                <Button Content="&#xE784;" Style="{StaticResource ImageEditButton}"
-                        Command="{Binding MirrorImageXCommand}">
+                <Button
+                    Command="{Binding MirrorImageXCommand}"
+                    Content="&#xE784;"
+                    Style="{StaticResource ImageEditButton}">
                     <Button.ToolTip>
                         <ToolTip>
                             <TextBlock
@@ -81,8 +83,10 @@
                         </ToolTip>
                     </Button.ToolTip>
                 </Button>
-                <Button Content="&#xe76f;" Style="{StaticResource ImageEditButton}"
-                        Command="{Binding MirrorImageYCommand}">
+                <Button
+                    Command="{Binding MirrorImageYCommand}"
+                    Content="&#xe76f;"
+                    Style="{StaticResource ImageEditButton}">
                     <Button.ToolTip>
                         <ToolTip>
                             <TextBlock
@@ -113,25 +117,25 @@
                     </Button.ToolTip>
                 </Button>
             </StackPanel>
-            <TextBlock HorizontalAlignment="Right" Text="HH:MM:SS" VerticalAlignment="Center"/>
+            <TextBlock
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Text="HH:MM:SS" />
         </UniformGrid>
         <Image
-            Name="SessionImage"
+            x:Name="SessionImage"
             Grid.Row="1"
+            Margin="0,20"
             Source="{Binding CurrentImage, Converter={StaticResource ImageLoader}}"
-            Stretch="Uniform"
-            Margin="0 20">
+            Stretch="Uniform">
             <Image.RenderTransform>
-                <ScaleTransform x:Name="MirrorTransform"
-                                ScaleX="{Binding IsMirroredX, Converter={StaticResource ScaleConverter}}"
-                                ScaleY="{Binding IsMirroredY, Converter={StaticResource ScaleConverter}}">
-                </ScaleTransform>
+                <ScaleTransform x:Name="MirrorTransform" ScaleX="{Binding IsMirroredX, Converter={StaticResource ScaleConverter}}" ScaleY="{Binding IsMirroredY, Converter={StaticResource ScaleConverter}}" />
             </Image.RenderTransform>
         </Image>
         <!--<svg:SvgViewbox Source="Images/undraw_workout_gcgu.svg" Stretch="Uniform" />-->
         <!--<Image Grid.Row="0" Source="pack://application:,,,/Images/undraw_workout_gcgu.png" />-->
         <StackPanel
-            Grid.Row="2"
+            Grid.Row="3"
             HorizontalAlignment="Center"
             Orientation="Horizontal">
             <Button
@@ -161,8 +165,8 @@
             <Button
                 Command="{Binding StopSessionCommand}"
                 Content="&#xE71A;"
-                Style="{StaticResource ControlButton}"
-                IsEnabled="{Binding IsStopEnabled}">
+                IsEnabled="{Binding IsStopEnabled}"
+                Style="{StaticResource ControlButton}">
                 <Button.ToolTip>
                     <ToolTip>
                         <TextBlock

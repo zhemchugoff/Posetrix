@@ -11,8 +11,4 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Assets\Images\Enthusiastic-rafiki.svg" />
-  </ItemGroup>
-
 </Project>
