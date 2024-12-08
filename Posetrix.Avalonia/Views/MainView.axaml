@@ -1,17 +1,17 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:Posetrix.Core.ViewModels"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        x:Class="Posetrix.Avalonia.Views.MainView"
-        x:DataType="vm:MainViewModel"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="{Binding WindowTitle}"
-        Width="400"
-        Height="600"
-        MinWidth="400"
-        MinHeight="600">
+<Window
+    x:Class="Posetrix.Avalonia.Views.MainView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Posetrix.Core.ViewModels"
+    Title="{Binding WindowTitle}"
+    Width="400"
+    Height="600"
+    MinWidth="400"
+    MinHeight="600"
+    x:DataType="vm:MainViewModel"
+    mc:Ignorable="d">
     <Design.DataContext>
         <vm:MainViewModel />
     </Design.DataContext>
@@ -20,70 +20,105 @@
 
             <Grid RowDefinitions="*,*,*">
                 <Grid ColumnDefinitions="Auto,*">
-                    <!-- Open settings button -->
-                    <Button Grid.Column="0"
-                            Click="OpenSettingsButton_OnClick"
-                            Name="OpenSettingsButton"
-                            Classes="transparent icon-only"
-                            Content="&#xE272;"
-                            FontSize="24" />
-                    <TextBlock Grid.Column="1" Text="Add your reference images" Margin="-20 0 0 0"
-                               HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <!--  Open settings button  -->
+                    <Button
+                        Name="OpenSettingsButton"
+                        Grid.Column="0"
+                        Classes="transparent icon-only"
+                        Click="OpenSettingsButton_OnClick"
+                        Content="&#xE272;"
+                        FontSize="24" />
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="-20,0,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="Add your reference images" />
                 </Grid>
-                <!-- Add folder button -->
-                <Button Grid.Row="1" Name="AddFolderButton"
-                        Click="AddFolderButton_OnClick"
-                        Classes="accent-button button-icon"
-                        Height="46"
-                        HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        Margin="0 10"
-                        Content="&#xE3D4;"
-                        FontSize="24">
-                </Button>
-                <TextBlock Grid.Row="2" HorizontalAlignment="Center" Text="{Binding FoldersInfo}"></TextBlock>
+                <!--  Add folder button  -->
+                <Button
+                    Name="AddFolderButton"
+                    Grid.Row="1"
+                    Height="46"
+                    Margin="0,10"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Classes="accent-button button-icon"
+                    Click="AddFolderButton_OnClick"
+                    Content="&#xE3D4;"
+                    FontSize="24" />
+                <TextBlock
+                    Grid.Row="2"
+                    HorizontalAlignment="Center"
+                    Text="{Binding FoldersInfo}" />
             </Grid>
-            
-            <!-- Custom controls combobox. -->
+
+            <!--  Custom controls combobox.  -->
             <Grid Grid.Row="1" RowDefinitions="*,*,*">
-                <TextBlock Grid.Row="0" Text="Practice modes" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                <ComboBox Grid.Row="1"
-                          ItemsSource="{Binding ViewModelsCollection}"
-                          SelectedItem="{Binding SelectedViewModel}"
-                          SelectedIndex="0"
-                          HorizontalAlignment="Stretch">
+                <TextBlock
+                    Grid.Row="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Text="Practice modes" />
+                <ComboBox
+                    Grid.Row="1"
+                    HorizontalAlignment="Stretch"
+                    ItemsSource="{Binding ViewModelsCollection}"
+                    SelectedIndex="0"
+                    SelectedItem="{Binding SelectedViewModel}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding ViewModelName}" />
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <!-- Controls switch. -->
+                <!--  Controls switch.  -->
                 <ContentControl Grid.Row="2" Content="{Binding SelectedViewModel.ViewModelObject}" />
             </Grid>
-            <!-- Image count. -->
-            <Grid Row="2" ColumnDefinitions="*,*">
-                <TextBlock Grid.Column="0" Text="References to draw" VerticalAlignment="Center"></TextBlock>
-                <TextBox Grid.Column="1" Text="{Binding CustomImageCount}" VerticalAlignment="Center"></TextBox>
+            <!--  Image count.  -->
+            <Grid ColumnDefinitions="*,*" Row="2">
+                <TextBlock
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Text="References to draw" />
+                <TextBox
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Text="{Binding CustomImageCount}" />
             </Grid>
             <Grid Grid.Row="3" ColumnDefinitions="*,*">
-                <TextBlock Grid.Column="0" Text="Shuffle images" VerticalAlignment="Center"></TextBlock>
-                <CheckBox Grid.Column="1" IsChecked="{Binding IsShuffleEnabled}" HorizontalAlignment="Center"></CheckBox>
+                <TextBlock
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Text="Shuffle images" />
+                <CheckBox
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    IsChecked="{Binding IsShuffleEnabled}" />
             </Grid>
             <Grid Grid.Row="4" ColumnDefinitions="*,*">
-                <TextBlock Grid.Column="0" Text="Endless mode" VerticalAlignment="Center"></TextBlock>
-                <CheckBox Grid.Column="1" IsChecked="True" HorizontalAlignment="Center"></CheckBox>
+                <TextBlock
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Text="Endless mode" />
+                <CheckBox
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    IsChecked="True" />
             </Grid>
-            <!-- Starting session button. -->
-            <Button Classes="accent-button" Grid.Row="5" Name="StartNewSession"
-                    Click="StartNewSession_OnClick"
-                    IsEnabled="{Binding CanStartSession}"
-                    HorizontalAlignment="Stretch"
-                    Height="46"
-                    Content="Start a drawing session"
-                    VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
-            </Button>
+            <!--  Starting session button.  -->
+            <Button
+                Name="StartNewSession"
+                Grid.Row="5"
+                Height="46"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Classes="accent-button"
+                Click="StartNewSession_OnClick"
+                Content="Start a drawing session"
+                IsEnabled="{Binding CanStartSession}" />
         </Grid>
     </Grid>
 </Window>

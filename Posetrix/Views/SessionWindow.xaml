@@ -9,6 +9,7 @@
     Width="600"
     Height="450"
     d:DataContext="{d:DesignInstance viewmodels:SessionViewModel}"
+    Icon="{StaticResource AppIcon}"
     SizeChanged="SessionWindow_OnSizeChanged"
     mc:Ignorable="d">
     <Window.Resources>

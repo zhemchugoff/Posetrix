@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Posetrix.Avalonia", "..\Pos
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Posetrix.SharedAssets", "..\Posetrix.SharedAssets\Posetrix.SharedAssets.csproj", "{D386B975-4ACB-4163-98CA-AC15A73D3AF7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Posetrix.AssetsAvalonia", "..\Posetrix.AssetsAvalonia\Posetrix.AssetsAvalonia.csproj", "{37E0C46F-99B0-4B64-BAE9-7261A8C31143}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Posetrix.Assets", "..\Posetrix.Assets\Posetrix.Assets.csproj", "{3F4EE9A1-57E4-4140-BBF9-64B3481BD6B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{D386B975-4ACB-4163-98CA-AC15A73D3AF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D386B975-4ACB-4163-98CA-AC15A73D3AF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D386B975-4ACB-4163-98CA-AC15A73D3AF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37E0C46F-99B0-4B64-BAE9-7261A8C31143}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37E0C46F-99B0-4B64-BAE9-7261A8C31143}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37E0C46F-99B0-4B64-BAE9-7261A8C31143}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37E0C46F-99B0-4B64-BAE9-7261A8C31143}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F4EE9A1-57E4-4140-BBF9-64B3481BD6B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F4EE9A1-57E4-4140-BBF9-64B3481BD6B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F4EE9A1-57E4-4140-BBF9-64B3481BD6B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F4EE9A1-57E4-4140-BBF9-64B3481BD6B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

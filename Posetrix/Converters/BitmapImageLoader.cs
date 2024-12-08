@@ -1,9 +1,12 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 using MetadataExtractor;
 using MetadataExtractor.Formats.Exif;
+using Posetrix.Assets;
+using Posetrix.Core.Services;
 
 namespace Posetrix.Converters;
 
@@ -26,30 +29,48 @@ public class BitmapImageLoader : IValueConverter
         if (value is string imagePath && !string.IsNullOrEmpty(imagePath))
         {
             var image = LoadImage(imagePath);
-            return LoadImage(image != null ? imagePath : "Images/undraw_fixing_bugs.png");
+            return LoadImage(image != null ? imagePath : PlaceHolderService.ErrorImage);
         }
-        
+
         // TODO: handle corrupt path.
-        return LoadImage("Images/undraw_fixing_bugs.png");
+        return LoadImage(PlaceHolderService.ErrorImage);
     }
 
-    private object? LoadImage(string filePath)
+    private BitmapImage? LoadImage(string filePath)
     {
         try
         {
+            if (filePath.StartsWith("Images."))
+            {
+                using Stream stream = ResourceHelper.GetEmbeddedResourceStream(filePath);
+                if (stream != null)
+                {
+                    var bmp = new BitmapImage();
+                    bmp.BeginInit();
+                    //ImageOrientation = GetImageOrientation(stream);
+                    //stream.Position = 0;
+                    bmp.StreamSource = stream;
+                    //CorrectImageRotation(bmp, ImageOrientation);
+                    bmp.DecodePixelWidth = 1920;
+                    bmp.EndInit();
+                    bmp.Freeze();
+                    return bmp;
+                }
+            }
+
             var bitmap = new BitmapImage();
             bitmap.BeginInit(); // Starts the initialization process for this element.
 
             // Convert relative path.
-            if (System.IO.Path.IsPathRooted(filePath))
+            if (Path.IsPathRooted(filePath))
             {
-                ImageOrientation = GetImageOrientation(filePath);
+                // Resolve relative paths as pack URIs.
                 bitmap.UriSource = new Uri(filePath, UriKind.Absolute);
             }
             else
             {
-                // Resolve relative paths as pack URIs
-                bitmap.UriSource = new Uri($"pack://application:,,,/Posetrix.SharedAssets;component/{filePath}", UriKind.Absolute);
+                ImageOrientation = GetImageOrientation(filePath);
+                bitmap.UriSource = new Uri(filePath, UriKind.Absolute);
             }
 
             CorrectImageRotation(bitmap, ImageOrientation);
@@ -71,32 +92,44 @@ public class BitmapImageLoader : IValueConverter
         }
     }
 
-    private void CorrectImageRotation(BitmapImage bitmapImage, int orientation)
+    private static void CorrectImageRotation(BitmapImage bitmapImage, int orientation)
     {
-        switch (orientation)
+        bitmapImage.Rotation = orientation switch
         {
-            case 1: // Normal
-                bitmapImage.Rotation = Rotation.Rotate0;
-                break;
-            case 6: // Rotated 90 degrees clockwise
-                bitmapImage.Rotation = Rotation.Rotate90;
-                break;
-            case 3: // Rotated 180 degrees
-                bitmapImage.Rotation = Rotation.Rotate180;
-                break;
-            case 8: // Rotated 270 degrees clockwise (or 90 degrees counter-clockwise)
-                bitmapImage.Rotation = Rotation.Rotate270;
-                break;
-            default:
-                bitmapImage.Rotation = Rotation.Rotate0;
-                break;
-        }
+            // Normal
+            1 => Rotation.Rotate0,
+            // Rotated 90 degrees clockwise
+            6 => Rotation.Rotate90,
+            // Rotated 180 degrees
+            3 => Rotation.Rotate180,
+            // Rotated 270 degrees clockwise (or 90 degrees counter-clockwise)
+            8 => Rotation.Rotate270,
+            _ => Rotation.Rotate0,
+        };
     }
 
-    private static int GetImageOrientation(string imagePath)
+    private static int GetImageOrientation(object imagePath)
     {
-        var directories = ImageMetadataReader.ReadMetadata(imagePath);
-        var exifIfd0Directory = directories.OfType<ExifIfd0Directory>().FirstOrDefault();
+        IReadOnlyList<MetadataExtractor.Directory> directories;
+
+        if (imagePath is string stringPath)
+        {
+            directories = ImageMetadataReader.ReadMetadata(stringPath);
+
+        }
+
+        else if (imagePath is Stream streamPath)
+        {
+            directories = ImageMetadataReader.ReadMetadata(streamPath);
+
+        }
+
+        else
+        {
+            throw new ArgumentException("Input must be either a string or a stream.");
+        }
+
+        ExifIfd0Directory? exifIfd0Directory = directories.OfType<ExifIfd0Directory>().FirstOrDefault();
         if (exifIfd0Directory != null &&
             exifIfd0Directory.TryGetInt32(ExifDirectoryBase.TagOrientation, out int orientation))
         {

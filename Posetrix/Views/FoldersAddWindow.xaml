@@ -12,6 +12,7 @@
     MinWidth="600"
     MinHeight="400"
     d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+    Icon="{StaticResource AppIcon}"
     mc:Ignorable="d">
     <Grid Margin="20">
         <Grid.RowDefinitions>

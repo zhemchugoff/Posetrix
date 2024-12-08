@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <AvaloniaResource Include="Assets\**"/>
+        <AvaloniaResource Include="Assets\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -40,6 +40,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Posetrix.Assets\Posetrix.Assets.csproj" />
       <ProjectReference Include="..\Posetrix.Core\Posetrix.Core.csproj" />
     </ItemGroup>
 </Project>

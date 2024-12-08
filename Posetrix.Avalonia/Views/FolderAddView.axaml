@@ -5,7 +5,6 @@
         xmlns:viewModels="clr-namespace:Posetrix.Core.ViewModels;assembly=Posetrix.Core"
         xmlns:models="clr-namespace:Posetrix.Core.Models;assembly=Posetrix.Core"
         mc:Ignorable="d"
-        Icon="/Assets/avalonia-logo.ico"
         Title="{Binding FolderAddTitle}"
         Width="600"
         Height="400"

@@ -58,7 +58,7 @@ namespace Posetrix
             // Add services.
             serviceCollection.AddTransient<IFolderBrowserServiceAsync, FolderBrowserService>();
             serviceCollection.AddTransient<IExtensionsService, SupportedExtensionsService>();
-            serviceCollection.AddTransient<IContentService, PlaceHolderImage>();
+            //serviceCollection.AddTransient<IContentService, PlaceHolderImage>();
         }
     }
 }

@@ -1,8 +1,10 @@
+using System.IO;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Microsoft.Extensions.DependencyInjection;
 using Posetrix.Core.Data;
 using Posetrix.Core.Interfaces;
+using Posetrix.Core.Services;
 using Posetrix.Core.ViewModels;
 
 namespace Posetrix.Avalonia.Views;
@@ -12,6 +14,8 @@ public partial class MainView : Window
     public MainView()
     {
         InitializeComponent();
+        using Stream stream = Assets.ResourceHelper.GetEmbeddedResourceStream(PlaceHolderService.WindowIcon);
+        Icon = new WindowIcon(stream);
     }
 
     private void OpenSettingsButton_OnClick(object? sender, RoutedEventArgs e)

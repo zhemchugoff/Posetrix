@@ -16,8 +16,6 @@ public partial class SessionWindow
         InitializeComponent();
     }
     
-    
-
     /// <summary>
     /// <c>UpdateScaleTransformCenter</c> ensures the image is loaded and has actual dimensions.
     /// </summary>

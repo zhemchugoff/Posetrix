@@ -4,6 +4,7 @@ using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 using System.Collections.ObjectModel;
 using Posetrix.Core.Data;
+using Posetrix.Core.Services;
 
 namespace Posetrix.Core.ViewModels;
 
@@ -138,7 +139,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
     [RelayCommand]
     private void StopSession()
     {
-        CurrentImage = _mainViewModel.SessionEndImagePath;
+        CurrentImage = PlaceHolderService.Congratulations;
         //_sessionImages.Clear();
         CanDeleteImage = false;
         CanSelectNextImage = false;

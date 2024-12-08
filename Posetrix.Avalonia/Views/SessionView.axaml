@@ -1,29 +1,35 @@
-﻿<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="using:Posetrix.Core.ViewModels"
-        xmlns:converters="clr-namespace:Posetrix.Avalonia.Converters"
-        mc:Ignorable="d"
-        x:Class="Posetrix.Avalonia.Views.SessionView"
-        Title="{Binding WindowTitle}"
-        Icon="/Assets/avalonia-logo.ico"
-        Width="600"
-        Height="450"
-        x:DataType="vm:SessionViewModel">
+﻿<Window
+    x:Class="Posetrix.Avalonia.Views.SessionView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Posetrix.Avalonia.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Posetrix.Core.ViewModels"
+    Title="{Binding WindowTitle}"
+    Width="600"
+    Height="450"
+    x:DataType="vm:SessionViewModel"
+    mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
-            <!-- TODO: Add a placeholder in case there is a problem with getting a bitmap image.  -->
+            <!--  TODO: Add a placeholder in case there is a problem with getting a bitmap image.  -->
             <converters:SkiaSharpImageLoader x:Key="ImageLoader" />
         </ResourceDictionary>
     </Window.Resources>
     <Design.DataContext>
         <vm:SessionViewModel />
     </Design.DataContext>
-    <Grid RowDefinitions="Auto, 10*, Auto, Auto" Margin="20">
-        <UniformGrid Grid.Row="0" Columns="3" Margin="0 0 0 10">
-            <TextBlock Text="{Binding SessionInfo}" VerticalAlignment="Center" HorizontalAlignment="Left" />
-            <!-- Image editing buttons -->
+    <Grid Margin="20" RowDefinitions="Auto, 10*, Auto, Auto">
+        <UniformGrid
+            Grid.Row="0"
+            Margin="0,0,0,10"
+            Columns="3">
+            <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Text="{Binding SessionInfo}" />
+            <!--  Image editing buttons  -->
             <StackPanel
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
@@ -33,35 +39,52 @@
                 <Button Classes="small button-icon" Content="&#xEC8C;" />
                 <Button Classes="small button-icon" Content="&#xED6A;" />
                 <Button Classes="small button-icon" Content="&#xE492;" />
-                <Button Classes="small button-icon" Content="&#xE92A;" Click="Button_OnClick" />
+                <Button
+                    Classes="small button-icon"
+                    Click="Button_OnClick"
+                    Content="&#xE92A;" />
             </StackPanel>
-            <TextBlock HorizontalAlignment="Right" Text="HH:MM:SS" VerticalAlignment="Center" />
+            <TextBlock
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Text="HH:MM:SS" />
         </UniformGrid>
-        <!-- <Svg Grid.Row="1" Path="avares://Posetrix.Avalonia/Assets/Images/Enthusiastic-pana.svg" /> -->
-        <Image Name="ImageControl" Grid.Row="1" Source="{Binding CurrentImage, Converter={StaticResource ImageLoader}}">
-            <Image.RenderTransform>
-                <ScaleTransform ScaleX="1" ScaleY="1">
-                </ScaleTransform>
-            </Image.RenderTransform>
+       <!-- <Svg Grid.Row="1" Path="avares://Posetrix.Avalonia/Assets/Images/Enthusiastic-pana.svg" /> -->
+        <Image Name="ImageControl" Grid.Row="1" Source="{Binding CurrentImage, Converter={StaticResource ImageLoader}}"> 
+        <Image.RenderTransform>
+        <ScaleTransform ScaleX="1" ScaleY="1">
+                 </ScaleTransform>
+             </Image.RenderTransform> 
         </Image>
-
-        <!-- Control buttons. -->
+        <!--  Control buttons.  -->
         <StackPanel
             Grid.Row="3"
+            Margin="0,10,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Orientation="Horizontal"
-            Margin="0 10 0 0"
             Spacing="6">
-            <Button Classes="big button-icon" Content="&#xE138;" Command="{Binding SelectPreviousImageCommand}"
-                    IsEnabled="{Binding CanSelectPreviousImage}" />
+            <Button
+                Classes="big button-icon"
+                Command="{Binding SelectPreviousImageCommand}"
+                Content="&#xE138;"
+                IsEnabled="{Binding CanSelectPreviousImage}" />
             <Button Classes="big button-icon" Content="&#xE39E;" />
-            <Button Classes="big button-icon" Content="&#xE46C;" Command="{Binding StopSessionCommand}"
-                    IsEnabled="{Binding IsStopEnabled}" />
-            <Button Classes="big button-icon" Content="&#xE13A;" Command="{Binding SelectNextImageCommand}"
-                    IsEnabled="{Binding CanSelectNextImage}" />
-            <Button Classes="big button-icon" Content="&#xE5A6;" Command="{Binding SkipImageCommand}"
-                    IsEnabled="{Binding CanDeleteImage}" />
+            <Button
+                Classes="big button-icon"
+                Command="{Binding StopSessionCommand}"
+                Content="&#xE46C;"
+                IsEnabled="{Binding IsStopEnabled}" />
+            <Button
+                Classes="big button-icon"
+                Command="{Binding SelectNextImageCommand}"
+                Content="&#xE13A;"
+                IsEnabled="{Binding CanSelectNextImage}" />
+            <Button
+                Classes="big button-icon"
+                Command="{Binding SkipImageCommand}"
+                Content="&#xE5A6;"
+                IsEnabled="{Binding CanDeleteImage}" />
         </StackPanel>
     </Grid>
 </Window>

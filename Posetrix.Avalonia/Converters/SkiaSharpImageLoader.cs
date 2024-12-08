@@ -4,7 +4,7 @@ using System.IO;
 using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media.Imaging;
-using Avalonia.Platform;
+using Posetrix.Core.Services;
 using SkiaSharp;
 
 namespace Posetrix.Avalonia.Converters;
@@ -15,45 +15,44 @@ public class SkiaSharpImageLoader : IValueConverter
     {
         if (value is string imagePath && !string.IsNullOrEmpty(imagePath))
         {
-            return LoadImage(imagePath, 1920, 1080);
+            Bitmap? bitmap = LoadImage(imagePath, 1920, 1080);
+
+            return bitmap ?? LoadImage(PlaceHolderService.ErrorImage, 1920, 1080);
         }
 
-        return null;
+        return LoadImage(PlaceHolderService.ErrorImage, 1920, 1080);
     }
 
     /// <summary>
     /// Method <c>LoadImage</c> loads an image using SkiaSharp, resizes it  and converts to Avalonia bitmap.
     /// </summary>
-    private Bitmap LoadImage(string imagePath, int maxWidth, int maxHeight)
+    private Bitmap? LoadImage(string imagePath, int maxWidth, int maxHeight)
     {
-        // Load Avalonia asset.
-        if (imagePath.StartsWith("avares://"))
+        try
         {
-            Uri uri = new(imagePath);
-
-            if (!AssetLoader.Exists(uri)) return null;
-
-            using var stream = AssetLoader.Open(uri);
-            var bitmap = new Bitmap(stream);
-            bitmap.CreateScaledBitmap(new PixelSize(maxWidth, maxHeight),
-                BitmapInterpolationMode.HighQuality);
-            return bitmap;
-        }
-        else
-        {
+            // Load Avalonia asset.
+            if (imagePath.StartsWith("Images."))
+            {
+                using Stream imageStream = Assets.ResourceHelper.GetEmbeddedResourceStream(imagePath);
+                var bitmap = new Bitmap(imageStream);
+                bitmap.CreateScaledBitmap(new PixelSize(maxWidth, maxHeight),
+                    BitmapInterpolationMode.HighQuality);
+                return bitmap;
+            }
+            
             // Load the original image.
             using var skBitmap = SKBitmap.Decode(imagePath);
             var orientation = GetImageOrientation(imagePath);
-            var rotetedSkBitmap = AutoOrient(skBitmap, orientation);
+            var rotatedSkBitmap = AutoOrient(skBitmap, orientation);
 
             // Calculate new dimensions.
             var (newWidth, newHeight) =
-                CalculateNewDimensions(rotetedSkBitmap.Width, rotetedSkBitmap.Height, maxWidth, maxHeight);
+                CalculateNewDimensions(rotatedSkBitmap.Width, rotatedSkBitmap.Height, maxWidth, maxHeight);
 
             // TODO: add cache for images.
 
             // Resize the image.
-            using var resizedBitmap = rotetedSkBitmap.Resize(
+            using var resizedBitmap = rotatedSkBitmap.Resize(
                 new SKImageInfo(newWidth, newHeight),
                 SKFilterQuality.Medium
             );
@@ -67,6 +66,11 @@ public class SkiaSharpImageLoader : IValueConverter
             using var stream = new MemoryStream(data.ToArray());
             // Return the resized Avalonia bitmap.
             return new Bitmap(stream);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
         }
     }
 

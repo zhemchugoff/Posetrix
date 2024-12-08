@@ -1,6 +1,8 @@
-﻿using Avalonia.Controls;
+﻿using System.IO;
+using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
+using Posetrix.Core.Services;
 
 namespace Posetrix.Avalonia.Views;
 
@@ -11,6 +13,8 @@ public partial class SessionView : Window
     public SessionView()
     {
         InitializeComponent();
+        using Stream stream = Assets.ResourceHelper.GetEmbeddedResourceStream(PlaceHolderService.WindowIcon);
+        Icon = new WindowIcon(stream);
     }
 
     private void Button_OnClick(object? sender, RoutedEventArgs e)

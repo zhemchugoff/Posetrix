@@ -10,13 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Images\Icons\book%281%29.png" />
-    <None Remove="Images\Icons\book.png" />
-    <None Remove="Images\undraw_walk_ing_qkyj.png" />
-    <None Remove="Images\undraw_workout_gcgu.svg" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MetadataExtractor" Version="2.8.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="SharpVectors" Version="1.8.4.2" />
@@ -24,20 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Posetrix.Assets\Posetrix.Assets.csproj" />
     <ProjectReference Include="..\Posetrix.Core\Posetrix.Core.csproj" />
     <ProjectReference Include="..\Posetrix.SharedAssets\Posetrix.SharedAssets.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Assets\Fonts\SegoeFluentIcons.ttf" />
-    <None Remove="Assets\Fonts\Segoe UI.ttf" />
-    <Resource Include="Assets\Fonts\Segoe UI.ttf" />
-    <Resource Include="Assets\Icons\book(1).png" />
-    <Resource Include="Assets\Icons\book.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Assets\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -66,6 +48,23 @@
       <XamlRuntime>Wpf</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Icons\avalonia-logo.ico" />
+    <None Remove="Posetrix.AssetsAvalonia\Images\undraw_winners_re_wr1l.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Fonts\Segoe UI.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\SegoeFluentIcons.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\avalonia-logo.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

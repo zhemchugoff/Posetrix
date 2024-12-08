@@ -8,7 +8,6 @@
         x:Class="Posetrix.Avalonia.Views.SettingsView"
         Width="480"
         Height="400"
-        Icon="/Assets/avalonia-logo.ico"
         Title="{Binding WindowTitle}"
         x:DataType="viewModels:SettingsViewModel">
     <Design.DataContext>

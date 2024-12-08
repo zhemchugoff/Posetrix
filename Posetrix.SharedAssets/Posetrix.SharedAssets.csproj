@@ -8,13 +8,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Resource Include="Images\Error 429-bro.png">
+    <Resource Include="Icons\pencil-light.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\Happy-Earth-bro.png">
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icons\pencil.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\undraw_bug_fixing.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\undraw_fixing_bugs.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\undraw_winners_re.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

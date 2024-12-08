@@ -7,6 +7,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using Posetrix.Core.Data;
 using Posetrix.Core.Factories;
+using Posetrix.Core.Services;
 
 
 namespace Posetrix.Core.ViewModels;
@@ -15,7 +16,6 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
 {
     public string WindowTitle => "Posetrix";
     public string FolderAddTitle => "Add folders";
-    public string SessionEndImagePath { get; }
 
     //private readonly IConfigService _configService;
     private readonly IFolderBrowserServiceAsync _folderBrowserService;
@@ -39,8 +39,7 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
     public string FoldersInfo => $" Folders: {FolderCount} Images: {FolderImageCounter}";
 
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(CanDeleteFolder))]
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(CanDeleteFolder))]
     private ImageFolder? _selectedFolder;
 
     // ComboBox
@@ -57,17 +56,15 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
     /// </summary>
     public MainViewModel()
     {
-        
     }
-    public MainViewModel(ModelFactory modelFactory, IExtensionsService extensionsService, IContentService contentService,
+
+    public MainViewModel(ModelFactory modelFactory, IExtensionsService extensionsService,
         IFolderBrowserServiceAsync folderBrowserService)
     {
         //_configService = configService;
         _modelFactory = modelFactory;
         _extensionsService = extensionsService;
         _folderBrowserService = folderBrowserService;
-
-        SessionEndImagePath = contentService.GetImagePath();
 
         // Default value for a folder view.
         FolderCount = 0;
@@ -78,8 +75,15 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
         ViewModelsCollection =
         [
             new ComboBoxViewModel
-                { ViewModelName = "Predefined intervals", ViewModelObject = _modelFactory.GetViewModelName(ApplicationModelNames.PredefinedIntervals) },
-            new ComboBoxViewModel { ViewModelName = "Custom Intervals", ViewModelObject = _modelFactory.GetViewModelName(ApplicationModelNames.CustomInterval) }
+            {
+                ViewModelName = "Predefined intervals",
+                ViewModelObject = _modelFactory.GetViewModelName(ApplicationModelNames.PredefinedIntervals)
+            },
+            new ComboBoxViewModel
+            {
+                ViewModelName = "Custom Intervals",
+                ViewModelObject = _modelFactory.GetViewModelName(ApplicationModelNames.CustomInterval)
+            }
         ];
 
         SelectedViewModel = ViewModelsCollection.First();

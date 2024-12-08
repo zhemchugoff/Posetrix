@@ -1,7 +1,9 @@
-﻿using Avalonia;
+﻿using System.IO;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Styling;
 using Posetrix.Core.Models;
+using Posetrix.Core.Services;
 
 namespace Posetrix.Avalonia.Views;
 
@@ -10,6 +12,8 @@ public partial class SettingsView : Window
     public SettingsView()
     {
         InitializeComponent();
+        using Stream stream = Assets.ResourceHelper.GetEmbeddedResourceStream(PlaceHolderService.WindowIcon);
+        Icon = new WindowIcon(stream);
     }
 
     private void ChangeTheme_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)

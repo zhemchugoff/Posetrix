@@ -6,7 +6,7 @@
     public partial class CustomInterval
     {
         public CustomInterval()
-        {
+        { 
             InitializeComponent();
         }
     }
