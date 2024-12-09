@@ -121,7 +121,7 @@
             <TextBlock
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
-                Text="HH:MM:SS" />
+                Text="{Binding CurrentTime}" />
         </UniformGrid>
         <Image
             x:Name="SessionImage"

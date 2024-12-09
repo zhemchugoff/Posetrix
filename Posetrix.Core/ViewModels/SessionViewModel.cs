@@ -3,8 +3,8 @@ using CommunityToolkit.Mvvm.Input;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 using System.Collections.ObjectModel;
-using Posetrix.Core.Data;
 using Posetrix.Core.Services;
+using Posetrix.Core.Data;
 
 namespace Posetrix.Core.ViewModels;
 
@@ -24,25 +24,32 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
     [ObservableProperty] private bool _canSelectPreviousImage;
     [ObservableProperty] private bool _canDeleteImage;
     [ObservableProperty] private string? _currentImage;
-    
+    [ObservableProperty] private int _currentTime;
+
+    private readonly TimerStore _timerStore;
+
     // Image properties.
     [ObservableProperty] private bool _isMirroredX;
     [ObservableProperty] private bool _isMirroredY;
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(SessionInfo))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SessionInfo))]
     private int _completedImagesCounter;
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(SessionInfo))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SessionInfo))]
     private int _sessionCollectionCount;
 
     public string SessionInfo => $"{CompletedImagesCounter} / {SessionCollectionCount}";
-    
+
     [ObservableProperty]
     private bool _isStopEnabled;
 
+    private SessionTimer _sessionTimer;
+
     public SessionViewModel()
     {
-        
+
     }
     public SessionViewModel(MainViewModel mainViewModel)
     {
@@ -55,10 +62,16 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
         _completedImages = [];
 
         _currentImageIndex = 0;
-        
+
         IsStopEnabled = true;
 
         CurrentImage = _sessionImages[_currentImageIndex];
+
+
+        _sessionTimer = _mainViewModel.GetTimer();
+        _timerStore = new TimerStore(_sessionTimer.Seconds);
+        _timerStore.RemainingSecondsChanged += seconds => CurrentTime = seconds;
+        _timerStore.Start();
 
         UpdateImageStatus();
     }
@@ -154,7 +167,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
     {
         IsMirroredX = false;
         IsMirroredY = false;
-        
+
         CompletedImagesCounter = _completedImages.Count;
         SessionCollectionCount = _sessionImages.Count;
 
@@ -187,7 +200,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
     {
         IsMirroredX = !IsMirroredX;
     }
-    
+
     [RelayCommand]
     private void MirrorImageY()
     {

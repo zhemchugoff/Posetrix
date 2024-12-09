@@ -158,6 +158,7 @@
                 HorizontalAlignment="Stretch"
                 Click="ShowDrawingSessionWindow_Click"
                 Content="Start a drawing session"
+                IsEnabled="{Binding CanStartSession}"
                 Style="{DynamicResource AccentButtonStyle}" />
         </Grid>
     </Grid>

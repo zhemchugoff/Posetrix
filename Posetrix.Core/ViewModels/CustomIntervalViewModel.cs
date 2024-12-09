@@ -1,24 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Posetrix.Core.Data;
-using Posetrix.Core.Interfaces;
-using Posetrix.Core.Models;
 
-namespace Posetrix.Core.ViewModels
+namespace Posetrix.Core.ViewModels;
+
+public partial class CustomIntervalViewModel : DynamicViewModel
 {
-    public partial class CustomIntervalViewModel : DynamicViewModel
+    [ObservableProperty] private int _hours;
+    [ObservableProperty] private int _minutes;
+    [ObservableProperty] private int _seconds;
+    
+    public CustomIntervalViewModel()
     {
-        [ObservableProperty] private SessionTimer _sessionTimer;
-        
-        public CustomIntervalViewModel()
-        {
-            ModelName = ApplicationModelNames.CustomInterval;
-            
-            _sessionTimer = new SessionTimer
-            {
-                Hours = 0,
-                Minutes = 0,
-                Seconds = 30
-            };
-        }
+        ModelName = ApplicationModelNames.CustomInterval;
     }
 }

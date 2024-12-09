@@ -32,23 +32,29 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
     [NotifyPropertyChangedFor(nameof(CanDeleteFolder))]
     private int _folderCount;
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(FoldersInfo))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(FoldersInfo))]
     private int _folderImageCounter;
 
     public string FoldersInfo => $" Folders: {FolderCount} Images: {FolderImageCounter}";
 
 
-    [ObservableProperty] [NotifyPropertyChangedFor(nameof(CanDeleteFolder))]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CanDeleteFolder))]
     private ImageFolder? _selectedFolder;
 
     // ComboBox
     [ObservableProperty] private ComboBoxViewModel? _selectedViewModel;
+
     public ObservableCollection<ComboBoxViewModel> ViewModelsCollection { get; set; }
 
     [ObservableProperty] private int _customImageCount;
     [ObservableProperty] private bool _isShuffleEnabled;
     public bool CanStartSession => FolderCount > 0;
     public bool CanDeleteFolder => FolderCount > 0 && SelectedFolder is not null;
+
+    public CustomIntervalViewModel CustomIntervalVM { get; private set; }
+    public PredefinedIntervalsViewModel PredefinedIntervalsVM { get; private set; }
 
     /// <summary>
     /// Design-time only constructor.
@@ -71,17 +77,20 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
 
         ReferenceFolders.CollectionChanged += ReferenceFolders_CollectionChanged;
 
+        CustomIntervalVM = (CustomIntervalViewModel)_modelFactory.GetViewModelName(ApplicationModelNames.CustomInterval);
+        PredefinedIntervalsVM = (PredefinedIntervalsViewModel)_modelFactory.GetViewModelName(ApplicationModelNames.PredefinedIntervals);
+
         ViewModelsCollection =
         [
             new ComboBoxViewModel
             {
                 ViewModelName = "Predefined intervals",
-                ViewModelObject = _modelFactory.GetViewModelName(ApplicationModelNames.PredefinedIntervals)
+                ViewModelObject = PredefinedIntervalsVM
             },
             new ComboBoxViewModel
             {
                 ViewModelName = "Custom Intervals",
-                ViewModelObject = _modelFactory.GetViewModelName(ApplicationModelNames.CustomInterval)
+                ViewModelObject = CustomIntervalVM
             }
         ];
 
@@ -140,5 +149,26 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
             References = files
         };
         return referencesFolder;
+    }
+
+    public SessionTimer GetTimer()
+    {
+        if (SelectedViewModel.ViewModelObject == CustomIntervalVM)
+        {
+            return new SessionTimer()
+            {
+                Hours = CustomIntervalVM.Hours,
+                Minutes = CustomIntervalVM.Minutes,
+                Seconds = CustomIntervalVM.Seconds,
+            };
+        }
+
+        return new SessionTimer()
+        {
+            Hours = 0,
+            Minutes = 0,
+            Seconds = 0,
+        };
+
     }
 }
