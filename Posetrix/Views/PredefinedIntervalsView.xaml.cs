@@ -3,9 +3,9 @@
     /// <summary>
     /// Interaction logic for PredefinedTimes.xaml
     /// </summary>
-    public partial class PredefinedIntervals
+    public partial class PredefinedIntervalsView
     {
-        public PredefinedIntervals()
+        public PredefinedIntervalsView()
         {
             InitializeComponent();
         }

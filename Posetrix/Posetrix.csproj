@@ -12,38 +12,35 @@
   <ItemGroup>
     <PackageReference Include="MetadataExtractor" Version="2.8.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
-    <PackageReference Include="SharpVectors" Version="1.8.4.2" />
-    <PackageReference Include="SkiaSharp" Version="3.116.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Posetrix.Assets\Posetrix.Assets.csproj" />
     <ProjectReference Include="..\Posetrix.Core\Posetrix.Core.csproj" />
-    <ProjectReference Include="..\Posetrix.SharedAssets\Posetrix.SharedAssets.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Views\FoldersAddWindow.xaml">
+    <Page Update="Views\FoldersAddView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <XamlRuntime>Wpf</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\SessionWindow.xaml">
+    <Page Update="Views\SessionView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <XamlRuntime>Wpf</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\SettingsWindow.xaml">
+    <Page Update="Views\SettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <XamlRuntime>Wpf</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\CustomInterval.xaml">
+    <Page Update="Views\CustomIntervalView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <XamlRuntime>Wpf</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\PredefinedIntervals.xaml">
+    <Page Update="Views\PredefinedIntervalsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <XamlRuntime>Wpf</XamlRuntime>
       <SubType>Designer</SubType>

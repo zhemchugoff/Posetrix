@@ -1,8 +1,9 @@
 ﻿<Window
-    x:Class="Posetrix.Views.SettingsWindow"
+    x:Class="Posetrix.Views.SettingsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Posetrix.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:Posetrix.Core.ViewModels;assembly=Posetrix.Core"
     Title="{Binding WindowTitle}"
@@ -15,6 +16,7 @@
     mc:Ignorable="d">
     <Grid Margin="20" ShowGridLines="False">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -81,20 +83,48 @@
                 </Grid>
             </Border>
         </Grid>
-        <TextBlock
-            Grid.Row="2"
-            Grid.ColumnSpan="2"
-            HorizontalAlignment="Center"
-            Style="{StaticResource BodyTextBlockStyle}"
-            Text="Application name" />
+        <Grid Grid.Row="2" Margin="0,0,0,20">
+            <Border
+                Padding="{StaticResource ExpanderPadding}"
+                Background="{DynamicResource ExpanderHeaderBackground}"
+                BorderBrush="{DynamicResource ExpanderHeaderBorderBrush}"
+                BorderThickness="{StaticResource ExpanderBorderThemeThickness}"
+                CornerRadius="{DynamicResource ControlCornerRadius}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="Image quality" />
+                    <ComboBox
+                        Grid.Column="1"
+                        MinWidth="180"
+                        HorizontalAlignment="Right"
+                        SelectedIndex="0">
+                        <ComboBoxItem Content="High" />
+                        <ComboBoxItem Content="Medium" />
+                        <ComboBoxItem Content="Low" />
+                    </ComboBox>
+                </Grid>
+            </Border>
+        </Grid>
         <TextBlock
             Grid.Row="3"
             Grid.ColumnSpan="2"
             HorizontalAlignment="Center"
             Style="{StaticResource BodyTextBlockStyle}"
-            Text="Application version" />
+            Text="Application name" />
         <TextBlock
             Grid.Row="4"
+            Grid.ColumnSpan="2"
+            HorizontalAlignment="Center"
+            Style="{StaticResource BodyTextBlockStyle}"
+            Text="Application version" />
+        <TextBlock
+            Grid.Row="5"
             Grid.ColumnSpan="2"
             HorizontalAlignment="Center">
             Source:<Hyperlink NavigateUri="http://www.example.com" RequestNavigate="Hyperlink_RequestNavigate">www.example.com</Hyperlink>

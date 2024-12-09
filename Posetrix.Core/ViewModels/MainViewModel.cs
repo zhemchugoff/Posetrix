@@ -7,7 +7,6 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using Posetrix.Core.Data;
 using Posetrix.Core.Factories;
-using Posetrix.Core.Services;
 
 
 namespace Posetrix.Core.ViewModels;

@@ -7,30 +7,30 @@ namespace Posetrix.Views
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow
+    public partial class MainView: Window
     {
-        public MainWindow()
+        public MainView()
         {
             InitializeComponent();
         }
 
         private void ShowSettingsWindow_Click(object sender, RoutedEventArgs e)
         {
-            var settingsWindow = App.ServiceProvider.GetRequiredService<SettingsWindow>();
+            var settingsWindow = App.ServiceProvider.GetRequiredService<SettingsView>();
             settingsWindow.DataContext = App.ServiceProvider.GetRequiredService<SettingsViewModel>();
             settingsWindow.Show();
         }
 
         private void AddReferencesButton_Click(object sender, RoutedEventArgs e)
         {
-            var foldersAddWindow = App.ServiceProvider.GetRequiredService<FoldersAddWindow>();
+            var foldersAddWindow = App.ServiceProvider.GetRequiredService<FoldersAddView>();
             foldersAddWindow.DataContext = App.ServiceProvider.GetService<MainViewModel>();
             foldersAddWindow.Show();
         }
 
         private void ShowDrawingSessionWindow_Click(object sender, RoutedEventArgs e)
         {
-            var drawingSessionWindow = App.ServiceProvider.GetRequiredService<SessionWindow>();
+            var drawingSessionWindow = App.ServiceProvider.GetRequiredService<SessionView>();
             drawingSessionWindow.DataContext = App.ServiceProvider.GetRequiredService<SessionViewModel>();
             drawingSessionWindow.Show();
         }

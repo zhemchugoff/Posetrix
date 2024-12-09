@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Globalization;
+﻿using System.Globalization;
 using System.IO;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
@@ -13,69 +12,54 @@ namespace Posetrix.Converters;
 /// <summary>
 /// A class <c>BitmapImageLoader</c> used for loading images and reducing memory consumption.
 /// </summary>
-[ValueConversion(typeof(String), typeof(BitmapImage))]
+[ValueConversion(typeof(string), typeof(BitmapImage))]
 public class BitmapImageLoader : IValueConverter
 {
     private int ImageOrientation { get; set; } = 1; // Default orientation.
 
-    // TODO: handle corrupt images
-    /// <summary>
-    /// Converts <c>path</c> into a bitmap image.
-    /// </summary>
-    /// <returns>bitmap image or null</returns>
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        // Catch corrupt images.
         if (value is string imagePath && !string.IsNullOrEmpty(imagePath))
         {
-            var image = LoadImage(imagePath);
-            return LoadImage(image != null ? imagePath : PlaceHolderService.ErrorImage);
+            if (imagePath.StartsWith("Images."))
+            {
+                return LoadPlaceholder(imagePath);
+            }
+
+            return LoadImage(imagePath) ?? LoadPlaceholder(PlaceHolderService.ErrorImage);
         }
 
-        // TODO: handle corrupt path.
-        return LoadImage(PlaceHolderService.ErrorImage);
+        return LoadPlaceholder(PlaceHolderService.ErrorImage);
+    }
+
+    private static BitmapImage? LoadPlaceholder(string filePath)
+    {
+        using Stream stream = ResourceHelper.GetEmbeddedResourceStream(filePath);
+        if (stream == null) return null;
+
+        var bmp = new BitmapImage();
+        bmp.BeginInit();
+        //stream.Position = 0;
+        bmp.StreamSource = stream;
+        bmp.DecodePixelWidth = 1920;
+        bmp.EndInit();
+        bmp.Freeze();
+        return bmp;
     }
 
     private BitmapImage? LoadImage(string filePath)
     {
         try
         {
-            if (filePath.StartsWith("Images."))
-            {
-                using Stream stream = ResourceHelper.GetEmbeddedResourceStream(filePath);
-                if (stream != null)
-                {
-                    var bmp = new BitmapImage();
-                    bmp.BeginInit();
-                    //ImageOrientation = GetImageOrientation(stream);
-                    //stream.Position = 0;
-                    bmp.StreamSource = stream;
-                    //CorrectImageRotation(bmp, ImageOrientation);
-                    bmp.DecodePixelWidth = 1920;
-                    bmp.EndInit();
-                    bmp.Freeze();
-                    return bmp;
-                }
-            }
-
             var bitmap = new BitmapImage();
             bitmap.BeginInit(); // Starts the initialization process for this element.
+            bitmap.UriSource = new Uri(filePath, UriKind.Absolute);
 
-            // Convert relative path.
-            if (Path.IsPathRooted(filePath))
-            {
-                // Resolve relative paths as pack URIs.
-                bitmap.UriSource = new Uri(filePath, UriKind.Absolute);
-            }
-            else
-            {
-                ImageOrientation = GetImageOrientation(filePath);
-                bitmap.UriSource = new Uri(filePath, UriKind.Absolute);
-            }
-
+            ImageOrientation = GetImageOrientation(filePath);
             CorrectImageRotation(bitmap, ImageOrientation);
 
-            bitmap.DecodePixelWidth = 1920; // Adjust for optimization
+            bitmap.DecodePixelWidth = 1920; // Adjust for optimization.
+            bitmap.DecodePixelWidth = 1600; // Adjust for optimization.
 
             // Caches the entire image into memory at load time.
             // All requests for image data are filled from the memory store.
@@ -115,13 +99,11 @@ public class BitmapImageLoader : IValueConverter
         if (imagePath is string stringPath)
         {
             directories = ImageMetadataReader.ReadMetadata(stringPath);
-
         }
 
         else if (imagePath is Stream streamPath)
         {
             directories = ImageMetadataReader.ReadMetadata(streamPath);
-
         }
 
         else

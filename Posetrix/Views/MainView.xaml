@@ -1,5 +1,5 @@
 ﻿<Window
-    x:Class="Posetrix.Views.MainWindow"
+    x:Class="Posetrix.Views.MainView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:core="clr-namespace:Posetrix.Core.ViewModels;assembly=Posetrix.Core"
@@ -18,10 +18,10 @@
     <Window.Resources>
         <!--  Template for dynamic custom views display  -->
         <DataTemplate DataType="{x:Type core:CustomIntervalViewModel}">
-            <views:CustomInterval />
+            <views:CustomIntervalView />
         </DataTemplate>
         <DataTemplate DataType="{x:Type core:PredefinedIntervalsViewModel}">
-            <views:PredefinedIntervals />
+            <views:PredefinedIntervalsView />
         </DataTemplate>
     </Window.Resources>
     <Grid Margin="20">

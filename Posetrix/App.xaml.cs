@@ -31,7 +31,7 @@ namespace Posetrix
 
             ServiceProvider = serviceCollection.BuildServiceProvider();
 
-            var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
+            var mainWindow = ServiceProvider.GetRequiredService<MainView>();
             mainWindow.DataContext = ServiceProvider.GetRequiredService<MainViewModel>();
             mainWindow.Show();
         }
@@ -39,12 +39,12 @@ namespace Posetrix
         private static void ConfigureServices(ServiceCollection serviceCollection)
         {
             // Add windows.
-            serviceCollection.AddTransient<MainWindow>();
-            serviceCollection.AddTransient<FoldersAddWindow>();
-            serviceCollection.AddTransient<SettingsWindow>();
-            serviceCollection.AddTransient<CustomInterval>();
-            serviceCollection.AddTransient<PredefinedIntervals>();
-            serviceCollection.AddTransient<SessionWindow>();
+            serviceCollection.AddTransient<MainView>();
+            serviceCollection.AddTransient<FoldersAddView>();
+            serviceCollection.AddTransient<SettingsView>();
+            serviceCollection.AddTransient<CustomIntervalView>();
+            serviceCollection.AddTransient<PredefinedIntervalsView>();
+            serviceCollection.AddTransient<SessionView>();
             
             serviceCollection.AddSingleton<Func<ApplicationModelNames, DynamicViewModel>>(s => name => name switch
             {

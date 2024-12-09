@@ -8,9 +8,9 @@ namespace Posetrix.Views;
 /// <summary>
 /// Interaction logic for SettingsWindow.xaml
 /// </summary>
-public partial class SettingsWindow
+public partial class SettingsView: Window
 {
-    public SettingsWindow()
+    public SettingsView()
     {
         InitializeComponent();
     }

@@ -1,7 +1,4 @@
-﻿using System.IO;
-using System.Windows;
-using System.Windows.Media.Imaging;
-using Posetrix.Core.ViewModels;
+﻿using System.Windows;
 
 
 namespace Posetrix.Views;
@@ -9,9 +6,9 @@ namespace Posetrix.Views;
 /// <summary>
 /// Interaction logic for DrawingSessionWindow.xaml
 /// </summary>
-public partial class SessionWindow
+public partial class SessionView: Window
 {
-    public SessionWindow()
+    public SessionView()
     {
         InitializeComponent();
     }
