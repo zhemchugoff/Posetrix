@@ -55,23 +55,24 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
     {
         _mainViewModel = mainViewModel;
 
-        _sessionImages = SessionCollectionStatic.GetImageCollection(_mainViewModel.ReferenceFolders,
-            _mainViewModel.IsShuffleEnabled, _mainViewModel.CustomImageCount);
-        _sessionCollectionCount = _sessionImages.Count;
-
-        _completedImages = [];
-
-        _currentImageIndex = 0;
-
-        IsStopEnabled = true;
-
-        CurrentImage = _sessionImages[_currentImageIndex];
-
-
-        _sessionTimer = _mainViewModel.GetTimer();
+        // Timer.
+        IDynamicView dynamicView = (IDynamicView)_mainViewModel.SelectedViewModel;
+        _sessionTimer = dynamicView.SessionTimer;
         _timerStore = new TimerStore(_sessionTimer.Seconds);
         _timerStore.RemainingSecondsChanged += seconds => CurrentTime = seconds;
         _timerStore.Start();
+
+        IsStopEnabled = true;
+
+        // Images.
+        _sessionImages = SessionCollectionStatic.GetImageCollection(
+            _mainViewModel.ReferenceFolders,
+            _mainViewModel.IsShuffleEnabled,
+            _mainViewModel.CustomImageCount);
+        _sessionCollectionCount = _sessionImages.Count;
+        _completedImages = [];
+        _currentImageIndex = 0;
+        CurrentImage = _sessionImages[_currentImageIndex];
 
         UpdateImageStatus();
     }

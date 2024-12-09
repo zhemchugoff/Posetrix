@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using Posetrix.Core.Data;
-using Posetrix.Core.Factories;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 

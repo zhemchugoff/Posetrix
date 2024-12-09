@@ -43,18 +43,30 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
     [NotifyPropertyChangedFor(nameof(CanDeleteFolder))]
     private ImageFolder? _selectedFolder;
 
-    // ComboBox
-    [ObservableProperty] private ComboBoxViewModel? _selectedViewModel;
+    // ComboBox.
+    public List<string> CustomViews { get; }
 
-    public ObservableCollection<ComboBoxViewModel> ViewModelsCollection { get; set; }
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SelectedViewModel))]
+    private string _selectedComboboxItem;
+
+    public DynamicViewModel SelectedViewModel
+    {
+        get
+        {
+            if (SelectedComboboxItem == "Predefined intervals")
+            {
+                return _modelFactory.GetViewModelName(ApplicationModelNames.PredefinedIntervals);
+            }
+
+            return _modelFactory.GetViewModelName(ApplicationModelNames.CustomInterval);
+        }
+    }
 
     [ObservableProperty] private int _customImageCount;
     [ObservableProperty] private bool _isShuffleEnabled;
     public bool CanStartSession => FolderCount > 0;
     public bool CanDeleteFolder => FolderCount > 0 && SelectedFolder is not null;
-
-    public CustomIntervalViewModel CustomIntervalVM { get; private set; }
-    public PredefinedIntervalsViewModel PredefinedIntervalsVM { get; private set; }
 
     /// <summary>
     /// Design-time only constructor.
@@ -66,35 +78,18 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
     public MainViewModel(ModelFactory modelFactory, IExtensionsService extensionsService,
         IFolderBrowserServiceAsync folderBrowserService)
     {
-        //_configService = configService;
         _modelFactory = modelFactory;
         _extensionsService = extensionsService;
         _folderBrowserService = folderBrowserService;
 
-        // Default value for a folder view.
+        // Folders view.
         FolderCount = 0;
         FolderImageCounter = 0;
-
         ReferenceFolders.CollectionChanged += ReferenceFolders_CollectionChanged;
 
-        CustomIntervalVM = (CustomIntervalViewModel)_modelFactory.GetViewModelName(ApplicationModelNames.CustomInterval);
-        PredefinedIntervalsVM = (PredefinedIntervalsViewModel)_modelFactory.GetViewModelName(ApplicationModelNames.PredefinedIntervals);
-
-        ViewModelsCollection =
-        [
-            new ComboBoxViewModel
-            {
-                ViewModelName = "Predefined intervals",
-                ViewModelObject = PredefinedIntervalsVM
-            },
-            new ComboBoxViewModel
-            {
-                ViewModelName = "Custom Intervals",
-                ViewModelObject = CustomIntervalVM
-            }
-        ];
-
-        SelectedViewModel = ViewModelsCollection.First();
+        // Combobox.
+        CustomViews = ["Custom interval", "Predefined intervals"];
+        SelectedComboboxItem = CustomViews.First();
 
         CustomImageCount = 0; // Number of images, defined by a user. Default is 0: endless mode.
 
@@ -151,24 +146,24 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
         return referencesFolder;
     }
 
-    public SessionTimer GetTimer()
-    {
-        if (SelectedViewModel.ViewModelObject == CustomIntervalVM)
-        {
-            return new SessionTimer()
-            {
-                Hours = CustomIntervalVM.Hours,
-                Minutes = CustomIntervalVM.Minutes,
-                Seconds = CustomIntervalVM.Seconds,
-            };
-        }
+    //public SessionTimer GetTimer()
+    //{
+    //    if (SelectedViewModel.GetType() == IDynamicView)
+    //    {
+    //        return new SessionTimer()
+    //        {
+    //            Hours = CustomIntervalVM.Hours,
+    //            Minutes = CustomIntervalVM.Minutes,
+    //            Seconds = CustomIntervalVM.Seconds,
+    //        };
+    //    }
 
-        return new SessionTimer()
-        {
-            Hours = 0,
-            Minutes = 0,
-            Seconds = 0,
-        };
+    //    return new SessionTimer()
+    //    {
+    //        Hours = 0,
+    //        Minutes = 0,
+    //        Seconds = 0,
+    //    };
 
-    }
+    //}
 }

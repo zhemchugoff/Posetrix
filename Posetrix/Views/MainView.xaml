@@ -95,7 +95,7 @@
                 HorizontalAlignment="Center"
                 Text="{Binding FoldersInfo}" />
         </Grid>
-        <!--<ContentControl x:Name="PracticeModesControlContainer" Grid.Row="1" />-->
+
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -109,11 +109,10 @@
                 Text="Practice modes" />
             <ComboBox
                 Grid.Row="1"
-                DisplayMemberPath="ViewModelName"
-                ItemsSource="{Binding ViewModelsCollection}"
-                SelectedItem="{Binding SelectedViewModel}" />
+                ItemsSource="{Binding CustomViews}"
+                SelectedItem="{Binding SelectedComboboxItem}" />
             <Grid Grid.Row="2">
-                <ContentControl Content="{Binding SelectedViewModel.ViewModelObject}" />
+                <ContentControl Content="{Binding SelectedViewModel}" />
             </Grid>
         </Grid>
 
