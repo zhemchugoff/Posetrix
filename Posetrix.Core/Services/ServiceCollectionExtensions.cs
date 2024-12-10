@@ -1,12 +1,8 @@
-﻿using Posetrix.Core.Interfaces;
-using Posetrix.Core.ViewModels;
-
-namespace Posetrix.Core.Services;
+﻿using Posetrix.Core.ViewModels;
 
 using Microsoft.Extensions.DependencyInjection;
-using Posetrix.Core.Data;
-using Posetrix.Core.Factories;
 
+namespace Posetrix.Core.Services;
 public static class ServiceCollectionExtensions
 {
     /// <summary>
@@ -18,6 +14,7 @@ public static class ServiceCollectionExtensions
         collection.AddSingleton<SettingsViewModel>();
         //collection.AddSingleton<ModelFactory>();
 
+        collection.AddTransient<FolderAddViewModel>();
         collection.AddTransient<CustomIntervalViewModel>();
         collection.AddTransient<PredefinedIntervalsViewModel>();
         collection.AddTransient<SessionViewModel>();

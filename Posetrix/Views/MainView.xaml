@@ -75,7 +75,7 @@
                 Height="46"
                 Margin="0,10"
                 HorizontalAlignment="Stretch"
-                Click="AddReferencesButton_Click"
+                Command="{Binding AddFoldersCommand}"
                 Content="&#xE710;"
                 FontFamily="{StaticResource SegoeUiIcons}"
                 FontSize="20"

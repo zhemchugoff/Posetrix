@@ -11,7 +11,7 @@
     Height="400"
     MinWidth="600"
     MinHeight="400"
-    d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+    d:DataContext="{d:DesignInstance Type=viewmodels:FolderAddViewModel}"
     Icon="{StaticResource AppIcon}"
     mc:Ignorable="d">
     <Grid Margin="20">
@@ -22,7 +22,7 @@
         <ListView
             Grid.Row="0"
             Height="200"
-            ItemsSource="{Binding ReferenceFolders}"
+            ItemsSource="{Binding Folders}"
             SelectedIndex="1"
             SelectedItem="{Binding SelectedFolder}">
             <ListView.ItemTemplate>
@@ -96,7 +96,8 @@
                 CommandParameter="{Binding SelectedFolder}"
                 Content="&#xE738;"
                 FontFamily="{StaticResource SegoeUiIcons}"
-                FontSize="16">
+                FontSize="16"
+                IsEnabled="{Binding CanDeleteFolder}">
                 <Button.ToolTip>
                     <ToolTip>
                         <TextBlock

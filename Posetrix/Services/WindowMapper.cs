@@ -13,6 +13,7 @@ public class WindowMapper
         RegisterMapping<MainViewModel, MainView>();
         RegisterMapping<SettingsViewModel, SettingsView>();
         RegisterMapping<SessionViewModel, SessionView>();
+        RegisterMapping<FolderAddViewModel, FoldersAddView>();
     }
 
     public void RegisterMapping<TViewModel, TWindow>() where TViewModel: BaseViewModel where TWindow : Window
