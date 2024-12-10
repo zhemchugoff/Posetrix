@@ -7,6 +7,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using Posetrix.Core.Data;
 using Posetrix.Core.Factories;
+using Posetrix.Core.Services;
 
 
 namespace Posetrix.Core.ViewModels;
@@ -16,14 +17,11 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
     public string WindowTitle => "Posetrix";
     public string FolderAddTitle => "Add folders";
 
-    //private readonly IConfigService _configService;
     private readonly IFolderBrowserServiceAsync _folderBrowserService;
-    private readonly ModelFactory _modelFactory;
+    private readonly IWindowManager _windowManager;
+    private readonly ViewModelLocator _viewModelLocator;
     private readonly IExtensionsService _extensionsService;
 
-    /// <summary>
-    /// A collection of folders with image files.
-    /// </summary>
     public ObservableCollection<ImageFolder> ReferenceFolders { get; } = [];
 
     [ObservableProperty]
@@ -38,28 +36,28 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
 
     public string FoldersInfo => $" Folders: {FolderCount} Images: {FolderImageCounter}";
 
-
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanDeleteFolder))]
     private ImageFolder? _selectedFolder;
 
     // ComboBox.
-    public List<string> CustomViews { get; }
+    public List<string> ViewNamesList { get; }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SelectedViewModel))]
-    private string _selectedComboboxItem;
+    private string _selectedViewName;
 
-    public DynamicViewModel SelectedViewModel
+    public IDynamicViewModel SelectedViewModel
     {
         get
         {
-            if (SelectedComboboxItem == "Predefined intervals")
+            return SelectedViewName switch
             {
-                return _modelFactory.GetViewModelName(ApplicationModelNames.PredefinedIntervals);
-            }
+                "Predefined intervals" => _viewModelLocator.PredefinedIntervalsViewModel,
+                "Custom interval" => _viewModelLocator.CustomIntervalViewModel,
+                _ => _viewModelLocator.CustomIntervalViewModel,
+            };
 
-            return _modelFactory.GetViewModelName(ApplicationModelNames.CustomInterval);
         }
     }
 
@@ -75,12 +73,13 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
     {
     }
 
-    public MainViewModel(ModelFactory modelFactory, IExtensionsService extensionsService,
-        IFolderBrowserServiceAsync folderBrowserService)
+    public MainViewModel(IExtensionsService extensionsService,
+        IFolderBrowserServiceAsync folderBrowserService, IWindowManager windowManager, ViewModelLocator viewModelLocator)
     {
-        _modelFactory = modelFactory;
         _extensionsService = extensionsService;
         _folderBrowserService = folderBrowserService;
+        this._windowManager = windowManager;
+        this._viewModelLocator = viewModelLocator;
 
         // Folders view.
         FolderCount = 0;
@@ -88,12 +87,13 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
         ReferenceFolders.CollectionChanged += ReferenceFolders_CollectionChanged;
 
         // Combobox.
-        CustomViews = ["Custom interval", "Predefined intervals"];
-        SelectedComboboxItem = CustomViews.First();
+        ViewNamesList = ["Custom interval", "Predefined intervals"];
+        SelectedViewName = ViewNamesList.First();
 
         CustomImageCount = 0; // Number of images, defined by a user. Default is 0: endless mode.
 
         IsShuffleEnabled = false;
+
     }
 
     private void ReferenceFolders_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -146,24 +146,16 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
         return referencesFolder;
     }
 
-    //public SessionTimer GetTimer()
-    //{
-    //    if (SelectedViewModel.GetType() == IDynamicView)
-    //    {
-    //        return new SessionTimer()
-    //        {
-    //            Hours = CustomIntervalVM.Hours,
-    //            Minutes = CustomIntervalVM.Minutes,
-    //            Seconds = CustomIntervalVM.Seconds,
-    //        };
-    //    }
+    [RelayCommand]
+    private void OpenSettings()
+    {
+        _windowManager.ShowWindow(_viewModelLocator.SettingsViewModel);
+    }
 
-    //    return new SessionTimer()
-    //    {
-    //        Hours = 0,
-    //        Minutes = 0,
-    //        Seconds = 0,
-    //    };
 
-    //}
+    [RelayCommand]
+    private void StartSession()
+    {
+        _windowManager.ShowWindow(_viewModelLocator.SessionViewModel);
+    }
 }

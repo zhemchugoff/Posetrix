@@ -56,7 +56,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
         _mainViewModel = mainViewModel;
 
         // Timer.
-        IDynamicView dynamicView = (IDynamicView)_mainViewModel.SelectedViewModel;
+        IDynamicViewModel dynamicView = (IDynamicViewModel)_mainViewModel.SelectedViewModel;
         _sessionTimer = dynamicView.SessionTimer;
         _timerStore = new TimerStore(_sessionTimer.Seconds);
         _timerStore.RemainingSecondsChanged += seconds => CurrentTime = seconds;

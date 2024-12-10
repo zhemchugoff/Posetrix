@@ -15,15 +15,6 @@
     Icon="{StaticResource AppIcon}"
     ResizeMode="NoResize"
     mc:Ignorable="d">
-    <Window.Resources>
-        <!--  Template for dynamic custom views display  -->
-        <DataTemplate DataType="{x:Type core:CustomIntervalViewModel}">
-            <views:CustomIntervalView />
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type core:PredefinedIntervalsViewModel}">
-            <views:PredefinedIntervalsView />
-        </DataTemplate>
-    </Window.Resources>
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <!--  Add references button.  -->
@@ -57,7 +48,7 @@
                     Height="28"
                     Padding="0"
                     VerticalAlignment="Center"
-                    Click="ShowSettingsWindow_Click"
+                    Command="{Binding OpenSettingsCommand}"
                     Content="&#xE713;"
                     FontFamily="{StaticResource SegoeUiIcons}"
                     FontSize="16">
@@ -109,8 +100,8 @@
                 Text="Practice modes" />
             <ComboBox
                 Grid.Row="1"
-                ItemsSource="{Binding CustomViews}"
-                SelectedItem="{Binding SelectedComboboxItem}" />
+                ItemsSource="{Binding ViewNamesList}"
+                SelectedItem="{Binding SelectedViewName}" />
             <Grid Grid.Row="2">
                 <ContentControl Content="{Binding SelectedViewModel}" />
             </Grid>
@@ -155,7 +146,7 @@
             <Button
                 Height="46"
                 HorizontalAlignment="Stretch"
-                Click="ShowDrawingSessionWindow_Click"
+                Command="{Binding StartSessionCommand}"
                 Content="Start a drawing session"
                 IsEnabled="{Binding CanStartSession}"
                 Style="{DynamicResource AccentButtonStyle}" />

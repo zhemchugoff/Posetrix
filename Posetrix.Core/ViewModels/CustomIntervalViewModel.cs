@@ -5,16 +5,11 @@ using Posetrix.Core.Models;
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class CustomIntervalViewModel : DynamicViewModel, IDynamicView
+public partial class CustomIntervalViewModel : BaseViewModel, IDynamicViewModel
 {
     [ObservableProperty] private int _hours = 0;
     [ObservableProperty] private int _minutes = 0;
     [ObservableProperty] private int _seconds = 0;
-
-    public CustomIntervalViewModel()
-    {
-        ModelName = ApplicationModelNames.CustomInterval;
-    }
 
     public string DisplayName => "Custom interval";
 
