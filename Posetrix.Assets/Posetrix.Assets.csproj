@@ -7,14 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\jason-leung-Xaanw0s0pMk-unsplash.jpg" />
     <None Remove="Images\undraw_bug_fixing.png" />
+    <None Remove="Images\undraw_happy_music_g6wc.png" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Icons\avalonia-logo.ico">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Images\jason-leung-Xaanw0s0pMk-unsplash.jpg" />
     <EmbeddedResource Include="Images\undraw_fixing_bugs_w7gi.png" />
+    <EmbeddedResource Include="Images\undraw_happy_music_g6wc.png" />
     <EmbeddedResource Include="Images\undraw_winners_re_wr1l.png" />
   </ItemGroup>
 

@@ -57,8 +57,9 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
         _mainViewModel = mainViewModel;
 
         // Timer.
-        IDynamicViewModel dynamicView = (IDynamicViewModel)_mainViewModel.SelectedViewModel;
-        _sessionTimer = dynamicView.SessionTimer;
+        IDynamicViewModel dynamicView = _mainViewModel.SelectedViewModel;
+
+        _sessionTimer = dynamicView.GetTimer();
         _timerStore = new TimerStore(_sessionTimer.Seconds);
         _timerStore.RemainingSecondsChanged += seconds => CurrentTime = seconds;
         _timerStore.Start();
@@ -159,7 +160,10 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
     [RelayCommand]
     private void StopSession()
     {
-        CurrentImage = PlaceHolderService.Congratulations;
+        CurrentImage = PlaceHolderService.CelebrationImage1;
+        IsMirroredX = false;
+        IsMirroredY = false;
+
         //_sessionImages.Clear();
         CanDeleteImage = false;
         CanSelectNextImage = false;

@@ -15,6 +15,7 @@ namespace Posetrix.Converters;
 [ValueConversion(typeof(string), typeof(BitmapImage))]
 public class BitmapImageLoader : IValueConverter
 {
+    private readonly int PixelWidth = 1920;
     private int ImageOrientation { get; set; } = 1; // Default orientation.
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
@@ -32,16 +33,16 @@ public class BitmapImageLoader : IValueConverter
         return LoadPlaceholder(PlaceHolderService.ErrorImage);
     }
 
-    private static BitmapImage? LoadPlaceholder(string filePath)
+    private BitmapImage? LoadPlaceholder(string filePath)
     {
         using Stream stream = ResourceHelper.GetEmbeddedResourceStream(filePath);
         if (stream == null) return null;
 
         var bmp = new BitmapImage();
         bmp.BeginInit();
-        //stream.Position = 0;
         bmp.StreamSource = stream;
-        bmp.DecodePixelWidth = 1920;
+        bmp.DecodePixelWidth = PixelWidth;
+
         bmp.EndInit();
         bmp.Freeze();
         return bmp;
@@ -58,8 +59,7 @@ public class BitmapImageLoader : IValueConverter
             ImageOrientation = GetImageOrientation(filePath);
             CorrectImageRotation(bitmap, ImageOrientation);
 
-            bitmap.DecodePixelWidth = 1920; // Adjust for optimization.
-            bitmap.DecodePixelWidth = 1600; // Adjust for optimization.
+            bitmap.DecodePixelWidth = PixelWidth; // Adjust for optimization.
 
             // Caches the entire image into memory at load time.
             // All requests for image data are filled from the memory store.

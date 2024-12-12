@@ -14,5 +14,7 @@ public static class PlaceHolderService
 
     public static string ErrorImage => $"{ImagePath}undraw_fixing_bugs_w7gi.png";
     public static string Congratulations => $"{ImagePath}undraw_winners_re_wr1l.png";
+    public static string CelebrationImage=> $"{ImagePath}undraw_happy_music_g6wc.png";
+    public static string CelebrationImage1=> $"{ImagePath}jason-leung-Xaanw0s0pMk-unsplash.jpg";
     public static string WindowIcon => $"{IconPath}pencil-light.png";
 }

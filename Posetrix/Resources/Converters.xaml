@@ -4,4 +4,5 @@
     xmlns:conv="clr-namespace:Posetrix.Converters">
     <conv:BooleanToXScaleConverter x:Key="ScaleConverter" />
     <conv:BitmapImageLoader x:Key="ImageLoader" />
+    <conv:EnumToBooleanConverter x:Key="EnumConverter" />
 </ResourceDictionary>

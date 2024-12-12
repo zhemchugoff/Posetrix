@@ -10,47 +10,7 @@
     Height="450"
     d:DataContext="{d:DesignInstance viewmodels:SessionViewModel}"
     Icon="{StaticResource AppIcon}"
-    SizeChanged="SessionWindow_OnSizeChanged"
     mc:Ignorable="d">
-    <Window.Resources>
-        <Style
-            x:Key="ControlButton"
-            BasedOn="{StaticResource {x:Type Button}}"
-            TargetType="Button">
-            <Setter Property="Width" Value="50" />
-            <Setter Property="Height" Value="50" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="FontFamily" Value="{StaticResource SegoeUiIcons}" />
-            <Setter Property="FontSize" Value="24" />
-            <Setter Property="Margin" Value="4,0" />
-        </Style>
-        <Style
-            x:Key="ImageEditButton"
-            BasedOn="{StaticResource {x:Type Button}}"
-            TargetType="Button">
-            <Setter Property="Width" Value="24" />
-            <Setter Property="Height" Value="24" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="FontFamily" Value="{StaticResource SegoeUiIcons}" />
-            <Setter Property="FontSize" Value="16" />
-            <Setter Property="Margin" Value="4,0" />
-            <Setter Property="Padding" Value="0" />
-        </Style>
-        <Style
-            x:Key="EditToggleButton"
-            BasedOn="{StaticResource {x:Type ToggleButton}}"
-            TargetType="ToggleButton">
-            <Setter Property="Width" Value="24" />
-            <Setter Property="Height" Value="24" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="FontFamily" Value="{StaticResource SegoeUiIcons}" />
-            <Setter Property="FontSize" Value="16" />
-            <Setter Property="Margin" Value="4,0" />
-            <Setter Property="Padding" Value="0" />
-        </Style>
-        <!-- <converters:BitmapImageLoader x:Key="ImageLoader" /> -->
-        <!-- <converters:BooleanToXScaleConverter x:Key="MirrorX" /> -->
-    </Window.Resources>
     <Grid Margin="20" ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -139,14 +99,14 @@
             x:Name="SessionImage"
             Grid.Row="1"
             Margin="0,20"
+            Loaded="SessionImage_Loaded"
+            SizeChanged="SessionWindow_OnSizeChanged"
             Source="{Binding CurrentImage, Converter={StaticResource ImageLoader}}"
             Stretch="Uniform">
             <Image.RenderTransform>
                 <ScaleTransform x:Name="MirrorTransform" ScaleX="{Binding IsMirroredX, Converter={StaticResource ScaleConverter}}" ScaleY="{Binding IsMirroredY, Converter={StaticResource ScaleConverter}}" />
             </Image.RenderTransform>
         </Image>
-        <!--<svg:SvgViewbox Source="Images/undraw_workout_gcgu.svg" Stretch="Uniform" />-->
-        <!--<Image Grid.Row="0" Source="pack://application:,,,/Images/undraw_workout_gcgu.png" />-->
         <StackPanel
             Grid.Row="3"
             HorizontalAlignment="Center"

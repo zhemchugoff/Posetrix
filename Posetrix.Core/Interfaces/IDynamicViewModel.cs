@@ -5,5 +5,6 @@ namespace Posetrix.Core.Interfaces;
 public interface IDynamicViewModel
 {
     string DisplayName { get; }
-    SessionTimer SessionTimer { get; }
+
+    SessionTimer GetTimer();
 }
