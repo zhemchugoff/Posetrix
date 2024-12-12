@@ -36,6 +36,18 @@
             <Setter Property="Margin" Value="4,0" />
             <Setter Property="Padding" Value="0" />
         </Style>
+        <Style
+            x:Key="EditToggleButton"
+            BasedOn="{StaticResource {x:Type ToggleButton}}"
+            TargetType="ToggleButton">
+            <Setter Property="Width" Value="24" />
+            <Setter Property="Height" Value="24" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="{StaticResource SegoeUiIcons}" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Margin" Value="4,0" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
         <!-- <converters:BitmapImageLoader x:Key="ImageLoader" /> -->
         <!-- <converters:BooleanToXScaleConverter x:Key="MirrorX" /> -->
     </Window.Resources>
@@ -71,32 +83,32 @@
                         </ToolTip>
                     </Button.ToolTip>
                 </Button>
-                <Button
-                    Command="{Binding MirrorImageXCommand}"
+                <ToggleButton
                     Content="&#xE784;"
-                    Style="{StaticResource ImageEditButton}">
-                    <Button.ToolTip>
+                    IsChecked="{Binding IsMirroredX, Mode=TwoWay}"
+                    Style="{StaticResource EditToggleButton}">
+                    <ToggleButton.ToolTip>
                         <ToolTip>
                             <TextBlock
                                 FontFamily="Segoe UI"
                                 FontSize="12"
                                 Text="Mirror X" />
                         </ToolTip>
-                    </Button.ToolTip>
-                </Button>
-                <Button
-                    Command="{Binding MirrorImageYCommand}"
+                    </ToggleButton.ToolTip>
+                </ToggleButton>
+                <ToggleButton
                     Content="&#xe76f;"
-                    Style="{StaticResource ImageEditButton}">
-                    <Button.ToolTip>
+                    IsChecked="{Binding IsMirroredY, Mode=TwoWay}"
+                    Style="{StaticResource EditToggleButton}">
+                    <ToggleButton.ToolTip>
                         <ToolTip>
                             <TextBlock
                                 FontFamily="Segoe UI"
                                 FontSize="12"
                                 Text="Mirror Y" />
                         </ToolTip>
-                    </Button.ToolTip>
-                </Button>
+                    </ToggleButton.ToolTip>
+                </ToggleButton>
                 <Button Content="&#xe916;" Style="{StaticResource ImageEditButton}">
                     <Button.ToolTip>
                         <ToolTip>

@@ -5,6 +5,7 @@ using Posetrix.Core.Models;
 using System.Collections.ObjectModel;
 using Posetrix.Core.Services;
 using Posetrix.Core.Data;
+using System.Diagnostics;
 
 namespace Posetrix.Core.ViewModels;
 
@@ -14,7 +15,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
 
     private readonly MainViewModel _mainViewModel;
 
-    private readonly ObservableCollection<string> _sessionImages;
+    private ObservableCollection<string> _sessionImages;
 
     private int _currentImageIndex;
 
@@ -64,17 +65,22 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
 
         IsStopEnabled = true;
 
-        // Images.
-        _sessionImages = SessionCollectionStatic.GetImageCollection(
-            _mainViewModel.ReferenceFolders,
-            _mainViewModel.IsShuffleEnabled,
-            _mainViewModel.CustomImageCount);
+        PopulateImageCollection();
+
         _sessionCollectionCount = _sessionImages.Count;
         _completedImages = [];
         _currentImageIndex = 0;
         CurrentImage = _sessionImages[_currentImageIndex];
 
         UpdateImageStatus();
+    }
+
+    private void PopulateImageCollection()
+    {
+        List<string> tempList = ImageCollectionHelpers.PopulateCollection(_mainViewModel.ReferenceFolders);
+        tempList.ShuffleCollection(_mainViewModel.IsShuffleEnabled);
+        tempList.TrimCollectoin(_mainViewModel.CustomImageCount);
+        _sessionImages = new ObservableCollection<string>(tempList);
     }
 
 
@@ -194,17 +200,5 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
 
         // Checks deletion status.
         CanDeleteImage = SessionCollectionCount > 0;
-    }
-
-    [RelayCommand]
-    private void MirrorImageX()
-    {
-        IsMirroredX = !IsMirroredX;
-    }
-
-    [RelayCommand]
-    private void MirrorImageY()
-    {
-        IsMirroredY = !IsMirroredY;
     }
 }
