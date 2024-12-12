@@ -100,8 +100,9 @@
                 Text="Practice modes" />
             <ComboBox
                 Grid.Row="1"
-                ItemsSource="{Binding ViewNamesList}"
-                SelectedItem="{Binding SelectedViewName}" />
+                DisplayMemberPath="DisplayName"
+                ItemsSource="{Binding Folders}"
+                SelectedItem="{Binding SelectedViewModel}" />
             <Grid Grid.Row="2">
                 <ContentControl Content="{Binding SelectedViewModel}" />
             </Grid>

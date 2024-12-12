@@ -10,6 +10,8 @@ namespace Posetrix.Core.ViewModels
 {
     public partial class FolderAddViewModel : BaseViewModel, ICustomWindow
     {
+        public string WindowTitle => "Add folders";
+
         private readonly ViewModelLocator _viewModelLocator;
         private readonly IFolderBrowserServiceAsync _folderBrowserService;
         private readonly IExtensionsService _extensionsService;
@@ -23,7 +25,6 @@ namespace Posetrix.Core.ViewModels
 
         public bool CanDeleteFolder => _folderCount > 0 && SelectedFolder is not null;
 
-        public string WindowTitle => "Add folders";
 
         public FolderAddViewModel(ViewModelLocator viewModelLocator, IFolderBrowserServiceAsync folderBrowserService, IExtensionsService extensionsService)
         {

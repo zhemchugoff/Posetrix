@@ -12,7 +12,6 @@ namespace Posetrix.Core.ViewModels;
 public partial class MainViewModel : BaseViewModel, ICustomWindow
 {
     public string WindowTitle => "Posetrix";
-    public string FolderAddTitle => "Add folders";
 
     private readonly IWindowManager _windowManager;
     private readonly ViewModelLocator _viewModelLocator;
@@ -30,28 +29,11 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
 
     public string FoldersInfo => $" Folders: {FolderCount} Images: {FolderImageCounter}";
 
-
-
     // ComboBox.
-    public List<string> ViewNamesList { get; }
+    public List<IDynamicViewModel> Folders { get; } = new();
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(SelectedViewModel))]
-    private string _selectedViewName;
-
-    public IDynamicViewModel SelectedViewModel
-    {
-        get
-        {
-            return SelectedViewName switch
-            {
-                "Predefined intervals" => _viewModelLocator.PredefinedIntervalsViewModel,
-                "Custom interval" => _viewModelLocator.CustomIntervalViewModel,
-                _ => _viewModelLocator.CustomIntervalViewModel,
-            };
-
-        }
-    }
+    private IDynamicViewModel _selectedViewModel;
 
     [ObservableProperty] private int _customImageCount;
     [ObservableProperty] private bool _isShuffleEnabled;
@@ -76,8 +58,9 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
         ReferenceFolders.CollectionChanged += ReferenceFolders_CollectionChanged;
 
         // Combobox.
-        ViewNamesList = ["Custom interval", "Predefined intervals"];
-        SelectedViewName = ViewNamesList.First();
+        Folders.Add(viewModelLocator.PredefinedIntervalsViewModel);
+        Folders.Add(viewModelLocator.CustomIntervalViewModel);
+        SelectedViewModel = Folders.First();
 
         CustomImageCount = 0; // Number of images, defined by a user. Default is 0: endless mode.
 
