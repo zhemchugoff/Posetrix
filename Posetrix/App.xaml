@@ -7,6 +7,9 @@
             <FontFamily x:Key="SegoeUiIcons">pack://application:,,,/Assets/Fonts/#Segoe Fluent Icons</FontFamily>
             <FontFamily x:Key="SegoeUi">pack://application:,,,/Assets/Fonts/#Segoe UI</FontFamily>
             <BitmapImage x:Key="AppIcon" UriSource="pack://application:,,,/Assets/Icons/avalonia-logo.ico" />
+            <ControlTemplate x:Key="EmptyErrorTemplate">
+                <AdornedElementPlaceholder />
+            </ControlTemplate>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Themes/Fluent.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Resources/Converters.xaml" />
@@ -14,5 +17,6 @@
                 <ResourceDictionary Source="pack://application:,,,/Resources/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
+        <!--  Global empty error template  -->
     </Application.Resources>
 </Application>

@@ -102,9 +102,10 @@
                 Grid.Row="1"
                 DisplayMemberPath="DisplayName"
                 ItemsSource="{Binding Folders}"
-                SelectedItem="{Binding SelectedViewModel}" />
+                SelectedItem="{Binding SelectedViewModel}"
+                Validation.ErrorTemplate="{x:Null}" />
             <Grid Grid.Row="2">
-                <ContentControl Content="{Binding SelectedViewModel}" />
+                <ContentControl Content="{Binding SelectedViewModel}" Validation.ErrorTemplate="{x:Null}" />
             </Grid>
         </Grid>
 

@@ -1,17 +1,29 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Posetrix.Core.Data;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class CustomIntervalViewModel : BaseViewModel, IDynamicViewModel
+public partial class CustomIntervalViewModel : ObservableValidator, IDynamicViewModel
 {
     public string DisplayName => "Custom interval";
 
-    [ObservableProperty] private int _hours = 0;
-    [ObservableProperty] private int _minutes = 0;
-    [ObservableProperty] private int _seconds = 0;
+    [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Range(0, int.MaxValue, ErrorMessage = "Enter a number between 0 and whatever you want")]
+    private int _hours;
 
-    public SessionTimer GetTimer() => new() { Hours = Hours, Minutes = Minutes, Seconds = Seconds };
+    [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Range(0, 59, ErrorMessage = "Enter a number between 0 and 59")]
+    private int _minutes;
+
+    [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Range(0, 59, ErrorMessage = "enter a number between 0 and 59")]
+    private int _seconds;
+
+    public SessionTimer GetTimer() => new SessionTimer() { Hours = Hours, Minutes = Minutes, Seconds = Seconds };
 }

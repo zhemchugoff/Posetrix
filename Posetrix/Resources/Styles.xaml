@@ -39,4 +39,16 @@
     <Style BasedOn="{StaticResource {x:Type ToggleButton}}" TargetType="RadioButton">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
     </Style>
+    <Style
+        x:Key="TextBoxValidation"
+        BasedOn="{StaticResource {x:Type TextBox}}"
+        TargetType="TextBox">
+        <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource EmptyErrorTemplate}" />
+        <Style.Triggers>
+            <Trigger Property="Validation.HasError" Value="true">
+                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource SystemFillColorAttentionBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

@@ -9,6 +9,9 @@ public partial class PredefinedIntervalsViewModel : BaseViewModel, IDynamicViewM
     public string DisplayName => "Predefined intervals";
 
     [ObservableProperty]
+    private int _seconds = 0;
+
+    [ObservableProperty]
     private Intervals _selectedInterval;
 
     public SessionTimer GetTimer() =>
@@ -23,7 +26,6 @@ public partial class PredefinedIntervalsViewModel : BaseViewModel, IDynamicViewM
             Intervals.Interval6 => new() { Hours = 0, Minutes = 10, Seconds = 0 },
             _ => new() { Hours = 0, Minutes = 0, Seconds = 15 }
         };
-
 }
 
 public enum Intervals

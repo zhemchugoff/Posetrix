@@ -1,8 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Posetrix.Core.Data;
-using Posetrix.Core.Factories;
 using Posetrix.Core.Interfaces;
-using Posetrix.Core.ViewModels;
 using Posetrix.Views;
 
 namespace Posetrix.Services;

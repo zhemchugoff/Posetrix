@@ -19,9 +19,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid
             Grid.Row="0"
@@ -111,23 +109,20 @@
                 </Grid>
             </Border>
         </Grid>
-        <TextBlock
-            Grid.Row="3"
-            Grid.ColumnSpan="2"
-            HorizontalAlignment="Center"
-            Style="{StaticResource BodyTextBlockStyle}"
-            Text="Application name" />
-        <TextBlock
-            Grid.Row="4"
-            Grid.ColumnSpan="2"
-            HorizontalAlignment="Center"
-            Style="{StaticResource BodyTextBlockStyle}"
-            Text="Application version" />
-        <TextBlock
-            Grid.Row="5"
-            Grid.ColumnSpan="2"
-            HorizontalAlignment="Center">
-            Source:<Hyperlink NavigateUri="http://www.example.com" RequestNavigate="Hyperlink_RequestNavigate">www.example.com</Hyperlink>
-        </TextBlock>
+        <StackPanel Grid.Row="3" VerticalAlignment="Center">
+            <TextBlock
+                HorizontalAlignment="Center"
+                Style="{StaticResource BodyTextBlockStyle}"
+                Text="Posetrix" />
+
+            <TextBlock
+                HorizontalAlignment="Center"
+                Style="{StaticResource BodyTextBlockStyle}"
+                Text="Application version" />
+            <Image Width="30" Source="/Assets/Icons/github-mark.png" />
+            <TextBlock HorizontalAlignment="Center">
+                Source:<Hyperlink NavigateUri="http://www.example.com" RequestNavigate="Hyperlink_RequestNavigate">www.example.com</Hyperlink>
+            </TextBlock>
+        </StackPanel>
     </Grid>
 </Window>

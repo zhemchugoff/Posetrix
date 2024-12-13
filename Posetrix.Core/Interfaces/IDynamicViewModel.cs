@@ -6,5 +6,7 @@ public interface IDynamicViewModel
 {
     string DisplayName { get; }
 
+    int Seconds { get; set; }
+
     SessionTimer GetTimer();
 }

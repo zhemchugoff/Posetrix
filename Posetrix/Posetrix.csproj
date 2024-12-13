@@ -49,6 +49,7 @@
 
   <ItemGroup>
     <None Remove="Assets\Icons\avalonia-logo.ico" />
+    <None Remove="Assets\Icons\github-mark.png" />
     <None Remove="Posetrix.AssetsAvalonia\Images\undraw_winners_re_wr1l.png" />
   </ItemGroup>
 
@@ -60,6 +61,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\Icons\avalonia-logo.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\github-mark.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

@@ -78,12 +78,12 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
             {
                 FolderImageCounter += folder.References.Count;
             }
-        } else
+        }
+        else
         {
             FolderImageCounter = 0;
         }
     }
-
 
     [RelayCommand]
     private void OpenSettings()
@@ -91,6 +91,11 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
         _windowManager.ShowWindow(_viewModelLocator.SettingsViewModel);
     }
 
+    [RelayCommand]
+    private void AddFolders()
+    {
+        _windowManager.ShowWindow(_viewModelLocator.FolderAddViewModel);
+    }
 
     [RelayCommand]
     private void StartSession()
@@ -98,9 +103,4 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
         _windowManager.ShowWindow(_viewModelLocator.SessionViewModel);
     }
 
-    [RelayCommand]
-    private void AddFolders()
-    {
-        _windowManager.ShowWindow(_viewModelLocator.FolderAddViewModel);
-    }
 }

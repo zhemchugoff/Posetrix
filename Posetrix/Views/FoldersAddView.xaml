@@ -52,6 +52,7 @@
                                 Grid.Row="0"
                                 Grid.Column="1"
                                 Margin="12,6,0,0"
+                                FontFamily="{StaticResource SegoeUi}"
                                 FontWeight="Bold"
                                 Text="{Binding FolderName, Mode=OneWay}" />
                             <TextBlock
@@ -64,6 +65,7 @@
                                 Grid.Column="2"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
+                                FontFamily="{StaticResource SegoeUi}"
                                 Text="{Binding ImageCounter}" />
                         </Grid>
                     </DataTemplate>
