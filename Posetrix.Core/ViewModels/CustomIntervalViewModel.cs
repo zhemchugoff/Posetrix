@@ -22,8 +22,11 @@ public partial class CustomIntervalViewModel : ObservableValidator, IDynamicView
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
-    [Range(0, 59, ErrorMessage = "enter a number between 0 and 59")]
+    [Range(0, 59, ErrorMessage = "Enter a number between 0 and 59")]
     private int _seconds;
 
     public SessionTimer GetTimer() => new SessionTimer() { Hours = Hours, Minutes = Minutes, Seconds = Seconds };
+
+    public bool CanStart => !HasErrors;
+
 }

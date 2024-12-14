@@ -4,7 +4,7 @@ using Posetrix.Core.Models;
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class PredefinedIntervalsViewModel : BaseViewModel, IDynamicViewModel
+public partial class PredefinedIntervalsViewModel : ObservableValidator, IDynamicViewModel
 {
     public string DisplayName => "Predefined intervals";
 
@@ -26,6 +26,8 @@ public partial class PredefinedIntervalsViewModel : BaseViewModel, IDynamicViewM
             Intervals.Interval6 => new() { Hours = 0, Minutes = 10, Seconds = 0 },
             _ => new() { Hours = 0, Minutes = 0, Seconds = 15 }
         };
+
+    public bool CanStart => !HasErrors;
 }
 
 public enum Intervals

@@ -8,5 +8,7 @@ public interface IDynamicViewModel
 
     int Seconds { get; set; }
 
+    bool CanStart { get; }
+
     SessionTimer GetTimer();
 }

@@ -150,7 +150,6 @@
                 HorizontalAlignment="Stretch"
                 Command="{Binding StartSessionCommand}"
                 Content="Start a drawing session"
-                IsEnabled="{Binding CanStartSession}"
                 Style="{DynamicResource AccentButtonStyle}" />
         </Grid>
     </Grid>
