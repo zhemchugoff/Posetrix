@@ -4,7 +4,7 @@ using Avalonia.Interactivity;
 using Microsoft.Extensions.DependencyInjection;
 using Posetrix.Core.Data;
 using Posetrix.Core.Interfaces;
-using Posetrix.Core.Services;
+using Posetrix.Core.Data;
 using Posetrix.Core.ViewModels;
 
 namespace Posetrix.Avalonia.Views;

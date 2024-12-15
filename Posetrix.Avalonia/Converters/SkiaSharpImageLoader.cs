@@ -4,7 +4,7 @@ using System.IO;
 using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media.Imaging;
-using Posetrix.Core.Services;
+using Posetrix.Core.Data;
 using SkiaSharp;
 
 namespace Posetrix.Avalonia.Converters;

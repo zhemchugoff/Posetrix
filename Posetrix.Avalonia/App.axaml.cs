@@ -10,10 +10,10 @@ using Posetrix.Avalonia.Views;
 using Posetrix.Core.Data;
 using Posetrix.Core.Factories;
 using Posetrix.Core.Interfaces;
-using Posetrix.Core.Services;
 using Posetrix.Core.ViewModels;
 using CustomIntervalView = Posetrix.Avalonia.Views.CustomIntervalView;
 using PredefinedIntervalsView = Posetrix.Avalonia.Views.PredefinedIntervalsView;
+using Posetrix.Core.Services;
 
 
 namespace Posetrix.Avalonia;

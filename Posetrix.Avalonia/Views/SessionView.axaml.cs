@@ -2,7 +2,7 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
-using Posetrix.Core.Services;
+using Posetrix.Core.Data;
 
 namespace Posetrix.Avalonia.Views;
 

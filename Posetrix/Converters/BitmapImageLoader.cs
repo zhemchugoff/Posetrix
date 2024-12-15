@@ -5,7 +5,7 @@ using System.Windows.Media.Imaging;
 using MetadataExtractor;
 using MetadataExtractor.Formats.Exif;
 using Posetrix.Assets;
-using Posetrix.Core.Services;
+using Posetrix.Core.Data;
 
 namespace Posetrix.Converters;
 

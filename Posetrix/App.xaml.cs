@@ -1,10 +1,11 @@
 ﻿using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Posetrix.Core.Interfaces;
-using Posetrix.Core.Services;
+using Posetrix.Core.Data;
 using Posetrix.Core.ViewModels;
 using Posetrix.Services;
 using Posetrix.Views;
+using Posetrix.Core.Services;
 
 namespace Posetrix
 {

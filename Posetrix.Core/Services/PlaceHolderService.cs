@@ -1,4 +1,4 @@
-﻿namespace Posetrix.Core.Services;
+﻿namespace Posetrix.Core.Data;
 
 public static class PlaceHolderService
 {

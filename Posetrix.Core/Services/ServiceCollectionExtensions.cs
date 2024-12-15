@@ -12,7 +12,6 @@ public static class ServiceCollectionExtensions
     {
         collection.AddSingleton<MainViewModel>();
         collection.AddSingleton<SettingsViewModel>();
-        //collection.AddSingleton<ModelFactory>();
 
         collection.AddTransient<CustomIntervalViewModel>();
         collection.AddTransient<PredefinedIntervalsViewModel>();

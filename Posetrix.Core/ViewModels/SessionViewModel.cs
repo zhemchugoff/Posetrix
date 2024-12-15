@@ -3,9 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 using System.Collections.ObjectModel;
-using Posetrix.Core.Services;
 using Posetrix.Core.Data;
-using System.Diagnostics;
 
 namespace Posetrix.Core.ViewModels;
 
@@ -25,7 +23,12 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
     [ObservableProperty] private bool _canSelectPreviousImage;
     [ObservableProperty] private bool _canDeleteImage;
     [ObservableProperty] private string? _currentImage;
-    [ObservableProperty] private int _currentTime;
+
+    [ObservableProperty]
+    private int _seconds;
+
+    [ObservableProperty]
+    private string _formattedTime = "00:00:00";
 
     private readonly TimerStore _timerStore;
 
@@ -46,9 +49,9 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
     [ObservableProperty]
     private bool _isStopEnabled;
 
-    private SessionTimer _sessionTimer;
-
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     public SessionViewModel()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     {
 
     }
@@ -59,9 +62,8 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
         // Timer.
         IDynamicViewModel dynamicView = _mainViewModel.SelectedViewModel;
 
-        _sessionTimer = dynamicView.GetTimer();
-        _timerStore = new TimerStore(_sessionTimer.Seconds);
-        _timerStore.RemainingSecondsChanged += seconds => CurrentTime = seconds;
+        _timerStore = new TimerStore(dynamicView.GetSeconds());
+        _timerStore.TimeUpdated += OnTimeUpdated;
         _timerStore.Start();
 
         IsStopEnabled = true;
@@ -83,7 +85,6 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
         tempList.TrimCollectoin(_mainViewModel.CustomImageCount);
         _sessionImages = new ObservableCollection<string>(tempList);
     }
-
 
     /// <summary>
     /// Selects next image and increments completed images.
@@ -205,4 +206,14 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
         // Checks deletion status.
         CanDeleteImage = SessionCollectionCount > 0;
     }
+
+    /// <summary>
+    /// Updates <c>FormattedTime</c> textbox with formatted text.
+    /// </summary>
+    /// <param name="remainingTime"></param>
+    private void OnTimeUpdated(TimeSpan remainingTime)
+    {
+        FormattedTime = remainingTime.ToString(@"hh\:mm\:ss");
+    }
+
 }

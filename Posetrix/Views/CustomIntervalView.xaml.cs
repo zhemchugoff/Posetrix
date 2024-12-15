@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using Posetrix.Core.Data;
+using System.Text.RegularExpressions;
 
 namespace Posetrix.Views;
 
@@ -14,10 +15,7 @@ public partial class CustomIntervalView
 
     private void TextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
     {
-        // Allow only numeric input
-        e.Handled = !IsTextNumeric(e.Text);
+        Regex regex = TimerRegex.TimerValuesRegex();
+        e.Handled = !regex.IsMatch(e.Text);
     }
-
-    // Accept only digits.
-    private static bool IsTextNumeric(string text) => Regex.IsMatch(text, "^[0-9]+$");
 }

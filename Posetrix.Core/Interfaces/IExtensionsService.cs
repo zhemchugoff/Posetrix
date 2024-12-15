@@ -1,6 +1,4 @@
-﻿using Posetrix.Core.Models;
-
-namespace Posetrix.Core.Interfaces;
+﻿namespace Posetrix.Core.Interfaces;
 
 public interface IExtensionsService
 {

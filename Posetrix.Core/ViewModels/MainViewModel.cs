@@ -4,7 +4,7 @@ using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using Posetrix.Core.Services;
+using Posetrix.Core.Data;
 
 
 namespace Posetrix.Core.ViewModels;
@@ -16,8 +16,8 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
     private readonly IWindowManager _windowManager;
     private readonly ViewModelLocator _viewModelLocator;
 
-    private CustomIntervalViewModel _cVM;
-    private PredefinedIntervalsViewModel _pVM;
+    private readonly CustomIntervalViewModel _cVM;
+    private readonly PredefinedIntervalsViewModel _pVM;
 
     public ObservableCollection<ImageFolder> ReferenceFolders { get; } = [];
     public string FoldersInfo => $" Folders: {FolderCount} Images: {FolderImageCounter}";
@@ -32,7 +32,7 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
     private int _folderImageCounter;
 
     // ComboBox.
-    public List<IDynamicViewModel> Folders { get; } = new();
+    public List<IDynamicViewModel> Folders { get; } = [];
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(StartSessionCommand))]

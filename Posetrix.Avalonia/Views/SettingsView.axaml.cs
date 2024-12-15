@@ -3,7 +3,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Styling;
 using Posetrix.Core.Models;
-using Posetrix.Core.Services;
+using Posetrix.Core.Data;
 
 namespace Posetrix.Avalonia.Views;
 

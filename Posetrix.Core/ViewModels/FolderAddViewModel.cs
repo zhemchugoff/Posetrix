@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
-using Posetrix.Core.Services;
+using Posetrix.Core.Data;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 

@@ -93,7 +93,7 @@
             <TextBlock
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
-                Text="{Binding CurrentTime}" />
+                Text="{Binding FormattedTime}" />
         </UniformGrid>
         <Image
             x:Name="SessionImage"
