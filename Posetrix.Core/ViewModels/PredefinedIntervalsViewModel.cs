@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Posetrix.Core.Interfaces;
-using Posetrix.Core.Models;
 
 namespace Posetrix.Core.ViewModels;
 
@@ -9,24 +8,20 @@ public partial class PredefinedIntervalsViewModel : ObservableValidator, IDynami
     public string DisplayName => "Predefined intervals";
 
     [ObservableProperty]
-    private int _seconds = 0;
-
-    [ObservableProperty]
     private Intervals _selectedInterval;
 
-    public SessionTimer GetTimer() =>
+    public int GetSeconds() =>
 
         SelectedInterval switch
         {
-            Intervals.Interval1 => new() { Hours = 0, Minutes = 0, Seconds = 30 },
-            Intervals.Interval2 => new() { Hours = 0, Minutes = 0, Seconds = 45 },
-            Intervals.Interval3 => new() { Hours = 0, Minutes = 1, Seconds = 0 },
-            Intervals.Interval4 => new() { Hours = 0, Minutes = 2, Seconds = 0 },
-            Intervals.Interval5 => new() { Hours = 0, Minutes = 5, Seconds = 0 },
-            Intervals.Interval6 => new() { Hours = 0, Minutes = 10, Seconds = 0 },
-            _ => new() { Hours = 0, Minutes = 0, Seconds = 15 }
+            Intervals.Interval1 => 30,
+            Intervals.Interval2 => 45,
+            Intervals.Interval3 => 60,
+            Intervals.Interval4 => 120,
+            Intervals.Interval5 => 300,
+            Intervals.Interval6 => 600,
+            _ => 0
         };
-
     public bool CanStart => !HasErrors;
 }
 

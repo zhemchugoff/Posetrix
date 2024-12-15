@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Posetrix.Core.Interfaces;
-using Posetrix.Core.Models;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Posetrix.Core.ViewModels;
 
@@ -12,21 +10,18 @@ public partial class CustomIntervalViewModel : ObservableValidator, IDynamicView
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
-    [Range(0, int.MaxValue, ErrorMessage = "Enter a number between 0 and whatever you want")]
-    private int _hours;
+    [Range(0, int.MaxValue, ErrorMessage = "Enter a correct number")]
+    private int? _seconds = 0;
 
-    [ObservableProperty]
-    [NotifyDataErrorInfo]
-    [Range(0, 59, ErrorMessage = "Enter a number between 0 and 59")]
-    private int _minutes;
+    partial void OnSecondsChanged(int? value)
+    {
+        if (string.IsNullOrWhiteSpace(value.ToString()))
+        {
+            Seconds = 0;
+        }
+    }
 
-    [ObservableProperty]
-    [NotifyDataErrorInfo]
-    [Range(0, 59, ErrorMessage = "Enter a number between 0 and 59")]
-    private int _seconds;
-
-    public SessionTimer GetTimer() => new SessionTimer() { Hours = Hours, Minutes = Minutes, Seconds = Seconds };
+    public int GetSeconds() => Seconds ?? 0;
 
     public bool CanStart => !HasErrors;
-
 }

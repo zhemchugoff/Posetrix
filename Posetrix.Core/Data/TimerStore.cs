@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.Diagnostics;
-using System.Timers;
+﻿using System.Timers;
 using Timer = System.Timers.Timer;
 
 namespace Posetrix.Core.Data;
@@ -9,13 +7,16 @@ public class TimerStore
 {
     private readonly Timer _timer;
 
-    private int _remainingSeconds;
+    private int _seconds;
+    private readonly int _startSeconds;
 
-    public event Action<int> RemainingSecondsChanged;
+    public event Action<TimeSpan>? TimeUpdated;
 
-    public TimerStore(int startSeconds)
+    public TimerStore(int seconds)
     {
-        _remainingSeconds = startSeconds;
+        _seconds = seconds;
+        _startSeconds = seconds;
+
         _timer = new Timer(1000); // 1 second interval.
         _timer.Elapsed += Timer_Elapsed;
     }
@@ -23,21 +24,20 @@ public class TimerStore
     public void Start() => _timer.Start();
     public void Stop() => _timer.Stop();
 
-    public void Reset(int startSeconds)
+    public void Reset()
     {
         Stop();
-        _remainingSeconds = startSeconds;
-        RemainingSecondsChanged?.Invoke(_remainingSeconds);
+        var time = TimeSpan.FromSeconds(_startSeconds);
+        TimeUpdated?.Invoke(time);
     }
 
     private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
     {
-        Debug.WriteLine(_remainingSeconds);
-
-        if (_remainingSeconds > 0)
+        if (_seconds > 0)
         {
-            _remainingSeconds--;
-            RemainingSecondsChanged?.Invoke(_remainingSeconds);
+            var time = TimeSpan.FromSeconds(_seconds);
+            TimeUpdated?.Invoke(time);
+            _seconds--;
         }
         else
         {
