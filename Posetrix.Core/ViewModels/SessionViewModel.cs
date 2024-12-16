@@ -4,6 +4,8 @@ using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 using System.Collections.ObjectModel;
 using Posetrix.Core.Data;
+using System.Diagnostics;
+using System.ComponentModel;
 
 namespace Posetrix.Core.ViewModels;
 
@@ -19,13 +21,19 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
 
     private readonly List<string> _completedImages;
 
+    // Control buttons.
     [ObservableProperty] private bool _canSelectNextImage;
     [ObservableProperty] private bool _canSelectPreviousImage;
     [ObservableProperty] private bool _canDeleteImage;
     [ObservableProperty] private string? _currentImage;
 
     [ObservableProperty]
-    private int _seconds;
+    public partial bool IsStopEnabled { get; set; }
+
+    public bool IsPaused => _timerStore.IsTimerPaused;
+
+    [ObservableProperty]
+    public partial int Seconds { get; set; }
 
     [ObservableProperty]
     private string _formattedTime = "00:00:00";
@@ -46,9 +54,6 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
 
     public string SessionInfo => $"{CompletedImagesCounter} / {SessionCollectionCount}";
 
-    [ObservableProperty]
-    private bool _isStopEnabled;
-
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     public SessionViewModel()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
@@ -62,9 +67,16 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
         // Timer.
         IDynamicViewModel dynamicView = _mainViewModel.SelectedViewModel;
 
-        _timerStore = new TimerStore(dynamicView.GetSeconds());
+        _timerStore = new TimerStore();
         _timerStore.TimeUpdated += OnTimeUpdated;
-        _timerStore.Start();
+        _timerStore.CountdownFinished += OnCountDownFinished;
+        Seconds = _mainViewModel.SelectedViewModel.GetSeconds();
+
+        _timerStore.PropertyChanged += TimerStore_PropertyChanged; // Subscribe to _timeStore property changes.
+
+        var duration = TimeSpan.FromSeconds(Seconds);
+        _timerStore.StartTimer(duration);
+
 
         IsStopEnabled = true;
 
@@ -76,6 +88,22 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
         CurrentImage = _sessionImages[_currentImageIndex];
 
         UpdateImageStatus();
+    }
+
+    /// <summary>
+    /// Methods <c>TimerStore_PropertyChanged</c> updates <c>IsPaused</c> status.
+    /// </summary>
+    private void TimerStore_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(TimerStore.IsTimerPaused))
+        {
+            OnPropertyChanged(nameof(IsPaused));
+        } 
+    }
+
+    private void OnCountDownFinished()
+    {
+        SelectNextImage();
     }
 
     private void PopulateImageCollection()
@@ -104,6 +132,11 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
             {
                 _currentImageIndex++;
                 CurrentImage = _sessionImages[_currentImageIndex];
+                Debug.WriteLine($"Before: {IsStopEnabled}");
+                Debug.WriteLine($"Before timer: {_timerStore.IsTimerPaused}");
+                ResetTimer();
+                Debug.WriteLine($"After: {IsStopEnabled}");
+                Debug.WriteLine($"Before timer: {_timerStore.IsTimerPaused}");
                 UpdateImageStatus();
             }
             else
@@ -164,12 +197,14 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
         CurrentImage = PlaceHolderService.CelebrationImage1;
         IsMirroredX = false;
         IsMirroredY = false;
+        //IsPaused = false;
 
         //_sessionImages.Clear();
         CanDeleteImage = false;
         CanSelectNextImage = false;
         CanSelectPreviousImage = false;
         IsStopEnabled = false;
+
     }
 
     /// <summary>
@@ -216,4 +251,27 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
         FormattedTime = remainingTime.ToString(@"hh\:mm\:ss");
     }
 
+    [RelayCommand]
+    private void PauseSession()
+    {
+        if (!IsPaused)
+        {
+            _timerStore.PauseTimer();
+        }
+        else
+        {
+            _timerStore.ResumeTimer();
+        }
+    }
+
+    private void ResetTimer()
+    {
+        var duration = TimeSpan.FromSeconds(Seconds);
+        _timerStore.ResetTimer(duration);
+    }
+
+    public void Dispose()
+    {
+        _timerStore.PropertyChanged -= TimerStore_PropertyChanged;
+    }
 }

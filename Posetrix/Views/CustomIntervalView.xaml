@@ -16,4 +16,5 @@
             Style="{StaticResource TextBoxValidation}"
             Text="{Binding Seconds, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True, FallbackValue=0, TargetNullValue=''}" />
     </Grid>
+
 </UserControl>

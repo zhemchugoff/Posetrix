@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 
 
 namespace Posetrix.Views;
@@ -10,7 +11,10 @@ public partial class SessionView : Window
 {
     public SessionView()
     {
+        // TODO: add animation
         InitializeComponent();
+        MouseEnter += SessionWindow_MouseEnter;
+        MouseLeave += SessionWindow_MouseLeave;
     }
 
     /// <summary>
@@ -34,4 +38,7 @@ public partial class SessionView : Window
     {
         UpdateScaleTransformCenter();
     }
+
+    private void SessionWindow_MouseEnter(object sender, MouseEventArgs e) { SessionStackPanel.Visibility = Visibility.Visible; }
+    private void SessionWindow_MouseLeave(object sender, MouseEventArgs e) { SessionStackPanel.Visibility = Visibility.Collapsed; }
 }

@@ -67,8 +67,8 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
         ReferenceFolders.CollectionChanged += ReferenceFolders_CollectionChanged;
 
         // Combobox.
-        Folders.Add(_cVM);
         Folders.Add(_pVM);
+        Folders.Add(_cVM);
         SelectedViewModel = Folders.First();
 
         CustomImageCount = 0; // Number of images, defined by a user. Default is 0: endless mode.

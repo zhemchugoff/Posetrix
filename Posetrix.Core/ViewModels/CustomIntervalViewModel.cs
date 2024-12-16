@@ -6,7 +6,7 @@ namespace Posetrix.Core.ViewModels;
 
 public partial class CustomIntervalViewModel : ObservableValidator, IDynamicViewModel
 {
-    public string DisplayName => "Custom interval";
+    public string DisplayName => "Custom interval (in seconds)";
 
     [ObservableProperty]
     [NotifyDataErrorInfo]

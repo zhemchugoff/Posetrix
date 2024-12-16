@@ -6,177 +6,196 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:Posetrix.Core.ViewModels;assembly=Posetrix.Core"
     Title="{Binding WindowTitle}"
-    Width="600"
-    Height="450"
+    Width="800"
+    Height="600"
+    MinWidth="400"
+    MinHeight="400"
     d:DataContext="{d:DesignInstance viewmodels:SessionViewModel}"
     Icon="{StaticResource AppIcon}"
     mc:Ignorable="d">
-    <Grid Margin="20" ShowGridLines="False">
+
+    <Grid Margin="12" ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="10*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <UniformGrid Grid.Row="0" Columns="3">
-            <TextBlock VerticalAlignment="Center" Text="{Binding SessionInfo}" />
+        <Border
+            Grid.Row="0"
+            Margin="0,0,0,8"
+            Padding="8"
+            Background="{DynamicResource ExpanderHeaderBackground}"
+            BorderBrush="{DynamicResource ExpanderHeaderBorderBrush}"
+            BorderThickness="{StaticResource ExpanderBorderThemeThickness}"
+            CornerRadius="{DynamicResource ControlCornerRadius}">
+            <UniformGrid Columns="3">
+                <TextBlock VerticalAlignment="Center" Text="{Binding SessionInfo}" />
+                <StackPanel
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <Button Content="&#xe718;" Style="{StaticResource ImageEditButton}">
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <TextBlock
+                                    FontFamily="{StaticResource SegoeUi}"
+                                    FontSize="12"
+                                    Text="Always on top" />
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Content="&#xE80A;" Style="{StaticResource ImageEditButton}">
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <TextBlock
+                                    FontFamily="Segoe UI"
+                                    FontSize="12"
+                                    Text="Grid" />
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+                    <ToggleButton
+                        Content="&#xE784;"
+                        IsChecked="{Binding IsMirroredX, Mode=TwoWay}"
+                        Style="{StaticResource EditToggleButton}">
+                        <ToggleButton.ToolTip>
+                            <ToolTip>
+                                <TextBlock
+                                    FontFamily="Segoe UI"
+                                    FontSize="12"
+                                    Text="Mirror X" />
+                            </ToolTip>
+                        </ToggleButton.ToolTip>
+                    </ToggleButton>
+                    <ToggleButton
+                        Content="&#xe76f;"
+                        IsChecked="{Binding IsMirroredY, Mode=TwoWay}"
+                        Style="{StaticResource EditToggleButton}">
+                        <ToggleButton.ToolTip>
+                            <ToolTip>
+                                <TextBlock
+                                    FontFamily="Segoe UI"
+                                    FontSize="12"
+                                    Text="Mirror Y" />
+                            </ToolTip>
+                        </ToggleButton.ToolTip>
+                    </ToggleButton>
+                    <Button Content="&#xe916;" Style="{StaticResource ImageEditButton}">
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <TextBlock
+                                    FontFamily="Segoe UI"
+                                    FontSize="12"
+                                    Text="Timer visibility" />
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Content="&#xe746;" Style="{StaticResource ImageEditButton}">
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <TextBlock
+                                    FontFamily="Segoe UI"
+                                    FontSize="12"
+                                    Text="Black and white" />
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+                </StackPanel>
+                <TextBlock
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Text="{Binding FormattedTime}" />
+            </UniformGrid>
+        </Border>
+        <Grid Grid.Row="1">
+            <Image
+                x:Name="SessionImage"
+                Loaded="SessionImage_Loaded"
+                SizeChanged="SessionWindow_OnSizeChanged"
+                Source="{Binding CurrentImage, Converter={StaticResource ImageLoader}, Mode=OneWay}"
+                Stretch="Uniform">
+                <Image.RenderTransform>
+                    <ScaleTransform x:Name="MirrorTransform" ScaleX="{Binding IsMirroredX, Converter={StaticResource ScaleConverter}}" ScaleY="{Binding IsMirroredY, Converter={StaticResource ScaleConverter}}" />
+                </Image.RenderTransform>
+            </Image>
+            <!--  Control buttons.  -->
             <StackPanel
+                x:Name="SessionStackPanel"
+                Margin="0,0,0,8"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Orientation="Horizontal">
-                <Button Content="&#xe718;" Style="{StaticResource ImageEditButton}">
-                    <Button.ToolTip>
-                        <ToolTip>
-                            <TextBlock
-                                FontFamily="{StaticResource SegoeUi}"
-                                FontSize="12"
-                                Text="Always on top" />
-                        </ToolTip>
-                    </Button.ToolTip>
-                </Button>
-                <Button Content="&#xE80A;" Style="{StaticResource ImageEditButton}">
+                VerticalAlignment="Bottom"
+                Orientation="Horizontal"
+                Visibility="Collapsed">
+                <Button
+                    Command="{Binding SelectPreviousImageCommand}"
+                    Content="&#xE76B;"
+                    IsEnabled="{Binding CanSelectPreviousImage}"
+                    Style="{StaticResource ControlButton}">
                     <Button.ToolTip>
                         <ToolTip>
                             <TextBlock
                                 FontFamily="Segoe UI"
                                 FontSize="12"
-                                Text="Grid" />
+                                Text="Previous image" />
                         </ToolTip>
                     </Button.ToolTip>
                 </Button>
                 <ToggleButton
-                    Content="&#xE784;"
-                    IsChecked="{Binding IsMirroredX, Mode=TwoWay}"
-                    Style="{StaticResource EditToggleButton}">
+                    Command="{Binding PauseSessionCommand}"
+                    Content="&#xE769;"
+                    IsChecked="{Binding IsPaused, Mode=OneWay}"
+                    Style="{StaticResource ControlToggleButton}">
                     <ToggleButton.ToolTip>
                         <ToolTip>
                             <TextBlock
                                 FontFamily="Segoe UI"
                                 FontSize="12"
-                                Text="Mirror X" />
+                                Text="Pause" />
                         </ToolTip>
                     </ToggleButton.ToolTip>
                 </ToggleButton>
-                <ToggleButton
-                    Content="&#xe76f;"
-                    IsChecked="{Binding IsMirroredY, Mode=TwoWay}"
-                    Style="{StaticResource EditToggleButton}">
-                    <ToggleButton.ToolTip>
-                        <ToolTip>
-                            <TextBlock
-                                FontFamily="Segoe UI"
-                                FontSize="12"
-                                Text="Mirror Y" />
-                        </ToolTip>
-                    </ToggleButton.ToolTip>
-                </ToggleButton>
-                <Button Content="&#xe916;" Style="{StaticResource ImageEditButton}">
+                <Button
+                    Command="{Binding StopSessionCommand}"
+                    Content="&#xE71A;"
+                    IsEnabled="{Binding IsStopEnabled}"
+                    Style="{StaticResource ControlButton}">
                     <Button.ToolTip>
                         <ToolTip>
                             <TextBlock
                                 FontFamily="Segoe UI"
                                 FontSize="12"
-                                Text="Timer visibility" />
+                                Text="Stop session" />
                         </ToolTip>
                     </Button.ToolTip>
                 </Button>
-                <Button Content="&#xe746;" Style="{StaticResource ImageEditButton}">
+                <Button
+                    Command="{Binding SelectNextImageCommand}"
+                    Content="&#xE76C;"
+                    IsEnabled="{Binding CanSelectNextImage}"
+                    Style="{StaticResource ControlButton}">
                     <Button.ToolTip>
                         <ToolTip>
                             <TextBlock
                                 FontFamily="Segoe UI"
                                 FontSize="12"
-                                Text="Black and white" />
+                                Text="Next image" />
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+                <Button
+                    Command="{Binding SkipImageCommand}"
+                    Content="&#xE893;"
+                    IsEnabled="{Binding CanDeleteImage}"
+                    Style="{StaticResource ControlButton}">
+                    <Button.ToolTip>
+                        <ToolTip>
+                            <TextBlock
+                                FontFamily="Segoe UI"
+                                FontSize="12"
+                                Text="Remove image" />
                         </ToolTip>
                     </Button.ToolTip>
                 </Button>
             </StackPanel>
-            <TextBlock
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                Text="{Binding FormattedTime}" />
-        </UniformGrid>
-        <Image
-            x:Name="SessionImage"
-            Grid.Row="1"
-            Margin="0,20"
-            Loaded="SessionImage_Loaded"
-            SizeChanged="SessionWindow_OnSizeChanged"
-            Source="{Binding CurrentImage, Converter={StaticResource ImageLoader}, Mode=OneWay}"
-            Stretch="Uniform">
-            <Image.RenderTransform>
-                <ScaleTransform x:Name="MirrorTransform" ScaleX="{Binding IsMirroredX, Converter={StaticResource ScaleConverter}}" ScaleY="{Binding IsMirroredY, Converter={StaticResource ScaleConverter}}" />
-            </Image.RenderTransform>
-        </Image>
-        <StackPanel
-            Grid.Row="3"
-            HorizontalAlignment="Center"
-            Orientation="Horizontal">
-            <Button
-                Command="{Binding SelectPreviousImageCommand}"
-                Content="&#xE76B;"
-                IsEnabled="{Binding CanSelectPreviousImage}"
-                Style="{StaticResource ControlButton}">
-                <Button.ToolTip>
-                    <ToolTip>
-                        <TextBlock
-                            FontFamily="Segoe UI"
-                            FontSize="12"
-                            Text="Previous image" />
-                    </ToolTip>
-                </Button.ToolTip>
-            </Button>
-            <Button Content="&#xE769;" Style="{StaticResource ControlButton}">
-                <Button.ToolTip>
-                    <ToolTip>
-                        <TextBlock
-                            FontFamily="Segoe UI"
-                            FontSize="12"
-                            Text="Pause" />
-                    </ToolTip>
-                </Button.ToolTip>
-            </Button>
-            <Button
-                Command="{Binding StopSessionCommand}"
-                Content="&#xE71A;"
-                IsEnabled="{Binding IsStopEnabled}"
-                Style="{StaticResource ControlButton}">
-                <Button.ToolTip>
-                    <ToolTip>
-                        <TextBlock
-                            FontFamily="Segoe UI"
-                            FontSize="12"
-                            Text="Stop session" />
-                    </ToolTip>
-                </Button.ToolTip>
-            </Button>
-            <Button
-                Command="{Binding SelectNextImageCommand}"
-                Content="&#xE76C;"
-                IsEnabled="{Binding CanSelectNextImage}"
-                Style="{StaticResource ControlButton}">
-                <Button.ToolTip>
-                    <ToolTip>
-                        <TextBlock
-                            FontFamily="Segoe UI"
-                            FontSize="12"
-                            Text="Next image" />
-                    </ToolTip>
-                </Button.ToolTip>
-            </Button>
-            <Button
-                Command="{Binding SkipImageCommand}"
-                Content="&#xE893;"
-                IsEnabled="{Binding CanDeleteImage}"
-                Style="{StaticResource ControlButton}">
-                <Button.ToolTip>
-                    <ToolTip>
-                        <TextBlock
-                            FontFamily="Segoe UI"
-                            FontSize="12"
-                            Text="Remove image" />
-                    </ToolTip>
-                </Button.ToolTip>
-            </Button>
-        </StackPanel>
+        </Grid>
     </Grid>
 </Window>

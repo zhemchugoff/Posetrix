@@ -1,48 +1,102 @@
-﻿using System.Timers;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.Timers;
 using Timer = System.Timers.Timer;
 
 namespace Posetrix.Core.Data;
 
-public class TimerStore
+public partial class TimerStore : ObservableObject
 {
     private readonly Timer _timer;
+    private TimeSpan _timeElapsed;
+    private readonly Lock _timerLock = new(); // To ensure thread safety.
 
-    private int _seconds;
-    private readonly int _startSeconds;
+    [ObservableProperty]
+    public partial bool IsTimerPaused { get; private set; }
 
     public event Action<TimeSpan>? TimeUpdated;
+    public event Action? CountdownFinished;
 
-    public TimerStore(int seconds)
+    public TimerStore()
     {
-        _seconds = seconds;
-        _startSeconds = seconds;
-
         _timer = new Timer(1000); // 1 second interval.
         _timer.Elapsed += Timer_Elapsed;
+        _timer.AutoReset = true; // Timer repeats automatically.
     }
 
-    public void Start() => _timer.Start();
-    public void Stop() => _timer.Stop();
-
-    public void Reset()
+    public void StartTimer(TimeSpan duration)
     {
-        Stop();
-        var time = TimeSpan.FromSeconds(_startSeconds);
-        TimeUpdated?.Invoke(time);
+        lock (_timerLock)
+        {
+            _timeElapsed = duration;
+            IsTimerPaused = false;
+            _timer.Start();
+        }
+    }
+    public void StopTimer()
+    {
+        lock (_timerLock)
+        {
+            _timer.Stop();
+            IsTimerPaused = false;
+        }
+    }
+    public void ResetTimer(TimeSpan duration)
+    {
+        lock (_timerLock)
+        {
+            _timer.Stop();
+            _timeElapsed = duration;
+            IsTimerPaused = false;
+            TimeUpdated?.Invoke(_timeElapsed);
+            _timer.Start();
+        }
+    }
+
+
+    public void PauseTimer()
+    {
+        lock (_timerLock)
+        {
+            IsTimerPaused = true;
+        }
+    }
+
+    public void ResumeTimer()
+    {
+        lock (_timerLock)
+        {
+            if (IsTimerPaused)
+            {
+                IsTimerPaused = false;
+                _timer.Start();
+            }
+        }
+    }
+
+    public void Dispose()
+    {
+        _timer.Dispose();
     }
 
     private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
     {
-        if (_seconds > 0)
+        lock (_timerLock)
         {
-            var time = TimeSpan.FromSeconds(_seconds);
-            TimeUpdated?.Invoke(time);
-            _seconds--;
-        }
-        else
-        {
-            Stop();
-        }
+            if (IsTimerPaused)
+            {
+                return;
+            }
 
+            if (_timeElapsed.TotalSeconds > 0)
+            {
+                _timeElapsed = _timeElapsed.Subtract(TimeSpan.FromSeconds(1));
+                TimeUpdated?.Invoke(_timeElapsed);
+            }
+            else
+            {
+                _timer.Stop();
+                CountdownFinished?.Invoke();
+            }
+        }
     }
 }
