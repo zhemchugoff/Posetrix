@@ -1,41 +1,37 @@
 ﻿using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Posetrix.Core.Interfaces;
-using Posetrix.Core.Data;
 using Posetrix.Core.ViewModels;
 using Posetrix.Services;
-using Posetrix.Views;
 using Posetrix.Core.Services;
 
-namespace Posetrix
+namespace Posetrix;
+
+public partial class App : Application
 {
+    private IServiceProvider ServiceProvider { get; set; }
 
-    public partial class App : Application
+    private readonly ServiceCollection services = new();
+
+    public App()
     {
-        public static IServiceProvider ServiceProvider { get; private set; }
+        // Configure services.
+        services.AddCommonServices();
+        services.AddWPFServices();
 
-        private readonly ServiceCollection services = new();
+        services.AddSingleton<ViewModelLocator>();
+        services.AddSingleton<WindowMapper>();
+        services.AddSingleton<IWindowManager, WindowManager>();
 
-        public App()
-        {
-            // Configure services.
-            services.AddCommonServices();
-            services.AddWPFServices();
+        ServiceProvider = services.BuildServiceProvider();
+    }
 
-            services.AddSingleton<ViewModelLocator>();
-            services.AddSingleton<WindowMapper>();
-            services.AddSingleton<IWindowManager, WindowManager>();
+    protected override void OnStartup(StartupEventArgs e)
+    {
+        base.OnStartup(e);
 
-            ServiceProvider = services.BuildServiceProvider();
-        }
-
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            base.OnStartup(e);
-
-            // Main window.
-            var windowManager = ServiceProvider.GetRequiredService<IWindowManager>();
-            windowManager.ShowWindow(ServiceProvider.GetRequiredService<MainViewModel>());
-        }
+        // Main window.
+        var windowManager = ServiceProvider.GetRequiredService<IWindowManager>();
+        windowManager.ShowWindow(ServiceProvider.GetRequiredService<MainViewModel>());
     }
 }

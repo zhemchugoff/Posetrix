@@ -5,6 +5,7 @@ using Posetrix.Core.Models;
 using Posetrix.Core.Data;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using Posetrix.Core.Services;
 
 namespace Posetrix.Core.ViewModels
 {
@@ -17,20 +18,23 @@ namespace Posetrix.Core.ViewModels
         private readonly IExtensionsService _extensionsService;
 
         public int _folderCount;
-        public ObservableCollection<ImageFolder> Folders { get;}
+        public ObservableCollection<ImageFolder> Folders { get; }
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(CanDeleteFolder))]
-        private ImageFolder? _selectedFolder;
+        public partial ImageFolder? SelectedFolder { get; set; }
 
         public bool CanDeleteFolder => _folderCount > 0 && SelectedFolder is not null;
 
 
         public FolderAddViewModel(ViewModelLocator viewModelLocator, IFolderBrowserServiceAsync folderBrowserService, IExtensionsService extensionsService)
         {
+            // Services.
             _viewModelLocator = viewModelLocator;
             _folderBrowserService = folderBrowserService;
             _extensionsService = extensionsService;
+
+            // MainViewModel collection.
             var mainViewModel = _viewModelLocator.MainViewModel;
             Folders = mainViewModel.ReferenceFolders;
             Folders.CollectionChanged += Folders_CollectionChanged;
@@ -50,20 +54,25 @@ namespace Posetrix.Core.ViewModels
 
             if (!string.IsNullOrEmpty(folderPath))
             {
-                // Gets a folder name from a full path and removes any trailing separators.
-                DirectoryInfo directoryInfo = new DirectoryInfo(folderPath);
-                var folderName = directoryInfo.Name;
+                AddFolder(folderPath);
+            }
+        }
 
-                List<string> references = ImageFolder.GetImageFiles(folderPath, _extensionsService.LoadExtensions());
+        private void AddFolder(string? folderPath)
+        {
+            // Gets a folder name from a full path and removes any trailing separators.
+            DirectoryInfo directoryInfo = new(path: folderPath);
+            var folderName = directoryInfo.Name;
 
-                if (!string.IsNullOrEmpty(folderName) && references.Count > 0)
+            List<string> references = ImageFolder.GetImageFiles(folderPath, _extensionsService.LoadExtensions());
+
+            if (!string.IsNullOrEmpty(folderName) && references.Count > 0)
+            {
+                ImageFolder folderObject = ImageFolderService.CreateFolderObject(folderPath, folderName, references);
+
+                if (!Folders.Contains(folderObject))
                 {
-                    ImageFolder folderObject = ImageFolderService.CreateFolderObject(folderPath, folderName, references);
-
-                    if (!Folders.Contains(folderObject))
-                    {
-                        Folders.Add(folderObject);
-                    }
+                    Folders.Add(folderObject);
                 }
             }
         }

@@ -5,4 +5,5 @@ namespace Posetrix.Core.Interfaces;
 public interface IWindowManager
 {
     void ShowWindow(BaseViewModel viewModel);
+    void ShowDialog(BaseViewModel viewModel);
 }

@@ -9,6 +9,7 @@ public class SettingsViewModel : BaseViewModel, ICustomWindow
     public string WindowTitle => "Settings";
     public Theme SelectedTheme { get; set; }
 
+    // List of app themes.
     public ObservableCollection<Theme> Themes { get; } =
     [
         new() { Name = "System" },
@@ -18,6 +19,6 @@ public class SettingsViewModel : BaseViewModel, ICustomWindow
 
     public SettingsViewModel()
     {
-        SelectedTheme = Themes.First();
+        SelectedTheme = Themes.First(); // Select first item in collection.
     }
 }

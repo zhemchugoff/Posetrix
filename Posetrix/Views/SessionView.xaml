@@ -170,7 +170,6 @@
                 <Button
                     Command="{Binding SelectNextImageCommand}"
                     Content="&#xE76C;"
-                    IsEnabled="{Binding CanSelectNextImage}"
                     Style="{StaticResource ControlButton}">
                     <Button.ToolTip>
                         <ToolTip>

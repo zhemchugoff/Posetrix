@@ -11,7 +11,7 @@ public partial class CustomIntervalViewModel : ObservableValidator, IDynamicView
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Range(0, int.MaxValue, ErrorMessage = "Enter a correct number")]
-    private int? _seconds = 0;
+    public partial int? Seconds { get; set; } = 0;
 
     partial void OnSecondsChanged(int? value)
     {
@@ -22,6 +22,5 @@ public partial class CustomIntervalViewModel : ObservableValidator, IDynamicView
     }
 
     public int GetSeconds() => Seconds ?? 0;
-
     public bool CanStart => !HasErrors;
 }

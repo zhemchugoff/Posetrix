@@ -23,7 +23,7 @@
             Grid.Row="0"
             Padding="10"
             Background="{DynamicResource CardBackgroundFillColorSecondaryBrush}"
-            BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
             BorderThickness="2"
             CornerRadius="8">
             <ListView ItemsSource="{Binding Folders}" SelectedItem="{Binding SelectedFolder}">

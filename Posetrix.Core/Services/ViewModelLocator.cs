@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Posetrix.Core.ViewModels;
 
-namespace Posetrix.Core.Data;
+namespace Posetrix.Core.Services;
 
 /// <summary>
 /// Class <c>ViewModelLocator</c> gets required viewmodels from <c>IServiceProvider</c>.

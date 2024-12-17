@@ -4,14 +4,15 @@ using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using Posetrix.Core.Data;
+using System.ComponentModel.DataAnnotations;
+using Posetrix.Core.Services;
 
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class MainViewModel : BaseViewModel, ICustomWindow
+public partial class MainViewModel : BaseViewModel
 {
-    public string WindowTitle => "Posetrix";
+    public static string WindowTitle => "Posetrix";
 
     private readonly IWindowManager _windowManager;
     private readonly ViewModelLocator _viewModelLocator;
@@ -19,34 +20,42 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
     private readonly CustomIntervalViewModel _cVM;
     private readonly PredefinedIntervalsViewModel _pVM;
 
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(StartSessionCommand))]
+    public partial IDynamicViewModel SelectedViewModel { get; set; }
     public ObservableCollection<ImageFolder> ReferenceFolders { get; } = [];
     public string FoldersInfo => $" Folders: {FolderCount} Images: {FolderImageCounter}";
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FoldersInfo))]
     [NotifyCanExecuteChangedFor(nameof(StartSessionCommand))]
-    private int _folderCount;
+    public partial int FolderCount { get; set; } = 0;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FoldersInfo))]
-    private int _folderImageCounter;
+    public partial int FolderImageCounter { get; set; } = 0;
 
     // ComboBox.
     public List<IDynamicViewModel> Folders { get; } = [];
 
-    [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(StartSessionCommand))]
-    private IDynamicViewModel _selectedViewModel;
 
-    [ObservableProperty] private int _customImageCount;
-    [ObservableProperty] private bool _isShuffleEnabled;
+    // Number of images, defined by a user. Default is 0: entire collecton.
+    [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Range(0, int.MaxValue, ErrorMessage = "Enter a correct number")]
+    public partial int? ImageCount { get; set; } = 0;
+    [ObservableProperty] public partial bool IsShuffleEnabled { get; set; } = true;
 
     public bool CanStartSession => FolderCount > 0 && SelectedViewModel.CanStart;
 
     /// <summary>
     /// Design-time only constructor.
     /// </summary>
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+#pragma warning disable CS9264 // Non-nullable property must contain a non-null value when exiting constructor. Consider adding the 'required' modifier, or declaring the property as nullable, or adding '[field: MaybeNull, AllowNull]' attributes.
     public MainViewModel()
+#pragma warning restore CS9264 // Non-nullable property must contain a non-null value when exiting constructor. Consider adding the 'required' modifier, or declaring the property as nullable, or adding '[field: MaybeNull, AllowNull]' attributes.
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     {
     }
 
@@ -61,20 +70,12 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
         _pVM.ErrorsChanged += (_, _) => StartSessionCommand.NotifyCanExecuteChanged();
         _cVM.ErrorsChanged += (_, _) => StartSessionCommand.NotifyCanExecuteChanged();
 
-        // Folders view.
-        FolderCount = 0;
-        FolderImageCounter = 0;
         ReferenceFolders.CollectionChanged += ReferenceFolders_CollectionChanged;
 
-        // Combobox.
+        // Combobox items.
         Folders.Add(_pVM);
         Folders.Add(_cVM);
         SelectedViewModel = Folders.First();
-
-        CustomImageCount = 0; // Number of images, defined by a user. Default is 0: endless mode.
-
-        IsShuffleEnabled = false;
-
     }
 
     private void ReferenceFolders_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -103,7 +104,8 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
     [RelayCommand]
     private void AddFolders()
     {
-        _windowManager.ShowWindow(_viewModelLocator.FolderAddViewModel);
+        //_windowManager.ShowWindow(_viewModelLocator.FolderAddViewModel);
+        _windowManager.ShowDialog(_viewModelLocator.FolderAddViewModel);
     }
 
     [RelayCommand(CanExecute = nameof(CanStartSession))]
@@ -112,4 +114,11 @@ public partial class MainViewModel : BaseViewModel, ICustomWindow
         _windowManager.ShowWindow(_viewModelLocator.SessionViewModel);
     }
 
+    partial void OnImageCountChanged(int? value)
+    {
+        if (string.IsNullOrWhiteSpace(value.ToString()))
+        {
+            ImageCount = 0;
+        }
+    }
 }

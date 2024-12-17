@@ -4,54 +4,64 @@ using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 using System.Collections.ObjectModel;
 using Posetrix.Core.Data;
-using System.Diagnostics;
 using System.ComponentModel;
+using Posetrix.Core.Services;
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class SessionViewModel : BaseViewModel, ICustomWindow
+public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposable
 {
     public string WindowTitle => "Drawing session";
 
     private readonly MainViewModel _mainViewModel;
 
+    private bool _disposed = false;
+
     private ObservableCollection<string> _sessionImages;
 
-    private int _currentImageIndex;
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(SelectNextImageCommand))]
+    public partial int CurrentImageIndex { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SessionInfo))]
+    [NotifyCanExecuteChangedFor(nameof(SelectNextImageCommand))]
+
+    public partial int SessionCollectionCount { get; set; }
 
     private readonly List<string> _completedImages;
 
-    // Control buttons.
-    [ObservableProperty] private bool _canSelectNextImage;
-    [ObservableProperty] private bool _canSelectPreviousImage;
-    [ObservableProperty] private bool _canDeleteImage;
-    [ObservableProperty] private string? _currentImage;
-
     [ObservableProperty]
-    public partial bool IsStopEnabled { get; set; }
+    [NotifyCanExecuteChangedFor(nameof(SelectNextImageCommand))]
+    public partial bool IsSessionActive { get; set; } = true;
+
+    // Control buttons.
+    public bool CanSelectNextImage => CurrentImageIndex < SessionCollectionCount && SessionCollectionCount > 0 && IsSessionActive;
+
+    [ObservableProperty] public partial bool CanSelectPreviousImage { get; set; }
+    [ObservableProperty] public partial bool CanDeleteImage { get; set; }
+    [ObservableProperty] public partial string? CurrentImage { get; set; }
+    [ObservableProperty] public partial bool IsStopEnabled { get; set; } = true;
+
+    [ObservableProperty] public partial bool IsMirroredX { get; set; }
+    [ObservableProperty] public partial bool IsMirroredY { get; set; }
+
+    // Timer.
+    private readonly TimerStore _timerStore;
+    private readonly ViewModelLocator _viewModelLocator;
 
     public bool IsPaused => _timerStore.IsTimerPaused;
 
     [ObservableProperty]
     public partial int Seconds { get; set; }
 
-    [ObservableProperty]
-    private string _formattedTime = "00:00:00";
-
-    private readonly TimerStore _timerStore;
-
     // Image properties.
-    [ObservableProperty] private bool _isMirroredX;
-    [ObservableProperty] private bool _isMirroredY;
+
+    [ObservableProperty] public partial string FormattedTime { get; set; } = "00:00:00";
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SessionInfo))]
-    private int _completedImagesCounter;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(SessionInfo))]
-    private int _sessionCollectionCount;
-
+    public partial int CompletedImagesCounter { get; set; }
     public string SessionInfo => $"{CompletedImagesCounter} / {SessionCollectionCount}";
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
@@ -60,33 +70,31 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
     {
 
     }
-    public SessionViewModel(MainViewModel mainViewModel)
+    public SessionViewModel(ViewModelLocator viewModelLocator)
     {
-        _mainViewModel = mainViewModel;
-
-        // Timer.
+        // Viewmodels.
+        _viewModelLocator = viewModelLocator;
+        _mainViewModel = _viewModelLocator.MainViewModel;
         IDynamicViewModel dynamicView = _mainViewModel.SelectedViewModel;
 
+        // Timer.
         _timerStore = new TimerStore();
         _timerStore.TimeUpdated += OnTimeUpdated;
         _timerStore.CountdownFinished += OnCountDownFinished;
-        Seconds = _mainViewModel.SelectedViewModel.GetSeconds();
-
         _timerStore.PropertyChanged += TimerStore_PropertyChanged; // Subscribe to _timeStore property changes.
 
+        // Create timer.
+        Seconds = _mainViewModel.SelectedViewModel.GetSeconds();
         var duration = TimeSpan.FromSeconds(Seconds);
         _timerStore.StartTimer(duration);
 
 
-        IsStopEnabled = true;
-
+        // Image collection.
         PopulateImageCollection();
-
-        _sessionCollectionCount = _sessionImages.Count;
+        SessionCollectionCount = _sessionImages.Count;
         _completedImages = [];
-        _currentImageIndex = 0;
-        CurrentImage = _sessionImages[_currentImageIndex];
-
+        CurrentImageIndex = 0;
+        CurrentImage = _sessionImages[CurrentImageIndex];
         UpdateImageStatus();
     }
 
@@ -98,7 +106,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
         if (e.PropertyName == nameof(TimerStore.IsTimerPaused))
         {
             OnPropertyChanged(nameof(IsPaused));
-        } 
+        }
     }
 
     private void OnCountDownFinished()
@@ -110,38 +118,34 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
     {
         List<string> tempList = ImageCollectionHelpers.PopulateCollection(_mainViewModel.ReferenceFolders);
         tempList.ShuffleCollection(_mainViewModel.IsShuffleEnabled);
-        tempList.TrimCollectoin(_mainViewModel.CustomImageCount);
+        tempList.TrimCollectoin(_mainViewModel.ImageCount ?? 0);
         _sessionImages = new ObservableCollection<string>(tempList);
     }
 
     /// <summary>
     /// Selects next image and increments completed images.
     /// </summary>
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanSelectNextImage))]
     private void SelectNextImage()
     {
         if (CanSelectNextImage)
         {
             if (!_completedImages.Contains(CurrentImage))
             {
-                _completedImages.Add(_sessionImages[_currentImageIndex]);
+                _completedImages.Add(_sessionImages[CurrentImageIndex]);
                 UpdateImageStatus();
             }
 
-            if (_currentImageIndex != SessionCollectionCount - 1)
+            if (CurrentImageIndex != SessionCollectionCount - 1)
             {
-                _currentImageIndex++;
-                CurrentImage = _sessionImages[_currentImageIndex];
-                Debug.WriteLine($"Before: {IsStopEnabled}");
-                Debug.WriteLine($"Before timer: {_timerStore.IsTimerPaused}");
+                CurrentImageIndex++;
+                CurrentImage = _sessionImages[CurrentImageIndex];
                 ResetTimer();
-                Debug.WriteLine($"After: {IsStopEnabled}");
-                Debug.WriteLine($"Before timer: {_timerStore.IsTimerPaused}");
                 UpdateImageStatus();
             }
             else
             {
-                _currentImageIndex++;
+                CurrentImageIndex++;
                 StopSession();
             }
         }
@@ -152,8 +156,8 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
     {
         if (CanSelectPreviousImage)
         {
-            _currentImageIndex--;
-            CurrentImage = _sessionImages[_currentImageIndex];
+            CurrentImageIndex--;
+            CurrentImage = _sessionImages[CurrentImageIndex];
         }
 
         UpdateImageStatus();
@@ -169,23 +173,23 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
         {
             if (SessionCollectionCount > 1)
             {
-                if (_currentImageIndex == SessionCollectionCount - 1)
+                if (CurrentImageIndex == SessionCollectionCount - 1)
                 {
-                    _sessionImages.RemoveAt(_currentImageIndex);
-                    _currentImageIndex--;
-                    CurrentImage = _sessionImages[_currentImageIndex];
+                    _sessionImages.RemoveAt(CurrentImageIndex);
+                    CurrentImageIndex--;
+                    CurrentImage = _sessionImages[CurrentImageIndex];
                 }
                 else
                 {
-                    _sessionImages.RemoveAt(_currentImageIndex);
-                    CurrentImage = _sessionImages[_currentImageIndex];
+                    _sessionImages.RemoveAt(CurrentImageIndex);
+                    CurrentImage = _sessionImages[CurrentImageIndex];
                 }
 
                 UpdateImageStatus();
             }
             else if (SessionCollectionCount == 1)
             {
-                _sessionImages.RemoveAt(_currentImageIndex);
+                _sessionImages.RemoveAt(CurrentImageIndex);
                 StopSession();
             }
         }
@@ -194,17 +198,16 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
     [RelayCommand]
     private void StopSession()
     {
-        CurrentImage = PlaceHolderService.CelebrationImage1;
+        IsSessionActive = false;
         IsMirroredX = false;
         IsMirroredY = false;
         //IsPaused = false;
 
         //_sessionImages.Clear();
         CanDeleteImage = false;
-        CanSelectNextImage = false;
         CanSelectPreviousImage = false;
         IsStopEnabled = false;
-
+        CurrentImage = PlaceHolderService.CelebrationImage1;
     }
 
     /// <summary>
@@ -218,18 +221,8 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
         CompletedImagesCounter = _completedImages.Count;
         SessionCollectionCount = _sessionImages.Count;
 
-        // Checks next image status.
-        if (_currentImageIndex < SessionCollectionCount && SessionCollectionCount > 0)
-        {
-            CanSelectNextImage = true;
-        }
-        else
-        {
-            CanSelectNextImage = false;
-        }
-
         // Checks previous image status.
-        if (_currentImageIndex > 0 && SessionCollectionCount > 0)
+        if (CurrentImageIndex > 0 && SessionCollectionCount > 0)
         {
             CanSelectPreviousImage = true;
         }
@@ -272,6 +265,13 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow
 
     public void Dispose()
     {
-        _timerStore.PropertyChanged -= TimerStore_PropertyChanged;
+        if (!_disposed)
+        {
+            _timerStore.PropertyChanged -= TimerStore_PropertyChanged; // Unsubsribe from property.
+            _timerStore.Dispose(); // Dispose of any disposable resources.
+            _disposed = true; // Mark as disposed.
+            GC.SuppressFinalize(this); // Optionally suppress finalization.
+        }
+
     }
 }

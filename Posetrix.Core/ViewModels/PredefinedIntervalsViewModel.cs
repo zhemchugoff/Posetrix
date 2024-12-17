@@ -8,7 +8,7 @@ public partial class PredefinedIntervalsViewModel : ObservableValidator, IDynami
     public string DisplayName => "Predefined intervals";
 
     [ObservableProperty]
-    private Intervals _selectedInterval;
+    public partial Intervals SelectedInterval { get; set; }
 
     public int GetSeconds() =>
 

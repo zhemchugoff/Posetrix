@@ -19,4 +19,16 @@ public class WindowManager(WindowMapper windowMapper) : IWindowManager
             window.Show();
         }
     }
+
+    public void ShowDialog(BaseViewModel viewModel)
+    {
+        var windowType = _windowMapper.GetWindowTypeForViewModel(viewModel.GetType());
+
+        if (windowType != null)
+        {
+            var window = Activator.CreateInstance(windowType) as Window;
+            window.DataContext = viewModel;
+            window.ShowDialog();
+        }
+    }
 }

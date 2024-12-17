@@ -8,7 +8,7 @@ namespace Posetrix.Services;
 /// </summary>
 public class FolderBrowserService : IFolderBrowserServiceAsync
 {
-    public async Task<string?> SelectFolderAsync()
+    public Task<string?> SelectFolderAsync()
     {
         var folderDialog = new OpenFolderDialog
         {
@@ -19,9 +19,9 @@ public class FolderBrowserService : IFolderBrowserServiceAsync
         if (folderDialog.ShowDialog() == true)
         {
             var folderFullPath = folderDialog.FolderName;
-            return folderFullPath;
+            return Task.FromResult<string?>(folderFullPath);
         }
-
-        return null;
+        
+        return Task.FromResult<string?>(null);
     }
 }

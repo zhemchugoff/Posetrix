@@ -1,8 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Posetrix.Core.ViewModels
+namespace Posetrix.Core.ViewModels;
+
+public partial class BaseViewModel: ObservableValidator
 {
-    public partial class BaseViewModel: ObservableObject
-    {
-    }
 }

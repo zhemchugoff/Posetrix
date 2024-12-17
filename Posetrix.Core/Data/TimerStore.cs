@@ -8,13 +8,14 @@ public partial class TimerStore : ObservableObject
 {
     private readonly Timer _timer;
     private TimeSpan _timeElapsed;
+
+    public event Action<TimeSpan>? TimeUpdated;
+    public event Action? CountdownFinished;
+
     private readonly Lock _timerLock = new(); // To ensure thread safety.
 
     [ObservableProperty]
     public partial bool IsTimerPaused { get; private set; }
-
-    public event Action<TimeSpan>? TimeUpdated;
-    public event Action? CountdownFinished;
 
     public TimerStore()
     {
@@ -52,7 +53,6 @@ public partial class TimerStore : ObservableObject
         }
     }
 
-
     public void PauseTimer()
     {
         lock (_timerLock)
@@ -71,11 +71,6 @@ public partial class TimerStore : ObservableObject
                 _timer.Start();
             }
         }
-    }
-
-    public void Dispose()
-    {
-        _timer.Dispose();
     }
 
     private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
@@ -99,4 +94,9 @@ public partial class TimerStore : ObservableObject
             }
         }
     }
+    public void Dispose()
+    {
+        _timer.Dispose();
+    }
+
 }
