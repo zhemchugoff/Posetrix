@@ -14,55 +14,56 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     public string WindowTitle => "Drawing session";
 
     private readonly MainViewModel _mainViewModel;
+    private readonly ViewModelLocator _viewModelLocator;
 
-    private bool _disposed = false;
-
+    // Collections.
     private ObservableCollection<string> _sessionImages;
+    private readonly List<string> _completedImages;
 
+    // Counters.
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(SelectNextImageCommand))]
+    [NotifyCanExecuteChangedFor(nameof(SelectPreviousImageCommand))]
     public partial int CurrentImageIndex { get; set; }
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(SessionInfo))]
     [NotifyCanExecuteChangedFor(nameof(SelectNextImageCommand))]
-
+    [NotifyCanExecuteChangedFor(nameof(SelectPreviousImageCommand))]
+    [NotifyCanExecuteChangedFor(nameof(SkipImageCommand))]
+    [NotifyPropertyChangedFor(nameof(SessionInfo))]
     public partial int SessionCollectionCount { get; set; }
 
-    private readonly List<string> _completedImages;
+    [ObservableProperty] public partial bool IsSessionActive { get; set; } = true;
 
-    [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(SelectNextImageCommand))]
-    public partial bool IsSessionActive { get; set; } = true;
-
-    // Control buttons.
+    // Commands conditions.
     public bool CanSelectNextImage => CurrentImageIndex < SessionCollectionCount && SessionCollectionCount > 0 && IsSessionActive;
+    public bool CanSelectPreviousImage => CurrentImageIndex > 0 && SessionCollectionCount > 0 && IsSessionActive;
+    public bool CanDeleteImage => SessionCollectionCount > 0 && IsSessionActive;
+    public bool IsStopEnabled => IsSessionActive;
+    public bool IsPauseEnabled => IsSessionActive;
+    public bool IsTimerPaused => _timerStore.IsTimerPaused;
 
-    [ObservableProperty] public partial bool CanSelectPreviousImage { get; set; }
-    [ObservableProperty] public partial bool CanDeleteImage { get; set; }
+    // Image properties.
     [ObservableProperty] public partial string? CurrentImage { get; set; }
-    [ObservableProperty] public partial bool IsStopEnabled { get; set; } = true;
-
     [ObservableProperty] public partial bool IsMirroredX { get; set; }
     [ObservableProperty] public partial bool IsMirroredY { get; set; }
 
     // Timer.
     private readonly TimerStore _timerStore;
-    private readonly ViewModelLocator _viewModelLocator;
-
-    public bool IsPaused => _timerStore.IsTimerPaused;
 
     [ObservableProperty]
     public partial int Seconds { get; set; }
 
-    // Image properties.
-
-    [ObservableProperty] public partial string FormattedTime { get; set; } = "00:00:00";
-
+    // Session information topbar.
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SessionInfo))]
     public partial int CompletedImagesCounter { get; set; }
     public string SessionInfo => $"{CompletedImagesCounter} / {SessionCollectionCount}";
+    [ObservableProperty] public partial string FormattedTime { get; set; } = "00:00:00";
+
+    // Session disposal.
+    private bool _disposed = false;
+
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     public SessionViewModel()
@@ -105,7 +106,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     {
         if (e.PropertyName == nameof(TimerStore.IsTimerPaused))
         {
-            OnPropertyChanged(nameof(IsPaused));
+            OnPropertyChanged(nameof(IsTimerPaused));
         }
     }
 
@@ -128,37 +129,34 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     [RelayCommand(CanExecute = nameof(CanSelectNextImage))]
     private void SelectNextImage()
     {
-        if (CanSelectNextImage)
-        {
-            if (!_completedImages.Contains(CurrentImage))
-            {
-                _completedImages.Add(_sessionImages[CurrentImageIndex]);
-                UpdateImageStatus();
-            }
 
-            if (CurrentImageIndex != SessionCollectionCount - 1)
-            {
-                CurrentImageIndex++;
-                CurrentImage = _sessionImages[CurrentImageIndex];
-                ResetTimer();
-                UpdateImageStatus();
-            }
-            else
-            {
-                CurrentImageIndex++;
-                StopSession();
-            }
+        if (!_completedImages.Contains(CurrentImage))
+        {
+            _completedImages.Add(_sessionImages[CurrentImageIndex]);
+            UpdateImageStatus();
         }
+
+        if (CurrentImageIndex != SessionCollectionCount - 1)
+        {
+            CurrentImageIndex++;
+            CurrentImage = _sessionImages[CurrentImageIndex];
+            ResetTimer();
+            UpdateImageStatus();
+        }
+        else
+        {
+            CurrentImageIndex++;
+            StopSession();
+        }
+
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanSelectPreviousImage))]
     private void SelectPreviousImage()
     {
-        if (CanSelectPreviousImage)
-        {
-            CurrentImageIndex--;
-            CurrentImage = _sessionImages[CurrentImageIndex];
-        }
+
+        CurrentImageIndex--;
+        CurrentImage = _sessionImages[CurrentImageIndex];
 
         UpdateImageStatus();
     }
@@ -166,48 +164,41 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     /// <summary>
     /// Deletes image from session collection.
     /// </summary>
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanDeleteImage))]
     private void SkipImage()
     {
-        if (CanDeleteImage)
-        {
-            if (SessionCollectionCount > 1)
-            {
-                if (CurrentImageIndex == SessionCollectionCount - 1)
-                {
-                    _sessionImages.RemoveAt(CurrentImageIndex);
-                    CurrentImageIndex--;
-                    CurrentImage = _sessionImages[CurrentImageIndex];
-                }
-                else
-                {
-                    _sessionImages.RemoveAt(CurrentImageIndex);
-                    CurrentImage = _sessionImages[CurrentImageIndex];
-                }
 
-                UpdateImageStatus();
-            }
-            else if (SessionCollectionCount == 1)
+        if (SessionCollectionCount > 1)
+        {
+            if (CurrentImageIndex == SessionCollectionCount - 1)
             {
                 _sessionImages.RemoveAt(CurrentImageIndex);
-                StopSession();
+                CurrentImageIndex--;
+                CurrentImage = _sessionImages[CurrentImageIndex];
             }
+            else
+            {
+                _sessionImages.RemoveAt(CurrentImageIndex);
+                CurrentImage = _sessionImages[CurrentImageIndex];
+            }
+
+            UpdateImageStatus();
         }
+        else if (SessionCollectionCount == 1)
+        {
+            _sessionImages.RemoveAt(CurrentImageIndex);
+            StopSession();
+        }
+
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(IsStopEnabled))]
     private void StopSession()
     {
+        // TODO: Reset timer to 00:00:00
+        CurrentImage = PlaceHolderService.CelebrationImage;
         IsSessionActive = false;
-        IsMirroredX = false;
-        IsMirroredY = false;
-        //IsPaused = false;
-
-        //_sessionImages.Clear();
-        CanDeleteImage = false;
-        CanSelectPreviousImage = false;
-        IsStopEnabled = false;
-        CurrentImage = PlaceHolderService.CelebrationImage1;
+        UpdateImageStatus();
     }
 
     /// <summary>
@@ -220,19 +211,6 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
 
         CompletedImagesCounter = _completedImages.Count;
         SessionCollectionCount = _sessionImages.Count;
-
-        // Checks previous image status.
-        if (CurrentImageIndex > 0 && SessionCollectionCount > 0)
-        {
-            CanSelectPreviousImage = true;
-        }
-        else
-        {
-            CanSelectPreviousImage = false;
-        }
-
-        // Checks deletion status.
-        CanDeleteImage = SessionCollectionCount > 0;
     }
 
     /// <summary>
@@ -244,10 +222,10 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
         FormattedTime = remainingTime.ToString(@"hh\:mm\:ss");
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(IsPauseEnabled))]
     private void PauseSession()
     {
-        if (!IsPaused)
+        if (!IsTimerPaused)
         {
             _timerStore.PauseTimer();
         }
@@ -261,6 +239,18 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     {
         var duration = TimeSpan.FromSeconds(Seconds);
         _timerStore.ResetTimer(duration);
+    }
+
+    /// <summary>
+    /// Centralized <c>IsSessionActive</c> notifications for commands.
+    /// </summary>
+    partial void OnIsSessionActiveChanged(bool oldValue, bool newValue)
+    {
+        SelectNextImageCommand.NotifyCanExecuteChanged();
+        SelectPreviousImageCommand.NotifyCanExecuteChanged();
+        PauseSessionCommand.NotifyCanExecuteChanged();
+        SkipImageCommand.NotifyCanExecuteChanged();
+        StopSessionCommand.NotifyCanExecuteChanged();
     }
 
     public void Dispose()

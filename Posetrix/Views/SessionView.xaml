@@ -128,7 +128,6 @@
                 <Button
                     Command="{Binding SelectPreviousImageCommand}"
                     Content="&#xE76B;"
-                    IsEnabled="{Binding CanSelectPreviousImage}"
                     Style="{StaticResource ControlButton}">
                     <Button.ToolTip>
                         <ToolTip>
@@ -142,7 +141,7 @@
                 <ToggleButton
                     Command="{Binding PauseSessionCommand}"
                     Content="&#xE769;"
-                    IsChecked="{Binding IsPaused, Mode=OneWay}"
+                    IsChecked="{Binding IsTimerPaused, Mode=OneWay}"
                     Style="{StaticResource ControlToggleButton}">
                     <ToggleButton.ToolTip>
                         <ToolTip>
@@ -156,7 +155,6 @@
                 <Button
                     Command="{Binding StopSessionCommand}"
                     Content="&#xE71A;"
-                    IsEnabled="{Binding IsStopEnabled}"
                     Style="{StaticResource ControlButton}">
                     <Button.ToolTip>
                         <ToolTip>
@@ -183,7 +181,6 @@
                 <Button
                     Command="{Binding SkipImageCommand}"
                     Content="&#xE893;"
-                    IsEnabled="{Binding CanDeleteImage}"
                     Style="{StaticResource ControlButton}">
                     <Button.ToolTip>
                         <ToolTip>
