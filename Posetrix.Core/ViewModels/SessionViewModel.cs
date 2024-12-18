@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using Posetrix.Core.Data;
 using System.ComponentModel;
 using Posetrix.Core.Services;
+using System.Diagnostics;
 
 namespace Posetrix.Core.ViewModels;
 
@@ -80,6 +81,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
         _mainViewModel = _viewModelLocator.MainViewModel;
         IDynamicViewModel dynamicView = _mainViewModel.SelectedViewModel;
 
+        // Set UI thread.
         _synchronizationContext = SynchronizationContext.Current
             ?? throw new InvalidOperationException("No SynchronizationContext. Ensure the ViewModel is initialized on the UI thread.");
 
@@ -138,10 +140,20 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     }
     private void OnCountDownFinished()
     {
-        // Use SynchronizationContext to call NotifyCanExecuteChanged.
-        //_synchronizationContext.Post(_ => SelectNextImageCommand.NotifyCanExecuteChanged(), null);
-        SelectNextImageCommand.NotifyCanExecuteChanged();
+        Debug.WriteLine($"Can select: {CanSelectNextImage}");
+        if (CanSelectNextImage)
+        {
+            _synchronizationContext.Post(_ =>
+            {
+                SelectNextImageCommand.NotifyCanExecuteChanged();
 
+                if (SelectNextImageCommand.CanExecute(null))
+                {
+                    SelectNextImageCommand.Execute(null);
+                }
+            }, null);
+
+        }
     }
 
     [RelayCommand(CanExecute = nameof(CanSelectPreviousImage))]
