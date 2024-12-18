@@ -28,7 +28,14 @@
             BorderThickness="{StaticResource ExpanderBorderThemeThickness}"
             CornerRadius="{DynamicResource ControlCornerRadius}">
             <UniformGrid Columns="3">
-                <TextBlock VerticalAlignment="Center" Text="{Binding SessionInfo}" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{Binding SessionInfo}"
+                    ToolTipService.InitialShowDelay="100"
+                    ToolTipService.Placement="MousePoint"
+                    ToolTipService.ToolTip="Current / Completed / Total" />
                 <StackPanel
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -103,6 +110,7 @@
                 <TextBlock
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
+                    Style="{StaticResource CaptionTextBlockStyle}"
                     Text="{Binding FormattedTime}" />
             </UniformGrid>
         </Border>
