@@ -38,7 +38,6 @@ public partial class TimerStore : ObservableObject
         lock (_timerLock)
         {
             _timer.Stop();
-            IsTimerPaused = false;
         }
     }
     public void ResetTimer(TimeSpan duration)

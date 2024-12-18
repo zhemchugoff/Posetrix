@@ -16,9 +16,11 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     private readonly MainViewModel _mainViewModel;
     private readonly ViewModelLocator _viewModelLocator;
 
+    private readonly SynchronizationContext _synchronizationContext;
+
     // Collections.
-    private ObservableCollection<string> _sessionImages;
-    private readonly List<string> _completedImages;
+    private readonly ObservableCollection<string> _sessionImages = [];
+    private readonly ObservableCollection<string> _completedImages = [];
 
     // Counters.
     [ObservableProperty]
@@ -27,10 +29,10 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     public partial int CurrentImageIndex { get; set; }
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SessionInfo))]
     [NotifyCanExecuteChangedFor(nameof(SelectNextImageCommand))]
     [NotifyCanExecuteChangedFor(nameof(SelectPreviousImageCommand))]
     [NotifyCanExecuteChangedFor(nameof(SkipImageCommand))]
-    [NotifyPropertyChangedFor(nameof(SessionInfo))]
     public partial int SessionCollectionCount { get; set; }
 
     [ObservableProperty] public partial bool IsSessionActive { get; set; } = true;
@@ -78,6 +80,9 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
         _mainViewModel = _viewModelLocator.MainViewModel;
         IDynamicViewModel dynamicView = _mainViewModel.SelectedViewModel;
 
+        _synchronizationContext = SynchronizationContext.Current
+            ?? throw new InvalidOperationException("No SynchronizationContext. Ensure the ViewModel is initialized on the UI thread.");
+
         // Timer.
         _timerStore = new TimerStore();
         _timerStore.TimeUpdated += OnTimeUpdated;
@@ -91,36 +96,21 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
 
 
         // Image collection.
-        PopulateImageCollection();
-        SessionCollectionCount = _sessionImages.Count;
-        _completedImages = [];
+        _sessionImages.CollectionChanged += SessionImages_CollectionChanged;
+        _completedImages.CollectionChanged += CompletedImages_CollectionChanged;
+        PopulateImageCollection(_sessionImages);
+
         CurrentImageIndex = 0;
         CurrentImage = _sessionImages[CurrentImageIndex];
-        UpdateImageStatus();
     }
 
-    /// <summary>
-    /// Methods <c>TimerStore_PropertyChanged</c> updates <c>IsPaused</c> status.
-    /// </summary>
-    private void TimerStore_PropertyChanged(object? sender, PropertyChangedEventArgs e)
-    {
-        if (e.PropertyName == nameof(TimerStore.IsTimerPaused))
-        {
-            OnPropertyChanged(nameof(IsTimerPaused));
-        }
-    }
-
-    private void OnCountDownFinished()
-    {
-        SelectNextImage();
-    }
-
-    private void PopulateImageCollection()
+    private ObservableCollection<string> PopulateImageCollection(ObservableCollection<string> collection)
     {
         List<string> tempList = ImageCollectionHelpers.PopulateCollection(_mainViewModel.ReferenceFolders);
         tempList.ShuffleCollection(_mainViewModel.IsShuffleEnabled);
         tempList.TrimCollectoin(_mainViewModel.ImageCount ?? 0);
-        _sessionImages = new ObservableCollection<string>(tempList);
+        tempList.ForEach(collection.Add);
+        return collection;
     }
 
     /// <summary>
@@ -129,11 +119,9 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     [RelayCommand(CanExecute = nameof(CanSelectNextImage))]
     private void SelectNextImage()
     {
-
         if (!_completedImages.Contains(CurrentImage))
         {
             _completedImages.Add(_sessionImages[CurrentImageIndex]);
-            UpdateImageStatus();
         }
 
         if (CurrentImageIndex != SessionCollectionCount - 1)
@@ -141,13 +129,18 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
             CurrentImageIndex++;
             CurrentImage = _sessionImages[CurrentImageIndex];
             ResetTimer();
-            UpdateImageStatus();
         }
         else
         {
             CurrentImageIndex++;
             StopSession();
         }
+    }
+    private void OnCountDownFinished()
+    {
+        // Use SynchronizationContext to call NotifyCanExecuteChanged.
+        //_synchronizationContext.Post(_ => SelectNextImageCommand.NotifyCanExecuteChanged(), null);
+        SelectNextImageCommand.NotifyCanExecuteChanged();
 
     }
 
@@ -157,8 +150,6 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
 
         CurrentImageIndex--;
         CurrentImage = _sessionImages[CurrentImageIndex];
-
-        UpdateImageStatus();
     }
 
     /// <summary>
@@ -181,8 +172,6 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
                 _sessionImages.RemoveAt(CurrentImageIndex);
                 CurrentImage = _sessionImages[CurrentImageIndex];
             }
-
-            UpdateImageStatus();
         }
         else if (SessionCollectionCount == 1)
         {
@@ -197,19 +186,26 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     {
         // TODO: Reset timer to 00:00:00
         CurrentImage = PlaceHolderService.CelebrationImage;
+        StopTimer();
         IsSessionActive = false;
-        UpdateImageStatus();
     }
 
     /// <summary>
     /// Checks statuses for view buttons.
     /// </summary>
-    private void UpdateImageStatus()
+    private void ResetImageProperties()
     {
         IsMirroredX = false;
         IsMirroredY = false;
+    }
 
+    private void UpdateCompletedImagesCount()
+    {
         CompletedImagesCounter = _completedImages.Count;
+    }
+
+    private void UpdateSessionImagesCount()
+    {
         SessionCollectionCount = _sessionImages.Count;
     }
 
@@ -241,6 +237,12 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
         _timerStore.ResetTimer(duration);
     }
 
+    private void StopTimer()
+    {
+        _timerStore.StopTimer();
+        FormattedTime = "00:00:00";
+    }
+
     /// <summary>
     /// Centralized <c>IsSessionActive</c> notifications for commands.
     /// </summary>
@@ -251,6 +253,29 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
         PauseSessionCommand.NotifyCanExecuteChanged();
         SkipImageCommand.NotifyCanExecuteChanged();
         StopSessionCommand.NotifyCanExecuteChanged();
+    }
+
+    partial void OnCurrentImageChanged(string? value)
+    {
+        ResetImageProperties();
+    }
+
+    private void TimerStore_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(TimerStore.IsTimerPaused))
+        {
+            OnPropertyChanged(nameof(IsTimerPaused));
+        }
+    }
+
+    private void CompletedImages_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        UpdateCompletedImagesCount();
+    }
+
+    private void SessionImages_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        UpdateSessionImagesCount();
     }
 
     public void Dispose()
