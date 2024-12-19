@@ -16,6 +16,12 @@ public class WindowManager(WindowMapper windowMapper) : IWindowManager
         {
             var window = Activator.CreateInstance(windowType) as Window;
             window.DataContext = viewModel;
+
+            if (window.DataContext is IDisposable disposable)
+            {
+                window.Unloaded += (s, e) => disposable.Dispose();
+            }
+
             window.Show();
         }
     }

@@ -48,6 +48,7 @@
     </Style>
     <!--  Predefined intervals.  -->
     <Style BasedOn="{StaticResource {x:Type ToggleButton}}" TargetType="RadioButton">
+        <Setter Property="Height" Value="30" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
     </Style>
     <Style

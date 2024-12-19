@@ -45,4 +45,11 @@ public static class ImageCollectionHelpers
             images.RemoveRange(imageCounter, images.Count - imageCounter);
         }
     }
+
+    public static void PopulateAndConvertObservableColletionToList(this List<string> paths, ObservableCollection<ImageFolder> folders, bool isShuffleOn, int? imageCount)
+    {
+        paths.AddRange(PopulateCollection(folders));
+        paths.ShuffleCollection(isShuffleOn);
+        paths.TrimCollectoin(imageCount ?? 0);
+    }
 }

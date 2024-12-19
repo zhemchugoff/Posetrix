@@ -45,6 +45,7 @@ public partial class MainViewModel : BaseViewModel
     [Range(0, int.MaxValue, ErrorMessage = "Enter a correct number")]
     public partial int? ImageCount { get; set; } = 0;
     [ObservableProperty] public partial bool IsShuffleEnabled { get; set; } = true;
+    [ObservableProperty] public partial bool IsEndlessModeEnabled { get; set; }
 
     public bool CanStartSession => FolderCount > 0 && SelectedViewModel.CanStart;
 
