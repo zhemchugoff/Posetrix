@@ -9,7 +9,7 @@ namespace Posetrix.Views;
 public partial class CustomIntervalView
 {
     public CustomIntervalView()
-    { 
+    {
         InitializeComponent();
     }
 

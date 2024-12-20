@@ -1,24 +1,61 @@
-﻿using System.Collections.ObjectModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
+using Posetrix.Core.Services;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace Posetrix.Core.ViewModels;
 
-public class SettingsViewModel : BaseViewModel, ICustomWindow
+public partial class SettingsViewModel : BaseViewModel, ICustomWindow
 {
+    private readonly IUserSettings _userSettings;
+
     public string WindowTitle => "Settings";
-    public Theme SelectedTheme { get; set; }
+    [ObservableProperty] public partial string SelectedTheme { get; set; }
 
-    // List of app themes.
-    public ObservableCollection<Theme> Themes { get; } =
-    [
-        new() { Name = "System" },
-        new() { Name = "Light" },
-        new() { Name = "Dark" }
-    ];
+    private readonly IThemeService _themeService;
 
-    public SettingsViewModel()
+    public string Theme
     {
-        SelectedTheme = Themes.First(); // Select first item in collection.
+        get => _userSettings.Theme;
+        set
+        {
+            _userSettings.Theme = value;
+            _userSettings.Save();
+        }
+    }
+    public string Sound
+    {
+        get => _userSettings.Sound;
+        set
+        {
+            _userSettings.Sound = value;
+            _userSettings.Save();
+        }
+    }
+
+    public ObservableCollection<string> Themes { get; } = ["System", "Light", "Dark"];
+
+    public SettingsViewModel(ServiceLocator serviceLocator)
+    {
+        _userSettings = serviceLocator.UserSettings;
+        _themeService = serviceLocator.ThemeService;
+
+        SelectedTheme = Theme;
+    }
+
+    [RelayCommand]
+    private void SaveSettings()
+    {
+        _userSettings.Theme = Theme;
+        _userSettings.Sound = Sound;
+    }
+
+    partial void OnSelectedThemeChanged(string value)
+    {
+        Theme = value;
+        _themeService.SetTheme(Theme);
     }
 }

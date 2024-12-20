@@ -1,8 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using Posetrix.Core.Data;
+using System.Text.RegularExpressions;
 using System.Windows;
-using Microsoft.Extensions.DependencyInjection;
-using Posetrix.Core.Data;
-using Posetrix.Core.ViewModels;
 
 namespace Posetrix.Views;
 

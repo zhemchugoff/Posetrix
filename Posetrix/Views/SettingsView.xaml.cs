@@ -1,14 +1,14 @@
-﻿using System.Windows;
+﻿using Posetrix.Core.Models;
 using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
-using Posetrix.Core.Models;
 
 namespace Posetrix.Views;
 
 /// <summary>
 /// Interaction logic for SettingsWindow.xaml
 /// </summary>
-public partial class SettingsView: Window
+public partial class SettingsView : Window
 {
     public SettingsView()
     {
@@ -25,28 +25,5 @@ public partial class SettingsView: Window
         });
 
         e.Handled = true;
-    }
-
-    private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        if (ChangeTheme.SelectedItem is Theme theme)
-        {
-            var selectedValue = theme.Name;
-
-            switch (selectedValue)
-            {
-                case "Light":
-                    Application.Current.ThemeMode = ThemeMode.Light;
-                    break;
-                case "Dark":
-                    Application.Current.ThemeMode = ThemeMode.Dark;
-                    break;
-                case "System":
-                    Application.Current.ThemeMode = ThemeMode.System;
-                    break;
-                default:
-                    break;
-            }
-        }
     }
 }

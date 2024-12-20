@@ -19,5 +19,7 @@ public static class ConfigureServices
         // Services.
         collection.AddTransient<IFolderBrowserServiceAsync, FolderBrowserService>();
         collection.AddTransient<IExtensionsService, SupportedExtensionsService>();
+        collection.AddTransient<IUserSettings, UserSettings>();
+        collection.AddTransient<IThemeService, ThemeService>();
     }
 }

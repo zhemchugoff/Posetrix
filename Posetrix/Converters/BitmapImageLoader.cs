@@ -1,11 +1,11 @@
-﻿using System.Globalization;
+﻿using MetadataExtractor;
+using MetadataExtractor.Formats.Exif;
+using Posetrix.Assets;
+using Posetrix.Core.Services;
+using System.Globalization;
 using System.IO;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
-using MetadataExtractor;
-using MetadataExtractor.Formats.Exif;
-using Posetrix.Assets;
-using Posetrix.Core.Data;
 
 namespace Posetrix.Converters;
 

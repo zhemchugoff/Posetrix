@@ -2,6 +2,6 @@
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class BaseViewModel: ObservableValidator
+public partial class BaseViewModel : ObservableValidator
 {
 }

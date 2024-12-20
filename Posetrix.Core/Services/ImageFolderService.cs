@@ -1,6 +1,6 @@
 ﻿using Posetrix.Core.Models;
 
-namespace Posetrix.Core.Data;
+namespace Posetrix.Core.Services;
 
 /// <summary>
 /// Service <c>ImageFolderService</c> is used for creation of <c>ImageFolder</c> object.

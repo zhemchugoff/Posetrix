@@ -1,9 +1,9 @@
-﻿using System.Windows;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Posetrix.Core.Interfaces;
+using Posetrix.Core.Services;
 using Posetrix.Core.ViewModels;
 using Posetrix.Services;
-using Posetrix.Core.Services;
+using System.Windows;
 
 namespace Posetrix;
 
@@ -21,6 +21,7 @@ public partial class App : Application
 
         services.AddSingleton<ViewModelLocator>();
         services.AddSingleton<WindowMapper>();
+        services.AddSingleton<ServiceLocator>();
         services.AddSingleton<IWindowManager, WindowManager>();
 
         ServiceProvider = services.BuildServiceProvider();

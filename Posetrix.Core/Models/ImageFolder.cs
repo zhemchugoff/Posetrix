@@ -40,11 +40,11 @@ public class ImageFolder
         // Convert the object to a ReferencesFolder object
         var comparedFolder = (ImageFolder)compared;
         // If the values of the object variables are equal, the objects are, too.
-        return FullFolderPath.Equals(comparedFolder.FullFolderPath);
+        return FullFolderPath != null && FullFolderPath.Equals(comparedFolder.FullFolderPath);
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(FullFolderPath);
+        return HashCode.Combine(FullFolderPath, FolderName);
     }
 }

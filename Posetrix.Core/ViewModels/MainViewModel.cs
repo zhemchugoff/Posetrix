@@ -2,10 +2,10 @@
 using CommunityToolkit.Mvvm.Input;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
+using Posetrix.Core.Services;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
-using Posetrix.Core.Services;
 
 
 namespace Posetrix.Core.ViewModels;
@@ -60,13 +60,19 @@ public partial class MainViewModel : BaseViewModel
     {
     }
 
-    public MainViewModel(IWindowManager windowManager, ViewModelLocator viewModelLocator)
+    public MainViewModel(IWindowManager windowManager, ViewModelLocator viewModelLocator, ServiceLocator serviceLocator)
     {
         _windowManager = windowManager;
         _viewModelLocator = viewModelLocator;
 
+        // Set app theme on startup.
+        var themeService = serviceLocator.ThemeService;
+        var userSettings = serviceLocator.UserSettings;
+        themeService.SetTheme(userSettings.Theme);
+
         _cVM = viewModelLocator.CustomIntervalViewModel;
         _pVM = viewModelLocator.PredefinedIntervalsViewModel;
+
 
         _pVM.ErrorsChanged += (_, _) => StartSessionCommand.NotifyCanExecuteChanged();
         _cVM.ErrorsChanged += (_, _) => StartSessionCommand.NotifyCanExecuteChanged();
@@ -85,9 +91,14 @@ public partial class MainViewModel : BaseViewModel
 
         if (FolderCount > 0)
         {
+            FolderImageCounter = 0; // Reset counter before recounting
+
             foreach (ImageFolder folder in ReferenceFolders)
             {
-                FolderImageCounter += folder.References.Count;
+                if (folder.References != null)
+                {
+                    FolderImageCounter += folder.References.Count;
+                }
             }
         }
         else

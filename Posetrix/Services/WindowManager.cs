@@ -14,15 +14,17 @@ public class WindowManager(WindowMapper windowMapper) : IWindowManager
 
         if (windowType != null)
         {
-            var window = Activator.CreateInstance(windowType) as Window;
-            window.DataContext = viewModel;
-
-            if (window.DataContext is IDisposable disposable)
+            if (Activator.CreateInstance(windowType) is Window window)
             {
-                window.Unloaded += (s, e) => disposable.Dispose();
-            }
+                window.DataContext = viewModel;
 
-            window.Show();
+                if (window.DataContext is IDisposable disposable)
+                {
+                    window.Unloaded += (s, e) => disposable.Dispose();
+                }
+
+                window.Show();
+            }
         }
     }
 
@@ -32,9 +34,11 @@ public class WindowManager(WindowMapper windowMapper) : IWindowManager
 
         if (windowType != null)
         {
-            var window = Activator.CreateInstance(windowType) as Window;
-            window.DataContext = viewModel;
-            window.ShowDialog();
+            if (Activator.CreateInstance(windowType) is Window window)
+            {
+                window.DataContext = viewModel;
+                window.ShowDialog();
+            }
         }
     }
 }

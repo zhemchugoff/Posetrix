@@ -21,7 +21,7 @@ public class FolderBrowserService : IFolderBrowserServiceAsync
             var folderFullPath = folderDialog.FolderName;
             return Task.FromResult<string?>(folderFullPath);
         }
-        
+
         return Task.FromResult<string?>(null);
     }
 }

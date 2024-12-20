@@ -127,7 +127,7 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="Images to draw" />
                     <TextBlock
-                        Margin="8,0,0,0"
+                        Margin="8,4,0,0"
                         VerticalAlignment="Center"
                         FontFamily="{StaticResource SegoeUiIcons}"
                         Text="&#xE946;">
@@ -171,7 +171,7 @@
                         Style="{StaticResource BodyTextBlockStyle}"
                         Text="Endless mode" />
                     <TextBlock
-                        Margin="8,0,0,0"
+                        Margin="8,4,0,0"
                         VerticalAlignment="Center"
                         FontFamily="{StaticResource SegoeUiIcons}"
                         Text="&#xE946;">

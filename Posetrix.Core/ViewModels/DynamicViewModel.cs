@@ -3,7 +3,7 @@ using Posetrix.Core.Data;
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class DynamicViewModel: BaseViewModel
+public partial class DynamicViewModel : BaseViewModel
 {
-    [ObservableProperty] private ApplicationModelNames _modelName;
+    [ObservableProperty] public partial ApplicationModelNames ModelName { get; set; }
 }

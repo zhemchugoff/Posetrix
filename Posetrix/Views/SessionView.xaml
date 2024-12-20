@@ -110,6 +110,7 @@
                 <TextBlock
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
+                    IsEnabled="{Binding IsTimeVisible}"
                     Style="{StaticResource CaptionTextBlockStyle}"
                     Text="{Binding FormattedTime}" />
             </UniformGrid>

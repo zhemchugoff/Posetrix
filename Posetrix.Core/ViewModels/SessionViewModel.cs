@@ -1,12 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Posetrix.Core.Data;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
-using System.Collections.ObjectModel;
-using Posetrix.Core.Data;
-using System.ComponentModel;
 using Posetrix.Core.Services;
-using System.Diagnostics;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace Posetrix.Core.ViewModels;
 
@@ -32,6 +31,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     [NotifyCanExecuteChangedFor(nameof(SelectPreviousImageCommand))]
     public partial int CurrentImageIndex { get; set; }
 
+    [ObservableProperty] public partial bool IsTimeVisible { get; set; }
     [ObservableProperty] public partial bool IsSessionActive { get; set; } = true;
     [ObservableProperty] public partial bool IsEndOfCollection { get; set; }
 
@@ -39,8 +39,8 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     public bool CanSelectNextImage => IsSessionActive && CurrentImageIndex < _sessionCollectionCount && _sessionCollectionCount > 0;
     public bool CanSelectPreviousImage => IsSessionActive && CurrentImageIndex > 0 && _sessionCollectionCount > 0;
     public bool IsStopEnabled => IsSessionActive;
-    public bool IsPauseEnabled => IsSessionActive;
-    public bool IsTimerPaused => _timerStore.IsTimerPaused;
+    public bool IsPauseEnabled => IsSessionActive && IsTimeVisible;
+    public bool IsTimerPaused => _timerStore.IsTimerPaused && IsTimeVisible;
 
     // Image properties.
     [ObservableProperty] public partial string? CurrentImage { get; set; }
@@ -59,16 +59,6 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     public string SessionInfo => $"{CurrentImageIndex} / {CompletedImagesCounter} / {_sessionCollectionCount}";
     [ObservableProperty] public partial string FormattedTime { get; set; } = "00:00:00";
 
-    // Session disposal.
-    //private bool _disposed = false;
-
-
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
-    public SessionViewModel()
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
-    {
-
-    }
     public SessionViewModel(ViewModelLocator viewModelLocator)
     {
         // Viewmodels.
@@ -90,8 +80,19 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
 
         // Create timer.
         Seconds = _mainViewModel.SelectedViewModel.GetSeconds();
-        var duration = TimeSpan.FromSeconds(Seconds);
-        _timerStore.StartTimer(duration);
+
+        if (Seconds == 0)
+        {
+            IsTimeVisible = false;
+            FormattedTime = "";
+        }
+        else
+        {
+            IsTimeVisible = true;
+            FormattedTime = "00:00:00";
+            var duration = TimeSpan.FromSeconds(Seconds);
+            _timerStore.StartTimer(duration);
+        }
 
         // Image collection.
         _completedImages.CollectionChanged += CompletedImages_CollectionChanged;
@@ -108,7 +109,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     [RelayCommand(CanExecute = nameof(CanSelectNextImage))]
     private void SelectNextImage()
     {
-        if (!_completedImages.Contains(CurrentImage))
+        if (!string.IsNullOrEmpty(CurrentImage) && !_completedImages.Contains(CurrentImage))
         {
             _completedImages.Add(_sessionCollection[CurrentImageIndex]);
         }
@@ -168,8 +169,12 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
 
     private void ShowEndOfSessionPlaceholder()
     {
+        if (IsTimeVisible)
+        {
+            StopTimer();
+        }
+
         CurrentImage = PlaceHolderService.CelebrationImage;
-        StopTimer();
         IsSessionActive = false;
     }
 
@@ -235,7 +240,11 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
         else
         {
             CurrentImage = _sessionCollection[value];
-            ResetTimer();
+
+            if (IsTimeVisible)
+            {
+                ResetTimer();
+            }
         }
     }
 
@@ -262,11 +271,11 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
 
     public void Dispose()
     {
-        // TODO: add subscriptions.
-
+        _timerStore.TimeUpdated -= OnTimeUpdated;
+        _timerStore.CountdownFinished -= OnCountDownFinished;
         _timerStore.PropertyChanged -= TimerStore_PropertyChanged; // Unsubsribe from property.
         _timerStore.Dispose(); // Dispose of any disposable resources.
-        Debug.Write("Disposed!");
+
         GC.SuppressFinalize(this); // Optionally suppress finalization.
     }
 }

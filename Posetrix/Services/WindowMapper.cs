@@ -16,15 +16,14 @@ public class WindowMapper
         RegisterMapping<FolderAddViewModel, FoldersAddView>();
     }
 
-    public void RegisterMapping<TViewModel, TWindow>() where TViewModel: BaseViewModel where TWindow : Window
+    public void RegisterMapping<TViewModel, TWindow>() where TViewModel : BaseViewModel where TWindow : Window
     {
-        _mappings[typeof(TViewModel)] =  typeof(TWindow);
+        _mappings[typeof(TViewModel)] = typeof(TWindow);
     }
 
-    public Type GetWindowTypeForViewModel(Type viewModelType)
+    public Type? GetWindowTypeForViewModel(Type viewModelType)
     {
         _mappings.TryGetValue(viewModelType, out var windowType);
         return windowType;
-
     }
 }

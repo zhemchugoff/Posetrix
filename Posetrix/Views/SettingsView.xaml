@@ -14,17 +14,19 @@
     d:DataContext="{d:DesignInstance Type=viewmodels:SettingsViewModel}"
     Icon="{StaticResource AppIcon}"
     mc:Ignorable="d">
-    <Grid Margin="20" ShowGridLines="False">
+    <Grid Margin="12" ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="12" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="12" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="12" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="12" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid
-            Grid.Row="0"
-            Margin="0,0,0,20"
-            Background="Transparent">
+        <Grid Grid.Row="0" Background="Transparent">
             <Border
                 Padding="{StaticResource ExpanderPadding}"
                 Background="{DynamicResource ExpanderHeaderBackground}"
@@ -46,14 +48,12 @@
                         Grid.Column="1"
                         MinWidth="180"
                         HorizontalAlignment="Right"
-                        DisplayMemberPath="Name"
                         ItemsSource="{Binding Themes}"
-                        SelectedItem="{Binding SelectedTheme}"
-                        SelectionChanged="ComboBox_SelectionChanged" />
+                        SelectedItem="{Binding SelectedTheme}" />
                 </Grid>
             </Border>
         </Grid>
-        <Grid Grid.Row="1" Margin="0,0,0,20">
+        <Grid Grid.Row="2">
             <Border
                 Padding="{StaticResource ExpanderPadding}"
                 Background="{DynamicResource ExpanderHeaderBackground}"
@@ -81,7 +81,7 @@
                 </Grid>
             </Border>
         </Grid>
-        <Grid Grid.Row="2" Margin="0,0,0,20">
+        <Grid Grid.Row="4">
             <Border
                 Padding="{StaticResource ExpanderPadding}"
                 Background="{DynamicResource ExpanderHeaderBackground}"
@@ -109,7 +109,14 @@
                 </Grid>
             </Border>
         </Grid>
-        <StackPanel Grid.Row="3" VerticalAlignment="Center">
+        <Button
+            Grid.Row="6"
+            Height="30"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Command="{Binding SaveSettingsCommand}"
+            Content="Save settings" />
+        <StackPanel Grid.Row="8" VerticalAlignment="Center">
             <TextBlock
                 HorizontalAlignment="Center"
                 Style="{StaticResource BodyTextBlockStyle}"

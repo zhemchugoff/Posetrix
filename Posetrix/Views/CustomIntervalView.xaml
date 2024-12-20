@@ -14,7 +14,10 @@
             Height="30"
             PreviewTextInput="TextBox_PreviewTextInput"
             Style="{StaticResource TextBoxValidation}"
-            Text="{Binding Seconds, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True, FallbackValue=0, TargetNullValue=''}" />
+            Text="{Binding Seconds, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True, FallbackValue=0, TargetNullValue=''}"
+            ToolTipService.InitialShowDelay="100"
+            ToolTipService.Placement="MousePoint"
+            ToolTipService.ToolTip="0: Timer is off" />
     </Grid>
 
 </UserControl>

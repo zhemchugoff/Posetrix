@@ -2,10 +2,9 @@
 using CommunityToolkit.Mvvm.Input;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
-using Posetrix.Core.Data;
+using Posetrix.Core.Services;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using Posetrix.Core.Services;
 
 namespace Posetrix.Core.ViewModels
 {
@@ -60,6 +59,11 @@ namespace Posetrix.Core.ViewModels
 
         private void AddFolder(string? folderPath)
         {
+            if (string.IsNullOrEmpty(folderPath))
+            {
+                return;
+            }
+
             // Gets a folder name from a full path and removes any trailing separators.
             DirectoryInfo directoryInfo = new(path: folderPath);
             var folderName = directoryInfo.Name;

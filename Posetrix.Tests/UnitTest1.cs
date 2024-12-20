@@ -1,6 +1,4 @@
-﻿using Posetrix.Core.ViewModels;
-
-namespace Posetrix.Tests;
+﻿namespace Posetrix.Tests;
 
 public class UnitTest1
 {
