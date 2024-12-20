@@ -1,11 +1,9 @@
-using System.IO;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Microsoft.Extensions.DependencyInjection;
-using Posetrix.Core.Data;
-using Posetrix.Core.Interfaces;
-using Posetrix.Core.Data;
+using Posetrix.Core.Services;
 using Posetrix.Core.ViewModels;
+using System.IO;
 
 namespace Posetrix.Avalonia.Views;
 

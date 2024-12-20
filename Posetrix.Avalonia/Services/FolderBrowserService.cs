@@ -1,8 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using Posetrix.Core.Interfaces;
+using System;
+using System.Threading.Tasks;
 
 namespace Posetrix.Avalonia.Services;
 

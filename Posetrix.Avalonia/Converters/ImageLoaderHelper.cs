@@ -1,10 +1,10 @@
-﻿using System;
-using System.Globalization;
-using System.IO;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
+using System;
+using System.Globalization;
+using System.IO;
 
 namespace Posetrix.Avalonia.Converters;
 

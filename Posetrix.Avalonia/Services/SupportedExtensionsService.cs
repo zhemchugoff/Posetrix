@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Posetrix.Core.Interfaces;
+﻿using Posetrix.Core.Interfaces;
+using System.Collections.Generic;
 
 namespace Posetrix.Avalonia.Services;
 

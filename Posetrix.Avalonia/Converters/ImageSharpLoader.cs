@@ -1,12 +1,12 @@
-﻿using System;
-using System.Globalization;
-using System.IO;
-using Avalonia.Data.Converters;
+﻿using Avalonia.Data.Converters;
 using Avalonia.Media.Imaging;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Metadata.Profiles.Exif;
 using SixLabors.ImageSharp.Processing;
+using System;
+using System.Globalization;
+using System.IO;
 
 namespace Posetrix.Avalonia.Converters;
 

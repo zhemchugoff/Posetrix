@@ -1,8 +1,8 @@
-﻿using System.IO;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
-using Posetrix.Core.Data;
+using Posetrix.Core.Services;
+using System.IO;
 
 namespace Posetrix.Avalonia.Views;
 

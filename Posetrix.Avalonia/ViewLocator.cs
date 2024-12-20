@@ -1,7 +1,7 @@
-using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Posetrix.Core.ViewModels;
+using System;
 
 namespace Posetrix.Avalonia;
 

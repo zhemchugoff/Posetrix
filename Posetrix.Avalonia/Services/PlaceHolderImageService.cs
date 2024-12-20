@@ -2,7 +2,7 @@
 
 namespace Posetrix.Avalonia.Services;
 
-public class PlaceHolderImageService: IContentService
+public class PlaceHolderImageService : IContentService
 {
     public string GetImagePath()
     {

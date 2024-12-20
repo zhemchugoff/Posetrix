@@ -1,8 +1,6 @@
-using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
-using System.Linq;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using Posetrix.Avalonia.Services;
@@ -10,10 +8,12 @@ using Posetrix.Avalonia.Views;
 using Posetrix.Core.Data;
 using Posetrix.Core.Factories;
 using Posetrix.Core.Interfaces;
+using Posetrix.Core.Services;
 using Posetrix.Core.ViewModels;
+using System;
+using System.Linq;
 using CustomIntervalView = Posetrix.Avalonia.Views.CustomIntervalView;
 using PredefinedIntervalsView = Posetrix.Avalonia.Views.PredefinedIntervalsView;
-using Posetrix.Core.Services;
 
 
 namespace Posetrix.Avalonia;
@@ -62,14 +62,14 @@ public partial class App : Application
 
             collection.AddTransient<IFolderBrowserServiceAsync>(sp =>
                 new FolderBrowserService(sp.GetRequiredService<FolderAddView>));
-            
-            
+
+
             collection.AddSingleton<Func<ApplicationModelNames, DynamicViewModel>>(s => name => name switch
             {
                 ApplicationModelNames.CustomInterval => s.GetRequiredService<CustomIntervalViewModel>(),
                 ApplicationModelNames.PredefinedIntervals => s.GetRequiredService<PredefinedIntervalsViewModel>(),
                 _ => throw new InvalidOperationException()
-            } );
+            });
 
             collection.AddSingleton<ModelFactory>();
 

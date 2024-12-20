@@ -1,11 +1,11 @@
-﻿using System;
-using System.Globalization;
-using System.IO;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media.Imaging;
-using Posetrix.Core.Data;
+using Posetrix.Core.Services;
 using SkiaSharp;
+using System;
+using System.Globalization;
+using System.IO;
 
 namespace Posetrix.Avalonia.Converters;
 
@@ -39,7 +39,7 @@ public class SkiaSharpImageLoader : IValueConverter
                     BitmapInterpolationMode.HighQuality);
                 return bitmap;
             }
-            
+
             // Load the original image.
             using var skBitmap = SKBitmap.Decode(imagePath);
             var orientation = GetImageOrientation(imagePath);
