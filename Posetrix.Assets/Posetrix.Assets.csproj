@@ -10,6 +10,9 @@
     <None Remove="Images\jason-leung-Xaanw0s0pMk-unsplash.jpg" />
     <None Remove="Images\undraw_bug_fixing.png" />
     <None Remove="Images\undraw_happy_music_g6wc.png" />
+    <None Remove="Sounds\jenninexus-countdown.wav" />
+    <None Remove="Sounds\short-beep-countdown.wav" />
+    <None Remove="Sounds\up-to-the-top-of-the-hour-beep.wav" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +38,9 @@
     <EmbeddedResource Include="Images\undraw_bug_fixing.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Sounds\jenninexus-countdown.wav" />
+    <EmbeddedResource Include="Sounds\short-beep-countdown.wav" />
+    <EmbeddedResource Include="Sounds\up-to-the-top-of-the-hour-beep.wav" />
   </ItemGroup>
 
 </Project>

@@ -21,5 +21,6 @@ public static class ConfigureServices
         collection.AddTransient<IExtensionsService, SupportedExtensionsService>();
         collection.AddTransient<IUserSettings, UserSettings>();
         collection.AddTransient<IThemeService, ThemeService>();
+        collection.AddTransient<ISoundService, SoundService>();
     }
 }

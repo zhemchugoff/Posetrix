@@ -27,10 +27,10 @@ public class BitmapImageLoader : IValueConverter
                 return LoadPlaceholder(imagePath);
             }
 
-            return LoadImage(imagePath) ?? LoadPlaceholder(PlaceHolderService.ErrorImage);
+            return LoadImage(imagePath) ?? LoadPlaceholder(EmbeddedResourceLocator.ErrorImage);
         }
 
-        return LoadPlaceholder(PlaceHolderService.ErrorImage);
+        return LoadPlaceholder(EmbeddedResourceLocator.ErrorImage);
     }
 
     private BitmapImage? LoadPlaceholder(string filePath)
@@ -42,7 +42,7 @@ public class BitmapImageLoader : IValueConverter
         bmp.BeginInit();
         bmp.StreamSource = stream;
         bmp.DecodePixelWidth = PixelWidth;
-
+        bmp.CacheOption = BitmapCacheOption.OnLoad;
         bmp.EndInit();
         bmp.Freeze();
         return bmp;
@@ -124,5 +124,14 @@ public class BitmapImageLoader : IValueConverter
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
+    }
+
+    // TODO: Implement IDisposable
+    public void DisposeBitmap(object image)
+    {
+        if (image is BitmapImage bitmap)
+        {
+            bitmap.StreamSource?.Dispose();
+        }
     }
 }

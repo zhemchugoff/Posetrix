@@ -12,7 +12,7 @@ public partial class SettingsView : Window
     public SettingsView()
     {
         InitializeComponent();
-        using Stream stream = Assets.ResourceHelper.GetEmbeddedResourceStream(PlaceHolderService.WindowIcon);
+        using Stream stream = Assets.ResourceHelper.GetEmbeddedResourceStream(EmbeddedResourceLocator.WindowIcon);
         Icon = new WindowIcon(stream);
     }
 

@@ -12,10 +12,10 @@ public class UserSettings : IUserSettings
     private class SettingsData
     {
         public string Theme { get; set; } = "System";
-        public string Sound { get; set; } = "Sound1";
+        public string Sound { get; set; } = "Classic Countdown";
     }
 
-    private SettingsData _settings = null!;
+    private SettingsData _settings = new();
 
     public string Theme
     {

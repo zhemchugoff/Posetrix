@@ -13,5 +13,6 @@ public class ServiceLocator(IServiceProvider serviceProvider)
     public IExtensionsService ExtensionsService => _serviceProvider.GetRequiredService<IExtensionsService>();
     public IUserSettings UserSettings => _serviceProvider.GetRequiredService<IUserSettings>();
     public IThemeService ThemeService => _serviceProvider.GetRequiredService<IThemeService>();
+    public ISoundService SoundService => _serviceProvider.GetRequiredService<ISoundService>();
 
 }

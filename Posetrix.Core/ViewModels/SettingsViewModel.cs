@@ -1,21 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Posetrix.Core.Interfaces;
-using Posetrix.Core.Models;
 using Posetrix.Core.Services;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace Posetrix.Core.ViewModels;
 
 public partial class SettingsViewModel : BaseViewModel, ICustomWindow
 {
-    private readonly IUserSettings _userSettings;
-
     public string WindowTitle => "Settings";
-    [ObservableProperty] public partial string SelectedTheme { get; set; }
-
+    private readonly IUserSettings _userSettings;
     private readonly IThemeService _themeService;
+    private readonly ISoundService _soundService;
+    [ObservableProperty] public partial string SelectedTheme { get; set; }
+    [ObservableProperty] public partial string SelectedSound { get; set; }
 
     public string Theme
     {
@@ -36,26 +33,35 @@ public partial class SettingsViewModel : BaseViewModel, ICustomWindow
         }
     }
 
-    public ObservableCollection<string> Themes { get; } = ["System", "Light", "Dark"];
+    public List<string> Themes { get; } = ["System", "Light", "Dark"];
+    public List<string> Sounds { get; } = ["Classic Countdown", "Beep Countdown", "Three Two One Countdown"];
 
     public SettingsViewModel(ServiceLocator serviceLocator)
     {
         _userSettings = serviceLocator.UserSettings;
         _themeService = serviceLocator.ThemeService;
+        _soundService = serviceLocator.SoundService;
 
         SelectedTheme = Theme;
-    }
-
-    [RelayCommand]
-    private void SaveSettings()
-    {
-        _userSettings.Theme = Theme;
-        _userSettings.Sound = Sound;
+        SelectedSound = Sound;
     }
 
     partial void OnSelectedThemeChanged(string value)
     {
         Theme = value;
+        _userSettings.Theme = Theme;
         _themeService.SetTheme(Theme);
+    }
+
+    partial void OnSelectedSoundChanged(string value)
+    {
+        Sound = value;
+        _userSettings.Sound = Sound;
+    }
+
+    [RelayCommand]
+    private void PlaySound()
+    {
+        _soundService.PlaySound(SelectedSound);
     }
 }

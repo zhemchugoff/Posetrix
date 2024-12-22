@@ -1,7 +1,6 @@
-﻿namespace Posetrix.Assets
-{
-    public class Class1
-    {
+﻿namespace Posetrix.Assets;
 
-    }
+public class Class1
+{
+
 }

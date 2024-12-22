@@ -15,7 +15,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
 
     private readonly MainViewModel _mainViewModel;
     private readonly ViewModelLocator _viewModelLocator;
-
+    private readonly ServiceLocator _serviceLocator;
     private readonly SynchronizationContext _synchronizationContext;
 
     // Collections.
@@ -59,10 +59,12 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     public string SessionInfo => $"{CurrentImageIndex} / {CompletedImagesCounter} / {_sessionCollectionCount}";
     [ObservableProperty] public partial string FormattedTime { get; set; } = "00:00:00";
 
-    public SessionViewModel(ViewModelLocator viewModelLocator)
+    public SessionViewModel(ViewModelLocator viewModelLocator, ServiceLocator serviceLocator)
     {
         // Viewmodels.
         _viewModelLocator = viewModelLocator;
+        // TODO: add countdown.
+        _serviceLocator = serviceLocator;
         _mainViewModel = _viewModelLocator.MainViewModel;
         IDynamicViewModel dynamicView = _mainViewModel.SelectedViewModel;
 
@@ -174,7 +176,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
             StopTimer();
         }
 
-        CurrentImage = PlaceHolderService.CelebrationImage;
+        CurrentImage = EmbeddedResourceLocator.CelebrationImage;
         IsSessionActive = false;
     }
 

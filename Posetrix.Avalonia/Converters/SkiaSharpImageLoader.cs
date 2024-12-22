@@ -17,10 +17,10 @@ public class SkiaSharpImageLoader : IValueConverter
         {
             Bitmap? bitmap = LoadImage(imagePath, 1920, 1080);
 
-            return bitmap ?? LoadImage(PlaceHolderService.ErrorImage, 1920, 1080);
+            return bitmap ?? LoadImage(EmbeddedResourceLocator.ErrorImage, 1920, 1080);
         }
 
-        return LoadImage(PlaceHolderService.ErrorImage, 1920, 1080);
+        return LoadImage(EmbeddedResourceLocator.ErrorImage, 1920, 1080);
     }
 
     /// <summary>

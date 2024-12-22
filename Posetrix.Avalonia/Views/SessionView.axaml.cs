@@ -13,7 +13,7 @@ public partial class SessionView : Window
     public SessionView()
     {
         InitializeComponent();
-        using Stream stream = Assets.ResourceHelper.GetEmbeddedResourceStream(PlaceHolderService.WindowIcon);
+        using Stream stream = Assets.ResourceHelper.GetEmbeddedResourceStream(EmbeddedResourceLocator.WindowIcon);
         Icon = new WindowIcon(stream);
     }
 

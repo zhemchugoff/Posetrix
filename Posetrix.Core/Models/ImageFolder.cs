@@ -8,6 +8,8 @@ public class ImageFolder
 
     public int ImageCounter => References?.Count ?? 0;
 
+    // TODO: add class conctructor and delete ImageFolderService
+
     /// <summary>
     /// Gets a folder path and a list of supported extensions.
     /// </summary>
