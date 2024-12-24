@@ -99,19 +99,36 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock
-                        Grid.Column="0"
-                        VerticalAlignment="Center"
-                        Text="Image quality" />
+                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="Image quality" />
+                        <TextBlock
+                            Margin="8,4,0,0"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource SegoeUiIcons}"
+                            Text="&#xE946;">
+                            <TextBlock.ToolTip>
+                                <ToolTip>
+                                    <TextBlock
+                                        FontFamily="{StaticResource SegoeUi}"
+                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                        TextWrapping="Wrap">
+                                        Higher image quality - higher memory consumption and worse app performance.<LineBreak />
+                                        Default: keep an original image size.<LineBreak />
+                                        Low: 480<LineBreak />
+                                        Medium: 960<LineBreak />
+                                        High: 1920</TextBlock>
+                                </ToolTip>
+                            </TextBlock.ToolTip>
+                        </TextBlock>
+
+
+                    </StackPanel>
                     <ComboBox
                         Grid.Column="1"
                         MinWidth="220"
                         HorizontalAlignment="Right"
-                        SelectedIndex="0">
-                        <ComboBoxItem Content="High" />
-                        <ComboBoxItem Content="Medium" />
-                        <ComboBoxItem Content="Low" />
-                    </ComboBox>
+                        ItemsSource="{Binding Resolutions}"
+                        SelectedItem="{Binding SelectedImageResolution}" />
                 </Grid>
             </Border>
         </Grid>

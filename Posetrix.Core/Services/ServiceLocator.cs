@@ -14,5 +14,6 @@ public class ServiceLocator(IServiceProvider serviceProvider)
     public IUserSettings UserSettings => _serviceProvider.GetRequiredService<IUserSettings>();
     public IThemeService ThemeService => _serviceProvider.GetRequiredService<IThemeService>();
     public ISoundService SoundService => _serviceProvider.GetRequiredService<ISoundService>();
+    public IImageResolutionService ImageResolutionService => _serviceProvider.GetRequiredService<IImageResolutionService>();
 
 }

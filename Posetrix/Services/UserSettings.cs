@@ -13,6 +13,7 @@ public class UserSettings : IUserSettings
     {
         public string Theme { get; set; } = "System";
         public string Sound { get; set; } = "Off";
+        public string ImageResolution { get; set; } = "Default";
     }
 
     private SettingsData _settings = new();
@@ -26,6 +27,12 @@ public class UserSettings : IUserSettings
     {
         get => _settings.Sound;
         set => _settings.Sound = value;
+    }
+
+    public string ImageResolution
+    {
+        get => _settings.ImageResolution;
+        set => _settings.ImageResolution = value;
     }
 
     public UserSettings()

@@ -2,6 +2,7 @@
 using MetadataExtractor.Formats.Exif;
 using Posetrix.Assets;
 using Posetrix.Core.Services;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Windows.Data;
@@ -12,15 +13,19 @@ namespace Posetrix.Converters;
 /// <summary>
 /// A class <c>BitmapImageLoader</c> used for loading images and reducing memory consumption.
 /// </summary>
-[ValueConversion(typeof(string), typeof(BitmapImage))]
-public class BitmapImageLoader : IValueConverter
+public class BitmapImageLoader : IMultiValueConverter
 {
-    private readonly int PixelWidth = 1920;
+    private int _imageResolution;
     private int ImageOrientation { get; set; } = 1; // Default orientation.
 
-    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    public object? Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is string imagePath && !string.IsNullOrEmpty(imagePath))
+        if (values[1] is int resolution)
+        {
+            _imageResolution = resolution;
+        }
+
+        if (values[0] is string imagePath && !string.IsNullOrEmpty(imagePath))
         {
             if (imagePath.StartsWith("Images."))
             {
@@ -37,11 +42,18 @@ public class BitmapImageLoader : IValueConverter
     {
         using Stream stream = ResourceHelper.GetEmbeddedResourceStream(filePath);
         if (stream == null) return null;
-
+        // TODO: Optimize memory usage.
         var bmp = new BitmapImage();
         bmp.BeginInit();
         bmp.StreamSource = stream;
-        bmp.DecodePixelWidth = PixelWidth;
+
+        if (_imageResolution != 0)
+        {
+            bmp.DecodePixelWidth = _imageResolution;
+        }
+
+        Debug.WriteLine(_imageResolution);
+
         bmp.CacheOption = BitmapCacheOption.OnLoad;
         bmp.EndInit();
         bmp.Freeze();
@@ -59,7 +71,10 @@ public class BitmapImageLoader : IValueConverter
             ImageOrientation = GetImageOrientation(filePath);
             CorrectImageRotation(bitmap, ImageOrientation);
 
-            bitmap.DecodePixelWidth = PixelWidth; // Adjust for optimization.
+            if (_imageResolution != 0)
+            {
+                bitmap.DecodePixelWidth = _imageResolution; // Adjust for optimization.
+            }
 
             // Caches the entire image into memory at load time.
             // All requests for image data are filled from the memory store.
@@ -67,7 +82,6 @@ public class BitmapImageLoader : IValueConverter
 
             bitmap.EndInit(); // Indicates that the initialization process for the element is complete.
             bitmap.Freeze(); // Makes the current object unmodifiable and sets its IsFrozen property to true.
-
             return bitmap;
         }
         catch (Exception)
@@ -120,12 +134,6 @@ public class BitmapImageLoader : IValueConverter
 
         return 1; // Default orientation if metadata is missing.
     }
-
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
-
     // TODO: Implement IDisposable
     public void DisposeBitmap(object image)
     {
@@ -133,5 +141,10 @@ public class BitmapImageLoader : IValueConverter
         {
             bitmap.StreamSource?.Dispose();
         }
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
     }
 }

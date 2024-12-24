@@ -19,6 +19,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     private readonly SynchronizationContext _synchronizationContext;
     private readonly ISoundService _soundService;
     private readonly IUserSettings _userSettings;
+    private readonly IImageResolutionService _imageResolutionService;
 
     // Collections.
     private readonly List<string> _sessionCollection = [];
@@ -61,6 +62,8 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     public string SessionInfo => $"{CurrentImageIndex} / {CompletedImagesCounter} / {_sessionCollectionCount}";
     [ObservableProperty] public partial string FormattedTime { get; set; } = "00:00:00";
 
+    public int ImageResolution { get; }
+
     public SessionViewModel(ViewModelLocator viewModelLocator, ServiceLocator serviceLocator)
     {
         // Viewmodels.
@@ -71,6 +74,9 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
         _serviceLocator = serviceLocator;
         _soundService = _serviceLocator.SoundService;
         _userSettings = _serviceLocator.UserSettings;
+        _imageResolutionService = _serviceLocator.ImageResolutionService;
+
+        ImageResolution = _imageResolutionService.SetResoluton(_userSettings.ImageResolution);
 
 
         _IsEndlessModeOn = _mainViewModel.IsEndlessModeEnabled;

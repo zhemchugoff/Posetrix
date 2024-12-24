@@ -120,8 +120,13 @@
                 x:Name="SessionImage"
                 Loaded="SessionImage_Loaded"
                 SizeChanged="SessionWindow_OnSizeChanged"
-                Source="{Binding CurrentImage, Converter={StaticResource ImageLoader}, Mode=OneWay}"
                 Stretch="Uniform">
+                <Image.Source>
+                    <MultiBinding Converter="{StaticResource ImageLoader}">
+                        <Binding Mode="OneWay" Path="CurrentImage" />
+                        <Binding Mode="OneWay" Path="ImageResolution" />
+                    </MultiBinding>
+                </Image.Source>
                 <Image.RenderTransform>
                     <ScaleTransform x:Name="MirrorTransform" ScaleX="{Binding IsMirroredX, Converter={StaticResource ScaleConverter}}" ScaleY="{Binding IsMirroredY, Converter={StaticResource ScaleConverter}}" />
                 </Image.RenderTransform>

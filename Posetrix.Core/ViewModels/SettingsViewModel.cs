@@ -12,6 +12,7 @@ public partial class SettingsViewModel : BaseViewModel, ICustomWindow
     private readonly IThemeService _themeService;
     private readonly ISoundService _soundService;
     [ObservableProperty] public partial string SelectedTheme { get; set; }
+    [ObservableProperty] public partial string SelectedImageResolution { get; set; }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsSoundEnabled))]
@@ -39,8 +40,18 @@ public partial class SettingsViewModel : BaseViewModel, ICustomWindow
         }
     }
 
+    public string ImageResolution
+    {
+        get => _userSettings.ImageResolution;
+        set
+        {
+            _userSettings.ImageResolution = value;
+            _userSettings.Save();
+        }
+    }
     public List<string> Themes { get; } = ["System", "Light", "Dark"];
     public List<string> Sounds { get; } = ["Off", "Classic Countdown", "Beep Countdown", "Three Two One Countdown"];
+    public List<string> Resolutions { get; } = ["Default", "Low", "Medium", "High"];
 
     public SettingsViewModel(ServiceLocator serviceLocator)
     {
@@ -50,6 +61,7 @@ public partial class SettingsViewModel : BaseViewModel, ICustomWindow
 
         SelectedTheme = Theme;
         SelectedSound = Sound;
+        SelectedImageResolution = ImageResolution;
     }
 
     partial void OnSelectedThemeChanged(string value)
@@ -63,6 +75,12 @@ public partial class SettingsViewModel : BaseViewModel, ICustomWindow
     {
         Sound = value;
         _userSettings.Sound = Sound;
+    }
+
+    partial void OnSelectedImageResolutionChanged(string value)
+    {
+        ImageResolution = value;
+        _userSettings.ImageResolution = ImageResolution;
     }
 
     [RelayCommand(CanExecute =nameof(IsSoundEnabled))]
