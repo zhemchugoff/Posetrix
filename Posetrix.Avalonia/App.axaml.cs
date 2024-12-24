@@ -5,15 +5,13 @@ using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
 using Posetrix.Avalonia.Services;
 using Posetrix.Avalonia.Views;
-using Posetrix.Core.Data;
 using Posetrix.Core.Factories;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Services;
 using Posetrix.Core.ViewModels;
 using System;
+using System.Diagnostics;
 using System.Linq;
-using CustomIntervalView = Posetrix.Avalonia.Views.CustomIntervalView;
-using PredefinedIntervalsView = Posetrix.Avalonia.Views.PredefinedIntervalsView;
 
 
 namespace Posetrix.Avalonia;
@@ -40,44 +38,30 @@ public partial class App : Application
             DisableAvaloniaDataAnnotationValidation();
 
             // Register all the services needed for the application to run.
-            var collection = new ServiceCollection();
+            var services = new ServiceCollection();
+            
+            services.AddCommonServices();
+            services.AddAvaloniaServices();
+            
+            services.AddSingleton<ViewModelLocator>();
+            services.AddSingleton<ServiceLocator>();
+            services.AddSingleton<IWindowManager, WindowManager>();
+            services.AddSingleton<WindowMapper>();
 
-            // Add viewodels.
-            collection.AddCommonServices();
+            // _services.AddTransient<IExtensionsService, SupportedExtensionsService>();
+            // _services.AddTransient<IContentService, PlaceHolderImageService>();
 
-            // Add windows.
-            collection.AddSingleton<MainView>();
-            collection.AddTransient<FolderAddView>();
-            collection.AddTransient<SettingsView>();
-            collection.AddTransient<SessionView>();
+            services.AddTransient<IFolderBrowserServiceAsync>(sp =>
+                new FolderBrowserService(sp.GetRequiredService<FoldersAddView>));
 
-            // Add custom controls.
-            collection.AddTransient<CustomIntervalView>();
-            collection.AddTransient<PredefinedIntervalsView>();
+            // _services.AddSingleton<ModelFactory>();
+            
 
-            // Add services.
-
-            collection.AddTransient<IExtensionsService, SupportedExtensionsService>();
-            collection.AddTransient<IContentService, PlaceHolderImageService>();
-
-            collection.AddTransient<IFolderBrowserServiceAsync>(sp =>
-                new FolderBrowserService(sp.GetRequiredService<FolderAddView>));
-
-
-            collection.AddSingleton<Func<ApplicationModelNames, DynamicViewModel>>(s => name => name switch
-            {
-                ApplicationModelNames.CustomInterval => s.GetRequiredService<CustomIntervalViewModel>(),
-                ApplicationModelNames.PredefinedIntervals => s.GetRequiredService<PredefinedIntervalsViewModel>(),
-                _ => throw new InvalidOperationException()
-            });
-
-            collection.AddSingleton<ModelFactory>();
 
             // Creates a ServiceProvider containing services from the provided IServiceCollection.
-            ServiceProvider = collection.BuildServiceProvider();
+            ServiceProvider = services.BuildServiceProvider();
 
             desktop.MainWindow = ServiceProvider.GetRequiredService<MainView>();
-            ;
             desktop.MainWindow.DataContext = ServiceProvider.GetRequiredService<MainViewModel>();
         }
 

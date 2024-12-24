@@ -10,6 +10,7 @@
         <entry key="../Posetrix.Avalonia/Views/CustomIntervalView.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
         <entry key="../Posetrix.Avalonia/Views/FolderAddView.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
         <entry key="../Posetrix.Avalonia/Views/FolderAddWindow.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
+        <entry key="../Posetrix.Avalonia/Views/FoldersAddView.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
         <entry key="../Posetrix.Avalonia/Views/MainView.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
         <entry key="../Posetrix.Avalonia/Views/MainWindow.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />
         <entry key="../Posetrix.Avalonia/Views/PredefinedIntervalsView.axaml" value="../Posetrix.Avalonia/Posetrix.Avalonia.csproj" />

@@ -112,7 +112,7 @@
                     Grid.Row="1"
                     Margin="0,12"
                     DisplayMemberPath="DisplayName"
-                    ItemsSource="{Binding Folders}"
+                    ItemsSource="{Binding DynamicViews}"
                     SelectedItem="{Binding SelectedViewModel}"
                     Validation.ErrorTemplate="{x:Null}" />
                 <Grid Grid.Row="2">

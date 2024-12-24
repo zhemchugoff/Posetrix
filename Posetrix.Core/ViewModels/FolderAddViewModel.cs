@@ -21,6 +21,7 @@ public partial class FolderAddViewModel : BaseViewModel, ICustomWindow
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanDeleteFolder))]
+    [NotifyCanExecuteChangedFor(nameof(RemoveFolderCommand))]
     public partial ImageFolder? SelectedFolder { get; set; }
 
     public bool CanDeleteFolder => _folderCount > 0 && SelectedFolder is not null;
@@ -41,12 +42,6 @@ public partial class FolderAddViewModel : BaseViewModel, ICustomWindow
     }
 
     [RelayCommand]
-    private void RemoveFolder(ImageFolder referencesFolder)
-    {
-        Folders.Remove(referencesFolder);
-    }
-
-    [RelayCommand]
     private async Task OpenFolder()
     {
         var folderPath = await _folderBrowserService.SelectFolderAsync();
@@ -57,6 +52,11 @@ public partial class FolderAddViewModel : BaseViewModel, ICustomWindow
         }
     }
 
+    [RelayCommand(CanExecute = nameof(CanDeleteFolder))]
+    private void RemoveFolder(ImageFolder referencesFolder)
+    {
+        Folders.Remove(referencesFolder);
+    }
     private void AddFolder(string? folderPath)
     {
         if (string.IsNullOrEmpty(folderPath))

@@ -3,11 +3,20 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Posetrix.Avalonia"
+    xmlns:core="using:Posetrix.Core.ViewModels"
+    xmlns:views="using:Posetrix.Avalonia.Views"
     RequestedThemeVariant="Default">
     <!--  "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options.  -->
 
     <Application.DataTemplates>
-        <local:ViewLocator />
+        <!-- <local:ViewLocator /> -->
+        <!-- Data templates for dynamic views. -->
+        <DataTemplate DataType="{x:Type core:CustomIntervalViewModel}">
+            <views:CustomIntervalView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type core:PredefinedIntervalsViewModel}">
+            <views:PredefinedIntervalsView />
+        </DataTemplate>
     </Application.DataTemplates>
     <Application.Resources>
         <FontFamily x:Key="CustomIconsFont">avares://Posetrix.Avalonia/Assets/Fonts#Phosphor</FontFamily>

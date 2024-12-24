@@ -1,8 +1,11 @@
-﻿using Posetrix.Core.Interfaces;
+﻿using System;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using Posetrix.Core.Interfaces;
 using Posetrix.Core.ViewModels;
-using System.Windows;
 
-namespace Posetrix.Services;
+namespace Posetrix.Avalonia.Services;
 
 public class WindowManager(WindowMapper windowMapper) : IWindowManager
 {
@@ -35,7 +38,11 @@ public class WindowManager(WindowMapper windowMapper) : IWindowManager
             if (Activator.CreateInstance(windowType) is Window window)
             {
                 window.DataContext = viewModel;
-                window.ShowDialog();
+
+                if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime appLifetime)
+                {
+                    if (appLifetime.MainWindow != null) window.ShowDialog(appLifetime.MainWindow);
+                }
             }
         }
     }

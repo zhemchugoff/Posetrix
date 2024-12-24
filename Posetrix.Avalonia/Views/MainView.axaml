@@ -25,7 +25,7 @@
                         Name="OpenSettingsButton"
                         Grid.Column="0"
                         Classes="transparent icon-only"
-                        Click="OpenSettingsButton_OnClick"
+                        Command="{Binding OpenSettingsCommand}"
                         Content="&#xE272;"
                         FontSize="24" />
                     <TextBlock
@@ -45,7 +45,7 @@
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     Classes="accent-button button-icon"
-                    Click="AddFolderButton_OnClick"
+                    Command="{Binding AddFoldersCommand}"
                     Content="&#xE3D4;"
                     FontSize="24" />
                 <TextBlock
@@ -64,17 +64,12 @@
                 <ComboBox
                     Grid.Row="1"
                     HorizontalAlignment="Stretch"
-                    ItemsSource="{Binding ViewModelsCollection}"
-                    SelectedIndex="0"
-                    SelectedItem="{Binding SelectedViewModel}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding ViewModelName}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
+                    ItemsSource="{Binding DynamicViews}"
+                    SelectedItem="{Binding SelectedViewModel}"
+                    DisplayMemberBinding="{Binding  DisplayName}">
                 </ComboBox>
                 <!--  Controls switch.  -->
-                <ContentControl Grid.Row="2" Content="{Binding SelectedViewModel.ViewModelObject}" />
+                <ContentControl Grid.Row="2" Content="{Binding SelectedViewModel}" />
             </Grid>
             <!--  Image count.  -->
             <Grid ColumnDefinitions="*,*" Row="2">
@@ -85,7 +80,7 @@
                 <TextBox
                     Grid.Column="1"
                     VerticalAlignment="Center"
-                    Text="{Binding CustomImageCount}" />
+                    Text="{Binding ImageCount}" />
             </Grid>
             <Grid Grid.Row="3" ColumnDefinitions="*,*">
                 <TextBlock
@@ -105,7 +100,7 @@
                 <CheckBox
                     Grid.Column="1"
                     HorizontalAlignment="Center"
-                    IsChecked="True" />
+                    IsChecked="{Binding IsEndlessModeEnabled}" />
             </Grid>
             <!--  Starting session button.  -->
             <Button
@@ -116,9 +111,8 @@
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
                 Classes="accent-button"
-                Click="StartNewSession_OnClick"
-                Content="Start a drawing session"
-                IsEnabled="{Binding CanStartSession}" />
+                Command="{Binding StartSessionCommand}"
+                Content="Start a drawing session"/>
         </Grid>
     </Grid>
 </Window>

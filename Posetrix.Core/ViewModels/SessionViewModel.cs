@@ -64,6 +64,11 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
 
     public int ImageResolution { get; }
 
+    public SessionViewModel()
+    {
+        
+    }
+    
     public SessionViewModel(ViewModelLocator viewModelLocator, ServiceLocator serviceLocator)
     {
         // Viewmodels.

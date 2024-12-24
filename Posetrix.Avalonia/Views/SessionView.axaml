@@ -13,7 +13,6 @@
     mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
-            <!--  TODO: Add a placeholder in case there is a problem with getting a bitmap image.  -->
             <converters:SkiaSharpImageLoader x:Key="ImageLoader" />
         </ResourceDictionary>
     </Window.Resources>
@@ -49,12 +48,12 @@
                 VerticalAlignment="Center"
                 Text="HH:MM:SS" />
         </UniformGrid>
-       <!-- <Svg Grid.Row="1" Path="avares://Posetrix.Avalonia/Assets/Images/Enthusiastic-pana.svg" /> -->
-        <Image Name="ImageControl" Grid.Row="1" Source="{Binding CurrentImage, Converter={StaticResource ImageLoader}}"> 
-        <Image.RenderTransform>
-        <ScaleTransform ScaleX="1" ScaleY="1">
-                 </ScaleTransform>
-             </Image.RenderTransform> 
+        <!-- <Svg Grid.Row="1" Path="avares://Posetrix.Avalonia/Assets/Images/Enthusiastic-pana.svg" /> -->
+        <Image Name="ImageControl" Grid.Row="1" Source="{Binding CurrentImage, Converter={StaticResource ImageLoader}}">
+            <Image.RenderTransform>
+                <ScaleTransform ScaleX="1" ScaleY="1">
+                </ScaleTransform>
+            </Image.RenderTransform>
         </Image>
         <!--  Control buttons.  -->
         <StackPanel
@@ -83,8 +82,7 @@
             <Button
                 Classes="big button-icon"
                 Command="{Binding SkipImageCommand}"
-                Content="&#xE5A6;"
-                IsEnabled="{Binding CanDeleteImage}" />
+                Content="&#xE5A6;" />
         </StackPanel>
     </Grid>
 </Window>

@@ -6,6 +6,7 @@ using Posetrix.Core.Services;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 
 
 namespace Posetrix.Core.ViewModels;
@@ -36,7 +37,7 @@ public partial class MainViewModel : BaseViewModel
     public partial int FolderImageCounter { get; set; } = 0;
 
     // ComboBox.
-    public List<IDynamicViewModel> Folders { get; } = [];
+    public List<IDynamicViewModel> DynamicViews { get; } = [];
 
 
     // Number of images, defined by a user. Default is 0: entire collecton.
@@ -52,16 +53,16 @@ public partial class MainViewModel : BaseViewModel
     /// <summary>
     /// Design-time only constructor.
     /// </summary>
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
-#pragma warning disable CS9264 // Non-nullable property must contain a non-null value when exiting constructor. Consider adding the 'required' modifier, or declaring the property as nullable, or adding '[field: MaybeNull, AllowNull]' attributes.
+    // public MainViewModel()
+    // {
+    // }
     public MainViewModel()
-#pragma warning restore CS9264 // Non-nullable property must contain a non-null value when exiting constructor. Consider adding the 'required' modifier, or declaring the property as nullable, or adding '[field: MaybeNull, AllowNull]' attributes.
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     {
+        
     }
-
     public MainViewModel(IWindowManager windowManager, ViewModelLocator viewModelLocator, ServiceLocator serviceLocator)
     {
+        Debug.WriteLine("Loaded!!");
         _windowManager = windowManager;
         _viewModelLocator = viewModelLocator;
 
@@ -80,9 +81,9 @@ public partial class MainViewModel : BaseViewModel
         ReferenceFolders.CollectionChanged += ReferenceFolders_CollectionChanged;
 
         // Combobox items.
-        Folders.Add(_pVM);
-        Folders.Add(_cVM);
-        SelectedViewModel = Folders.First();
+        DynamicViews.Add(_pVM);
+        DynamicViews.Add(_cVM);
+        SelectedViewModel = DynamicViews.First();
     }
 
     private void ReferenceFolders_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)

@@ -4,9 +4,9 @@ using System.IO;
 
 namespace Posetrix.Avalonia.Views;
 
-public partial class FolderAddView : Window
+public partial class FoldersAddView : Window
 {
-    public FolderAddView()
+    public FoldersAddView()
     {
         InitializeComponent();
         using Stream stream = Assets.ResourceHelper.GetEmbeddedResourceStream(EmbeddedResourceLocator.WindowIcon);

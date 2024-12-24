@@ -16,19 +16,19 @@ public partial class SettingsView : Window
         Icon = new WindowIcon(stream);
     }
 
-    private void ChangeTheme_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
-    {
-        if (ChangeTheme.SelectedItem is Theme theme && Application.Current != null)
-        {
-            var selectedValue = theme.Name;
-
-            Application.Current.RequestedThemeVariant = selectedValue switch
-            {
-                "Dark" => ThemeVariant.Dark,
-                "Light" => ThemeVariant.Light,
-                "System" => ThemeVariant.Default,
-                _ => Application.Current.RequestedThemeVariant
-            };
-        }
-    }
+    // private void ChangeTheme_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    // {
+    //     if (ChangeTheme.SelectedItem is Theme theme && Application.Current != null)
+    //     {
+    //         var selectedValue = theme.Name;
+    //
+    //         Application.Current.RequestedThemeVariant = selectedValue switch
+    //         {
+    //             "Dark" => ThemeVariant.Dark,
+    //             "Light" => ThemeVariant.Light,
+    //             "System" => ThemeVariant.Default,
+    //             _ => Application.Current.RequestedThemeVariant
+    //         };
+    //     }
+    // }
 }

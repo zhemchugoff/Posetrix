@@ -9,12 +9,10 @@ namespace Posetrix.Core.Services;
 /// <param name="serviceProvider"></param>
 public class ViewModelLocator(IServiceProvider serviceProvider)
 {
-    private readonly IServiceProvider _serviceProvider = serviceProvider;
-
-    public MainViewModel MainViewModel => _serviceProvider.GetRequiredService<MainViewModel>();
-    public SettingsViewModel SettingsViewModel => _serviceProvider.GetRequiredService<SettingsViewModel>();
-    public FolderAddViewModel FolderAddViewModel => _serviceProvider.GetRequiredService<FolderAddViewModel>();
-    public CustomIntervalViewModel CustomIntervalViewModel => _serviceProvider.GetRequiredService<CustomIntervalViewModel>();
-    public PredefinedIntervalsViewModel PredefinedIntervalsViewModel => _serviceProvider.GetRequiredService<PredefinedIntervalsViewModel>();
-    public SessionViewModel SessionViewModel => _serviceProvider.GetRequiredService<SessionViewModel>();
+    public MainViewModel MainViewModel => serviceProvider.GetRequiredService<MainViewModel>();
+    public SettingsViewModel SettingsViewModel => serviceProvider.GetRequiredService<SettingsViewModel>();
+    public FolderAddViewModel FolderAddViewModel => serviceProvider.GetRequiredService<FolderAddViewModel>();
+    public CustomIntervalViewModel CustomIntervalViewModel => serviceProvider.GetRequiredService<CustomIntervalViewModel>();
+    public PredefinedIntervalsViewModel PredefinedIntervalsViewModel => serviceProvider.GetRequiredService<PredefinedIntervalsViewModel>();
+    public SessionViewModel SessionViewModel => serviceProvider.GetRequiredService<SessionViewModel>();
 }
