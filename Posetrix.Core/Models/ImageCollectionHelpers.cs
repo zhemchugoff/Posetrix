@@ -32,7 +32,6 @@ public static class ImageCollectionHelpers
                 (images[j], images[i]) = (images[i], images[j]);
             }
         }
-
     }
 
     /// <summary>
@@ -51,5 +50,15 @@ public static class ImageCollectionHelpers
         paths.AddRange(PopulateCollection(folders));
         paths.ShuffleCollection(isShuffleOn);
         paths.TrimCollectoin(imageCount ?? 0);
+    }
+
+    /// <summary>
+    /// Method <c>GetImageFiles</c> populates the list with image files with supported extensions.
+    /// </summary>
+    public static void GetImageFiles(this List<string> files, string folderPath, List<string> supportedExtensions)
+    {
+        files.Clear();
+        files.AddRange(Directory.GetFiles(folderPath)
+            .Where(file => supportedExtensions.Contains(Path.GetExtension(file).ToLowerInvariant())));
     }
 }

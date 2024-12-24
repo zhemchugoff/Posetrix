@@ -11,17 +11,21 @@ public class SoundService : ISoundService
     public void PlaySound(string soundFile)
     {
         SoundPlayer soundPlayer = new();
-
-        string soundPath = soundFile switch
         {
-            "Classic Countdown" => EmbeddedResourceLocator.CountDownSound1,
-            "Beep Countdown" => EmbeddedResourceLocator.CountDownSound2,
-            "Three Two One Countdown" => EmbeddedResourceLocator.CountDownSound3,
-            _ => EmbeddedResourceLocator.CountDownSound1
-        };
+            string soundPath = soundFile switch
+            {
+                "Classic Countdown" => EmbeddedResourceLocator.CountDownSound1,
+                "Beep Countdown" => EmbeddedResourceLocator.CountDownSound2,
+                "Three Two One Countdown" => EmbeddedResourceLocator.CountDownSound3,
+                _ => "Off"
+            };
 
-        Stream resourceStream = ResourceHelper.GetEmbeddedResourceStream(soundPath);
-        soundPlayer.Stream = resourceStream;
-        soundPlayer.Play();
+            if (soundPath != "Off")
+            {
+                Stream resourceStream = ResourceHelper.GetEmbeddedResourceStream(soundPath);
+                soundPlayer.Stream = resourceStream;
+                soundPlayer.Play();
+            }
+        }
     }
 }

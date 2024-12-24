@@ -15,7 +15,7 @@ public partial class FolderAddViewModel : BaseViewModel, ICustomWindow
     private readonly ViewModelLocator _viewModelLocator;
     private readonly IFolderBrowserServiceAsync _folderBrowserService;
     private readonly IExtensionsService _extensionsService;
-
+    private readonly ServiceLocator _serviceLocator;
     public int _folderCount;
     public ObservableCollection<ImageFolder> Folders { get; }
 
@@ -25,13 +25,13 @@ public partial class FolderAddViewModel : BaseViewModel, ICustomWindow
 
     public bool CanDeleteFolder => _folderCount > 0 && SelectedFolder is not null;
 
-
-    public FolderAddViewModel(ViewModelLocator viewModelLocator, IFolderBrowserServiceAsync folderBrowserService, IExtensionsService extensionsService)
+    public FolderAddViewModel(ViewModelLocator viewModelLocator, ServiceLocator serviceLocator)
     {
         // Services.
         _viewModelLocator = viewModelLocator;
-        _folderBrowserService = folderBrowserService;
-        _extensionsService = extensionsService;
+        _serviceLocator = serviceLocator;
+        _folderBrowserService = _serviceLocator.FolderBrowserService;
+        _extensionsService = _serviceLocator.ExtensionsService;
 
         // MainViewModel collection.
         var mainViewModel = _viewModelLocator.MainViewModel;
@@ -68,16 +68,21 @@ public partial class FolderAddViewModel : BaseViewModel, ICustomWindow
         DirectoryInfo directoryInfo = new(path: folderPath);
         var folderName = directoryInfo.Name;
 
-        List<string> references = ImageFolder.GetImageFiles(folderPath, _extensionsService.LoadExtensions());
+        List<string> references = [];
+        references.GetImageFiles(folderPath, _extensionsService.LoadExtensions());
 
+        AddImageFolder(folderPath, folderName, references);
+    }
+
+    private void AddImageFolder(string folderPath, string folderName, List<string> references)
+    {
         if (!string.IsNullOrEmpty(folderName) && references.Count > 0)
         {
-            // Change CreateFolderObject to a class constructor.
-            ImageFolder folderObject = ImageFolderService.CreateFolderObject(folderPath, folderName, references);
+            ImageFolder imageFolder = new(folderPath, folderName, references);
 
-            if (!Folders.Contains(folderObject))
+            if (!Folders.Contains(imageFolder))
             {
-                Folders.Add(folderObject);
+                Folders.Add(imageFolder);
             }
         }
     }

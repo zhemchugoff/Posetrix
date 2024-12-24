@@ -1,29 +1,12 @@
 ﻿namespace Posetrix.Core.Models;
 
-public class ImageFolder
+public class ImageFolder(string fullFolderPath, string folderName, List<string> references)
 {
-    public string? FullFolderPath { get; set; }
-    public string? FolderName { get; set; }
-    public List<string>? References { get; init; }
+    public string FullFolderPath { get; } = fullFolderPath;
+    public string FolderName { get; set; } = folderName;
+    public List<string> References { get; } = references;
 
-    public int ImageCounter => References?.Count ?? 0;
-
-    // TODO: add class conctructor and delete ImageFolderService
-
-    /// <summary>
-    /// Gets a folder path and a list of supported extensions.
-    /// </summary>
-    /// <returns>
-    /// Returns a list of image files in a folder with supported extensions.
-    /// </returns>
-    public static List<string> GetImageFiles(string folderPath, List<string> supportedExtensions)
-    {
-        var imageFiles = Directory.GetFiles(folderPath)
-            .Where(file => supportedExtensions.Contains(Path.GetExtension(file).ToLowerInvariant()))
-            .ToList();
-
-        return imageFiles;
-    }
+    public int ImageCounter => References.Count;
 
     public override bool Equals(object? compared)
     {

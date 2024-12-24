@@ -7,6 +7,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UseWPF>true</UseWPF>
 		<NoWarn>$(NoWarn);WPF0001</NoWarn>
+		<ApplicationIcon>favicon.ico</ApplicationIcon>
 		<!-- For new MVVM toolkit properties--><!--
 		<LangVersion>preview</LangVersion>-->
 	</PropertyGroup>
@@ -50,9 +51,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Remove="Assets\Icons\appicon-64.png" />
 		<None Remove="Assets\Icons\avalonia-logo.ico" />
+		<None Remove="Assets\Icons\favicon.ico" />
 		<None Remove="Assets\Icons\github-mark.png" />
 		<None Remove="Posetrix.AssetsAvalonia\Images\undraw_winners_re_wr1l.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="favicon.ico" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -62,8 +69,12 @@
 		<Resource Include="Assets\Fonts\SegoeFluentIcons.ttf">
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</Resource>
+		<Resource Include="Assets\Icons\appicon-64.png" />
 		<Resource Include="Assets\Icons\avalonia-logo.ico">
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Assets\Icons\favicon.ico">
+		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</Resource>
 		<Resource Include="Assets\Icons\github-mark.png">
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>

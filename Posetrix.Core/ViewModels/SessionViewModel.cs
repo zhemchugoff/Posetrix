@@ -17,6 +17,8 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     private readonly ViewModelLocator _viewModelLocator;
     private readonly ServiceLocator _serviceLocator;
     private readonly SynchronizationContext _synchronizationContext;
+    private readonly ISoundService _soundService;
+    private readonly IUserSettings _userSettings;
 
     // Collections.
     private readonly List<string> _sessionCollection = [];
@@ -63,10 +65,13 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     {
         // Viewmodels.
         _viewModelLocator = viewModelLocator;
-        // TODO: add countdown.
-        _serviceLocator = serviceLocator;
         _mainViewModel = _viewModelLocator.MainViewModel;
         IDynamicViewModel dynamicView = _mainViewModel.SelectedViewModel;
+        // TODO: add countdown.
+        _serviceLocator = serviceLocator;
+        _soundService = _serviceLocator.SoundService;
+        _userSettings = _serviceLocator.UserSettings;
+
 
         _IsEndlessModeOn = _mainViewModel.IsEndlessModeEnabled;
 
@@ -168,7 +173,6 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
         }
     }
 
-
     private void ShowEndOfSessionPlaceholder()
     {
         if (IsTimeVisible)
@@ -196,6 +200,11 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     private void OnTimeUpdated(TimeSpan remainingTime)
     {
         FormattedTime = remainingTime.ToString(@"hh\:mm\:ss");
+
+        if (remainingTime == TimeSpan.FromSeconds(3) && _userSettings.Sound != "Off")
+        {
+            _soundService.PlaySound(_userSettings.Sound);
+        }
     }
 
     private void ResetTimer()
@@ -247,6 +256,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
             {
                 ResetTimer();
             }
+
         }
     }
 

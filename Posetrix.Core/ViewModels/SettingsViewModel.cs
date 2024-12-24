@@ -12,7 +12,13 @@ public partial class SettingsViewModel : BaseViewModel, ICustomWindow
     private readonly IThemeService _themeService;
     private readonly ISoundService _soundService;
     [ObservableProperty] public partial string SelectedTheme { get; set; }
-    [ObservableProperty] public partial string SelectedSound { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsSoundEnabled))]
+    [NotifyCanExecuteChangedFor(nameof(PlaySoundCommand))]
+    public partial string SelectedSound { get; set; }
+
+    public bool IsSoundEnabled => SelectedSound != "Off";
 
     public string Theme
     {
@@ -34,7 +40,7 @@ public partial class SettingsViewModel : BaseViewModel, ICustomWindow
     }
 
     public List<string> Themes { get; } = ["System", "Light", "Dark"];
-    public List<string> Sounds { get; } = ["Classic Countdown", "Beep Countdown", "Three Two One Countdown"];
+    public List<string> Sounds { get; } = ["Off", "Classic Countdown", "Beep Countdown", "Three Two One Countdown"];
 
     public SettingsViewModel(ServiceLocator serviceLocator)
     {
@@ -59,7 +65,7 @@ public partial class SettingsViewModel : BaseViewModel, ICustomWindow
         _userSettings.Sound = Sound;
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute =nameof(IsSoundEnabled))]
     private void PlaySound()
     {
         _soundService.PlaySound(SelectedSound);
