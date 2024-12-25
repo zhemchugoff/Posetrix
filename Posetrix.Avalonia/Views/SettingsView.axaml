@@ -14,50 +14,64 @@
         <vm:SettingsViewModel />
     </Design.DataContext>
     <Grid Margin="20">
-        <Grid RowDefinitions="*,*,*,*,*">
+        <Grid RowDefinitions="*,*,*,*,*,*">
             <Grid Grid.Row="0">
                 <TextBlock
                     VerticalAlignment="Center"
-                    Text="App theme" />
+                    Text="Theme" />
                 <ComboBox
-                    Name="ChangeTheme"
                     ItemsSource="{Binding Themes}"
                     SelectedItem="{Binding SelectedTheme}"
                     HorizontalAlignment="Right"
                     MinWidth="200"
-                    VerticalAlignment="Center"
-                    SelectedIndex="0">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <!-- <TextBlock Text="{Binding Name}" /> -->
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
+                    Height="30"
+                    VerticalAlignment="Center">
                 </ComboBox>
             </Grid>
             <Grid Grid.Row="1">
+                <Grid ColumnDefinitions="Auto,*">
+                    <TextBlock
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="Sounds" />
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+                        <Button Classes="button-icon" Content="&#xE3D2;" HorizontalAlignment="Right" Width="30" Padding="0"
+                                Height="30" FontSize="28" Command="{Binding PlaySoundCommand}" />
+                        <ComboBox
+                            SelectedIndex="0"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right"
+                            MinWidth="200"
+                            Height="30"
+                            ItemsSource="{Binding Sounds}"
+                            SelectedItem="{Binding SelectedSound}">
+                        </ComboBox>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2">
                 <TextBlock
                     VerticalAlignment="Center"
-                    Text="Sounds" />
+                    Text="Image quality" />
                 <ComboBox
                     SelectedIndex="0"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Right"
-                    MinWidth="200">
-                    <ComboBoxItem Content="Sound 1" />
-                    <ComboBoxItem Content="Sound 2" />
-                    <ComboBoxItem Content="Off" />
+                    MinWidth="200"
+                    ItemsSource="{Binding Resolutions}"
+                    SelectedItem="{Binding SelectedImageResolution}">
                 </ComboBox>
             </Grid>
             <TextBlock
-                Grid.Row="2"
+                Grid.Row="3"
                 HorizontalAlignment="Center"
                 Text="Application name" />
             <TextBlock
-                Grid.Row="3"
+                Grid.Row="4"
                 HorizontalAlignment="Center"
                 Text="Application version" />
             <TextBlock
-                Grid.Row="4"
+                Grid.Row="5"
                 HorizontalAlignment="Center">
                 Source: http://www.example.com www.example.com
             </TextBlock>

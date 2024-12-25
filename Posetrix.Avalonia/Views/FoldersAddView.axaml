@@ -37,12 +37,12 @@
         </ListBox>
         <Grid Grid.Row="1" ColumnDefinitions="*,*" Margin="0 20 0 0">
             <!-- Add folder button. -->
-            <Button Classes="accent-button button-icon folder-control"
+            <Button Classes="button-icon folder-control"
                     Grid.Column="0"
                     Content="&#xE3D4;"
                     Command="{Binding OpenFolderCommand}" />
             <!-- Remove folder button. -->
-            <Button Classes="accent-button button-icon folder-control"
+            <Button Classes="button-icon folder-control"
                     Grid.Column="1"
                     Content="&#xE32A;"
                     Command="{Binding RemoveFolderCommand}"

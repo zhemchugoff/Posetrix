@@ -50,16 +50,6 @@ public partial class MainViewModel : BaseViewModel
 
     public bool CanStartSession => FolderCount > 0 && SelectedViewModel.CanStart;
 
-    /// <summary>
-    /// Design-time only constructor.
-    /// </summary>
-    // public MainViewModel()
-    // {
-    // }
-    public MainViewModel()
-    {
-        
-    }
     public MainViewModel(IWindowManager windowManager, ViewModelLocator viewModelLocator, ServiceLocator serviceLocator)
     {
         Debug.WriteLine("Loaded!!");

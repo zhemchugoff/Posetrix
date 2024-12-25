@@ -7,7 +7,7 @@ namespace Posetrix.Services;
 public class UserSettings : IUserSettings
 {
     private readonly string _settingsFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Posetrix.json");
-    private static readonly JsonSerializerOptions _jsonSerializerOptions = new() { WriteIndented = true };
+    private static readonly JsonSerializerOptions JsonSerializerOptions = new() { WriteIndented = true };
 
     private class SettingsData
     {
@@ -56,7 +56,7 @@ public class UserSettings : IUserSettings
 
     public void Save()
     {
-        string json = JsonSerializer.Serialize(_settings, _jsonSerializerOptions);
+        string json = JsonSerializer.Serialize(_settings, JsonSerializerOptions);
         File.WriteAllText(_settingsFilePath, json);
     }
 }

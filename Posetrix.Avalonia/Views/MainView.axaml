@@ -10,24 +10,31 @@
     Height="600"
     MinWidth="400"
     MinHeight="600"
+    Icon="/Assets/Icons/favicon.ico"
     x:DataType="vm:MainViewModel"
     mc:Ignorable="d">
     <Design.DataContext>
         <vm:MainViewModel />
     </Design.DataContext>
-    <Grid Margin="20" ShowGridLines="True">
+    <Grid Margin="20" ShowGridLines="False">
         <Grid RowDefinitions="Auto,2*,*,*,*,Auto" ShowGridLines="False">
 
             <Grid RowDefinitions="*,*,*">
                 <Grid ColumnDefinitions="Auto,*">
                     <!--  Open settings button  -->
                     <Button
-                        Name="OpenSettingsButton"
                         Grid.Column="0"
                         Classes="transparent icon-only"
                         Command="{Binding OpenSettingsCommand}"
                         Content="&#xE272;"
-                        FontSize="24" />
+                        FontSize="24">
+                        <ToolTip.Tip>
+                            <TextBlock>Settings</TextBlock>
+                        </ToolTip.Tip>
+                        <ToolTip.Placement>
+                            Right
+                        </ToolTip.Placement>
+                    </Button>
                     <TextBlock
                         Grid.Column="1"
                         Margin="-20,0,0,0"
@@ -37,7 +44,6 @@
                 </Grid>
                 <!--  Add folder button  -->
                 <Button
-                    Name="AddFolderButton"
                     Grid.Row="1"
                     Height="46"
                     Margin="0,10"
@@ -71,16 +77,14 @@
                 <!--  Controls switch.  -->
                 <ContentControl Grid.Row="2" Content="{Binding SelectedViewModel}" />
             </Grid>
-            <!--  Image count.  -->
+            <!--  Image count section.  -->
             <Grid ColumnDefinitions="*,*" Row="2">
                 <TextBlock
                     Grid.Column="0"
                     VerticalAlignment="Center"
-                    Text="References to draw" />
-                <TextBox
-                    Grid.Column="1"
-                    VerticalAlignment="Center"
-                    Text="{Binding ImageCount}" />
+                    Text="Images to draw" />
+                <NumericUpDown Name="NumericInput" Grid.Column="1" VerticalAlignment="Center" FormatString="0"
+                               Watermark="Enter a correct value" Value="{Binding ImageCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Increment="1" />
             </Grid>
             <Grid Grid.Row="3" ColumnDefinitions="*,*">
                 <TextBlock
@@ -112,7 +116,7 @@
                 VerticalContentAlignment="Center"
                 Classes="accent-button"
                 Command="{Binding StartSessionCommand}"
-                Content="Start a drawing session"/>
+                Content="Start a drawing session" />
         </Grid>
     </Grid>
 </Window>

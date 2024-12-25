@@ -83,7 +83,7 @@ public partial class SettingsViewModel : BaseViewModel, ICustomWindow
         _userSettings.ImageResolution = ImageResolution;
     }
 
-    [RelayCommand(CanExecute =nameof(IsSoundEnabled))]
+    [RelayCommand(CanExecute = nameof(IsSoundEnabled))]
     private void PlaySound()
     {
         _soundService.PlaySound(SelectedSound);

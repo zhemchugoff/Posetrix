@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Posetrix.Core", "..\Posetri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Posetrix.Tests", "..\Posetrix.Tests\Posetrix.Tests.csproj", "{521443BB-33D9-4E86-B508-287D671C0F17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Posetrix.Avalonia", "..\Posetrix.Avalonia\Posetrix.Avalonia.csproj", "{18691E0B-28B4-4BFC-886E-8AB0078B6AD3}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Posetrix.Assets", "..\Posetrix.Assets\Posetrix.Assets.csproj", "{3F4EE9A1-57E4-4140-BBF9-64B3481BD6B2}"
 EndProject
 Global
@@ -31,10 +29,6 @@ Global
 		{521443BB-33D9-4E86-B508-287D671C0F17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{521443BB-33D9-4E86-B508-287D671C0F17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{521443BB-33D9-4E86-B508-287D671C0F17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{18691E0B-28B4-4BFC-886E-8AB0078B6AD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18691E0B-28B4-4BFC-886E-8AB0078B6AD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{18691E0B-28B4-4BFC-886E-8AB0078B6AD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{18691E0B-28B4-4BFC-886E-8AB0078B6AD3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3F4EE9A1-57E4-4140-BBF9-64B3481BD6B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3F4EE9A1-57E4-4140-BBF9-64B3481BD6B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F4EE9A1-57E4-4140-BBF9-64B3481BD6B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
