@@ -18,7 +18,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Posetrix.Assets\Posetrix.Assets.csproj" />
 		<ProjectReference Include="..\Posetrix.Core\Posetrix.Core.csproj" />
 	</ItemGroup>
 
@@ -55,11 +54,32 @@
 		<None Remove="Assets\Icons\avalonia-logo.ico" />
 		<None Remove="Assets\Icons\favicon.ico" />
 		<None Remove="Assets\Icons\github-mark.png" />
+		<None Remove="Assets\Sounds\jenninexus-countdown.wav" />
+		<None Remove="Assets\Sounds\short-beep-countdown.wav" />
+		<None Remove="Assets\Sounds\up-to-the-top-of-the-hour-beep.wav" />
 		<None Remove="Posetrix.AssetsAvalonia\Images\undraw_winners_re_wr1l.png" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Content Include="favicon.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Assets\Images\jason-leung-Xaanw0s0pMk-unsplash.jpg">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Assets\Images\undraw_bug_fixing.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Assets\Images\undraw_fixing_bugs_w7gi.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Assets\Images\undraw_happy_music_g6wc.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Assets\Images\undraw_winners_re_wr1l.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -69,7 +89,9 @@
 		<Resource Include="Assets\Fonts\SegoeFluentIcons.ttf">
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</Resource>
-		<Resource Include="Assets\Icons\appicon-64.png" />
+		<Resource Include="Assets\Icons\appicon-64.png">
+		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Resource>
 		<Resource Include="Assets\Icons\avalonia-logo.ico">
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</Resource>
@@ -79,6 +101,9 @@
 		<Resource Include="Assets\Icons\github-mark.png">
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</Resource>
+		<Resource Include="Assets\Sounds\jenninexus-countdown.wav" />
+		<Resource Include="Assets\Sounds\short-beep-countdown.wav" />
+		<Resource Include="Assets\Sounds\up-to-the-top-of-the-hour-beep.wav" />
 	</ItemGroup>
 
 </Project>

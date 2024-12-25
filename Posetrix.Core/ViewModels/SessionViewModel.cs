@@ -186,7 +186,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
             StopTimer();
         }
 
-        CurrentImage = EmbeddedResourceLocator.CelebrationImage;
+        CurrentImage = ResourceLocator.CelebrationImage;
         IsSessionActive = false;
     }
 

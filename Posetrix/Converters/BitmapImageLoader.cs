@@ -1,8 +1,6 @@
 ﻿using MetadataExtractor;
 using MetadataExtractor.Formats.Exif;
-using Posetrix.Assets;
 using Posetrix.Core.Services;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Windows.Data;
@@ -27,32 +25,33 @@ public class BitmapImageLoader : IMultiValueConverter
 
         if (values[0] is string imagePath && !string.IsNullOrEmpty(imagePath))
         {
-            if (imagePath.StartsWith("Images."))
+            if (imagePath.StartsWith("pack://"))
             {
                 return LoadPlaceholder(imagePath);
             }
 
-            return LoadImage(imagePath) ?? LoadPlaceholder(EmbeddedResourceLocator.ErrorImage);
+            return LoadImage(imagePath) ?? LoadPlaceholder(ResourceLocator.ErrorImage);
         }
 
-        return LoadPlaceholder(EmbeddedResourceLocator.ErrorImage);
+        return LoadPlaceholder(ResourceLocator.ErrorImage);
     }
 
     private BitmapImage? LoadPlaceholder(string filePath)
     {
-        using Stream stream = ResourceHelper.GetEmbeddedResourceStream(filePath);
-        if (stream == null) return null;
+        //using Stream stream = ResourceHelper.GetEmbeddedResourceStream(filePath);
+        //if (stream == null) return null;
         // TODO: Optimize memory usage.
         var bmp = new BitmapImage();
         bmp.BeginInit();
-        bmp.StreamSource = stream;
+        bmp.UriSource = new Uri(filePath, UriKind.RelativeOrAbsolute);
+        //bmp.StreamSource = stream;
 
         if (_imageResolution != 0)
         {
             bmp.DecodePixelWidth = _imageResolution;
         }
 
-        Debug.WriteLine(_imageResolution);
+        //Debug.WriteLine(_imageResolution);
 
         bmp.CacheOption = BitmapCacheOption.OnLoad;
         bmp.EndInit();
