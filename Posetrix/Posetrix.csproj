@@ -8,13 +8,15 @@
 		<UseWPF>true</UseWPF>
 		<NoWarn>$(NoWarn);WPF0001</NoWarn>
 		<ApplicationIcon>favicon.ico</ApplicationIcon>
-		<!-- For new MVVM toolkit properties--><!--
-		<LangVersion>preview</LangVersion>-->
+		<!-- For new MVVM toolkit properties-->
+		<!--<LangVersion>preview</LangVersion>-->
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="MetadataExtractor" Version="2.8.1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="NAudio" Version="2.2.1" />
+		<PackageReference Include="NAudio.Vorbis" Version="1.5.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -47,17 +49,6 @@
 			<XamlRuntime>Wpf</XamlRuntime>
 			<SubType>Designer</SubType>
 		</Page>
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Remove="Assets\Icons\appicon-64.png" />
-		<None Remove="Assets\Icons\avalonia-logo.ico" />
-		<None Remove="Assets\Icons\favicon.ico" />
-		<None Remove="Assets\Icons\github-mark.png" />
-		<None Remove="Assets\Sounds\jenninexus-countdown.wav" />
-		<None Remove="Assets\Sounds\short-beep-countdown.wav" />
-		<None Remove="Assets\Sounds\up-to-the-top-of-the-hour-beep.wav" />
-		<None Remove="Posetrix.AssetsAvalonia\Images\undraw_winners_re_wr1l.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -101,9 +92,15 @@
 		<Resource Include="Assets\Icons\github-mark.png">
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</Resource>
-		<Resource Include="Assets\Sounds\jenninexus-countdown.wav" />
-		<Resource Include="Assets\Sounds\short-beep-countdown.wav" />
-		<Resource Include="Assets\Sounds\up-to-the-top-of-the-hour-beep.wav" />
+		<Resource Include="Assets\Sounds\jenninexus-countdown.ogg">
+		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Assets\Sounds\short-beep-countdown.ogg">
+		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Resource>
+		<Resource Include="Assets\Sounds\up-to-the-top-of-the-hour-beep.ogg">
+		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Resource>
 	</ItemGroup>
 
 </Project>

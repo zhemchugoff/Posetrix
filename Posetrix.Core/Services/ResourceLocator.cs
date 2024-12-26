@@ -13,7 +13,7 @@ public static class ResourceLocator
     public static string CelebrationImage1 => $"{PlaceholderPath}jason-leung-Xaanw0s0pMk-unsplash.jpg";
 
     // Sounds.
-    public static string CountDownSound1 => $"{SoundPath}up-to-the-top-of-the-hour-beep.wav";
-    public static string CountDownSound2 => $"{SoundPath}short-beep-countdown.wav";
-    public static string CountDownSound3 => $"{SoundPath}jenninexus-countdown.wav";
+    public static string CountDownSound1 => $"{SoundPath}up-to-the-top-of-the-hour-beep.ogg";
+    public static string CountDownSound2 => $"{SoundPath}short-beep-countdown.ogg";
+    public static string CountDownSound3 => $"{SoundPath}jenninexus-countdown.ogg";
 }
