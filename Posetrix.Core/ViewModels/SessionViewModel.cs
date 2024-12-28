@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Posetrix.Core.Data;
+using Posetrix.Core.Factories;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 using Posetrix.Core.Services;
@@ -13,13 +14,9 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
 {
     public string WindowTitle => "Drawing session";
 
-    private readonly MainViewModel _mainViewModel;
-    private readonly ViewModelLocator _viewModelLocator;
-    private readonly ServiceLocator _serviceLocator;
     private readonly SynchronizationContext _synchronizationContext;
     private readonly ISoundService _soundService;
     private readonly IUserSettings _userSettings;
-    private readonly IImageResolutionService _imageResolutionService;
 
     // Collections.
     private readonly List<string> _sessionCollection = [];
@@ -67,19 +64,16 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     public SessionViewModel(ViewModelLocator viewModelLocator, ServiceLocator serviceLocator)
     {
         // Viewmodels.
-        _viewModelLocator = viewModelLocator;
-        _mainViewModel = _viewModelLocator.MainViewModel;
-        IDynamicViewModel dynamicView = _mainViewModel.SelectedViewModel;
-        // TODO: add countdown.
-        _serviceLocator = serviceLocator;
-        _soundService = _serviceLocator.SoundService;
-        _userSettings = _serviceLocator.UserSettings;
-        _imageResolutionService = _serviceLocator.ImageResolutionService;
+        var mainViewModel = viewModelLocator.MainViewModel;
+        var dynamicView = mainViewModel.SelectedViewModel;
 
-        ImageResolution = _imageResolutionService.SetResoluton(_userSettings.ImageResolution);
+        _soundService = serviceLocator.SoundService;
+        _userSettings = serviceLocator.UserSettings;
 
+        var imageResolutionService = serviceLocator.ImageResolutionService;
+        ImageResolution = imageResolutionService.SetResoluton(_userSettings.ImageResolution);
 
-        _IsEndlessModeOn = _mainViewModel.IsEndlessModeEnabled;
+        _IsEndlessModeOn = mainViewModel.IsEndlessModeEnabled;
 
         // Set current UI thread.
         _synchronizationContext = SynchronizationContext.Current
@@ -92,7 +86,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
         _timerStore.PropertyChanged += TimerStore_PropertyChanged; // Subscribe to _timeStore property changes.
 
         // Create timer.
-        Seconds = _mainViewModel.SelectedViewModel.GetSeconds();
+        Seconds = mainViewModel.SelectedViewModel.GetSeconds();
 
         if (Seconds == 0)
         {
@@ -109,7 +103,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
 
         // Image collection.
         _completedImages.CollectionChanged += CompletedImages_CollectionChanged;
-        _sessionCollection.PopulateAndConvertObservableColletionToList(_mainViewModel.ReferenceFolders, _mainViewModel.IsShuffleEnabled, _mainViewModel.ImageCount);
+        _sessionCollection.PopulateAndConvertObservableColletionToList(mainViewModel.ReferenceFolders, mainViewModel.IsShuffleEnabled, mainViewModel.ImageCount);
         _sessionCollectionCount = _sessionCollection.Count;
 
         CurrentImageIndex = 0;

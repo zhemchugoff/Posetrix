@@ -26,51 +26,11 @@
             BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
             BorderThickness="2"
             CornerRadius="8">
-            <ListView ItemsSource="{Binding Folders}" SelectedItem="{Binding SelectedFolder}">
-                <ListView.ItemTemplate>
-                    <DataTemplate DataType="{x:Type models:ImageFolder}">
-                        <Grid Margin="8,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Ellipse
-                                x:Name="Ellipse"
-                                Grid.RowSpan="2"
-                                Width="30"
-                                Height="30"
-                                Margin="6"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Fill="{DynamicResource AccentFillColorDefaultBrush}" />
-                            <TextBlock
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                Margin="12,6,0,0"
-                                FontFamily="{StaticResource SegoeUi}"
-                                FontWeight="Bold"
-                                Text="{Binding FolderName, Mode=OneWay}" />
-                            <TextBlock
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                Margin="12,0,0,6"
-                                Text="{Binding FullFolderPath, Mode=OneWay}" />
-                            <TextBlock
-                                Grid.RowSpan="2"
-                                Grid.Column="2"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                FontFamily="{StaticResource SegoeUi}"
-                                Text="{Binding ImageCounter}" />
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <ListView
+                ItemTemplate="{StaticResource ListViewTemplate}"
+                ItemsSource="{Binding Folders}"
+                SelectedItem="{Binding SelectedFolder}"
+                SelectionMode="Single" />
         </Border>
         <!--  Commands.  -->
         <Grid Grid.Row="1" Margin="0,20,0,0">
@@ -81,42 +41,25 @@
             <Button
                 Name="addFolder"
                 Grid.Column="0"
-                Width="40"
-                Height="40"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
                 Command="{Binding OpenFolderCommand}"
                 Content="&#xE710;"
-                FontFamily="{StaticResource SegoeUiIcons}"
-                FontSize="16">
+                Style="{StaticResource FoldersAddRemoveButton}">
                 <Button.ToolTip>
                     <ToolTip>
-                        <TextBlock
-                            FontFamily="Segoe UI"
-                            FontSize="12"
-                            Text="Add a folder" />
+                        <TextBlock Style="{StaticResource InfoToolTip}" Text="Add a folder" />
                     </ToolTip>
                 </Button.ToolTip>
             </Button>
             <Button
                 Name="removeFolder"
                 Grid.Column="1"
-                Width="40"
-                Height="40"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
                 Command="{Binding RemoveFolderCommand}"
                 CommandParameter="{Binding SelectedFolder}"
                 Content="&#xE738;"
-                FontFamily="{StaticResource SegoeUiIcons}"
-                FontSize="16"
-                IsEnabled="{Binding CanDeleteFolder}">
+                Style="{StaticResource FoldersAddRemoveButton}">
                 <Button.ToolTip>
                     <ToolTip>
-                        <TextBlock
-                            FontFamily="Segoe UI"
-                            FontSize="12"
-                            Text="Remove a folder" />
+                        <TextBlock Style="{StaticResource InfoToolTip}" Text="Remove a folder" />
                     </ToolTip>
                 </Button.ToolTip>
             </Button>

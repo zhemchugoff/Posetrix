@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Posetrix.Core.Factories;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 using Posetrix.Core.Services;
@@ -17,9 +18,6 @@ public partial class MainViewModel : BaseViewModel
 
     private readonly IWindowManager _windowManager;
     private readonly ViewModelLocator _viewModelLocator;
-
-    private readonly CustomIntervalViewModel _cVM;
-    private readonly PredefinedIntervalsViewModel _pVM;
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(StartSessionCommand))]
@@ -52,27 +50,26 @@ public partial class MainViewModel : BaseViewModel
 
     public MainViewModel(IWindowManager windowManager, ViewModelLocator viewModelLocator, ServiceLocator serviceLocator)
     {
-        Debug.WriteLine("Loaded!!");
         _windowManager = windowManager;
         _viewModelLocator = viewModelLocator;
 
         // Set app theme on startup.
-        var themeService = serviceLocator.ThemeService;
         var userSettings = serviceLocator.UserSettings;
+        var themeService = serviceLocator.ThemeService;
         themeService.SetTheme(userSettings.Theme);
 
-        _cVM = viewModelLocator.CustomIntervalViewModel;
-        _pVM = viewModelLocator.PredefinedIntervalsViewModel;
+        var customIntervalVM = viewModelLocator.CustomIntervalViewModel;
+        var predefinedIntervalVM = viewModelLocator.PredefinedIntervalsViewModel;
 
 
-        _pVM.ErrorsChanged += (_, _) => StartSessionCommand.NotifyCanExecuteChanged();
-        _cVM.ErrorsChanged += (_, _) => StartSessionCommand.NotifyCanExecuteChanged();
+        predefinedIntervalVM.ErrorsChanged += (_, _) => StartSessionCommand.NotifyCanExecuteChanged();
+        customIntervalVM.ErrorsChanged += (_, _) => StartSessionCommand.NotifyCanExecuteChanged();
 
         ReferenceFolders.CollectionChanged += ReferenceFolders_CollectionChanged;
 
         // Combobox items.
-        DynamicViews.Add(_pVM);
-        DynamicViews.Add(_cVM);
+        DynamicViews.Add(predefinedIntervalVM);
+        DynamicViews.Add(customIntervalVM);
         SelectedViewModel = DynamicViews.First();
     }
 
@@ -82,7 +79,7 @@ public partial class MainViewModel : BaseViewModel
 
         if (FolderCount > 0)
         {
-            FolderImageCounter = 0; // Reset counter before recounting
+            FolderImageCounter = 0; // Reset counter before recounting.
 
             foreach (ImageFolder folder in ReferenceFolders)
             {

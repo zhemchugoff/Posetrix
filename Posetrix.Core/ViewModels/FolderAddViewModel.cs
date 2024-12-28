@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Posetrix.Core.Factories;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 using Posetrix.Core.Services;

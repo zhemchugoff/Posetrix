@@ -2,9 +2,7 @@
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Services;
 using System.IO;
-using System.Media;
 using System.Windows;
-using System.Windows.Media;
 
 namespace Posetrix.Services;
 

@@ -13,8 +13,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Themes/Fluent.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Resources/Converters.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Resources/DataTemplates.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Resources/Styles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resources/DataTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         <!--  Global empty error template  -->
