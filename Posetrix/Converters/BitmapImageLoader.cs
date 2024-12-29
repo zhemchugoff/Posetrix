@@ -3,7 +3,9 @@ using MetadataExtractor.Formats.Exif;
 using Posetrix.Core.Services;
 using System.Globalization;
 using System.IO;
+using System.Security.RightsManagement;
 using System.Windows.Data;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Posetrix.Converters;
@@ -11,16 +13,25 @@ namespace Posetrix.Converters;
 /// <summary>
 /// A class <c>BitmapImageLoader</c> used for loading images and reducing memory consumption.
 /// </summary>
-public class BitmapImageLoader : IMultiValueConverter
+public class BitmapImageLoader : IMultiValueConverter, IDisposable
 {
+    private BitmapImage? _bitmapImage;
+    private FormatConvertedBitmap? _greyscaleBitmap;
+
     private int _imageResolution;
-    private int ImageOrientation { get; set; } = 1; // Default orientation.
+    private int _imageOrientation = 1; // Default orientation.
+    private bool _isGreyScale;
 
     public object? Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
         if (values[1] is int resolution)
         {
             _imageResolution = resolution;
+        }
+
+        if (values[2] is bool isGreyScale)
+        {
+            _isGreyScale = isGreyScale;
         }
 
         if (values[0] is string imagePath && !string.IsNullOrEmpty(imagePath))
@@ -38,50 +49,57 @@ public class BitmapImageLoader : IMultiValueConverter
 
     private BitmapImage? LoadPlaceholder(string filePath)
     {
-        //using Stream stream = ResourceHelper.GetEmbeddedResourceStream(filePath);
-        //if (stream == null) return null;
-        // TODO: Optimize memory usage.
-        var bmp = new BitmapImage();
-        bmp.BeginInit();
-        bmp.UriSource = new Uri(filePath, UriKind.RelativeOrAbsolute);
-        //bmp.StreamSource = stream;
+        _bitmapImage = new BitmapImage();
+        _bitmapImage.BeginInit();
+        _bitmapImage.UriSource = new Uri(filePath, UriKind.RelativeOrAbsolute);
 
         if (_imageResolution != 0)
         {
-            bmp.DecodePixelWidth = _imageResolution;
+            _bitmapImage.DecodePixelWidth = _imageResolution;
         }
 
-        //Debug.WriteLine(_imageResolution);
-
-        bmp.CacheOption = BitmapCacheOption.OnLoad;
-        bmp.EndInit();
-        bmp.Freeze();
-        return bmp;
+        _bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+        _bitmapImage.EndInit();
+        _bitmapImage.Freeze();
+        return _bitmapImage;
     }
 
-    private BitmapImage? LoadImage(string filePath)
+    private ImageSource? LoadImage(string filePath)
     {
         try
         {
-            var bitmap = new BitmapImage();
-            bitmap.BeginInit(); // Starts the initialization process for this element.
-            bitmap.UriSource = new Uri(filePath, UriKind.Absolute);
+            _bitmapImage = new BitmapImage();
+            _bitmapImage.BeginInit(); // Starts the initialization process for this element.
+            _bitmapImage.UriSource = new Uri(filePath, UriKind.Absolute);
 
-            ImageOrientation = GetImageOrientation(filePath);
-            CorrectImageRotation(bitmap, ImageOrientation);
+            _imageOrientation = GetImageOrientation(filePath);
+            CorrectImageRotation(_bitmapImage, _imageOrientation);
 
             if (_imageResolution != 0)
             {
-                bitmap.DecodePixelWidth = _imageResolution; // Adjust for optimization.
+                _bitmapImage.DecodePixelWidth = _imageResolution; // Adjust for optimization.
             }
 
             // Caches the entire image into memory at load time.
             // All requests for image data are filled from the memory store.
-            bitmap.CacheOption = BitmapCacheOption.OnLoad;
 
-            bitmap.EndInit(); // Indicates that the initialization process for the element is complete.
-            bitmap.Freeze(); // Makes the current object unmodifiable and sets its IsFrozen property to true.
-            return bitmap;
+
+            _bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+
+            _bitmapImage.EndInit(); // Indicates that the initialization process for the element is complete.
+            _bitmapImage.Freeze(); // Makes the current object unmodifiable and sets its IsFrozen property to true.
+
+            if (_isGreyScale)
+            {
+                _greyscaleBitmap = new();
+                _greyscaleBitmap.BeginInit();
+                _greyscaleBitmap.Source = _bitmapImage;
+                _greyscaleBitmap.DestinationFormat = PixelFormats.Gray8; // Converts the image to grayscale.
+                _greyscaleBitmap.EndInit();
+                _greyscaleBitmap.Freeze();
+                return _greyscaleBitmap;
+            }
+            return _bitmapImage;
         }
         catch (Exception)
         {
@@ -133,13 +151,23 @@ public class BitmapImageLoader : IMultiValueConverter
 
         return 1; // Default orientation if metadata is missing.
     }
-    // TODO: Implement IDisposable
-    public void DisposeBitmap(object image)
+    
+    private void DisposeBitmap()
     {
-        if (image is BitmapImage bitmap)
-        {
-            bitmap.StreamSource?.Dispose();
-        }
+        // Dispose of bitmaps if they are not null.
+        _bitmapImage = null;
+        _greyscaleBitmap = null;
+    }
+
+    public void Dispose()
+    {
+        DisposeBitmap();
+        GC.SuppressFinalize(this);
+    }
+
+    ~BitmapImageLoader()
+    {
+        Dispose();
     }
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

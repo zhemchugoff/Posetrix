@@ -7,6 +7,7 @@ using Posetrix.Core.Models;
 using Posetrix.Core.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace Posetrix.Core.ViewModels;
 
@@ -34,6 +35,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     [ObservableProperty] public partial bool IsTimeVisible { get; set; }
     [ObservableProperty] public partial bool IsSessionActive { get; set; } = true;
     [ObservableProperty] public partial bool IsEndOfCollection { get; set; }
+    [ObservableProperty] public partial bool IsGreyScale { get; set; } = false;
 
     // Commands conditions.
     public bool CanSelectNextImage => IsSessionActive && CurrentImageIndex < _sessionCollectionCount && _sessionCollectionCount > 0;
@@ -103,7 +105,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
 
         // Image collection.
         _completedImages.CollectionChanged += CompletedImages_CollectionChanged;
-        _sessionCollection.PopulateAndConvertObservableColletionToList(mainViewModel.ReferenceFolders, mainViewModel.IsShuffleEnabled, mainViewModel.ImageCount);
+        _sessionCollection.PopulateAndConvertObservableColletionToList(mainViewModel.ReferenceFolders, mainViewModel.IsShuffleEnabled, mainViewModel.SessionImageCount);
         _sessionCollectionCount = _sessionCollection.Count;
 
         CurrentImageIndex = 0;
@@ -157,6 +159,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     {
         ShowEndOfSessionPlaceholder();
     }
+
     private void OnCountDownFinished()
     {
         if (CanSelectNextImage)
@@ -191,6 +194,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     {
         IsMirroredX = false;
         IsMirroredY = false;
+        IsGreyScale = false;
     }
 
     /// <summary>

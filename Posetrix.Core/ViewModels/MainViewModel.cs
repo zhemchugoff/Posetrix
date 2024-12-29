@@ -7,7 +7,6 @@ using Posetrix.Core.Services;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 
 
 namespace Posetrix.Core.ViewModels;
@@ -23,7 +22,7 @@ public partial class MainViewModel : BaseViewModel
     [NotifyCanExecuteChangedFor(nameof(StartSessionCommand))]
     public partial IDynamicViewModel SelectedViewModel { get; set; }
     public ObservableCollection<ImageFolder> ReferenceFolders { get; } = [];
-    public string FoldersInfo => $" Folders: {FolderCount} Images: {FolderImageCounter}";
+    public string FoldersInfo => $" Folders: {FolderCount} Images: {ImageCountInfo}";
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FoldersInfo))]
@@ -32,7 +31,7 @@ public partial class MainViewModel : BaseViewModel
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FoldersInfo))]
-    public partial int FolderImageCounter { get; set; } = 0;
+    public partial int ImageCountInfo { get; set; } = 0;
 
     // ComboBox.
     public List<IDynamicViewModel> DynamicViews { get; } = [];
@@ -42,7 +41,7 @@ public partial class MainViewModel : BaseViewModel
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Range(0, int.MaxValue, ErrorMessage = "Enter a correct number")]
-    public partial int? ImageCount { get; set; } = 0;
+    public partial int? SessionImageCount { get; set; } = 0;
     [ObservableProperty] public partial bool IsShuffleEnabled { get; set; } = true;
     [ObservableProperty] public partial bool IsEndlessModeEnabled { get; set; }
 
@@ -58,18 +57,17 @@ public partial class MainViewModel : BaseViewModel
         var themeService = serviceLocator.ThemeService;
         themeService.SetTheme(userSettings.Theme);
 
-        var customIntervalVM = viewModelLocator.CustomIntervalViewModel;
-        var predefinedIntervalVM = viewModelLocator.PredefinedIntervalsViewModel;
+        var customIntervalViewModel = viewModelLocator.CustomIntervalViewModel;
+        var predefinedIntervalViewModel = viewModelLocator.PredefinedIntervalsViewModel;
 
-
-        predefinedIntervalVM.ErrorsChanged += (_, _) => StartSessionCommand.NotifyCanExecuteChanged();
-        customIntervalVM.ErrorsChanged += (_, _) => StartSessionCommand.NotifyCanExecuteChanged();
+        predefinedIntervalViewModel.ErrorsChanged += (_, _) => StartSessionCommand.NotifyCanExecuteChanged();
+        customIntervalViewModel.ErrorsChanged += (_, _) => StartSessionCommand.NotifyCanExecuteChanged();
 
         ReferenceFolders.CollectionChanged += ReferenceFolders_CollectionChanged;
 
         // Combobox items.
-        DynamicViews.Add(predefinedIntervalVM);
-        DynamicViews.Add(customIntervalVM);
+        DynamicViews.Add(predefinedIntervalViewModel);
+        DynamicViews.Add(customIntervalViewModel);
         SelectedViewModel = DynamicViews.First();
     }
 
@@ -79,19 +77,19 @@ public partial class MainViewModel : BaseViewModel
 
         if (FolderCount > 0)
         {
-            FolderImageCounter = 0; // Reset counter before recounting.
+            ImageCountInfo = 0; // Reset counter before recounting.
 
             foreach (ImageFolder folder in ReferenceFolders)
             {
                 if (folder.References != null)
                 {
-                    FolderImageCounter += folder.References.Count;
+                    ImageCountInfo += folder.References.Count;
                 }
             }
         }
         else
         {
-            FolderImageCounter = 0;
+            ImageCountInfo = 0;
         }
     }
 
@@ -114,11 +112,11 @@ public partial class MainViewModel : BaseViewModel
         _windowManager.ShowWindow(_viewModelLocator.SessionViewModel);
     }
 
-    partial void OnImageCountChanged(int? value)
+    partial void OnSessionImageCountChanged(int? value)
     {
         if (string.IsNullOrWhiteSpace(value.ToString()))
         {
-            ImageCount = 0;
+            SessionImageCount = 0;
         }
     }
 }

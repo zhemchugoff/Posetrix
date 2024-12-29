@@ -48,22 +48,14 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Button
-                        Name="OpenSettingsWindowButton"
                         Grid.Column="0"
-                        Width="28"
-                        Height="28"
-                        Padding="0"
-                        VerticalAlignment="Center"
                         Command="{Binding OpenSettingsCommand}"
                         Content="&#xE713;"
-                        FontFamily="{StaticResource SegoeUiIcons}"
-                        FontSize="16">
+                        Style="{StaticResource SettingsButton}">
+
                         <Button.ToolTip>
                             <ToolTip>
-                                <TextBlock
-                                    FontFamily="Segoe UI"
-                                    FontSize="12"
-                                    Text="Settings" />
+                                <TextBlock Style="{StaticResource InfoToolTip}" Text="Settings" />
                             </ToolTip>
                         </Button.ToolTip>
                     </Button>
@@ -147,7 +139,7 @@
                     HorizontalAlignment="Stretch"
                     PreviewTextInput="ImageCount_PreviewTextInput"
                     Style="{StaticResource TextBoxValidation}"
-                    Text="{Binding ImageCount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True, FallbackValue=0, TargetNullValue=''}" />
+                    Text="{Binding SessionImageCount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True, FallbackValue=0, TargetNullValue=''}" />
             </UniformGrid>
         </Border>
 

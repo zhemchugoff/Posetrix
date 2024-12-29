@@ -5,7 +5,6 @@ using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 using Posetrix.Core.Services;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 
 namespace Posetrix.Core.ViewModels;
 
@@ -13,33 +12,25 @@ public partial class FolderAddViewModel : BaseViewModel, ICustomWindow
 {
     public string WindowTitle => "Add folders";
 
-    private readonly ViewModelLocator _viewModelLocator;
     private readonly IFolderBrowserServiceAsync _folderBrowserService;
     private readonly IExtensionsService _extensionsService;
-    private readonly ServiceLocator _serviceLocator;
-    public int _folderCount;
     public ObservableCollection<ImageFolder> Folders { get; }
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(CanDeleteFolder))]
     [NotifyCanExecuteChangedFor(nameof(RemoveFolderCommand))]
     public partial ImageFolder? SelectedFolder { get; set; }
 
-    public bool CanDeleteFolder => _folderCount > 0 && SelectedFolder is not null;
+    public bool CanDeleteFolder => SelectedFolder is not null;
 
     public FolderAddViewModel(ViewModelLocator viewModelLocator, ServiceLocator serviceLocator)
     {
         // Services.
-        _viewModelLocator = viewModelLocator;
-        _serviceLocator = serviceLocator;
-        _folderBrowserService = _serviceLocator.FolderBrowserService;
-        _extensionsService = _serviceLocator.ExtensionsService;
+        _folderBrowserService = serviceLocator.FolderBrowserService;
+        _extensionsService = serviceLocator.ExtensionsService;
 
         // MainViewModel collection.
-        var mainViewModel = _viewModelLocator.MainViewModel;
+        var mainViewModel = viewModelLocator.MainViewModel;
         Folders = mainViewModel.ReferenceFolders;
-        Folders.CollectionChanged += Folders_CollectionChanged;
-        _folderCount = Folders.Count;
     }
 
     [RelayCommand]
@@ -49,7 +40,7 @@ public partial class FolderAddViewModel : BaseViewModel, ICustomWindow
 
         if (!string.IsNullOrEmpty(folderPath))
         {
-            AddFolder(folderPath);
+            GetFolder(folderPath);
         }
     }
 
@@ -58,7 +49,7 @@ public partial class FolderAddViewModel : BaseViewModel, ICustomWindow
     {
         Folders.Remove(referencesFolder);
     }
-    private void AddFolder(string? folderPath)
+    private void GetFolder(string? folderPath)
     {
         if (string.IsNullOrEmpty(folderPath))
         {
@@ -72,10 +63,10 @@ public partial class FolderAddViewModel : BaseViewModel, ICustomWindow
         List<string> references = [];
         references.GetImageFiles(folderPath, _extensionsService.LoadExtensions());
 
-        AddImageFolder(folderPath, folderName, references);
+        AddImageFolderToCollection(folderPath, folderName, references);
     }
 
-    private void AddImageFolder(string folderPath, string folderName, List<string> references)
+    private void AddImageFolderToCollection(string folderPath, string folderName, List<string> references)
     {
         if (!string.IsNullOrEmpty(folderName) && references.Count > 0)
         {
@@ -86,10 +77,5 @@ public partial class FolderAddViewModel : BaseViewModel, ICustomWindow
                 Folders.Add(imageFolder);
             }
         }
-    }
-
-    private void Folders_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
-    {
-        _folderCount = Folders.Count;
     }
 }

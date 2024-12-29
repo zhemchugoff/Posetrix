@@ -96,16 +96,16 @@
                             </ToolTip>
                         </Button.ToolTip>
                     </Button>
-                    <Button Content="&#xe746;" Style="{StaticResource ImageEditButton}">
-                        <Button.ToolTip>
+                    <ToggleButton
+                        Content="&#xe746;"
+                        IsChecked="{Binding IsGreyScale}"
+                        Style="{StaticResource EditToggleButton}">
+                        <ToggleButton.ToolTip>
                             <ToolTip>
-                                <TextBlock
-                                    FontFamily="Segoe UI"
-                                    FontSize="12"
-                                    Text="Black and white" />
+                                <TextBlock Style="{StaticResource InfoToolTip}" Text="Turn greyscale on/off for the image." />
                             </ToolTip>
-                        </Button.ToolTip>
-                    </Button>
+                        </ToggleButton.ToolTip>
+                    </ToggleButton>
                 </StackPanel>
                 <TextBlock
                     HorizontalAlignment="Right"
@@ -125,6 +125,7 @@
                     <MultiBinding Converter="{StaticResource ImageLoader}">
                         <Binding Mode="OneWay" Path="CurrentImage" />
                         <Binding Mode="OneWay" Path="ImageResolution" />
+                        <Binding Mode="OneWay" Path="IsGreyScale" />
                     </MultiBinding>
                 </Image.Source>
                 <Image.RenderTransform>
