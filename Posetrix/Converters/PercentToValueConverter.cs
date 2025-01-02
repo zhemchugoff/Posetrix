@@ -7,9 +7,9 @@ public class PercentToValueConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is double actualValue && parameter is string percentString && double.TryParse(percentString, out double percent)) 
+        if (value is double actualValue && parameter is string percentString && double.TryParse(percentString, out double percent))
         {
-            return actualValue * (percent / 100); 
+            return actualValue * (percent / 100);
         }
         return 0;
     }

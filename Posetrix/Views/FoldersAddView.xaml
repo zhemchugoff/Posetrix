@@ -59,7 +59,7 @@
                 Style="{StaticResource FoldersAddRemoveButton}">
                 <Button.ToolTip>
                     <ToolTip>
-                        <TextBlock Style="{StaticResource InfoToolTip}" Text="Remove a folder" />
+                        <TextBlock Style="{StaticResource InfoToolTip}" Text="Remove selected folder" />
                     </ToolTip>
                 </Button.ToolTip>
             </Button>

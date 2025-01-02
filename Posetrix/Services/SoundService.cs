@@ -28,7 +28,7 @@ public class SoundService : ISoundService
                 StopPlayback();
 
                 // Initialize playback.
-                Uri resourceUri = new Uri(soundPath);
+                Uri resourceUri = new(soundPath);
                 _audioStream = Application.GetResourceStream(resourceUri).Stream;
 
                 if (_audioStream != null)

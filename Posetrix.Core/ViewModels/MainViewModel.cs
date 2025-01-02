@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using Posetrix.Core.Factories;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
-using Posetrix.Core.Services;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;

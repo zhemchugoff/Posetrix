@@ -51,7 +51,7 @@
                             Style="{StaticResource EditToggleButton}">
                             <ToggleButton.ToolTip>
                                 <ToolTip>
-                                    <TextBlock Style="{StaticResource InfoToolTip}" Text="Mirror X." />
+                                    <TextBlock Style="{StaticResource InfoToolTip}" Text="Mirror X" />
                                 </ToolTip>
                             </ToggleButton.ToolTip>
                         </ToggleButton>
@@ -61,7 +61,7 @@
                             Style="{StaticResource EditToggleButton}">
                             <ToggleButton.ToolTip>
                                 <ToolTip>
-                                    <TextBlock Style="{StaticResource InfoToolTip}" Text="Mirror Y." />
+                                    <TextBlock Style="{StaticResource InfoToolTip}" Text="Mirror Y" />
                                 </ToolTip>
                             </ToggleButton.ToolTip>
                         </ToggleButton>
@@ -71,7 +71,7 @@
                             Style="{StaticResource EditToggleButton}">
                             <ToggleButton.ToolTip>
                                 <ToolTip>
-                                    <TextBlock Style="{StaticResource InfoToolTip}" Text="Turn greyscale on/off for the image." />
+                                    <TextBlock Style="{StaticResource InfoToolTip}" Text="Turn greyscale on/off for the image" />
                                 </ToolTip>
                             </ToggleButton.ToolTip>
                         </ToggleButton>
@@ -81,7 +81,7 @@
                             Style="{StaticResource EditToggleButton}">
                             <ToggleButton.ToolTip>
                                 <ToolTip>
-                                    <TextBlock Style="{StaticResource InfoToolTip}" Text="Toggle always-on-top mode for this window." />
+                                    <TextBlock Style="{StaticResource InfoToolTip}" Text="Toggle always-on-top mode for this window" />
                                 </ToolTip>
                             </ToggleButton.ToolTip>
                         </ToggleButton>
@@ -91,7 +91,7 @@
                             Style="{StaticResource EditToggleButton}">
                             <ToggleButton.ToolTip>
                                 <ToolTip>
-                                    <TextBlock Style="{StaticResource InfoToolTip}" Text="Image information." />
+                                    <TextBlock Style="{StaticResource InfoToolTip}" Text="Image information" />
                                 </ToolTip>
                             </ToggleButton.ToolTip>
                         </ToggleButton>
@@ -121,7 +121,7 @@
                     <MultiBinding Converter="{StaticResource ImageLoader}">
                         <Binding Mode="OneWay" Path="CurrentImage" />
                         <Binding Mode="OneWay" Path="ImageResolution" />
-                        <Binding Mode="OneWay" Path="IsGreyScale" />
+                        <Binding Mode="OneWay" Path="IsGreyScaleOn" />
                     </MultiBinding>
                 </Image.Source>
                 <Image.RenderTransform>
@@ -177,7 +177,7 @@
                             <TextBlock
                                 FontFamily="Segoe UI"
                                 FontSize="12"
-                                Text="Pause" />
+                                Text="Pause session" />
                         </ToolTip>
                     </ToggleButton.ToolTip>
                 </ToggleButton>
