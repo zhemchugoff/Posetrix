@@ -5,4 +5,6 @@
     <conv:BooleanToXScaleConverter x:Key="ScaleConverter" />
     <conv:BitmapImageLoader x:Key="ImageLoader" />
     <conv:EnumToBooleanConverter x:Key="EnumConverter" />
+    <conv:PercentToValueConverter x:Key="PercentConverter" />
+    <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
 </ResourceDictionary>

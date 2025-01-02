@@ -16,12 +16,12 @@
     mc:Ignorable="d">
     <Grid Margin="20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="8*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Border
             Grid.Row="0"
-            Padding="10"
+            Padding="8"
             Background="{DynamicResource CardBackgroundFillColorSecondaryBrush}"
             BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
             BorderThickness="2"

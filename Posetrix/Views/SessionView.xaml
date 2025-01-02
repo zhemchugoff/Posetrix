@@ -12,112 +12,108 @@
     MinHeight="400"
     d:DataContext="{d:DesignInstance viewmodels:SessionViewModel}"
     Icon="{StaticResource AppIcon}"
+    Topmost="{Binding IsAlwaysOnTopOn}"
     mc:Ignorable="d">
 
-    <Grid Margin="12" ShowGridLines="False">
+    <Grid Margin="12">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Border
-            Grid.Row="0"
-            Margin="0,0,0,8"
-            Padding="8"
-            Background="{DynamicResource ExpanderHeaderBackground}"
-            BorderBrush="{DynamicResource ExpanderHeaderBorderBrush}"
-            BorderThickness="{StaticResource ExpanderBorderThemeThickness}"
-            CornerRadius="{DynamicResource ControlCornerRadius}">
-            <UniformGrid Columns="3">
-                <TextBlock
-                    VerticalAlignment="Center"
-                    FontSize="12"
-                    Style="{StaticResource CaptionTextBlockStyle}"
-                    Text="{Binding SessionInfo}"
-                    ToolTipService.InitialShowDelay="100"
-                    ToolTipService.Placement="MousePoint"
-                    ToolTipService.ToolTip="Current / Completed / Total" />
-                <StackPanel
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
-                    <Button Content="&#xe718;" Style="{StaticResource ImageEditButton}">
-                        <Button.ToolTip>
-                            <ToolTip>
-                                <TextBlock
-                                    FontFamily="{StaticResource SegoeUi}"
-                                    FontSize="12"
-                                    Text="Always on top" />
-                            </ToolTip>
-                        </Button.ToolTip>
-                    </Button>
-                    <Button Content="&#xE80A;" Style="{StaticResource ImageEditButton}">
-                        <Button.ToolTip>
-                            <ToolTip>
-                                <TextBlock
-                                    FontFamily="Segoe UI"
-                                    FontSize="12"
-                                    Text="Grid" />
-                            </ToolTip>
-                        </Button.ToolTip>
-                    </Button>
-                    <ToggleButton
-                        Content="&#xE784;"
-                        IsChecked="{Binding IsMirroredX, Mode=TwoWay}"
-                        Style="{StaticResource EditToggleButton}">
-                        <ToggleButton.ToolTip>
-                            <ToolTip>
-                                <TextBlock
-                                    FontFamily="Segoe UI"
-                                    FontSize="12"
-                                    Text="Mirror X" />
-                            </ToolTip>
-                        </ToggleButton.ToolTip>
-                    </ToggleButton>
-                    <ToggleButton
-                        Content="&#xe76f;"
-                        IsChecked="{Binding IsMirroredY, Mode=TwoWay}"
-                        Style="{StaticResource EditToggleButton}">
-                        <ToggleButton.ToolTip>
-                            <ToolTip>
-                                <TextBlock
-                                    FontFamily="Segoe UI"
-                                    FontSize="12"
-                                    Text="Mirror Y" />
-                            </ToolTip>
-                        </ToggleButton.ToolTip>
-                    </ToggleButton>
-                    <Button Content="&#xe916;" Style="{StaticResource ImageEditButton}">
-                        <Button.ToolTip>
-                            <ToolTip>
-                                <TextBlock
-                                    FontFamily="Segoe UI"
-                                    FontSize="12"
-                                    Text="Timer visibility" />
-                            </ToolTip>
-                        </Button.ToolTip>
-                    </Button>
-                    <ToggleButton
-                        Content="&#xe746;"
-                        IsChecked="{Binding IsGreyScale}"
-                        Style="{StaticResource EditToggleButton}">
-                        <ToggleButton.ToolTip>
-                            <ToolTip>
-                                <TextBlock Style="{StaticResource InfoToolTip}" Text="Turn greyscale on/off for the image." />
-                            </ToolTip>
-                        </ToggleButton.ToolTip>
-                    </ToggleButton>
-                </StackPanel>
-                <TextBlock
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    IsEnabled="{Binding IsTimeVisible}"
-                    Style="{StaticResource CaptionTextBlockStyle}"
-                    Text="{Binding FormattedTime}" />
-            </UniformGrid>
-        </Border>
+        <StackPanel Grid.Row="0" Margin="0,0,0,8">
+
+            <Border
+                Grid.Row="0"
+                Padding="8"
+                Background="{DynamicResource ExpanderHeaderBackground}"
+                BorderBrush="{DynamicResource ExpanderHeaderBorderBrush}"
+                BorderThickness="{StaticResource ExpanderBorderThemeThickness}"
+                CornerRadius="{DynamicResource ControlCornerRadius}">
+                <UniformGrid Columns="3">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        d:Text="2 / 4 / 121"
+                        FontSize="12"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{Binding SessionInfo}"
+                        ToolTipService.InitialShowDelay="100"
+                        ToolTipService.Placement="MousePoint"
+                        ToolTipService.ToolTip="Current / Completed / Total" />
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+
+
+                        <ToggleButton
+                            Content="&#xE784;"
+                            IsChecked="{Binding IsMirroredX, Mode=TwoWay}"
+                            Style="{StaticResource EditToggleButton}">
+                            <ToggleButton.ToolTip>
+                                <ToolTip>
+                                    <TextBlock Style="{StaticResource InfoToolTip}" Text="Mirror X." />
+                                </ToolTip>
+                            </ToggleButton.ToolTip>
+                        </ToggleButton>
+                        <ToggleButton
+                            Content="&#xe76f;"
+                            IsChecked="{Binding IsMirroredY, Mode=TwoWay}"
+                            Style="{StaticResource EditToggleButton}">
+                            <ToggleButton.ToolTip>
+                                <ToolTip>
+                                    <TextBlock Style="{StaticResource InfoToolTip}" Text="Mirror Y." />
+                                </ToolTip>
+                            </ToggleButton.ToolTip>
+                        </ToggleButton>
+                        <ToggleButton
+                            Content="&#xE793;"
+                            IsChecked="{Binding IsGreyScaleOn}"
+                            Style="{StaticResource EditToggleButton}">
+                            <ToggleButton.ToolTip>
+                                <ToolTip>
+                                    <TextBlock Style="{StaticResource InfoToolTip}" Text="Turn greyscale on/off for the image." />
+                                </ToolTip>
+                            </ToggleButton.ToolTip>
+                        </ToggleButton>
+                        <ToggleButton
+                            Content="&#xe718;"
+                            IsChecked="{Binding IsAlwaysOnTopOn}"
+                            Style="{StaticResource EditToggleButton}">
+                            <ToggleButton.ToolTip>
+                                <ToolTip>
+                                    <TextBlock Style="{StaticResource InfoToolTip}" Text="Toggle always-on-top mode for this window." />
+                                </ToolTip>
+                            </ToggleButton.ToolTip>
+                        </ToggleButton>
+                        <ToggleButton
+                            Content="&#xEA1F;"
+                            IsChecked="{Binding IsImageInfoVisible}"
+                            Style="{StaticResource EditToggleButton}">
+                            <ToggleButton.ToolTip>
+                                <ToolTip>
+                                    <TextBlock Style="{StaticResource InfoToolTip}" Text="Image information." />
+                                </ToolTip>
+                            </ToggleButton.ToolTip>
+                        </ToggleButton>
+                    </StackPanel>
+                    <TextBlock
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        d:Text="00:00:30"
+                        IsEnabled="{Binding IsTimeVisible}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="{Binding FormattedTime}" />
+                </UniformGrid>
+            </Border>
+            <ProgressBar
+                Maximum="{Binding SessionCollectionCount, Mode=OneWay}"
+                Minimum="1"
+                Value="{Binding CurrentImageIndex, Mode=OneWay}" />
+        </StackPanel>
         <Grid Grid.Row="1">
             <Image
                 x:Name="SessionImage"
+                d:Source="pack://application:,,,/Assets/Images/undraw_coffee-time_98vi.png"
                 Loaded="SessionImage_Loaded"
                 SizeChanged="SessionWindow_OnSizeChanged"
                 Stretch="Uniform">
@@ -132,12 +128,30 @@
                     <ScaleTransform x:Name="MirrorTransform" ScaleX="{Binding IsMirroredX, Converter={StaticResource ScaleConverter}}" ScaleY="{Binding IsMirroredY, Converter={StaticResource ScaleConverter}}" />
                 </Image.RenderTransform>
             </Image>
-            <!--  Control buttons.  -->
+            <StackPanel
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Orientation="Vertical"
+                Visibility="{Binding IsImageInfoVisible, Converter={StaticResource BoolToVisibility}}">
+                <TextBlock
+                    d:Text="Width: 1920"
+                    Style="{StaticResource ImageInfo}"
+                    Text="{Binding ImageWidthInfo}" />
+                <TextBlock
+                    d:Text="Height: 1080"
+                    Style="{StaticResource ImageInfo}"
+                    Text="{Binding ImageHeightInfo}" />
+                <TextBlock
+                    d:Text="File name: image1.png"
+                    Style="{StaticResource ImageInfo}"
+                    Text="{Binding ImagePathInfo}" />
+            </StackPanel>
             <StackPanel
                 x:Name="SessionStackPanel"
                 Margin="0,0,0,8"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Bottom"
+                d:Visibility="Visible"
                 Orientation="Horizontal"
                 Visibility="Collapsed">
                 <Button

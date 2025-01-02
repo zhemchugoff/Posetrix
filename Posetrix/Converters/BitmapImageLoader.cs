@@ -1,9 +1,9 @@
 ﻿using MetadataExtractor;
 using MetadataExtractor.Formats.Exif;
 using Posetrix.Core.Services;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Security.RightsManagement;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -38,12 +38,14 @@ public class BitmapImageLoader : IMultiValueConverter, IDisposable
         {
             if (imagePath.StartsWith("pack://"))
             {
+                Debug.WriteLine($"Placeholder loaded 1: {values[0]}");
                 return LoadPlaceholder(imagePath);
             }
 
-            return LoadImage(imagePath) ?? LoadPlaceholder(ResourceLocator.ErrorImage);
+            return LoadImage(imagePath) ?? LoadPlaceholder(ResourceLocator.ErrorImage1);
         }
 
+        Debug.WriteLine($"Placeholder loaded 2: {values[0]}");
         return LoadPlaceholder(ResourceLocator.ErrorImage);
     }
 
@@ -81,9 +83,7 @@ public class BitmapImageLoader : IMultiValueConverter, IDisposable
             }
 
             // Caches the entire image into memory at load time.
-            // All requests for image data are filled from the memory store.
-
-
+            // All requests for image data are filled from the memory store
             _bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
 
             _bitmapImage.EndInit(); // Indicates that the initialization process for the element is complete.
@@ -151,7 +151,7 @@ public class BitmapImageLoader : IMultiValueConverter, IDisposable
 
         return 1; // Default orientation if metadata is missing.
     }
-    
+
     private void DisposeBitmap()
     {
         // Dispose of bitmaps if they are not null.

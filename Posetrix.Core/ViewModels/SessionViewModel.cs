@@ -7,7 +7,6 @@ using Posetrix.Core.Models;
 using Posetrix.Core.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 
 namespace Posetrix.Core.ViewModels;
 
@@ -21,7 +20,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
 
     // Collections.
     private readonly List<string> _sessionCollection = [];
-    private readonly int _sessionCollectionCount;
+    [ObservableProperty] public partial int SessionCollectionCount { get; private set; }
     private readonly ObservableCollection<string> _completedImages = [];
     private readonly bool _IsEndlessModeOn;
 
@@ -35,19 +34,32 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     [ObservableProperty] public partial bool IsTimeVisible { get; set; }
     [ObservableProperty] public partial bool IsSessionActive { get; set; } = true;
     [ObservableProperty] public partial bool IsEndOfCollection { get; set; }
-    [ObservableProperty] public partial bool IsGreyScale { get; set; } = false;
+    [ObservableProperty] public partial bool IsGreyScaleOn { get; set; } = false;
+    [ObservableProperty] public partial bool IsAlwaysOnTopOn { get; set; } = false;
+    [ObservableProperty] public partial bool IsImageInfoVisible { get; set; } = false;
 
     // Commands conditions.
-    public bool CanSelectNextImage => IsSessionActive && CurrentImageIndex < _sessionCollectionCount && _sessionCollectionCount > 0;
-    public bool CanSelectPreviousImage => IsSessionActive && CurrentImageIndex > 0 && _sessionCollectionCount > 0;
+    public bool CanSelectNextImage => IsSessionActive && CurrentImageIndex < SessionCollectionCount && SessionCollectionCount > 0;
+    public bool CanSelectPreviousImage => IsSessionActive && CurrentImageIndex > 0 && SessionCollectionCount > 0;
     public bool IsStopEnabled => IsSessionActive;
     public bool IsPauseEnabled => IsSessionActive && IsTimeVisible;
     public bool IsTimerPaused => _timerStore.IsTimerPaused && IsTimeVisible;
 
     // Image properties.
-    [ObservableProperty] public partial string? CurrentImage { get; set; }
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ImageWidthInfo))]
+    public partial double ImageWidth { get; set; } = 0;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ImageHeightInfo))]
+    public partial double ImageHeight { get; set; } = 0;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ImagePathInfo))]
+    public partial string? CurrentImage { get; set; } = ResourceLocator.DefaultPlaceholder;
     [ObservableProperty] public partial bool IsMirroredX { get; set; }
     [ObservableProperty] public partial bool IsMirroredY { get; set; }
+    public string ImageWidthInfo => $"Width: {ImageWidth}";
+    public string ImageHeightInfo => $"Height: {ImageHeight}";
+    public string ImagePathInfo => $"Path: {CurrentImage}";
 
     // Timer.
     private readonly TimerStore _timerStore;
@@ -58,7 +70,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SessionInfo))]
     public partial int CompletedImagesCounter { get; set; }
-    public string SessionInfo => $"{CurrentImageIndex} / {CompletedImagesCounter} / {_sessionCollectionCount}";
+    public string SessionInfo => $"{CurrentImageIndex} / {CompletedImagesCounter} / {SessionCollectionCount}";
     [ObservableProperty] public partial string FormattedTime { get; set; } = "00:00:00";
 
     public int ImageResolution { get; }
@@ -106,7 +118,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
         // Image collection.
         _completedImages.CollectionChanged += CompletedImages_CollectionChanged;
         _sessionCollection.PopulateAndConvertObservableColletionToList(mainViewModel.ReferenceFolders, mainViewModel.IsShuffleEnabled, mainViewModel.SessionImageCount);
-        _sessionCollectionCount = _sessionCollection.Count;
+        SessionCollectionCount = _sessionCollection.Count;
 
         CurrentImageIndex = 0;
         CurrentImage = _sessionCollection[CurrentImageIndex];
@@ -194,7 +206,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     {
         IsMirroredX = false;
         IsMirroredY = false;
-        IsGreyScale = false;
+        IsGreyScaleOn = false;
     }
 
     /// <summary>
@@ -242,7 +254,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
 
     partial void OnCurrentImageIndexChanged(int value)
     {
-        if (CurrentImageIndex == _sessionCollectionCount)
+        if (CurrentImageIndex == SessionCollectionCount)
         {
             if (_IsEndlessModeOn)
             {
@@ -266,7 +278,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
 
     private void SetPlaceholder()
     {
-        if (CurrentImageIndex == _sessionCollectionCount)
+        if (CurrentImageIndex == SessionCollectionCount)
         {
             ShowEndOfSessionPlaceholder();
         }
@@ -284,6 +296,11 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     {
         CompletedImagesCounter = _completedImages.Count;
     }
+    public void SetImageDimensions(double width, double height)
+    {
+        ImageWidth = width;
+        ImageHeight = height;
+    }
 
     public void Dispose()
     {
@@ -294,4 +311,5 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
 
         GC.SuppressFinalize(this); // Optionally suppress finalization.
     }
+
 }

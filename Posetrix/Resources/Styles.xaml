@@ -105,4 +105,10 @@
         <Setter Property="FontFamily" Value="{DynamicResource SegoeUi}" />
         <Setter Property="FontSize" Value="14" />
     </Style>
+    <!--  Image info.  -->
+    <Style x:Key="ImageInfo" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{DynamicResource SegoeUi}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+    </Style>
 </ResourceDictionary>

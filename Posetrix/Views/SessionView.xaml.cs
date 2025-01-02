@@ -1,5 +1,9 @@
-﻿using System.Windows;
+﻿using Posetrix.Core.Models;
+using Posetrix.Core.ViewModels;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 
 namespace Posetrix.Views;
@@ -17,6 +21,21 @@ public partial class SessionView : Window
         MouseLeave += SessionWindow_MouseLeave;
     }
 
+    private void SessionWindow_OnSizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        UpdateScaleTransformCenter();
+
+        UpdatetImageDimensions(sender);
+    }
+
+    private void UpdatetImageDimensions(object sender)
+    {
+        if (sender is Image image && image.Source is BitmapSource bitmap && DataContext is SessionViewModel viewModel)
+        {
+            viewModel.SetImageDimensions(bitmap.PixelWidth, bitmap.PixelHeight);
+        }
+    }
+
     /// <summary>
     /// <c>UpdateScaleTransformCenter</c> ensures the image is loaded and has actual dimensions.
     /// </summary>
@@ -29,14 +48,12 @@ public partial class SessionView : Window
         }
     }
 
-    private void SessionWindow_OnSizeChanged(object sender, SizeChangedEventArgs e)
-    {
-        UpdateScaleTransformCenter();
-    }
 
     private void SessionImage_Loaded(object sender, RoutedEventArgs e)
     {
         UpdateScaleTransformCenter();
+        UpdatetImageDimensions(sender);
+
     }
 
     private void SessionWindow_MouseEnter(object sender, MouseEventArgs e) { SessionStackPanel.Visibility = Visibility.Visible; }

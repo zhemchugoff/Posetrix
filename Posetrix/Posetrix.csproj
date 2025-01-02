@@ -13,6 +13,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Assets\Images\undraw_coffee-time_98vi.png" />
+	  <None Remove="Assets\Images\undraw_snap-the-moment_96zx.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="MetadataExtractor" Version="2.8.1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
 		<PackageReference Include="NAudio" Version="2.2.1" />
@@ -62,10 +67,16 @@
 	  <Resource Include="Assets\Images\undraw_bug_fixing.png">
 	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	  </Resource>
+	  <Resource Include="Assets\Images\undraw_coffee-time_98vi.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
 	  <Resource Include="Assets\Images\undraw_fixing_bugs_w7gi.png">
 	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	  </Resource>
 	  <Resource Include="Assets\Images\undraw_happy_music_g6wc.png">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Assets\Images\undraw_snap-the-moment_96zx.png">
 	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	  </Resource>
 	  <Resource Include="Assets\Images\undraw_winners_re_wr1l.png">

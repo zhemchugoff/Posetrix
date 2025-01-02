@@ -13,11 +13,16 @@
     <DataTemplate x:Key="ListViewTemplate" DataType="{x:Type m:ImageFolder}">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
+                <ColumnDefinition Width="52" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-
-            <StackPanel Grid.Column="0" Orientation="Vertical">
+            <TextBlock
+                Grid.Column="0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontFamily="{DynamicResource SegoeUi}"
+                Text="{Binding ImageCounter, Mode=OneWay}" />
+            <StackPanel Grid.Column="1" Orientation="Vertical">
                 <TextBlock
                     FontFamily="{DynamicResource SegoeUi}"
                     FontWeight="Bold"
@@ -27,12 +32,6 @@
                     Foreground="{DynamicResource TextFillColorTertiaryBrush}"
                     Text="{Binding FullFolderPath, Mode=OneWay}" />
             </StackPanel>
-            <TextBlock
-                Grid.Column="1"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                FontFamily="{DynamicResource SegoeUi}"
-                Text="{Binding ImageCounter, Mode=OneWay}" />
         </Grid>
     </DataTemplate>
 </ResourceDictionary>
