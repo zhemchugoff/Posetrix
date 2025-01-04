@@ -4,6 +4,7 @@ on:
     push:
         tags:
             - "v*"
+    workflow_dispatch:
 env:
     PROJECT_PATH: Posetrix/Posetrix.csproj
 jobs:
