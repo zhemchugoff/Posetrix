@@ -24,13 +24,13 @@ jobs:
                 dotnet-version: '9.0.x'
 
             - name: Restore dependencies
-              run: dotnet restore
+              run: dotnet restore ${{ PROJECT_PATH }}
 
             - name: Build project
-              run: dotnet build -c Release -o ./output
+              run: dotnet build ${{ PROJECT_PATH }} -c Release -o ./output
 
             - name: Publish project
-              run: dotnet publish -c Release --self-contained -r win-x64 -p:PublishSingleFile=true
+              run: dotnet publish ${{ PROJECT_PATH }} -c Release --self-contained -r win-x64 -p:PublishSingleFile=true
 
             - name: Upload artifact
               uses: actions/upload-artifact@v4
