@@ -1,12 +1,12 @@
 name: "Deploy Posetrix"
 
 on:
-  push:
-    tags:
-      - 'v*'   # Trigger on semantic version tags
-  release:
-    types:
-      - created  # Trigger on new releases
+  # push:
+  #   tags:
+  #     - 'v*'   # Trigger on semantic version tags
+  # release:
+  #   types:
+  #     - created  # Trigger on new releases
     workflow_dispatch:
 env:
     PROJECT_PATH: Posetrix/Posetrix.csproj
