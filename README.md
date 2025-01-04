@@ -1,7 +1,7 @@
 # Posetrix - a simple application for practicing gesture drawing
 
 ## Overview
-With Posetrix you can add your own reference images, set desired time intervals and another settings. I started this project to practice C# and WPF framework.
+With Posetrix you can add your own reference images with desired time intervals. I started this project to practice C# and WPF framework and hope that someone will find it useful.
 
 ## Table of Contents
 - [Features](#features)
