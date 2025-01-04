@@ -120,8 +120,6 @@
                                 </ToolTip>
                             </TextBlock.ToolTip>
                         </TextBlock>
-
-
                     </StackPanel>
                     <ComboBox
                         Grid.Column="1"

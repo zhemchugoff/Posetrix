@@ -20,7 +20,6 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="FontFamily" Value="{DynamicResource SegoeUiIcons}" />
         <Setter Property="FontSize" Value="24" />
-        <Setter Property="Margin" Value="4,0" />
     </Style>
     <!--  Image editing buttons.  -->
     <Style
@@ -56,12 +55,20 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="FontFamily" Value="{DynamicResource SegoeUiIcons}" />
         <Setter Property="FontSize" Value="24" />
-        <Setter Property="Margin" Value="4,0" />
     </Style>
     <!--  Predefined intervals.  -->
-    <Style BasedOn="{StaticResource {x:Type ToggleButton}}" TargetType="RadioButton">
+    <!--  Radio button with toggle button style.  -->
+    <Style
+        x:Key="RadioToggleButton"
+        BasedOn="{StaticResource {x:Type ToggleButton}}"
+        TargetType="RadioButton">
         <Setter Property="Height" Value="30" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
     </Style>
     <!--  Form validation.  -->
     <Style
@@ -103,12 +110,20 @@
         BasedOn="{StaticResource {x:Type TextBlock}}"
         TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{DynamicResource SegoeUi}" />
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontSize" Value="12" />
     </Style>
     <!--  Image info.  -->
     <Style x:Key="ImageInfo" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{DynamicResource SegoeUi}" />
         <Setter Property="FontSize" Value="12" />
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+    </Style>
+    <!--  Border with buttons in session window.  -->
+    <Style x:Key="SessionBorderWithButtons" TargetType="Border">
+        <Setter Property="Padding" Value="8" />
+        <Setter Property="Background" Value="{DynamicResource SolidBackgroundFillColorBaseBrush}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
     </Style>
 </ResourceDictionary>

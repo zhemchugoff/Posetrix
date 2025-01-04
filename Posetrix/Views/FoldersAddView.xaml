@@ -14,7 +14,7 @@
     d:DataContext="{d:DesignInstance Type=viewmodels:FolderAddViewModel}"
     Icon="{StaticResource AppIcon}"
     mc:Ignorable="d">
-    <Grid Margin="20">
+    <Grid Margin="12">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
@@ -25,7 +25,7 @@
             Background="{DynamicResource CardBackgroundFillColorSecondaryBrush}"
             BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
             BorderThickness="2"
-            CornerRadius="8">
+            CornerRadius="{DynamicResource ControlCornerRadius}">
             <ListView
                 ItemTemplate="{StaticResource ListViewTemplate}"
                 ItemsSource="{Binding Folders}"
@@ -33,7 +33,7 @@
                 SelectionMode="Single" />
         </Border>
         <!--  Commands.  -->
-        <Grid Grid.Row="1" Margin="0,20,0,0">
+        <Grid Grid.Row="1" Margin="0,12,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />

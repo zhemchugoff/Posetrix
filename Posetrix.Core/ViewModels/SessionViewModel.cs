@@ -31,12 +31,14 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     [NotifyCanExecuteChangedFor(nameof(SelectPreviousImageCommand))]
     public partial int CurrentImageIndex { get; set; }
 
-    [ObservableProperty] public partial bool IsTimeVisible { get; set; }
-    [ObservableProperty] public partial bool IsSessionActive { get; set; } = true;
-    [ObservableProperty] public partial bool IsEndOfCollection { get; set; }
+    [ObservableProperty] public partial bool IsMirroredX { get; private set; } = false;
+    [ObservableProperty] public partial bool IsMirroredY { get; private set; } = false;
     [ObservableProperty] public partial bool IsGreyScaleOn { get; set; } = false;
     [ObservableProperty] public partial bool IsAlwaysOnTopOn { get; set; } = false;
     [ObservableProperty] public partial bool IsImageInfoVisible { get; set; } = false;
+    [ObservableProperty] public partial bool IsTimeVisible { get; set; }
+    [ObservableProperty] public partial bool IsSessionActive { get; set; } = true;
+    [ObservableProperty] public partial bool IsEndOfCollection { get; set; }
 
     // Commands conditions.
     public bool CanSelectNextImage => IsSessionActive && CurrentImageIndex < SessionCollectionCount && SessionCollectionCount > 0;
@@ -55,8 +57,6 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ImagePathInfo))]
     public partial string? CurrentImage { get; set; } = ResourceLocator.DefaultPlaceholder;
-    [ObservableProperty] public partial bool IsMirroredX { get; set; }
-    [ObservableProperty] public partial bool IsMirroredY { get; set; }
     public string ImageWidthInfo => $"Width: {ImageWidth}";
     public string ImageHeightInfo => $"Height: {ImageHeight}";
     public string ImagePathInfo => $"Path: {CurrentImage}";
@@ -172,6 +172,24 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
         ShowEndOfSessionPlaceholder();
     }
 
+    [RelayCommand]
+    private void ToggleMirrorX()
+    {
+        IsMirroredX = !IsMirroredX;
+    }
+
+    [RelayCommand]
+    private void ToggleMirrorY()
+    {
+        IsMirroredY = !IsMirroredY;
+    }
+
+    [RelayCommand]
+    private void ToggleGreyScale()
+    {
+        IsGreyScaleOn = !IsGreyScaleOn;
+    }
+
     private void OnCountDownFinished()
     {
         if (CanSelectNextImage)
@@ -272,7 +290,6 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
             {
                 ResetTimer();
             }
-
         }
     }
 

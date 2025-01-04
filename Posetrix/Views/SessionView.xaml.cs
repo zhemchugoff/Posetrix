@@ -14,7 +14,6 @@ public partial class SessionView : Window
 {
     public SessionView()
     {
-        // TODO: add animation
         InitializeComponent();
         MouseEnter += SessionWindow_MouseEnter;
         MouseLeave += SessionWindow_MouseLeave;
@@ -47,7 +46,6 @@ public partial class SessionView : Window
         }
     }
 
-
     private void SessionImage_Loaded(object sender, RoutedEventArgs e)
     {
         UpdateScaleTransformCenter();
@@ -55,6 +53,6 @@ public partial class SessionView : Window
 
     }
 
-    private void SessionWindow_MouseEnter(object sender, MouseEventArgs e) { SessionStackPanel.Visibility = Visibility.Visible; }
-    private void SessionWindow_MouseLeave(object sender, MouseEventArgs e) { SessionStackPanel.Visibility = Visibility.Collapsed; }
+    private void SessionWindow_MouseEnter(object sender, MouseEventArgs e) { SessionBorder.Visibility = Visibility.Visible; }
+    private void SessionWindow_MouseLeave(object sender, MouseEventArgs e) { SessionBorder.Visibility = Visibility.Collapsed; }
 }

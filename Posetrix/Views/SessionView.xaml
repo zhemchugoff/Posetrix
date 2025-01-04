@@ -14,14 +14,25 @@
     Icon="{StaticResource AppIcon}"
     Topmost="{Binding IsAlwaysOnTopOn}"
     mc:Ignorable="d">
-
+    <Window.InputBindings>
+        <KeyBinding Key="Space" Command="{Binding PauseSessionCommand}" />
+        <KeyBinding Key="Left" Command="{Binding SelectPreviousImageCommand}" />
+        <KeyBinding Key="A" Command="{Binding SelectPreviousImageCommand}" />
+        <KeyBinding Key="Right" Command="{Binding SelectNextImageCommand}" />
+        <KeyBinding Key="D" Command="{Binding SelectNextImageCommand}" />
+        <KeyBinding Key="S" Command="{Binding StopSessionCommand}" />
+        <KeyBinding Key="Up" Command="{Binding SkipImageCommand}" />
+        <KeyBinding Key="W" Command="{Binding SkipImageCommand}" />
+        <KeyBinding Key="Q" Command="{Binding ToggleMirrorXCommand}" />
+        <KeyBinding Key="E" Command="{Binding ToggleMirrorYCommand}" />
+        <KeyBinding Key="G" Command="{Binding ToggleGreyScaleCommand}" />
+    </Window.InputBindings>
     <Grid Margin="12">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Margin="0,0,0,8">
-
             <Border
                 Grid.Row="0"
                 Padding="8"
@@ -43,35 +54,42 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
-
-
                         <ToggleButton
+                            Command="{Binding ToggleMirrorXCommand}"
                             Content="&#xE784;"
-                            IsChecked="{Binding IsMirroredX, Mode=TwoWay}"
+                            IsChecked="{Binding IsMirroredX, Mode=OneWay}"
                             Style="{StaticResource EditToggleButton}">
                             <ToggleButton.ToolTip>
                                 <ToolTip>
-                                    <TextBlock Style="{StaticResource InfoToolTip}" Text="Mirror X" />
+                                    <TextBlock Style="{StaticResource InfoToolTip}">
+                                        Mirror X<LineBreak />
+                                        Keys: Q</TextBlock>
                                 </ToolTip>
                             </ToggleButton.ToolTip>
                         </ToggleButton>
                         <ToggleButton
+                            Command="{Binding ToggleMirrorYCommand}"
                             Content="&#xe76f;"
-                            IsChecked="{Binding IsMirroredY, Mode=TwoWay}"
+                            IsChecked="{Binding IsMirroredY, Mode=OneWay}"
                             Style="{StaticResource EditToggleButton}">
                             <ToggleButton.ToolTip>
                                 <ToolTip>
-                                    <TextBlock Style="{StaticResource InfoToolTip}" Text="Mirror Y" />
+                                    <TextBlock Style="{StaticResource InfoToolTip}">
+                                        Mirror Y<LineBreak />
+                                        Keys: E</TextBlock>
                                 </ToolTip>
                             </ToggleButton.ToolTip>
                         </ToggleButton>
                         <ToggleButton
+                            Command="{Binding ToggleGreyScaleCommand}"
                             Content="&#xE793;"
-                            IsChecked="{Binding IsGreyScaleOn}"
+                            IsChecked="{Binding IsGreyScaleOn, Mode=OneWay}"
                             Style="{StaticResource EditToggleButton}">
                             <ToggleButton.ToolTip>
                                 <ToolTip>
-                                    <TextBlock Style="{StaticResource InfoToolTip}" Text="Turn greyscale on/off for the image" />
+                                    <TextBlock Style="{StaticResource InfoToolTip}">
+                                        Turn greyscale on/off for the image<LineBreak />
+                                        Keys: G</TextBlock>
                                 </ToolTip>
                             </ToggleButton.ToolTip>
                         </ToggleButton>
@@ -110,7 +128,11 @@
                 Minimum="1"
                 Value="{Binding CurrentImageIndex, Mode=OneWay}" />
         </StackPanel>
-        <Grid Grid.Row="1">
+        <Grid
+            Grid.Row="1"
+            Background="Transparent"
+            MouseEnter="SessionWindow_MouseEnter"
+            MouseLeave="SessionWindow_MouseLeave">
             <Image
                 x:Name="SessionImage"
                 d:Source="pack://application:,,,/Assets/Images/undraw_coffee-time_98vi.png"
@@ -146,81 +168,81 @@
                     Style="{StaticResource ImageInfo}"
                     Text="{Binding ImagePathInfo}" />
             </StackPanel>
-            <StackPanel
-                x:Name="SessionStackPanel"
-                Margin="0,0,0,8"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Bottom"
+            <Border
+                x:Name="SessionBorder"
                 d:Visibility="Visible"
-                Orientation="Horizontal"
+                Style="{StaticResource SessionBorderWithButtons}"
                 Visibility="Collapsed">
-                <Button
-                    Command="{Binding SelectPreviousImageCommand}"
-                    Content="&#xE76B;"
-                    Style="{StaticResource ControlButton}">
-                    <Button.ToolTip>
-                        <ToolTip>
-                            <TextBlock
-                                FontFamily="Segoe UI"
-                                FontSize="12"
-                                Text="Previous image" />
-                        </ToolTip>
-                    </Button.ToolTip>
-                </Button>
-                <ToggleButton
-                    Command="{Binding PauseSessionCommand}"
-                    Content="&#xE769;"
-                    IsChecked="{Binding IsTimerPaused, Mode=OneWay}"
-                    Style="{StaticResource ControlToggleButton}">
-                    <ToggleButton.ToolTip>
-                        <ToolTip>
-                            <TextBlock
-                                FontFamily="Segoe UI"
-                                FontSize="12"
-                                Text="Pause session" />
-                        </ToolTip>
-                    </ToggleButton.ToolTip>
-                </ToggleButton>
-                <Button
-                    Command="{Binding StopSessionCommand}"
-                    Content="&#xE71A;"
-                    Style="{StaticResource ControlButton}">
-                    <Button.ToolTip>
-                        <ToolTip>
-                            <TextBlock
-                                FontFamily="Segoe UI"
-                                FontSize="12"
-                                Text="Stop session" />
-                        </ToolTip>
-                    </Button.ToolTip>
-                </Button>
-                <Button
-                    Command="{Binding SelectNextImageCommand}"
-                    Content="&#xE76C;"
-                    Style="{StaticResource ControlButton}">
-                    <Button.ToolTip>
-                        <ToolTip>
-                            <TextBlock
-                                FontFamily="Segoe UI"
-                                FontSize="12"
-                                Text="Next image" />
-                        </ToolTip>
-                    </Button.ToolTip>
-                </Button>
-                <Button
-                    Command="{Binding SkipImageCommand}"
-                    Content="&#xE893;"
-                    Style="{StaticResource ControlButton}">
-                    <Button.ToolTip>
-                        <ToolTip>
-                            <TextBlock
-                                FontFamily="Segoe UI"
-                                FontSize="12"
-                                Text="Remove image" />
-                        </ToolTip>
-                    </Button.ToolTip>
-                </Button>
-            </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button
+                        Command="{Binding SelectPreviousImageCommand}"
+                        Content="&#xE76B;"
+                        IsDefault="False"
+                        Style="{StaticResource ControlButton}">
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <TextBlock Style="{StaticResource InfoToolTip}">
+                                    Previous image<LineBreak />
+                                    Keys: Left arrow or A</TextBlock>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+                    <ToggleButton
+                        Margin="8,0,8,0"
+                        Command="{Binding PauseSessionCommand}"
+                        Content="&#xE769;"
+                        IsChecked="{Binding IsTimerPaused, Mode=OneWay}"
+                        Style="{StaticResource ControlToggleButton}">
+                        <ToggleButton.ToolTip>
+                            <ToolTip>
+                                <TextBlock Style="{StaticResource InfoToolTip}">
+                                    Pause session<LineBreak />
+                                    Keys: Spacebar</TextBlock>
+                            </ToolTip>
+                        </ToggleButton.ToolTip>
+                    </ToggleButton>
+                    <Button
+                        Command="{Binding StopSessionCommand}"
+                        Content="&#xE71A;"
+                        IsDefault="False"
+                        Style="{StaticResource ControlButton}">
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <TextBlock Style="{StaticResource InfoToolTip}">
+                                    Stop session<LineBreak />
+                                    Keys: S</TextBlock>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button
+                        Margin="8,0,8,0"
+                        Command="{Binding SelectNextImageCommand}"
+                        Content="&#xE76C;"
+                        IsDefault="False"
+                        Style="{StaticResource ControlButton}">
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <TextBlock Style="{StaticResource InfoToolTip}">
+                                    Next image<LineBreak />
+                                    Keys: Right arrow or D</TextBlock>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button
+                        Command="{Binding SkipImageCommand}"
+                        Content="&#xE893;"
+                        IsDefault="False"
+                        Style="{StaticResource ControlButton}">
+                        <Button.ToolTip>
+                            <ToolTip>
+                                <TextBlock Style="{StaticResource InfoToolTip}">
+                                    Skip image<LineBreak />
+                                    Keys: Up arrow or W</TextBlock>
+                            </ToolTip>
+                        </Button.ToolTip>
+                    </Button>
+                </StackPanel>
+            </Border>
         </Grid>
     </Grid>
 </Window>
