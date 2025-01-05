@@ -84,8 +84,8 @@ public partial class SettingsViewModel : BaseViewModel, ICustomWindow
     }
 
     [RelayCommand(CanExecute = nameof(IsSoundEnabled))]
-    private void PlaySound()
+    private async Task PlaySound()
     {
-        _soundService.PlaySound(SelectedSound);
+        await _soundService.PlaySound(SelectedSound);
     }
 }

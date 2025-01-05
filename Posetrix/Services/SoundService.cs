@@ -1,16 +1,13 @@
 ﻿using NAudio.Wave;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Services;
-using System.IO;
 using System.Windows;
 
 namespace Posetrix.Services;
 
 public class SoundService : ISoundService
 {
-    private WaveOutEvent? _outputDevice;
-    private Stream? _audioStream;
-    public void PlaySound(string soundFile)
+    public async Task PlaySound(string soundFile)
     {
         string soundPath = soundFile switch
         {
@@ -24,33 +21,32 @@ public class SoundService : ISoundService
         {
             try
             {
-                // Dispose any existing playback to avoid conflicts.
-                StopPlayback();
-
-                // Initialize playback.
                 Uri resourceUri = new(soundPath);
-                _audioStream = Application.GetResourceStream(resourceUri).Stream;
+                var resourceInfo = Application.GetResourceStream(resourceUri);
 
-                if (_audioStream != null)
+                if (resourceInfo?.Stream != null)
                 {
-                    var vorbisReader = new NAudio.Vorbis.VorbisWaveReader(_audioStream);
+                    using (var audioStream = resourceInfo?.Stream)
+                    {
+                        using (var vorbisReader = new NAudio.Vorbis.VorbisWaveReader(audioStream))
+                        using (var waveOut = new WaveOutEvent())
+                        {
+                            waveOut.Init(vorbisReader);
+                            waveOut.Play();
 
-                    _outputDevice = new WaveOutEvent();
-                    _outputDevice.Init(vorbisReader);
-                    _outputDevice.Play();
+                            while (waveOut.PlaybackState == PlaybackState.Playing)
+                            {
+                                await Task.Delay(100);
+                            }
+                        }
+                    }
                 }
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error playing sound: {ex.Message}");
             }
         }
-    }
-
-    public void StopPlayback()
-    {
-        _outputDevice?.Stop();
-        _audioStream?.Dispose();
-        _outputDevice?.Dispose();
     }
 }

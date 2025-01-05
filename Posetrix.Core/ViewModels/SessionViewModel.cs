@@ -231,13 +231,13 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     /// Updates <c>FormattedTime</c> textbox with formatted text.
     /// </summary>
     /// <param name="remainingTime"></param>
-    private void OnTimeUpdated(TimeSpan remainingTime)
+    private async void OnTimeUpdated(TimeSpan remainingTime)
     {
         FormattedTime = remainingTime.ToString(@"hh\:mm\:ss");
 
         if (remainingTime == TimeSpan.FromSeconds(3) && _userSettings.Sound != "Off")
         {
-            _soundService.PlaySound(_userSettings.Sound);
+            await _soundService.PlaySound(_userSettings.Sound);
         }
     }
 
