@@ -1,5 +1,5 @@
 # Posetrix - a simple application for practicing gesture drawing
-[![Deploy Posetrix](https://github.com/zhemchugoff/Posetrix/actions/workflows/deploy-posetrix.yml/badge.svg?branch=main)](https://github.com/zhemchugoff/Posetrix/actions/workflows/deploy-posetrix.yml)
+[![Deploy Posetrix](https://github.com/zhemchugoff/Posetrix/actions/workflows/deploy-posetrix.yml/badge.svg)](https://github.com/zhemchugoff/Posetrix/actions/workflows/deploy-posetrix.yml)
 
 ## Overview
 With Posetrix you can add your own reference images with desired time intervals. I started this project to practice C# and WPF framework and hope that someone will find it useful.
