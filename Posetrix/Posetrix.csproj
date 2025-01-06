@@ -8,8 +8,7 @@
 		<UseWPF>true</UseWPF>
 		<NoWarn>$(NoWarn);WPF0001</NoWarn>
 		<ApplicationIcon>favicon.ico</ApplicationIcon>
-		<!-- For new MVVM toolkit properties-->
-		<!--<LangVersion>preview</LangVersion>-->
+		<LangVersion>preview</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

@@ -1,41 +1,52 @@
 name: "Deploy Posetrix"
 
 on:
-  # push:
-  #   tags:
-  #     - 'v*'   # Trigger on semantic version tags
-  # release:
-  #   types:
-  #     - created  # Trigger on new releases
-    workflow_dispatch:
+  push:
+     tags:
+        - "v*.*.*"
+           
 env:
-    PROJECT_PATH: Posetrix/Posetrix.csproj
-jobs:
-    build:
-        runs-on: windows-latest
-
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v4
-            
-            - name: Set up NET
-              uses: actions/setup-dotnet@v4
-              with:
-                dotnet-version: '9.0.x'
-
-            - name: Restore dependencies
-              run: dotnet restore ${{ PROJECT_PATH }}
-
-            - name: Build project
-              run: dotnet build ${{ PROJECT_PATH }} -c Release -o ./output
-
-            - name: Publish project
-              run: dotnet publish ${{ PROJECT_PATH }} -c Release --self-contained -r win-x64 -p:PublishSingleFile=true
-
-            - name: Upload artifact
-              uses: actions/upload-artifact@v4
-              with:
-                name: Posetrix-SelfContained
-                path: ./output
-
+   PROJECT_PATH: Posetrix/Posetrix.csproj
     
+jobs:
+  deploy:
+     runs-on: windows-latest
+     permissions:
+        contents: write
+     steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+     
+        - name: Setup .NET 
+          uses: actions/setup-dotnet@v4
+          with: 
+            dotnet-version: 9.0.x
+
+        - name: Restore dependencies
+          run: dotnet restore ${{ env.PROJECT_PATH }}
+  
+        - name: Build project
+          run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
+  
+        - name: Publish self-contained
+          run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --self-contained -r win-x64 -p:PublishSingleFile=true -o publish-output-self-contained
+
+        - name: Publish framework-dependent
+          run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --self-contained false -r win-x64 -p:PublishSingleFile=true -o publish-output-framework-dependent
+
+           # Archive published files
+        - name: Create self-contained zip
+          run: |
+            mkdir artifacts
+            Compress-Archive -Path publish-output-self-contained\* -DestinationPath artifacts\Posetrix-${{ github.ref_name }}-self-contained.zip
+
+        - name: Create framework-dependent zip
+          run: Compress-Archive -Path publish-output-framework-dependent\* -DestinationPath artifacts\Posetrix-${{ github.ref_name }}-NET-dependent.zip
+  
+        - name: Release
+          uses: softprops/action-gh-release@v2
+          if: startsWith(github.ref, 'refs/tags/')
+          with:
+            files: |
+                artifacts/Posetrix-${{ github.ref_name }}-self-contained.zip
+                artifacts/Posetrix-${{ github.ref_name }}-NET-dependent.zip
