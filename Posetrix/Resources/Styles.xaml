@@ -126,4 +126,9 @@
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Bottom" />
     </Style>
+    <!--  Session statistics texbox.  -->
+    <Style x:Key="SessionStatistics" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{DynamicResource SegoeUi}" />
+        <Setter Property="FontSize" Value="20" />
+    </Style>
 </ResourceDictionary>

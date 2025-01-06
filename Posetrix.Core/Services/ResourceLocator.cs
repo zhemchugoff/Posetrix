@@ -7,11 +7,9 @@ public static class ResourceLocator
     private const string SoundPath = "pack://application:,,,/Assets/Sounds/";
 
     // Placeholders.
-    public static string ErrorImage => $"{PlaceholderPath}undraw_fixing_bugs_w7gi.png";
-    public static string ErrorImage1 => $"{PlaceholderPath}undraw_snap-the-moment_96zx.png";
-    public static string Congratulations => $"{PlaceholderPath}undraw_winners_re_wr1l.png";
-    public static string CelebrationImage => $"{PlaceholderPath}undraw_happy_music_g6wc.png";
-    public static string CelebrationImage1 => $"{PlaceholderPath}jason-leung-Xaanw0s0pMk-unsplash.jpg";
+    public static string WrongPathOrImageData => $"{PlaceholderPath}undraw_fixing-bugs_13mt.png";
+    public static string Nullmage => $"{PlaceholderPath}undraw_bug-fixing_sgk7.png";
+    public static string CelebrationImage => $"{PlaceholderPath}undraw_progress-data_gvcq.png";
     public static string DefaultPlaceholder => $"{PlaceholderPath}undraw_coffee-time_98vi.png"; // For MultiValueConverter.
 
     // Sounds.

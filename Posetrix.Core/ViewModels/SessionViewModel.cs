@@ -39,6 +39,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     [ObservableProperty] public partial bool IsTimeVisible { get; set; }
     [ObservableProperty] public partial bool IsSessionActive { get; set; } = true;
     [ObservableProperty] public partial bool IsEndOfCollection { get; set; }
+    [ObservableProperty] public partial bool IsSessionResultsVisible { get; private set; } = false;
 
     // Commands conditions.
     public bool CanSelectNextImage => IsSessionActive && CurrentImageIndex < SessionCollectionCount && SessionCollectionCount > 0;
@@ -60,6 +61,8 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     public string ImageWidthInfo => $"Width: {ImageWidth}";
     public string ImageHeightInfo => $"Height: {ImageHeight}";
     public string ImagePathInfo => $"Path: {CurrentImage}";
+    public string SessionResultsImagesCompleted => $"Images completed: {CompletedImagesCount}";
+    [ObservableProperty ]public partial string TotalPracticeTime { get; set; } = "Total practice time: 00:00:00";
 
     // Timer.
     private readonly TimerStore _timerStore;
@@ -69,8 +72,9 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     // Session information topbar.
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(SessionInfo))]
-    public partial int CompletedImagesCounter { get; set; }
-    public string SessionInfo => $"{CurrentImageIndex} / {CompletedImagesCounter} / {SessionCollectionCount}";
+    [NotifyPropertyChangedFor(nameof(SessionResultsImagesCompleted))]
+    public partial int CompletedImagesCount { get; set; }
+    public string SessionInfo => $"{CurrentImageIndex} / {CompletedImagesCount} / {SessionCollectionCount}";
     [ObservableProperty] public partial string FormattedTime { get; set; } = "00:00:00";
 
     public int ImageResolution { get; }
@@ -214,7 +218,10 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
         }
 
         CurrentImage = ResourceLocator.CelebrationImage;
+        TotalPracticeTime = $"Total practice time: {_timerStore.GetTotalPracticeTime():hh\\:mm\\:ss}";
+        IsSessionResultsVisible = true;
         IsSessionActive = false;
+
     }
 
     /// <summary>
@@ -311,7 +318,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
 
     private void CompletedImages_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
-        CompletedImagesCounter = _completedImages.Count;
+        CompletedImagesCount = _completedImages.Count;
     }
     public void SetImageDimensions(double width, double height)
     {

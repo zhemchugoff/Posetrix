@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.Diagnostics;
 using System.Timers;
 using Timer = System.Timers.Timer;
 
@@ -8,14 +9,15 @@ public partial class TimerStore : ObservableObject
 {
     private readonly Timer _timer;
     private TimeSpan _timeElapsed;
+    private TimeSpan _timeElapsedSum = TimeSpan.Zero;
 
     public event Action<TimeSpan>? TimeUpdated;
     public event Action? CountdownFinished;
 
     private readonly Lock _timerLock = new(); // To ensure thread safety.
 
-    [ObservableProperty]
-    public partial bool IsTimerPaused { get; private set; }
+    [ObservableProperty] public partial bool IsTimerPaused { get; private set; }
+    //[ObservableProperty] public TimeSpan TimeElapsedSum { get; private set; } = TimeSpan.Zero;
 
     public TimerStore()
     {
@@ -44,6 +46,7 @@ public partial class TimerStore : ObservableObject
     {
         lock (_timerLock)
         {
+            _timeElapsedSum += duration - _timeElapsed;
             _timer.Stop();
             _timeElapsed = duration;
             IsTimerPaused = false;
@@ -93,6 +96,8 @@ public partial class TimerStore : ObservableObject
             }
         }
     }
+
+    public TimeSpan GetTotalPracticeTime() => _timeElapsedSum;
     public void Dispose()
     {
         _timer.Dispose();

@@ -133,6 +133,7 @@
             Background="Transparent"
             MouseEnter="SessionWindow_MouseEnter"
             MouseLeave="SessionWindow_MouseLeave">
+            <!--  Session image.  -->
             <Image
                 x:Name="SessionImage"
                 d:Source="pack://application:,,,/Assets/Images/undraw_coffee-time_98vi.png"
@@ -150,6 +151,24 @@
                     <ScaleTransform x:Name="MirrorTransform" ScaleX="{Binding IsMirroredX, Converter={StaticResource ScaleConverter}}" ScaleY="{Binding IsMirroredY, Converter={StaticResource ScaleConverter}}" />
                 </Image.RenderTransform>
             </Image>
+            <Border
+                Padding="24"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                d:Visibility="Visible"
+                Background="{DynamicResource SurfaceStrokeColorFlyoutBrush}"
+                CornerRadius="{DynamicResource ControlCornerRadius}"
+                Visibility="{Binding IsSessionResultsVisible, Converter={StaticResource BoolToVisibility}}">
+                <StackPanel>
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        Style="{StaticResource TitleTextBlockStyle}"
+                        Text="Statistics" />
+                    <TextBlock Style="{StaticResource SessionStatistics}" Text="{Binding SessionResultsImagesCompleted}" />
+                    <TextBlock Style="{StaticResource SessionStatistics}" Text="{Binding TotalPracticeTime}" />
+                </StackPanel>
+            </Border>
+            <!--  Image info  -->
             <StackPanel
                 HorizontalAlignment="Left"
                 VerticalAlignment="Bottom"
@@ -168,6 +187,7 @@
                     Style="{StaticResource ImageInfo}"
                     Text="{Binding ImagePathInfo}" />
             </StackPanel>
+            <!--  Control buttons.  -->
             <Border
                 x:Name="SessionBorder"
                 d:Visibility="Visible"

@@ -41,8 +41,8 @@ public partial class MainViewModel : BaseViewModel
     [NotifyDataErrorInfo]
     [Range(0, int.MaxValue, ErrorMessage = "Enter a correct number")]
     public partial int? SessionImageCount { get; set; } = 0;
-    [ObservableProperty] public partial bool IsShuffleEnabled { get; set; } = true;
-    [ObservableProperty] public partial bool IsEndlessModeEnabled { get; set; }
+    [ObservableProperty] public partial bool IsShuffleEnabled { get; set; } = false;
+    [ObservableProperty] public partial bool IsEndlessModeEnabled { get; set; } = false;
 
     public bool CanStartSession => FolderCount > 0 && SelectedViewModel.CanStart;
 

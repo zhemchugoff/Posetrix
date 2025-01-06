@@ -1,7 +1,6 @@
 ﻿using MetadataExtractor;
 using MetadataExtractor.Formats.Exif;
 using Posetrix.Core.Services;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Windows.Data;
@@ -24,29 +23,30 @@ public class BitmapImageLoader : IMultiValueConverter, IDisposable
 
     public object? Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
+        // Get image quality from settings.
         if (values[1] is int resolution)
         {
             _imageResolution = resolution;
         }
 
+        // Get grayscale setting from MainViewModel.
         if (values[2] is bool isGreyScale)
         {
             _isGreyScale = isGreyScale;
         }
 
+        // Check image path for placeholder images
         if (values[0] is string imagePath && !string.IsNullOrEmpty(imagePath))
         {
             if (imagePath.StartsWith("pack://"))
             {
-                Debug.WriteLine($"Placeholder loaded 1: {values[0]}");
                 return LoadPlaceholder(imagePath);
             }
 
-            return LoadImage(imagePath) ?? LoadPlaceholder(ResourceLocator.ErrorImage1);
+            return LoadImage(imagePath) ?? LoadPlaceholder(ResourceLocator.Nullmage);
         }
 
-        Debug.WriteLine($"Placeholder loaded 2: {values[0]}");
-        return LoadPlaceholder(ResourceLocator.ErrorImage);
+        return LoadPlaceholder(ResourceLocator.WrongPathOrImageData);
     }
 
     private BitmapImage? LoadPlaceholder(string filePath)
@@ -60,7 +60,7 @@ public class BitmapImageLoader : IMultiValueConverter, IDisposable
             _bitmapImage.DecodePixelWidth = _imageResolution;
         }
 
-        _bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+        _bitmapImage.CacheOption = BitmapCacheOption.OnDemand;
         _bitmapImage.EndInit();
         _bitmapImage.Freeze();
         return _bitmapImage;
@@ -82,13 +82,14 @@ public class BitmapImageLoader : IMultiValueConverter, IDisposable
                 _bitmapImage.DecodePixelWidth = _imageResolution; // Adjust for optimization.
             }
 
-            // Caches the entire image into memory at load time.
-            // All requests for image data are filled from the memory store
-            _bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            // Creates a memory store for requested data only.
+            // The first request loads the image directly; subsequent requests are filled from the cache.
+            _bitmapImage.CacheOption = BitmapCacheOption.OnDemand;
 
             _bitmapImage.EndInit(); // Indicates that the initialization process for the element is complete.
             _bitmapImage.Freeze(); // Makes the current object unmodifiable and sets its IsFrozen property to true.
 
+            // Convert the image to grayscale if the setting is enabled.
             if (_isGreyScale)
             {
                 _greyscaleBitmap = new();
@@ -99,6 +100,7 @@ public class BitmapImageLoader : IMultiValueConverter, IDisposable
                 _greyscaleBitmap.Freeze();
                 return _greyscaleBitmap;
             }
+
             return _bitmapImage;
         }
         catch (Exception)
@@ -107,6 +109,11 @@ public class BitmapImageLoader : IMultiValueConverter, IDisposable
         }
     }
 
+    /// <summary>
+    /// Corrects the image rotation based on the EXIF orientation tag.
+    /// </summary>
+    /// <param name="bitmapImage"></param>
+    /// <param name="orientation"></param>
     private static void CorrectImageRotation(BitmapImage bitmapImage, int orientation)
     {
         bitmapImage.Rotation = orientation switch
@@ -123,6 +130,12 @@ public class BitmapImageLoader : IMultiValueConverter, IDisposable
         };
     }
 
+    /// <summary>
+    /// Gets the image orientation from the EXIF metadata.
+    /// </summary>
+    /// <param name="imagePath"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
     private static int GetImageOrientation(object imagePath)
     {
         IReadOnlyList<MetadataExtractor.Directory> directories;
