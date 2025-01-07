@@ -17,6 +17,5 @@
                 <ResourceDictionary Source="pack://application:,,,/Resources/DataTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-        <!--  Global empty error template  -->
     </Application.Resources>
 </Application>

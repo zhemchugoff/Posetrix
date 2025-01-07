@@ -95,7 +95,7 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     private void OpenSettings()
     {
-        _windowManager.ShowWindow(_viewModelLocator.SettingsViewModel);
+        _windowManager.ShowDialog(_viewModelLocator.SettingsViewModel);
     }
 
     [RelayCommand]

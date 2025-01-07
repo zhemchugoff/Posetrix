@@ -9,9 +9,11 @@
 		<NoWarn>$(NoWarn);WPF0001</NoWarn>
 		<ApplicationIcon>favicon.ico</ApplicationIcon>
 		<LangVersion>preview</LangVersion>
+		<FileVersion>0.3.0</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Assets\Icons\favicon.ico" />
 	  <None Remove="Assets\Images\undraw_bug-fixing_sgk7.png" />
 	  <None Remove="Assets\Images\undraw_coffee-time_98vi.png" />
 	  <None Remove="Assets\Images\undraw_fixing-bugs_13mt.png" />
@@ -63,6 +65,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Resource Include="Assets\Icons\favicon.ico">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </Resource>
 	  <Resource Include="Assets\Images\undraw_bug-fixing_sgk7.png">
 	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	  </Resource>
@@ -80,18 +85,6 @@
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</Resource>
 		<Resource Include="Assets\Fonts\SegoeFluentIcons.ttf">
-			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</Resource>
-		<Resource Include="Assets\Icons\appicon-64.png">
-		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</Resource>
-		<Resource Include="Assets\Icons\avalonia-logo.ico">
-			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</Resource>
-		<Resource Include="Assets\Icons\favicon.ico">
-		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</Resource>
-		<Resource Include="Assets\Icons\github-mark.png">
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</Resource>
 		<Resource Include="Assets\Sounds\jenninexus-countdown.ogg">

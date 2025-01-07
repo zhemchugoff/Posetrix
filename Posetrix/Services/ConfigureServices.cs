@@ -23,5 +23,6 @@ public static class ConfigureServices
         collection.AddTransient<IThemeService, ThemeService>();
         collection.AddTransient<ISoundService, SoundService>();
         collection.AddTransient<IImageResolutionService, ImageResolutionService>();
+        collection.AddTransient<IRuntimeInformation, RuntimeInformationService>();
     }
 }

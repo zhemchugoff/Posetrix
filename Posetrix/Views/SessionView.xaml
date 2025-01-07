@@ -164,8 +164,14 @@
                         HorizontalAlignment="Center"
                         Style="{StaticResource TitleTextBlockStyle}"
                         Text="Statistics" />
-                    <TextBlock Style="{StaticResource SessionStatistics}" Text="{Binding SessionResultsImagesCompleted}" />
-                    <TextBlock Style="{StaticResource SessionStatistics}" Text="{Binding TotalPracticeTime}" />
+                    <TextBlock
+                        d:Text="Images completed: 11"
+                        Style="{StaticResource SessionStatistics}"
+                        Text="{Binding SessionResultsImagesCompleted}" />
+                    <TextBlock
+                        d:Text="Total practice time: 00:00:00"
+                        Style="{StaticResource SessionStatistics}"
+                        Text="{Binding TotalPracticeTime}" />
                 </StackPanel>
             </Border>
             <!--  Image info  -->
