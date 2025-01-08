@@ -20,9 +20,8 @@ public partial class SettingsViewModel : BaseViewModel, ICustomWindow
     public partial string SelectedSound { get; set; }
 
     public bool IsSoundEnabled => SelectedSound != "Off";
-    public string AppVersion { get; private set; } = "";
     public string RuntimeInformation { get; private set; } = "";
-    public string SourceCode => "Source code: https://github.com/zhemchugoff/Posetrix";
+    public static string SourceLink => "Source code: https://github.com/zhemchugoff/Posetrix";
 
 
     public string Theme
@@ -67,7 +66,6 @@ public partial class SettingsViewModel : BaseViewModel, ICustomWindow
         SelectedSound = Sound;
         SelectedImageResolution = ImageResolution;
 
-        AppVersion = serviceLocator.RuntimeInformationService.AppVersion;
         RuntimeInformation = serviceLocator.RuntimeInformationService.NetVersion;
     }
 

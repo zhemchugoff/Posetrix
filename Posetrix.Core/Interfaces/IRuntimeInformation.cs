@@ -2,6 +2,5 @@
 
 public interface IRuntimeInformation
 {
-    string AppVersion { get; }
     string NetVersion { get;}
 }

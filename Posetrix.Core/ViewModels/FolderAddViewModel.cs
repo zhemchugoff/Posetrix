@@ -4,6 +4,7 @@ using Posetrix.Core.Factories;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Posetrix.Core.ViewModels;
 
@@ -35,11 +36,13 @@ public partial class FolderAddViewModel : BaseViewModel, ICustomWindow
     [RelayCommand]
     private async Task OpenFolder()
     {
-        var folderPath = await _folderBrowserService.SelectFolderAsync();
-
-        if (!string.IsNullOrEmpty(folderPath))
+        var folderPaths = await _folderBrowserService.SelectFolderAsync();
+        
+        foreach (var folder in from folder in folderPaths
+                               where !string.IsNullOrEmpty(folder)
+                               select folder)
         {
-            GetFolder(folderPath);
+            GetFolder(folder);
         }
     }
 

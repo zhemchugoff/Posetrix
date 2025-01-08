@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using Posetrix.Core.Interfaces;
+using System.Diagnostics;
 
 namespace Posetrix.Services;
 
@@ -8,20 +9,20 @@ namespace Posetrix.Services;
 /// </summary>
 public class FolderBrowserService : IFolderBrowserServiceAsync
 {
-    public Task<string?> SelectFolderAsync()
+    public Task<string[]?> SelectFolderAsync()
     {
         var folderDialog = new OpenFolderDialog
         {
             Title = "Select Folder",
+            Multiselect= true,
             InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal)
         };
 
         if (folderDialog.ShowDialog() == true)
         {
-            var folderFullPath = folderDialog.FolderName;
-            return Task.FromResult<string?>(folderFullPath);
+            return Task.FromResult<string[]?>(folderDialog.FolderNames);
         }
 
-        return Task.FromResult<string?>(null);
+        return Task.FromResult<string[]?>(null);
     }
 }

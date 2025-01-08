@@ -2,5 +2,5 @@
 
 public interface IFolderBrowserServiceAsync
 {
-    Task<string?> SelectFolderAsync();
+    Task<string[]?> SelectFolderAsync();
 }

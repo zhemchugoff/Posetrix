@@ -13,6 +13,7 @@
     d:DataContext="{d:DesignInstance viewmodels:SessionViewModel}"
     Icon="{StaticResource AppIcon}"
     Topmost="{Binding IsAlwaysOnTopOn}"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Window.InputBindings>
         <KeyBinding Key="Space" Command="{Binding PauseSessionCommand}" />
@@ -194,81 +195,81 @@
                     Text="{Binding ImagePathInfo}" />
             </StackPanel>
             <!--  Control buttons.  -->
-            <Border
-                x:Name="SessionBorder"
+            <StackPanel
+                x:Name="SessionStackPanel"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
                 d:Visibility="Visible"
-                Style="{StaticResource SessionBorderWithButtons}"
+                Orientation="Horizontal"
                 Visibility="Collapsed">
-                <StackPanel Orientation="Horizontal">
-                    <Button
-                        Command="{Binding SelectPreviousImageCommand}"
-                        Content="&#xE76B;"
-                        IsDefault="False"
-                        Style="{StaticResource ControlButton}">
-                        <Button.ToolTip>
-                            <ToolTip>
-                                <TextBlock Style="{StaticResource InfoToolTip}">
-                                    Previous image<LineBreak />
-                                    Keys: Left arrow or A</TextBlock>
-                            </ToolTip>
-                        </Button.ToolTip>
-                    </Button>
-                    <ToggleButton
-                        Margin="8,0,8,0"
-                        Command="{Binding PauseSessionCommand}"
-                        Content="&#xE769;"
-                        IsChecked="{Binding IsTimerPaused, Mode=OneWay}"
-                        Style="{StaticResource ControlToggleButton}">
-                        <ToggleButton.ToolTip>
-                            <ToolTip>
-                                <TextBlock Style="{StaticResource InfoToolTip}">
-                                    Pause session<LineBreak />
-                                    Keys: Spacebar</TextBlock>
-                            </ToolTip>
-                        </ToggleButton.ToolTip>
-                    </ToggleButton>
-                    <Button
-                        Command="{Binding StopSessionCommand}"
-                        Content="&#xE71A;"
-                        IsDefault="False"
-                        Style="{StaticResource ControlButton}">
-                        <Button.ToolTip>
-                            <ToolTip>
-                                <TextBlock Style="{StaticResource InfoToolTip}">
-                                    Stop session<LineBreak />
-                                    Keys: S</TextBlock>
-                            </ToolTip>
-                        </Button.ToolTip>
-                    </Button>
-                    <Button
-                        Margin="8,0,8,0"
-                        Command="{Binding SelectNextImageCommand}"
-                        Content="&#xE76C;"
-                        IsDefault="False"
-                        Style="{StaticResource ControlButton}">
-                        <Button.ToolTip>
-                            <ToolTip>
-                                <TextBlock Style="{StaticResource InfoToolTip}">
-                                    Next image<LineBreak />
-                                    Keys: Right arrow or D</TextBlock>
-                            </ToolTip>
-                        </Button.ToolTip>
-                    </Button>
-                    <Button
-                        Command="{Binding SkipImageCommand}"
-                        Content="&#xE893;"
-                        IsDefault="False"
-                        Style="{StaticResource ControlButton}">
-                        <Button.ToolTip>
-                            <ToolTip>
-                                <TextBlock Style="{StaticResource InfoToolTip}">
-                                    Skip image<LineBreak />
-                                    Keys: Up arrow or W</TextBlock>
-                            </ToolTip>
-                        </Button.ToolTip>
-                    </Button>
-                </StackPanel>
-            </Border>
+                <Button
+                    Command="{Binding SelectPreviousImageCommand}"
+                    Content="&#xE76B;"
+                    IsDefault="False"
+                    Style="{StaticResource ControlButton}">
+                    <Button.ToolTip>
+                        <ToolTip>
+                            <TextBlock Style="{StaticResource InfoToolTip}">
+                                Previous image<LineBreak />
+                                Keys: Left arrow or A</TextBlock>
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+                <ToggleButton
+                    Margin="8,0,8,0"
+                    Command="{Binding PauseSessionCommand}"
+                    Content="&#xE769;"
+                    IsChecked="{Binding IsTimerPaused, Mode=OneWay}"
+                    Style="{StaticResource ControlToggleButton}">
+                    <ToggleButton.ToolTip>
+                        <ToolTip>
+                            <TextBlock Style="{StaticResource InfoToolTip}">
+                                Pause session<LineBreak />
+                                Keys: Spacebar</TextBlock>
+                        </ToolTip>
+                    </ToggleButton.ToolTip>
+                </ToggleButton>
+                <Button
+                    Command="{Binding StopSessionCommand}"
+                    Content="&#xE71A;"
+                    IsDefault="False"
+                    Style="{StaticResource ControlButton}">
+                    <Button.ToolTip>
+                        <ToolTip>
+                            <TextBlock Style="{StaticResource InfoToolTip}">
+                                Stop session<LineBreak />
+                                Keys: S</TextBlock>
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+                <Button
+                    Margin="8,0,8,0"
+                    Command="{Binding SelectNextImageCommand}"
+                    Content="&#xE76C;"
+                    IsDefault="False"
+                    Style="{StaticResource ControlButton}">
+                    <Button.ToolTip>
+                        <ToolTip>
+                            <TextBlock Style="{StaticResource InfoToolTip}">
+                                Next image<LineBreak />
+                                Keys: Right arrow or D</TextBlock>
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+                <Button
+                    Command="{Binding SkipImageCommand}"
+                    Content="&#xE893;"
+                    IsDefault="False"
+                    Style="{StaticResource ControlButton}">
+                    <Button.ToolTip>
+                        <ToolTip>
+                            <TextBlock Style="{StaticResource InfoToolTip}">
+                                Skip image<LineBreak />
+                                Keys: Up arrow or W</TextBlock>
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

@@ -101,7 +101,6 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     private void AddFolders()
     {
-        //_windowManager.ShowWindow(_viewModelLocator.FolderAddViewModel);
         _windowManager.ShowDialog(_viewModelLocator.FolderAddViewModel);
     }
 

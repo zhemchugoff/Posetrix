@@ -12,6 +12,7 @@
     d:DataContext="{d:DesignInstance Type=viewmodels:SettingsViewModel}"
     Icon="{StaticResource AppIcon}"
     ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Grid Margin="12" ShowGridLines="False">
         <Grid.RowDefinitions>
@@ -121,12 +122,12 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Style="{StaticResource BodyTextBlockStyle}"
-            Text="{Binding AppVersion}" />
+            Text="{Binding RuntimeInformation}" />
         <TextBlock
             Grid.Row="8"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Style="{StaticResource BodyTextBlockStyle}"
-            Text="{Binding RuntimeInformation}" />
+            Text="{Binding SourceLink}" />
     </Grid>
 </Window>
