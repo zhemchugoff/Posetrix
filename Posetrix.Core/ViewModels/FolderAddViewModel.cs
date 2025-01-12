@@ -4,7 +4,6 @@ using Posetrix.Core.Factories;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace Posetrix.Core.ViewModels;
 
@@ -22,13 +21,11 @@ public partial class FolderAddViewModel : BaseViewModel, ICustomWindow
 
     public bool CanDeleteFolder => SelectedFolder is not null;
 
-    public FolderAddViewModel(ViewModelLocator viewModelLocator, ServiceLocator serviceLocator)
+    public FolderAddViewModel(ViewModelLocator viewModelLocator, IFolderBrowserServiceAsync folderBrowserServiceAsync, IExtensionsService extensionsService)
     {
-        // Services.
-        _folderBrowserService = serviceLocator.FolderBrowserService;
-        _extensionsService = serviceLocator.ExtensionsService;
+        _folderBrowserService = folderBrowserServiceAsync;
+        _extensionsService = extensionsService;
 
-        // MainViewModel collection.
         var mainViewModel = viewModelLocator.MainViewModel;
         Folders = mainViewModel.ReferenceFolders;
     }

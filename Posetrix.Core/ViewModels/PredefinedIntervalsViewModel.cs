@@ -3,7 +3,7 @@ using Posetrix.Core.Interfaces;
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class PredefinedIntervalsViewModel : ObservableValidator, IDynamicViewModel
+public partial class PredefinedIntervalsViewModel : ObservableObject, IDynamicViewModel
 {
     public string DisplayName => "Predefined intervals";
 
@@ -22,7 +22,7 @@ public partial class PredefinedIntervalsViewModel : ObservableValidator, IDynami
             Intervals.Interval6 => 600,
             _ => 0
         };
-    public bool CanStart => !HasErrors;
+    //public bool CanStart => !HasErrors;
 }
 
 public enum Intervals

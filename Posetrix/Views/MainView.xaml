@@ -106,10 +106,9 @@
                     Margin="0,12"
                     DisplayMemberPath="DisplayName"
                     ItemsSource="{Binding DynamicViews}"
-                    SelectedItem="{Binding SelectedViewModel}"
-                    Validation.ErrorTemplate="{x:Null}" />
+                    SelectedItem="{Binding SelectedViewModel}"/>
                 <Grid Grid.Row="2">
-                    <ContentControl Content="{Binding SelectedViewModel}" Validation.ErrorTemplate="{x:Null}" />
+                    <ContentControl Content="{Binding SelectedViewModel}"/>
                 </Grid>
             </Grid>
         </Border>
@@ -126,9 +125,7 @@
                         Text="&#xE946;">
                         <TextBlock.ToolTip>
                             <ToolTip>
-                                <TextBlock
-                                    FontFamily="{StaticResource SegoeUi}"
-                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                <TextBlock Style="{StaticResource InfoToolTip}"
                                     Text="0: Entire collection" />
                             </ToolTip>
                         </TextBlock.ToolTip>
@@ -140,7 +137,7 @@
                     HorizontalAlignment="Stretch"
                     PreviewTextInput="ImageCount_PreviewTextInput"
                     Style="{StaticResource TextBoxValidation}"
-                    Text="{Binding SessionImageCount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ValidatesOnDataErrors=True, FallbackValue=0, TargetNullValue=''}" />
+                    Text="{Binding SessionImageCount, FallbackValue=0, TargetNullValue=''}" />
             </UniformGrid>
         </Border>
 
@@ -170,9 +167,7 @@
                         Text="&#xE946;">
                         <TextBlock.ToolTip>
                             <ToolTip>
-                                <TextBlock
-                                    FontFamily="{StaticResource SegoeUi}"
-                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                <TextBlock Style="{StaticResource InfoToolTip}"
                                     Text="A session will start over when the last image is done" />
                             </ToolTip>
                         </TextBlock.ToolTip>

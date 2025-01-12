@@ -22,7 +22,6 @@ public partial class App : Application
 
         services.AddSingleton<ViewModelLocator>();
         services.AddSingleton<WindowMapper>();
-        services.AddSingleton<ServiceLocator>();
         services.AddSingleton<IWindowManager, WindowManager>();
 
         ServiceProvider = services.BuildServiceProvider();

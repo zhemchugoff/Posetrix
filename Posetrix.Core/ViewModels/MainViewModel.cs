@@ -38,29 +38,26 @@ public partial class MainViewModel : BaseViewModel
 
     // Number of images, defined by a user. Default is 0: entire collecton.
     [ObservableProperty]
-    [NotifyDataErrorInfo]
-    [Range(0, int.MaxValue, ErrorMessage = "Enter a correct number")]
     public partial int? SessionImageCount { get; set; } = 0;
     [ObservableProperty] public partial bool IsShuffleEnabled { get; set; } = false;
     [ObservableProperty] public partial bool IsEndlessModeEnabled { get; set; } = false;
 
-    public bool CanStartSession => FolderCount > 0 && SelectedViewModel.CanStart;
+    //public bool CanStartSession => FolderCount > 0 && SelectedViewModel.CanStart;
+    public bool CanStartSession => FolderCount > 0;
 
-    public MainViewModel(IWindowManager windowManager, ViewModelLocator viewModelLocator, ServiceLocator serviceLocator)
+    public MainViewModel(IWindowManager windowManager, ViewModelLocator viewModelLocator, IUserSettings userSettings, IThemeService themeService)
     {
         _windowManager = windowManager;
         _viewModelLocator = viewModelLocator;
 
         // Set app theme on startup.
-        var userSettings = serviceLocator.UserSettings;
-        var themeService = serviceLocator.ThemeService;
         themeService.SetTheme(userSettings.Theme);
 
         var customIntervalViewModel = viewModelLocator.CustomIntervalViewModel;
         var predefinedIntervalViewModel = viewModelLocator.PredefinedIntervalsViewModel;
 
-        predefinedIntervalViewModel.ErrorsChanged += (_, _) => StartSessionCommand.NotifyCanExecuteChanged();
-        customIntervalViewModel.ErrorsChanged += (_, _) => StartSessionCommand.NotifyCanExecuteChanged();
+        //predefinedIntervalViewModel.ErrorsChanged += (_, _) => StartSessionCommand.NotifyCanExecuteChanged();
+        //customIntervalViewModel.ErrorsChanged += (_, _) => StartSessionCommand.NotifyCanExecuteChanged();
 
         ReferenceFolders.CollectionChanged += ReferenceFolders_CollectionChanged;
 

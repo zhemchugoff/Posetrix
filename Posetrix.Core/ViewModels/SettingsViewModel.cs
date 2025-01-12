@@ -56,17 +56,17 @@ public partial class SettingsViewModel : BaseViewModel, ICustomWindow
     public List<string> Sounds { get; } = ["Off", "Classic Countdown", "Beep Countdown", "Three Two One Countdown"];
     public List<string> Resolutions { get; } = ["Default", "Low", "Medium", "High"];
 
-    public SettingsViewModel(ServiceLocator serviceLocator)
+    public SettingsViewModel(IUserSettings userSettings, IThemeService themeService, ISoundService soundService, IRuntimeInformation runtimeInformation)
     {
-        _userSettings = serviceLocator.UserSettings;
-        _themeService = serviceLocator.ThemeService;
-        _soundService = serviceLocator.SoundService;
+        _userSettings = userSettings;
+        _themeService = themeService;
+        _soundService = soundService;
 
         SelectedTheme = Theme;
         SelectedSound = Sound;
         SelectedImageResolution = ImageResolution;
 
-        RuntimeInformation = serviceLocator.RuntimeInformationService.NetVersion;
+        RuntimeInformation = runtimeInformation.NetVersion;
     }
 
     partial void OnSelectedThemeChanged(string value)

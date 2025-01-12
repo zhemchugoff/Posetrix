@@ -7,7 +7,7 @@
         <Setter Property="Height" Value="28" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="FontFamily" Value="{DynamicResource SegoeUiIcons}" />
-        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontSize" Value="16" />
     </Style>
     <!--  Session window.  -->
     <!--  Control buttons.  -->

@@ -62,7 +62,7 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
     public string ImageHeightInfo => $"Height: {ImageHeight}";
     public string ImagePathInfo => $"Path: {CurrentImage}";
     public string SessionResultsImagesCompleted => $"Images completed: {CompletedImagesCount}";
-    [ObservableProperty ]public partial string TotalPracticeTime { get; set; } = "Total practice time: 00:00:00";
+    [ObservableProperty] public partial string TotalPracticeTime { get; set; } = "Total practice time: 00:00:00";
 
     // Timer.
     private readonly TimerStore _timerStore;
@@ -79,16 +79,15 @@ public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposabl
 
     public int ImageResolution { get; }
 
-    public SessionViewModel(ViewModelLocator viewModelLocator, ServiceLocator serviceLocator)
+    public SessionViewModel(ViewModelLocator viewModelLocator, ISoundService soundService, IUserSettings userSettings, IImageResolutionService imageResolutionService)
     {
         // Viewmodels.
         var mainViewModel = viewModelLocator.MainViewModel;
         var dynamicView = mainViewModel.SelectedViewModel;
 
-        _soundService = serviceLocator.SoundService;
-        _userSettings = serviceLocator.UserSettings;
+        _soundService = soundService;
+        _userSettings = userSettings;
 
-        var imageResolutionService = serviceLocator.ImageResolutionService;
         ImageResolution = imageResolutionService.SetResoluton(_userSettings.ImageResolution);
 
         _IsEndlessModeOn = mainViewModel.IsEndlessModeEnabled;
