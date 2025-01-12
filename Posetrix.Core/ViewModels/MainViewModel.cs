@@ -5,8 +5,6 @@ using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel.DataAnnotations;
-
 
 namespace Posetrix.Core.ViewModels;
 
@@ -19,7 +17,7 @@ public partial class MainViewModel : BaseViewModel
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(StartSessionCommand))]
-    public partial IDynamicViewModel SelectedViewModel { get; set; }
+    public partial DynamicViewModel SelectedViewModel { get; set; }
     public ObservableCollection<ImageFolder> ReferenceFolders { get; } = [];
     public string FoldersInfo => $" Folders: {FolderCount} Images: {ImageCountInfo}";
 
@@ -33,7 +31,7 @@ public partial class MainViewModel : BaseViewModel
     public partial int ImageCountInfo { get; set; } = 0;
 
     // ComboBox.
-    public List<IDynamicViewModel> DynamicViews { get; } = [];
+    public List<DynamicViewModel> DynamicViews { get; } = [];
 
 
     // Number of images, defined by a user. Default is 0: entire collecton.
@@ -42,7 +40,6 @@ public partial class MainViewModel : BaseViewModel
     [ObservableProperty] public partial bool IsShuffleEnabled { get; set; } = false;
     [ObservableProperty] public partial bool IsEndlessModeEnabled { get; set; } = false;
 
-    //public bool CanStartSession => FolderCount > 0 && SelectedViewModel.CanStart;
     public bool CanStartSession => FolderCount > 0;
 
     public MainViewModel(IWindowManager windowManager, ViewModelLocator viewModelLocator, IUserSettings userSettings, IThemeService themeService)
@@ -55,9 +52,6 @@ public partial class MainViewModel : BaseViewModel
 
         var customIntervalViewModel = viewModelLocator.CustomIntervalViewModel;
         var predefinedIntervalViewModel = viewModelLocator.PredefinedIntervalsViewModel;
-
-        //predefinedIntervalViewModel.ErrorsChanged += (_, _) => StartSessionCommand.NotifyCanExecuteChanged();
-        //customIntervalViewModel.ErrorsChanged += (_, _) => StartSessionCommand.NotifyCanExecuteChanged();
 
         ReferenceFolders.CollectionChanged += ReferenceFolders_CollectionChanged;
 

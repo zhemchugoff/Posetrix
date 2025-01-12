@@ -1,11 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Posetrix.Core.Interfaces;
+using Posetrix.Core.Models;
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class CustomIntervalViewModel : ObservableObject, IDynamicViewModel
+public partial class CustomIntervalViewModel : DynamicViewModel
 {
-    public string DisplayName => "Custom interval (in seconds)";
+    public override string DisplayName => "Custom interval (in seconds)";
 
     [ObservableProperty]
     public partial int? Seconds { get; set; } = 0;
@@ -18,5 +18,5 @@ public partial class CustomIntervalViewModel : ObservableObject, IDynamicViewMod
         }
     }
 
-    public int GetSeconds() => Seconds ?? 0;
+    public override int GetSeconds() => Seconds ?? 0;
 }

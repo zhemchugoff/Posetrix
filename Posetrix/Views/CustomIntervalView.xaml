@@ -13,7 +13,6 @@
         <TextBox
             Height="30"
             PreviewTextInput="TextBox_PreviewTextInput"
-            Style="{StaticResource TextBoxValidation}"
             Text="{Binding Seconds, FallbackValue=0, TargetNullValue=''}"
             ToolTipService.InitialShowDelay="100"
             ToolTipService.Placement="MousePoint"

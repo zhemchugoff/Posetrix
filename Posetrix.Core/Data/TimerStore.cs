@@ -17,7 +17,6 @@ public partial class TimerStore : ObservableObject
     private readonly Lock _timerLock = new(); // To ensure thread safety.
 
     [ObservableProperty] public partial bool IsTimerPaused { get; private set; }
-    //[ObservableProperty] public TimeSpan TimeElapsedSum { get; private set; } = TimeSpan.Zero;
 
     public TimerStore()
     {
