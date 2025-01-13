@@ -3,16 +3,15 @@ using CommunityToolkit.Mvvm.Input;
 using Posetrix.Core.Data;
 using Posetrix.Core.Factories;
 using Posetrix.Core.Interfaces;
-using Posetrix.Core.Models;
 using Posetrix.Core.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class SessionViewModel : BaseViewModel, ICustomWindow, IDisposable
+public partial class SessionViewModel : BaseViewModel, IDisposable
 {
-    public string WindowTitle => "Drawing session";
+    public static string WindowTitle => "Drawing session";
 
     private readonly SynchronizationContext _synchronizationContext;
     private readonly ISoundService _soundService;

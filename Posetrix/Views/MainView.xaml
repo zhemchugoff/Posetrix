@@ -10,7 +10,7 @@
     Width="400"
     Height="630"
     d:DataContext="{d:DesignInstance Type=core:MainViewModel}"
-    Icon="{StaticResource AppIcon}"
+    Icon="pack://application:,,,/Assets/Icons/favicon.ico"
     ResizeMode="CanMinimize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">

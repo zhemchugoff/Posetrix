@@ -1,13 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Posetrix.Core.Factories;
 using Posetrix.Core.Interfaces;
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class SettingsViewModel : BaseViewModel, ICustomWindow
+public partial class SettingsViewModel : BaseViewModel
 {
-    public string WindowTitle => "Settings";
+    public static string WindowTitle => "Settings";
     private readonly IUserSettings _userSettings;
     private readonly IThemeService _themeService;
     private readonly ISoundService _soundService;

@@ -7,19 +7,10 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UseWPF>true</UseWPF>
 		<NoWarn>$(NoWarn);WPF0001</NoWarn>
-		<ApplicationIcon>favicon.ico</ApplicationIcon>
+		<ApplicationIcon>posetrix-icon.ico</ApplicationIcon>
 		<LangVersion>preview</LangVersion>
-		<FileVersion>0.3.0</FileVersion>
+		<FileVersion>0.3.1</FileVersion>
 	</PropertyGroup>
-
-	<ItemGroup>
-	  <None Remove="Assets\Icons\favicon.ico" />
-	  <None Remove="Assets\Images\undraw_bug-fixing_sgk7.png" />
-	  <None Remove="Assets\Images\undraw_coffee-time_98vi.png" />
-	  <None Remove="Assets\Images\undraw_fixing-bugs_13mt.png" />
-	  <None Remove="Assets\Images\undraw_progress-data_gvcq.png" />
-	  <None Remove="C:\Users\zhemc\.nuget\packages\naudio.vorbis\1.5.0\contentFiles\any\netstandard2.0\README.md" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="MetadataExtractor" Version="2.8.1" />
@@ -61,7 +52,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Include="favicon.ico" />
+	  <Content Include="posetrix-icon.ico" />
 	</ItemGroup>
 
 	<ItemGroup>

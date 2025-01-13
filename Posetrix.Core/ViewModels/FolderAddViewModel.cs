@@ -3,13 +3,14 @@ using CommunityToolkit.Mvvm.Input;
 using Posetrix.Core.Factories;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
+using Posetrix.Core.Services;
 using System.Collections.ObjectModel;
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class FolderAddViewModel : BaseViewModel, ICustomWindow
+public partial class FolderAddViewModel : BaseViewModel
 {
-    public string WindowTitle => "Add folders";
+    public static string WindowTitle => "Add folders";
 
     private readonly IFolderBrowserServiceAsync _folderBrowserService;
     private readonly IExtensionsService _extensionsService;

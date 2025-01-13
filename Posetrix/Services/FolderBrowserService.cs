@@ -1,6 +1,5 @@
 ﻿using Microsoft.Win32;
 using Posetrix.Core.Interfaces;
-using System.Diagnostics;
 
 namespace Posetrix.Services;
 

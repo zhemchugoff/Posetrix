@@ -1,6 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using Posetrix.Core.Models;
+using System.Collections.ObjectModel;
 
-namespace Posetrix.Core.Models;
+namespace Posetrix.Core.Services;
 
 public static class ImageCollectionHelpers
 {

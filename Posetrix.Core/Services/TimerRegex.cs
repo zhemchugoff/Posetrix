@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Posetrix.Core.Data;
+namespace Posetrix.Core.Services;
 
 /// <summary>
 /// A helper class for timer textbox input.
