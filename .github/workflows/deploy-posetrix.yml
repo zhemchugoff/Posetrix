@@ -6,7 +6,7 @@ on:
         - "v*.*.*"
            
 env:
-   PROJECT_PATH: Posetrix.csproj
+   PROJECT_PATH: Posetrix/Posetrix.csproj
     
 jobs:
   deploy:
