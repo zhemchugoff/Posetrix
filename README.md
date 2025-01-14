@@ -1,5 +1,5 @@
 <div id="posetrix-logo" align="center">
-    <img src="./Images/icon.png" alt="Posetrix Logo" width="100"/>
+    <img src="./Images/icon.svg" alt="Posetrix Logo" width="100"/>
     <h1>Posetrix</h1>
     <h3>A simple application for gesture drawing practice</h3>
   <img src="./Images/screenshot.png" alt="Posetrix Screenshot"/>
