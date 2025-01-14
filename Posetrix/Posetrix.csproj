@@ -7,7 +7,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UseWPF>true</UseWPF>
 		<NoWarn>$(NoWarn);WPF0001</NoWarn>
-		<ApplicationIcon>posetrix-icon.ico</ApplicationIcon>
+		<ApplicationIcon>posetrix.ico</ApplicationIcon>
 		<LangVersion>preview</LangVersion>
 		<FileVersion>0.3.1</FileVersion>
 	</PropertyGroup>
@@ -52,7 +52,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Include="posetrix-icon.ico" />
+	  <Content Include="posetrix.ico" />
 	</ItemGroup>
 
 	<ItemGroup>
