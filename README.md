@@ -1,5 +1,15 @@
-# Posetrix
+<div id="posetrix-logo" align="center">
+    <img src="./Images/icon.png" alt="Posetrix Logo" width="100"/>
+    <h1>Posetrix</h1>
+    <h3>A simple application for gesture drawing practice</h3>
+  <img src="./Images/screenshot.png" alt="Posetrix Screenshot"/>
+</div>
+
+<div id="badges" align="center">
+  
 [![Deploy Posetrix](https://github.com/zhemchugoff/Posetrix/actions/workflows/deploy-posetrix.yml/badge.svg)](https://github.com/zhemchugoff/Posetrix/actions/workflows/deploy-posetrix.yml)
+
+</div>
 
 ## Overview
 With Posetrix, you can add your own reference images and practice drawing them with the time interval you want.
