@@ -22,7 +22,7 @@ public class ImageFolder(string fullFolderPath, string folderName, List<string> 
             return false;
         }
 
-        // Convert the object to a ReferencesFolder object
+        // Convert the object to ReferencesFolder object.
         var comparedFolder = (ImageFolder)compared;
         // If the values of the object variables are equal, the objects are, too.
         return FullFolderPath != null && FullFolderPath.Equals(comparedFolder.FullFolderPath);
