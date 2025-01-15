@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Posetrix.Core.Factories;
+using Posetrix.Core.Enums;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 using Posetrix.Core.Services;
@@ -11,7 +11,6 @@ namespace Posetrix.Core.ViewModels;
 public partial class FolderAddViewModel : BaseViewModel
 {
     public static string WindowTitle => "Add folders";
-
     private readonly IFolderBrowserServiceAsync _folderBrowserService;
     private readonly IExtensionsService _extensionsService;
     public ObservableCollection<ImageFolder> Folders { get; }
@@ -22,12 +21,13 @@ public partial class FolderAddViewModel : BaseViewModel
 
     public bool CanDeleteFolder => SelectedFolder is not null;
 
-    public FolderAddViewModel(ViewModelLocator viewModelLocator, IFolderBrowserServiceAsync folderBrowserServiceAsync, IExtensionsService extensionsService)
+    public FolderAddViewModel(IViewModelFactory viewModelFactory, IFolderBrowserServiceAsync folderBrowserServiceAsync, IExtensionsService extensionsService)
     {
+        ViewModelName = ViewModelNames.FolderAdd;
         _folderBrowserService = folderBrowserServiceAsync;
         _extensionsService = extensionsService;
 
-        var mainViewModel = viewModelLocator.MainViewModel;
+        var mainViewModel = viewModelFactory.GetViewModel(ViewModelNames.Main) as MainViewModel ?? throw new InvalidOperationException("MainViewModel is not available.");
         Folders = mainViewModel.ReferenceFolders;
     }
 
@@ -35,7 +35,7 @@ public partial class FolderAddViewModel : BaseViewModel
     private async Task OpenFolder()
     {
         var folderPaths = await _folderBrowserService.SelectFolderAsync();
-        
+
         foreach (var folder in from folder in folderPaths
                                where !string.IsNullOrEmpty(folder)
                                select folder)
