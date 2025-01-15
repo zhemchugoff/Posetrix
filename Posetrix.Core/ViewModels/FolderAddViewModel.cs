@@ -61,7 +61,7 @@ public partial class FolderAddViewModel : BaseViewModel
         var folderName = directoryInfo.Name;
 
         List<string> references = [];
-        references.GetImageFiles(folderPath, _extensionsService.LoadExtensions());
+        GetImageFiles(references, folderPath, _extensionsService.LoadExtensions());
 
         AddImageFolderToCollection(folderPath, folderName, references);
     }
@@ -77,5 +77,15 @@ public partial class FolderAddViewModel : BaseViewModel
                 Folders.Add(imageFolder);
             }
         }
+    }
+
+    /// <summary>
+    /// Method <c>GetImageFiles</c> populates the list with image files with supported extensions.
+    /// </summary>
+    public static void GetImageFiles(List<string> files, string folderPath, List<string> supportedExtensions)
+    {
+        files.Clear();
+        files.AddRange(Directory.GetFiles(folderPath)
+            .Where(file => supportedExtensions.Contains(Path.GetExtension(file).ToLowerInvariant())));
     }
 }

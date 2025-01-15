@@ -119,11 +119,13 @@ public partial class SessionViewModel : BaseViewModel, IDisposable
 
         // Image collection.
         _completedImages.CollectionChanged += CompletedImages_CollectionChanged;
-        _sessionCollection.PopulateAndConvertObservableColletionToList(mainViewModel.ReferenceFolders, mainViewModel.IsShuffleEnabled, mainViewModel.SessionImageCount);
+
+        ImageCollectionHelpers.PopulateAndConvertObservableColletionToList(_sessionCollection, mainViewModel.ReferenceFolders, mainViewModel.IsShuffleEnabled, mainViewModel.SessionImageCount);
         SessionCollectionCount = _sessionCollection.Count;
 
         CurrentImageIndex = 0;
         CurrentImage = _sessionCollection[CurrentImageIndex];
+
     }
 
     /// <summary>
@@ -281,7 +283,7 @@ public partial class SessionViewModel : BaseViewModel, IDisposable
         {
             if (_IsEndlessModeOn)
             {
-                _sessionCollection.ShuffleCollection(true);
+                ImageCollectionHelpers.ShuffleList(_sessionCollection);
                 _completedImages.Clear();
                 CurrentImageIndex = 0;
             }
