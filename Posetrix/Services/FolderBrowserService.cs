@@ -13,7 +13,7 @@ public class FolderBrowserService : IFolderBrowserServiceAsync
         var folderDialog = new OpenFolderDialog
         {
             Title = "Select Folder",
-            Multiselect= true,
+            Multiselect = true,
             InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal)
         };
 

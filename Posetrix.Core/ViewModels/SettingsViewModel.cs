@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Posetrix.Core.Enums;
 using Posetrix.Core.Interfaces;
 
 namespace Posetrix.Core.ViewModels;
@@ -21,7 +22,6 @@ public partial class SettingsViewModel : BaseViewModel
     public bool IsSoundEnabled => SelectedSound != "Off";
     public string RuntimeInformation { get; private set; } = "";
     public static string SourceLink => "Source code: https://github.com/zhemchugoff/Posetrix";
-
 
     public string Theme
     {
@@ -57,6 +57,7 @@ public partial class SettingsViewModel : BaseViewModel
 
     public SettingsViewModel(IUserSettings userSettings, IThemeService themeService, ISoundService soundService, IRuntimeInformation runtimeInformation)
     {
+        ViewModelName = ViewModelNames.Settings;
         _userSettings = userSettings;
         _themeService = themeService;
         _soundService = soundService;

@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Posetrix.Core.Data;
-using Posetrix.Core.Factories;
+using Posetrix.Core.Enums;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Services;
 using System.Collections.ObjectModel;
@@ -78,18 +78,18 @@ public partial class SessionViewModel : BaseViewModel, IDisposable
 
     public int ImageResolution { get; }
 
-    public SessionViewModel(ViewModelLocator viewModelLocator, ISoundService soundService, IUserSettings userSettings, IImageResolutionService imageResolutionService)
+    public SessionViewModel(IViewModelFactory viewModelFactory, ISoundService soundService, IUserSettings userSettings, IImageResolutionService imageResolutionService)
     {
-        // Viewmodels.
-        var mainViewModel = viewModelLocator.MainViewModel;
-        var dynamicView = mainViewModel.SelectedViewModel;
+        ViewModelName = ViewModelNames.Session;
+
+        var mainViewModel = viewModelFactory.GetViewModel(ViewModelNames.Main) as MainViewModel ?? throw new InvalidOperationException("MainViewModel is not available.");
+        IDynamicViewModel dynamicView = mainViewModel.SelectedViewModel;
+        _IsEndlessModeOn = mainViewModel.IsEndlessModeEnabled;
 
         _soundService = soundService;
         _userSettings = userSettings;
 
         ImageResolution = imageResolutionService.SetResoluton(_userSettings.ImageResolution);
-
-        _IsEndlessModeOn = mainViewModel.IsEndlessModeEnabled;
 
         // Set current UI thread.
         _synchronizationContext = SynchronizationContext.Current

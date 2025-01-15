@@ -4,19 +4,19 @@ using Posetrix.Views;
 
 namespace Posetrix.Services;
 
-public static class ConfigureServices
+public static class ConfigureWPFServices
 {
-    public static void AddWPFServices(this IServiceCollection collection)
+    public static void AddWPFViews(this IServiceCollection collection)
     {
-        // Views.
         collection.AddTransient<MainView>();
         collection.AddTransient<FoldersAddView>();
         collection.AddTransient<SettingsView>();
         collection.AddTransient<CustomIntervalView>();
         collection.AddTransient<PredefinedIntervalsView>();
         collection.AddTransient<SessionView>();
-
-        // Services.
+    }
+    public static void AddWPFServices(this IServiceCollection collection)
+    {
         collection.AddTransient<IFolderBrowserServiceAsync, FolderBrowserService>();
         collection.AddTransient<IExtensionsService, SupportedExtensionsService>();
         collection.AddTransient<IUserSettings, UserSettings>();

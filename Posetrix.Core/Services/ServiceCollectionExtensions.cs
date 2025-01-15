@@ -7,7 +7,7 @@ public static class ServiceCollectionExtensions
     /// <summary>
     /// Method <c>AddCommonServices</c> registers shared ViewModels.
     /// </summary>
-    public static void AddCommonServices(this IServiceCollection collection)
+    public static void AddViewModels(this IServiceCollection collection)
     {
         collection.AddSingleton<MainViewModel>();
 

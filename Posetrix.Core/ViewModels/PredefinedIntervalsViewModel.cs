@@ -1,15 +1,21 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Posetrix.Core.Models;
+using Posetrix.Core.Enums;
+using Posetrix.Core.Interfaces;
 
 namespace Posetrix.Core.ViewModels;
 
-public partial class PredefinedIntervalsViewModel : DynamicViewModel
+public partial class PredefinedIntervalsViewModel : BaseViewModel, IDynamicViewModel
 {
-    public override string DisplayName { get => "Predefined intervals"; }
+    public string DisplayName { get => "Predefined intervals"; }
 
-    [ObservableProperty]
-    public partial Intervals SelectedInterval { get; set; }
-    public override int GetSeconds() =>
+    [ObservableProperty] public partial Intervals SelectedInterval { get; set; }
+
+    public PredefinedIntervalsViewModel()
+    {
+        ViewModelName = ViewModelNames.PredefinedIntervals;
+    }
+
+    public int GetSeconds() =>
 
         SelectedInterval switch
         {
@@ -21,14 +27,4 @@ public partial class PredefinedIntervalsViewModel : DynamicViewModel
             Intervals.Interval6 => 600,
             _ => 0
         };
-}
-
-public enum Intervals
-{
-    Interval1, // 30s
-    Interval2, // 45s
-    Interval3, // 1m
-    Interval4, // 2m
-    Interval5, // 5m
-    Interval6  // 10m
 }

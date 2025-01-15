@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enums="clr-namespace:Posetrix.Core.Enums;assembly=Posetrix.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:Posetrix.Core.ViewModels;assembly=Posetrix.Core"
     d:DataContext="{d:DesignInstance Type=viewmodels:PredefinedIntervalsViewModel}"
@@ -21,36 +22,36 @@
         <RadioButton
             Grid.Column="0"
             Content="30s"
-            IsChecked="{Binding SelectedInterval, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static viewmodels:Intervals.Interval1}}"
+            IsChecked="{Binding SelectedInterval, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static enums:Intervals.Interval1}}"
             Style="{StaticResource RadioToggleButton}" />
         <RadioButton
             Grid.Column="1"
             Margin="4,0,4,0"
             Content="45s"
-            IsChecked="{Binding SelectedInterval, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static viewmodels:Intervals.Interval2}}"
+            IsChecked="{Binding SelectedInterval, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static enums:Intervals.Interval2}}"
             Style="{StaticResource RadioToggleButton}" />
         <RadioButton
             Grid.Column="2"
             Margin="0,0,4,0"
             Content="1m"
-            IsChecked="{Binding SelectedInterval, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static viewmodels:Intervals.Interval3}}"
+            IsChecked="{Binding SelectedInterval, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static enums:Intervals.Interval3}}"
             Style="{StaticResource RadioToggleButton}" />
         <RadioButton
             Grid.Column="3"
             Margin="0,0,4,0"
             Content="2m"
-            IsChecked="{Binding SelectedInterval, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static viewmodels:Intervals.Interval4}}"
+            IsChecked="{Binding SelectedInterval, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static enums:Intervals.Interval4}}"
             Style="{StaticResource RadioToggleButton}" />
         <RadioButton
             Grid.Column="4"
             Margin="0,0,4,0"
             Content="5m"
-            IsChecked="{Binding SelectedInterval, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static viewmodels:Intervals.Interval5}}"
+            IsChecked="{Binding SelectedInterval, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static enums:Intervals.Interval5}}"
             Style="{StaticResource RadioToggleButton}" />
         <RadioButton
             Grid.Column="5"
             Content="10m"
-            IsChecked="{Binding SelectedInterval, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static viewmodels:Intervals.Interval6}}"
+            IsChecked="{Binding SelectedInterval, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static enums:Intervals.Interval6}}"
             Style="{StaticResource RadioToggleButton}" />
     </Grid>
 </UserControl>
