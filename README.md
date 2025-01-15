@@ -1,7 +1,6 @@
 <div id="posetrix-logo" align="center">
     <img src="./Images/icon.svg" alt="Posetrix Logo" width="100"/>
     <h1>Posetrix</h1>
-    <h3>A simple application for gesture drawing practice</h3>
   <img src="./Images/screenshot.png" alt="Posetrix Screenshot"/>
 </div>
 
@@ -15,18 +14,15 @@
 With Posetrix, you can add your own reference images and practice drawing them with the time interval you want.
 
 ## Motivation
-I started this project to practice C# and WPF framework and hope that someone will find it useful.
+I started this project to practice C# and WPF framework and hope someone will find it useful.
 
 ## Features
-- Fluent Windows 11 design
 - Predefined and custom time intervals
+- Image quality
 - Shuffle images
 - Endless mode
-- Image quality (for lower memory consumption)
-- Mirror an image over the X or Y axis
-- Grayscale an image
-- Play a sound at the end of timer
-- Light and dark themes
+- Mirror an image, grayscale mode
+- Timer alarm sounds
 
 ## Credits
 - Illustrations by [unDraw](https://undraw.co)
