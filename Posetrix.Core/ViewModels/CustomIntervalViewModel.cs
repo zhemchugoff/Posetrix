@@ -22,5 +22,13 @@ public partial class CustomIntervalViewModel : BaseViewModel, IDynamicViewModel
         }
     }
 
-    public int GetSeconds() => Seconds ?? 0;
+    public int GetSeconds()
+    {
+        if (Seconds is null || Seconds < 0)
+        {
+            return 0;
+        }
+
+        return (int)Seconds;
+    }
 }

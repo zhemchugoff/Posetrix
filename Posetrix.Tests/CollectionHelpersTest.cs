@@ -31,7 +31,7 @@ public class CollectionHelpersTest
     }
 
     [Fact]
-    public void PopulateListWithImagePaths_ImagePathsFromImageFolder_ReturnsListOfAllImagePaths()
+    public void PopulateListWithImagePaths_ShouldReturnListOfAllImagePaths_WhenGivenImagePathsFromImageFolder()
     {
         // Arrange.
         List<string> expectedList = ["C:\\TestFolder\\image1.jpg", "C:\\TestFolder\\image2.jpg", "C:\\TestFolder\\image3.jpg", "C:\\TestFolder\\image4.jpg", "C:\\TestFolder\\image5.jpg"];
@@ -43,7 +43,7 @@ public class CollectionHelpersTest
     }
 
     [Fact]
-    public void PopulateListWithImagePaths_ImagePathsFromImageFolder_ReturnsNotEqualListOfAllImagePaths()
+    public void PopulateListWithImagePaths_ShouldReturnFalse_WhenImagePathsFromImageFolderAreNotEqual()
     {
         // Arrange.
         List<string> expectedList = ["C:\\TestFolder\\image0.jpg", "C:\\TestFolder\\image2.jpg", "C:\\TestFolder\\image3.jpg", "C:\\TestFolder\\image4.jpg", "C:\\TestFolder\\image5.jpg"];
@@ -55,7 +55,7 @@ public class CollectionHelpersTest
     }
 
     [Fact]
-    public void ShuffleList_ListOfStrings_ReturnsShuffledList()
+    public void ShuffleList_ShouldReturnShuffledList_WhenInputIsListOfStrings()
     {
         // Arrange.
         List<string> expectedList = ["image1.jpg", "image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg"];
@@ -70,7 +70,8 @@ public class CollectionHelpersTest
     [InlineData(1)]
     [InlineData(3)]
     [InlineData(5)]
-    public void TrimList_ValidTrimValue_ReturnsTrimmedListCount(int count) {
+    public void TrimList_ShouldReturnTrimmedListCount_WhenTrimValueIsValid(int count)
+    {
         // Arrange.
         List<string> list = ["image1.jpg", "image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg"];
         // Act.
@@ -83,7 +84,7 @@ public class CollectionHelpersTest
     [InlineData(-2)]
     [InlineData(0)]
     [InlineData(21)]
-    public void TrimList_InvalidTrimValue_ReturnsUnchangedListCount(int count)
+    public void TrimList_ShouldReturnUnchangedListCount_WhenTrimValueIsInvalid(int count)
     {
         // Arrange.
         List<string> list = [ "image1.jpg", "image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg" ];
@@ -100,7 +101,7 @@ public class CollectionHelpersTest
     [InlineData(0)] 
     [InlineData(2)]
     [InlineData(6)]
-    public void TrimList_InvalidTrimValueWithEmptyList_ReturnsUnchangedListCount(int count)
+    public void TrimList_ShouldReturnUnchangedListCount_WhenListIsEmpty(int count)
     {
         // Arrange.
         List<string> list = [];
@@ -110,5 +111,29 @@ public class CollectionHelpersTest
         // Assert.
         Assert.Empty(list);
         Assert.Equal(expectedListCount, list.Count);
+    }
+
+    [Fact]
+    public void PopulateAndConvertObservableColletionToList_ShouldReturnListOfStrings_WhenGivenObservableCollectionWithImageCountNull()
+    {
+        // Arrange.
+        List<string> expectedList = ["C:\\TestFolder\\image1.jpg", "C:\\TestFolder\\image2.jpg", "C:\\TestFolder\\image3.jpg", "C:\\TestFolder\\image4.jpg", "C:\\TestFolder\\image5.jpg"];
+        // Act.
+        List<string> actualList = [];
+        ImageCollectionHelpers.PopulateAndConvertObservableColletionToList(actualList, _imageFolders, false, null);
+        // Assert.
+        Assert.Equal(expectedList, actualList);
+    }
+
+    [Fact]
+    public void PopulateAndConvertObservableColletionToList_ShouldReturnNotEqualListOfStrings_WhenGivenObservableCollectionWithImageCountNullAndIsShuffleTrue()
+    {
+        // Arrange.
+        List<string> expectedList = ["C:\\TestFolder\\image1.jpg", "C:\\TestFolder\\image2.jpg", "C:\\TestFolder\\image3.jpg", "C:\\TestFolder\\image4.jpg", "C:\\TestFolder\\image5.jpg"];
+        // Act.
+        List<string> actualList = [];
+        ImageCollectionHelpers.PopulateAndConvertObservableColletionToList(actualList, _imageFolders, true, null);
+        // Assert.
+        Assert.NotEqual(expectedList, actualList);
     }
 }
