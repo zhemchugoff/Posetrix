@@ -6,7 +6,7 @@ namespace Posetrix.Core.ViewModels;
 
 public partial class PredefinedIntervalsViewModel : BaseViewModel, IDynamicViewModel
 {
-    public string DisplayName { get => "Predefined intervals"; }
+    public string DisplayName => "Predefined intervals";
 
     [ObservableProperty] public partial Intervals SelectedInterval { get; set; }
 

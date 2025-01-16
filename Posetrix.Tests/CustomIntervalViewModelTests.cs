@@ -11,14 +11,22 @@ public class CustomIntervalViewModelTests
     }
 
     [Fact]
-    public void DisplayName_ShouldNotBeEmpty_ShouldHasConstValue()
+    public void DisplayName_ShouldNotBeEmpty()
+    {
+        // Act.
+        string actualDisplayName = _customIntervalViewModel.DisplayName;
+        // Assert.
+        Assert.NotEmpty(actualDisplayName);
+    }
+
+    [Fact]
+    public void DisplayName_ShouldHaveConstValue()
     {
         // Arrange.
         string expectedDisplayName = "Custom interval (in seconds)";
         // Act.
         string actualDisplayName = _customIntervalViewModel.DisplayName;
         // Assert.
-        Assert.NotEmpty(actualDisplayName);
         Assert.Equal(expectedDisplayName, actualDisplayName);
     }
 
