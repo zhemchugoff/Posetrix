@@ -36,11 +36,14 @@ public partial class FolderAddViewModel : BaseViewModel
     {
         var folderPaths = await _folderBrowserService.SelectFolderAsync();
 
-        foreach (var folder in from folder in folderPaths
-                               where !string.IsNullOrEmpty(folder)
-                               select folder)
+        if (folderPaths != null)
         {
-            GetFolder(folder);
+            foreach (var folder in from folder in folderPaths
+                                   where !string.IsNullOrEmpty(folder)
+                                   select folder)
+            {
+                GetFolder(folder);
+            }
         }
     }
 

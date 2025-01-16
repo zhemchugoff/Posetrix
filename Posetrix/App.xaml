@@ -5,7 +5,6 @@
     <Application.Resources>
         <ResourceDictionary>
             <FontFamily x:Key="SegoeUiIcons">pack://application:,,,/Assets/Fonts/#Segoe Fluent Icons</FontFamily>
-            <FontFamily x:Key="SegoeUi">pack://application:,,,/Assets/Fonts/#Segoe UI</FontFamily>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Themes/Fluent.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Resources/Converters.xaml" />

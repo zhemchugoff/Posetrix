@@ -7,30 +7,30 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="clr-namespace:Posetrix.Views"
     Title="{Binding WindowTitle}"
-    Width="400"
-    Height="630"
+    Width="440"
+    Height="754"
     d:DataContext="{d:DesignInstance Type=core:MainViewModel}"
     Icon="pack://application:,,,/Assets/Icons/favicon.ico"
     ResizeMode="CanMinimize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid Margin="12">
+    <Grid Margin="24">
         <Grid.RowDefinitions>
             <!--  Add references button.  -->
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="12" />
+            <RowDefinition Height="16" />
             <!--  Practice modes.  -->
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="12" />
+            <RowDefinition Height="16" />
             <!--  References number.  -->
             <RowDefinition Height="Auto" />
             <!--  Shuffle section.  -->
-            <RowDefinition Height="12" />
+            <RowDefinition Height="16" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="12" />
+            <RowDefinition Height="16" />
             <!--  Endless mode sectrion.  -->
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="12" />
+            <RowDefinition Height="16" />
             <!--  Start a sessiom button.  -->
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -59,22 +59,22 @@
                     </Button>
                     <TextBlock
                         Grid.Column="1"
-                        Margin="-28,0,0,0"
+                        Margin="-28,16,0,24"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
                         Style="{StaticResource SubtitleTextBlockStyle}"
-                        Text="Add your reference images" />
+                        Text="Add reference images" />
                 </Grid>
                 <Button
                     Name="AddReferencesButton"
                     Grid.Row="1"
-                    Height="46"
-                    Margin="0,8"
+                    Height="38"
+                    Margin="0,0,0,16"
+                    Padding="0"
                     HorizontalAlignment="Stretch"
                     Command="{Binding AddFoldersCommand}"
                     Content="&#xE710;"
                     FontFamily="{StaticResource SegoeUiIcons}"
-                    FontSize="20"
+                    FontSize="24"
                     Style="{DynamicResource AccentButtonStyle}" />
                 <TextBlock
                     Grid.Row="2"
@@ -93,13 +93,14 @@
                 </Grid.RowDefinitions>
                 <TextBlock
                     Grid.Row="0"
+                    Margin="0,16,0,24"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Style="{StaticResource SubtitleTextBlockStyle}"
                     Text="Practice modes" />
                 <ComboBox
                     Grid.Row="1"
-                    Margin="0,12"
+                    Margin="0,0,0,8"
                     DisplayMemberPath="DisplayName"
                     ItemsSource="{Binding DynamicViews}"
                     SelectedItem="{Binding SelectedViewModel}" />
@@ -115,7 +116,6 @@
                 <TextBlock VerticalAlignment="Center" Text="Images to draw" />
                 <TextBox
                     x:Name="ImageCount"
-                    Height="30"
                     HorizontalAlignment="Stretch"
                     PreviewTextInput="ImageCount_PreviewTextInput"
                     Text="{Binding SessionImageCount, FallbackValue=0, TargetNullValue=''}"
@@ -162,7 +162,7 @@
 
         <Grid Grid.Row="10">
             <Button
-                Height="46"
+                Height="38"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Center"
                 Command="{Binding StartSessionCommand}"

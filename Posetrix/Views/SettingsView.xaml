@@ -8,22 +8,22 @@
     xmlns:viewmodels="clr-namespace:Posetrix.Core.ViewModels;assembly=Posetrix.Core"
     Title="{Binding WindowTitle}"
     Width="480"
-    Height="340"
+    Height="400"
     d:DataContext="{d:DesignInstance Type=viewmodels:SettingsViewModel}"
     Icon="pack://application:,,,/Assets/Icons/favicon.ico"
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid Margin="12" ShowGridLines="False">
+    <Grid Margin="24">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="12" />
+            <RowDefinition Height="16" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="12" />
+            <RowDefinition Height="16" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="12" />
+            <RowDefinition Height="16" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="12" />
+            <RowDefinition Height="16" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="Transparent">
@@ -36,7 +36,7 @@
                     <TextBlock
                         Grid.Column="0"
                         VerticalAlignment="Center"
-                        FontSize="14"
+                        Style="{DynamicResource BodyTextBlockStyle}"
                         Text="App theme" />
                     <ComboBox
                         Name="ChangeTheme"
@@ -59,6 +59,7 @@
                     <TextBlock
                         Grid.Column="0"
                         VerticalAlignment="Center"
+                        Style="{DynamicResource BodyTextBlockStyle}"
                         Text="Sounds" />
                     <Button
                         Grid.Column="1"
@@ -95,10 +96,7 @@
                             Text="&#xE946;">
                             <TextBlock.ToolTip>
                                 <ToolTip>
-                                    <TextBlock
-                                        FontFamily="{StaticResource SegoeUi}"
-                                        Style="{StaticResource CaptionTextBlockStyle}"
-                                        TextWrapping="Wrap">
+                                    <TextBlock Style="{StaticResource InfoToolTip}" TextWrapping="Wrap">
                                         Higher image quality - higher memory consumption and worse app performance.<LineBreak />
                                         Default: keep an original image size.<LineBreak />
                                         Low: 480<LineBreak />
@@ -121,13 +119,13 @@
             Grid.Row="6"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Style="{StaticResource BodyTextBlockStyle}"
+            Style="{DynamicResource BodyTextBlockStyle}"
             Text="{Binding RuntimeInformation}" />
         <TextBlock
             Grid.Row="8"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Style="{StaticResource BodyTextBlockStyle}"
+            Style="{DynamicResource BodyTextBlockStyle}"
             Text="{Binding SourceLink}" />
     </Grid>
 </Window>

@@ -21,35 +21,37 @@
         </Grid.ColumnDefinitions>
         <RadioButton
             Grid.Column="0"
+            Margin="0,0,8,0"
             Content="30s"
             IsChecked="{Binding SelectedInterval, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static enums:Intervals.Interval1}}"
             Style="{StaticResource RadioToggleButton}" />
         <RadioButton
             Grid.Column="1"
-            Margin="4,0,4,0"
+            Margin="0,0,8,0"
             Content="45s"
             IsChecked="{Binding SelectedInterval, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static enums:Intervals.Interval2}}"
             Style="{StaticResource RadioToggleButton}" />
         <RadioButton
             Grid.Column="2"
-            Margin="0,0,4,0"
+            Margin="0,0,8,0"
             Content="1m"
             IsChecked="{Binding SelectedInterval, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static enums:Intervals.Interval3}}"
             Style="{StaticResource RadioToggleButton}" />
         <RadioButton
             Grid.Column="3"
-            Margin="0,0,4,0"
+            Margin="0,0,8,0"
             Content="2m"
             IsChecked="{Binding SelectedInterval, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static enums:Intervals.Interval4}}"
             Style="{StaticResource RadioToggleButton}" />
         <RadioButton
             Grid.Column="4"
-            Margin="0,0,4,0"
+            Margin="0,0,8,0"
             Content="5m"
             IsChecked="{Binding SelectedInterval, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static enums:Intervals.Interval5}}"
             Style="{StaticResource RadioToggleButton}" />
         <RadioButton
             Grid.Column="5"
+            Margin="0"
             Content="10m"
             IsChecked="{Binding SelectedInterval, Converter={StaticResource EnumConverter}, ConverterParameter={x:Static enums:Intervals.Interval6}}"
             Style="{StaticResource RadioToggleButton}" />

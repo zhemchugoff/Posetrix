@@ -20,17 +20,13 @@
                 Grid.Column="0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                FontFamily="{DynamicResource SegoeUi}"
                 Text="{Binding ImageCounter, Mode=OneWay}" />
-            <StackPanel Grid.Column="1" Orientation="Vertical">
-                <TextBlock
-                    FontFamily="{DynamicResource SegoeUi}"
-                    FontWeight="Bold"
-                    Text="{Binding FolderName, Mode=OneWay}" />
-                <TextBlock
-                    FontFamily="{DynamicResource SegoeUi}"
-                    Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                    Text="{Binding FullFolderPath, Mode=OneWay}" />
+            <StackPanel
+                Grid.Column="1"
+                Margin="0,12"
+                Orientation="Vertical">
+                <TextBlock Style="{DynamicResource BodyStrongTextBlockStyle}" Text="{Binding FolderName, Mode=OneWay}" />
+                <TextBlock Foreground="{DynamicResource TextFillColorTertiaryBrush}" Text="{Binding FullFolderPath, Mode=OneWay}" />
             </StackPanel>
         </Grid>
     </DataTemplate>

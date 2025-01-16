@@ -72,9 +72,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Resource Include="Assets\Fonts\Segoe UI.ttf">
-			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</Resource>
 		<Resource Include="Assets\Fonts\SegoeFluentIcons.ttf">
 			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</Resource>
