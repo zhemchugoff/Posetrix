@@ -7,7 +7,7 @@ namespace Posetrix.Core.ViewModels;
 
 public partial class SettingsViewModel : BaseViewModel
 {
-    public static string WindowTitle => "Settings";
+    public string WindowTitle => "Settings";
     private readonly IUserSettings _userSettings;
     private readonly IThemeService _themeService;
     private readonly ISoundService _soundService;
@@ -20,8 +20,8 @@ public partial class SettingsViewModel : BaseViewModel
     public partial string SelectedSound { get; set; }
 
     public bool IsSoundEnabled => SelectedSound != "Off";
-    public string RuntimeInformation { get; private set; } = "";
-    public static string SourceLink => "Source code: https://github.com/zhemchugoff/Posetrix";
+    public string RuntimeInformation { get; private set; } = ".NET version: ";
+    public string SourceLink => "Source code: https://github.com/zhemchugoff/Posetrix";
 
     public string Theme
     {
@@ -66,12 +66,12 @@ public partial class SettingsViewModel : BaseViewModel
         SelectedSound = Sound;
         SelectedImageResolution = ImageResolution;
 
-        RuntimeInformation = runtimeInformation.NetVersion;
+        RuntimeInformation += runtimeInformation.NetVersion;
     }
 
     partial void OnSelectedThemeChanged(string value)
     {
-        Theme = value;
+        Theme = value;  
         _userSettings.Theme = Theme;
         _themeService.SetTheme(Theme);
     }

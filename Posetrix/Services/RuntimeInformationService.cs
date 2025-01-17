@@ -5,5 +5,5 @@ namespace Posetrix.Services;
 
 class RuntimeInformationService : IRuntimeInformation
 {
-    public string NetVersion => $".NET version: {RuntimeInformation.FrameworkDescription}";
+    public string NetVersion => $"{RuntimeInformation.FrameworkDescription}";
 }
