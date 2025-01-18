@@ -87,6 +87,7 @@ public class CustomIntervalViewModelTests
     public void Seconds_ShouldSetAndNotifyPropertyChanged()
     {
         // Arrange.
+        _mockSessionParametersService.Seconds.Returns(0);
         var customIntervalViewModel = new CustomIntervalViewModel(_mockSessionParametersService);
         var propertyChangedCount = 0;
         customIntervalViewModel.PropertyChanged += (sender, args) => propertyChangedCount++;

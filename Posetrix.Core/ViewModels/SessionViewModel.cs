@@ -121,7 +121,6 @@ public partial class SessionViewModel : BaseViewModel, IDisposable
 
         CurrentImageIndex = 0;
         CurrentImage = _sessionCollection[CurrentImageIndex];
-
     }
 
     /// <summary>
