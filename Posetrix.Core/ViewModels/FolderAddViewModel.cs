@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using Posetrix.Core.Enums;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
-using Posetrix.Core.Services;
 using System.Collections.ObjectModel;
 
 namespace Posetrix.Core.ViewModels;
@@ -13,6 +12,8 @@ public partial class FolderAddViewModel : BaseViewModel
     public static string WindowTitle => "Add folders";
     private readonly IFolderBrowserServiceAsync _folderBrowserService;
     private readonly IExtensionsService _extensionsService;
+    private readonly ISharedCollectionService _sharedCollectionService;
+
     public ObservableCollection<ImageFolder> Folders { get; }
 
     [ObservableProperty]
@@ -21,14 +22,13 @@ public partial class FolderAddViewModel : BaseViewModel
 
     public bool CanDeleteFolder => SelectedFolder is not null;
 
-    public FolderAddViewModel(IViewModelFactory viewModelFactory, IFolderBrowserServiceAsync folderBrowserServiceAsync, IExtensionsService extensionsService)
+    public FolderAddViewModel(IFolderBrowserServiceAsync folderBrowserServiceAsync, IExtensionsService extensionsService, ISharedCollectionService sharedCollectionService)
     {
         ViewModelName = ViewModelNames.FolderAdd;
         _folderBrowserService = folderBrowserServiceAsync;
         _extensionsService = extensionsService;
-
-        var mainViewModel = viewModelFactory.GetViewModel(ViewModelNames.Main) as MainViewModel ?? throw new InvalidOperationException("MainViewModel is not available.");
-        Folders = mainViewModel.ReferenceFolders;
+        _sharedCollectionService = sharedCollectionService;
+        Folders = _sharedCollectionService.ImageFolders;
     }
 
     [RelayCommand]
@@ -50,7 +50,7 @@ public partial class FolderAddViewModel : BaseViewModel
     [RelayCommand(CanExecute = nameof(CanDeleteFolder))]
     private void RemoveFolder(ImageFolder referencesFolder)
     {
-        Folders.Remove(referencesFolder);
+        _sharedCollectionService.RemoveFolder(referencesFolder);
     }
     private void GetFolder(string? folderPath)
     {
@@ -77,7 +77,7 @@ public partial class FolderAddViewModel : BaseViewModel
 
             if (!Folders.Contains(imageFolder))
             {
-                Folders.Add(imageFolder);
+                _sharedCollectionService.AddFolder(imageFolder);
             }
         }
     }

@@ -6,13 +6,17 @@ namespace Posetrix.Core.ViewModels;
 
 public partial class CustomIntervalViewModel : BaseViewModel, IDynamicViewModel
 {
+    private readonly ISharedSessionParametersService _sharedSessionParametersService;
+
     public string DisplayName => "Custom interval (in seconds)";
 
     [ObservableProperty] public partial int? Seconds { get; set; } = 0;
 
-    public CustomIntervalViewModel()
+    public CustomIntervalViewModel(ISharedSessionParametersService sharedSessionParametersService)
     {
         ViewModelName = ViewModelNames.CustomInterval;
+        _sharedSessionParametersService = sharedSessionParametersService;
+        Seconds = _sharedSessionParametersService.Seconds;
     }
     partial void OnSecondsChanged(int? value)
     {
@@ -20,15 +24,7 @@ public partial class CustomIntervalViewModel : BaseViewModel, IDynamicViewModel
         {
             Seconds = 0;
         }
-    }
 
-    public int GetSeconds()
-    {
-        if (Seconds is null || Seconds < 0)
-        {
-            return 0;
-        }
-
-        return (int)Seconds;
+        _sharedSessionParametersService.Seconds = value;
     }
 }

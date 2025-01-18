@@ -21,7 +21,6 @@ public partial class App : Application
         collection.AddWPFViews();
         collection.AddWPFServices();
 
-        //collection.AddSingleton<ViewModelLocator>();
         collection.AddSingleton<WindowMapper>();
         collection.AddSingleton<IWindowManager, WindowManager>();
 

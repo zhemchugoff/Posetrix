@@ -8,16 +8,17 @@ public partial class PredefinedIntervalsViewModel : BaseViewModel, IDynamicViewM
 {
     public string DisplayName => "Predefined intervals";
 
+    private readonly ISharedSessionParametersService _sharedSessionParametersService;
     [ObservableProperty] public partial Intervals SelectedInterval { get; set; }
 
-    public PredefinedIntervalsViewModel()
+    public PredefinedIntervalsViewModel(ISharedSessionParametersService sharedSessionParametersService)
     {
         ViewModelName = ViewModelNames.PredefinedIntervals;
+        _sharedSessionParametersService = sharedSessionParametersService;
     }
 
-    public int GetSeconds() =>
-
-        SelectedInterval switch
+    public int ConvertEnumToSeconds(Intervals interval) =>
+        interval switch
         {
             Intervals.Interval1 => 30,
             Intervals.Interval2 => 45,
@@ -27,4 +28,9 @@ public partial class PredefinedIntervalsViewModel : BaseViewModel, IDynamicViewM
             Intervals.Interval6 => 600,
             _ => 0
         };
+
+    partial void OnSelectedIntervalChanged(Intervals value)
+    {
+        _sharedSessionParametersService.Seconds = ConvertEnumToSeconds(value);
+    }
 }

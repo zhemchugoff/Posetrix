@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Posetrix.Core.Interfaces;
+using Posetrix.Core.Services;
 using Posetrix.Views;
 
 namespace Posetrix.Services;
@@ -17,6 +18,9 @@ public static class ConfigureWPFServices
     }
     public static void AddWPFServices(this IServiceCollection collection)
     {
+        collection.AddSingleton<ISharedCollectionService, SharedCollectionService>();
+        collection.AddSingleton<ISharedSessionParametersService, SharedSessionParametersService>();
+
         collection.AddTransient<IFolderBrowserServiceAsync, FolderBrowserService>();
         collection.AddTransient<IExtensionsService, SupportedExtensionsService>();
         collection.AddTransient<IUserSettings, UserSettings>();

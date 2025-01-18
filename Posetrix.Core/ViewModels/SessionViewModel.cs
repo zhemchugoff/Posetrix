@@ -78,17 +78,14 @@ public partial class SessionViewModel : BaseViewModel, IDisposable
 
     public int ImageResolution { get; }
 
-    public SessionViewModel(IViewModelFactory viewModelFactory, ISoundService soundService, IUserSettings userSettings, IImageResolutionService imageResolutionService)
+    public SessionViewModel(ISoundService soundService, IUserSettings userSettings, IImageResolutionService imageResolutionService, ISharedCollectionService sharedCollectionService, ISharedSessionParametersService sharedSessionParametersService)
     {
         ViewModelName = ViewModelNames.Session;
 
-        var mainViewModel = viewModelFactory.GetViewModel(ViewModelNames.Main) as MainViewModel ?? throw new InvalidOperationException("MainViewModel is not available.");
-        IDynamicViewModel dynamicView = mainViewModel.SelectedViewModel;
-        _IsEndlessModeOn = mainViewModel.IsEndlessModeEnabled;
+        _IsEndlessModeOn = sharedSessionParametersService.IsEndlessModeEnabled;
 
         _soundService = soundService;
         _userSettings = userSettings;
-
         ImageResolution = imageResolutionService.SetResoluton(_userSettings.ImageResolution);
 
         // Set current UI thread.
@@ -102,7 +99,7 @@ public partial class SessionViewModel : BaseViewModel, IDisposable
         _timerStore.PropertyChanged += TimerStore_PropertyChanged; // Subscribe to _timeStore property changes.
 
         // Create timer.
-        Seconds = mainViewModel.SelectedViewModel.GetSeconds();
+        Seconds = sharedSessionParametersService.Seconds ?? 0;
 
         if (Seconds == 0)
         {
@@ -119,8 +116,7 @@ public partial class SessionViewModel : BaseViewModel, IDisposable
 
         // Image collection.
         _completedImages.CollectionChanged += CompletedImages_CollectionChanged;
-
-        ImageCollectionHelpers.PopulateAndConvertObservableColletionToList(_sessionCollection, mainViewModel.ReferenceFolders, mainViewModel.IsShuffleEnabled, mainViewModel.SessionImageCount);
+        ImageCollectionHelpers.PopulateAndConvertObservableColletionToList(_sessionCollection, sharedCollectionService.ImageFolders, sharedSessionParametersService.IsShuffleEnabled, sharedSessionParametersService.SessionImageCount);
         SessionCollectionCount = _sessionCollection.Count;
 
         CurrentImageIndex = 0;
