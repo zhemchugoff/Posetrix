@@ -87,7 +87,7 @@ public class CollectionHelpersTest
     public void TrimList_ShouldReturnUnchangedListCount_WhenTrimValueIsInvalid(int count)
     {
         // Arrange.
-        List<string> list = [ "image1.jpg", "image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg" ];
+        List<string> list = ["image1.jpg", "image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg"];
         var expectedListCount = list.Count;
         // Act.
         ImageCollectionHelpers.TrimList(list, count);
@@ -98,7 +98,7 @@ public class CollectionHelpersTest
 
     [Theory]
     [InlineData(-10)]
-    [InlineData(0)] 
+    [InlineData(0)]
     [InlineData(2)]
     [InlineData(6)]
     public void TrimList_ShouldReturnUnchangedListCount_WhenListIsEmpty(int count)

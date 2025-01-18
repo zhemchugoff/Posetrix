@@ -17,7 +17,7 @@ public partial class PredefinedIntervalsViewModel : BaseViewModel, IDynamicViewM
         _sharedSessionParametersService = sharedSessionParametersService;
     }
 
-    public int ConvertEnumToSeconds(Intervals interval) =>
+    public static int ConvertEnumToSeconds(Intervals interval) =>
         interval switch
         {
             Intervals.Interval1 => 30,

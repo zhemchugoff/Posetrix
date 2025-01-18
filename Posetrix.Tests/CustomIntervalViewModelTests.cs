@@ -1,14 +1,21 @@
-﻿using Posetrix.Core.ViewModels;
+﻿using NSubstitute;
+using Posetrix.Core.Interfaces;
+using Posetrix.Core.ViewModels;
 
 namespace Posetrix.Tests;
 
 public class CustomIntervalViewModelTests
 {
+    private readonly ISharedSessionParametersService _mockSessionParametersService;
+    public CustomIntervalViewModelTests()
+    {
+        _mockSessionParametersService = Substitute.For<ISharedSessionParametersService>();
+    }
     [Fact]
     public void DisplayName_ShouldNotBeEmpty()
     {
         // Arrange.
-        var customIntervalViewModel = new CustomIntervalViewModel();
+        var customIntervalViewModel = new CustomIntervalViewModel(_mockSessionParametersService);
         // Act.
         string actualDisplayName = customIntervalViewModel.DisplayName;
         // Assert.
@@ -19,7 +26,7 @@ public class CustomIntervalViewModelTests
     public void DisplayName_ShouldHaveConstValue()
     {
         // Arrange.
-        var customIntervalViewModel = new CustomIntervalViewModel();
+        var customIntervalViewModel = new CustomIntervalViewModel(_mockSessionParametersService);
         string expectedDisplayName = "Custom interval (in seconds)";
         // Act.
         string actualDisplayName = customIntervalViewModel.DisplayName;
@@ -32,13 +39,16 @@ public class CustomIntervalViewModelTests
     [InlineData(1)]
     [InlineData(14)]
     [InlineData(23)]
-    public void GetSeconds_ShouldReturnSeconds_WhenGivenSeconds(int seconds)
+    public void GetSeconds_ShouldReturnDefaultValue0(int seconds)
     {
         // Arrange.
-        var customIntervalViewModel = new CustomIntervalViewModel();
-        customIntervalViewModel.Seconds = seconds;
+        _mockSessionParametersService.Seconds.Returns(0);
+        var customIntervalViewModel = new CustomIntervalViewModel(_mockSessionParametersService)
+        {
+            Seconds = seconds
+        };
         // Act.
-        int actualSeconds = customIntervalViewModel.GetSeconds();
+        int? actualSeconds = customIntervalViewModel.Seconds;
         // Assert.
         Assert.Equal(seconds, actualSeconds);
     }
@@ -47,10 +57,13 @@ public class CustomIntervalViewModelTests
     public void GetSeconds_ShouldReturnZero_WhenGivenNullValue()
     {
         // Arrange.
-        var customIntervalViewModel = new CustomIntervalViewModel();
-        customIntervalViewModel.Seconds = null;
+        _mockSessionParametersService.Seconds.Returns(0);
+        var customIntervalViewModel = new CustomIntervalViewModel(_mockSessionParametersService)
+        {
+            Seconds = null
+        };
         // Act.
-        int actualSeconds = customIntervalViewModel.GetSeconds();
+        int? actualSeconds = customIntervalViewModel.Seconds;
         // Assert.
         Assert.Equal(0, actualSeconds);
     }
@@ -59,10 +72,13 @@ public class CustomIntervalViewModelTests
     public void GetSeconds_ShouldReturnZero_WhenGivenNegativeValue()
     {
         // Arrange.
-        var customIntervalViewModel = new CustomIntervalViewModel();
-        customIntervalViewModel.Seconds = -1;
+        _mockSessionParametersService.Seconds.Returns(0);
+        var customIntervalViewModel = new CustomIntervalViewModel(_mockSessionParametersService)
+        {
+            Seconds = -1
+        };
         // Act.
-        int actualSeconds = customIntervalViewModel.GetSeconds();
+        int? actualSeconds = customIntervalViewModel.Seconds;
         // Assert.
         Assert.Equal(0, actualSeconds);
     }
@@ -71,7 +87,7 @@ public class CustomIntervalViewModelTests
     public void Seconds_ShouldSetAndNotifyPropertyChanged()
     {
         // Arrange.
-        var customIntervalViewModel = new CustomIntervalViewModel();
+        var customIntervalViewModel = new CustomIntervalViewModel(_mockSessionParametersService);
         var propertyChangedCount = 0;
         customIntervalViewModel.PropertyChanged += (sender, args) => propertyChangedCount++;
         // Act.

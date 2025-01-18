@@ -71,7 +71,7 @@ public partial class SettingsViewModel : BaseViewModel
 
     partial void OnSelectedThemeChanged(string value)
     {
-        Theme = value;  
+        Theme = value;
         _userSettings.Theme = Theme;
         _themeService.SetTheme(Theme);
     }

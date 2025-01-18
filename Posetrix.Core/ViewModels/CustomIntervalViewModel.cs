@@ -25,6 +25,11 @@ public partial class CustomIntervalViewModel : BaseViewModel, IDynamicViewModel
             Seconds = 0;
         }
 
+        if (Seconds < 0)
+        {
+            Seconds = 0;
+        }
+
         _sharedSessionParametersService.Seconds = value;
     }
 }

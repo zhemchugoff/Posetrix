@@ -124,7 +124,8 @@ public class SettingsViewModelTests
     }
 
     [Fact]
-    public void Sounds_ShouldHaveFourSpecificItems() {
+    public void Sounds_ShouldHaveFourSpecificItems()
+    {
         // Arrange.
         var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
         List<string> expectedSounds = new() { "Off", "Classic Countdown", "Beep Countdown", "Three Two One Countdown" };
@@ -228,7 +229,7 @@ public class SettingsViewModelTests
     }
 
     [Fact]
-    public void ImageResolution_ShouldReturnDefaultImageResolution() 
+    public void ImageResolution_ShouldReturnDefaultImageResolution()
     {
         // Arrange.
         string expectedImageResolution = "High";
@@ -241,7 +242,7 @@ public class SettingsViewModelTests
     }
 
     [Fact]
-    public void ImageResolution_ShouldChangeValue_WhenGivenString() 
+    public void ImageResolution_ShouldChangeValue_WhenGivenString()
     {
         // Arrange.
         string defaultImageResolution = "High";
@@ -356,7 +357,8 @@ public class SettingsViewModelTests
     }
 
     [Fact]
-    public void IsSoundEnabled_ShouldReturnTrue_WhenSelectedSoundIsNotOff() {
+    public void IsSoundEnabled_ShouldReturnTrue_WhenSelectedSoundIsNotOff()
+    {
         // Arrange.
         string defaultSelectedSound = "Off";
         _mockUserSettings.Sound.Returns(defaultSelectedSound);
