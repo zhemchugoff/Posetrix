@@ -8,13 +8,13 @@
     xmlns:views="clr-namespace:Posetrix.Views"
     Title="{Binding WindowTitle}"
     Width="440"
-    Height="754"
+    Height="604"
     d:DataContext="{d:DesignInstance Type=core:MainViewModel}"
     Icon="pack://application:,,,/Assets/Icons/favicon.ico"
     ResizeMode="CanMinimize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid Margin="24">
+    <Grid Margin="16">
         <Grid.RowDefinitions>
             <!--  Add references button.  -->
             <RowDefinition Height="Auto" />
@@ -27,12 +27,11 @@
             <!--  Shuffle section.  -->
             <RowDefinition Height="16" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="16" />
-            <!--  Endless mode sectrion.  -->
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="16" />
             <!--  Start a sessiom button.  -->
+            <RowDefinition Height="16" />
             <RowDefinition Height="Auto" />
+
+
         </Grid.RowDefinitions>
         <Border Grid.Row="0" Style="{StaticResource ContentPanel}">
             <Grid>
@@ -59,22 +58,20 @@
                     </Button>
                     <TextBlock
                         Grid.Column="1"
-                        Margin="-28,16,0,24"
+                        Margin="-28,0,0,8"
                         HorizontalAlignment="Center"
                         Style="{StaticResource SubtitleTextBlockStyle}"
-                        Text="Add reference images" />
+                        Text="Add images" />
                 </Grid>
                 <Button
-                    Name="AddReferencesButton"
                     Grid.Row="1"
-                    Height="38"
-                    Margin="0,0,0,16"
-                    Padding="0"
+                    Height="32"
+                    Margin="0,0,0,8"
                     HorizontalAlignment="Stretch"
                     Command="{Binding AddFoldersCommand}"
                     Content="&#xE710;"
                     FontFamily="{StaticResource SegoeUiIcons}"
-                    FontSize="24"
+                    FontSize="16"
                     Style="{DynamicResource AccentButtonStyle}" />
                 <TextBlock
                     Grid.Row="2"
@@ -93,11 +90,11 @@
                 </Grid.RowDefinitions>
                 <TextBlock
                     Grid.Row="0"
-                    Margin="0,16,0,24"
+                    Margin="0,0,0,8"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Style="{StaticResource SubtitleTextBlockStyle}"
-                    Text="Practice modes" />
+                    Text="Practice intervals" />
                 <ComboBox
                     Grid.Row="1"
                     Margin="0,0,0,8"
@@ -116,6 +113,7 @@
                 <TextBlock VerticalAlignment="Center" Text="Images to draw" />
                 <TextBox
                     x:Name="ImageCount"
+                    Height="32"
                     HorizontalAlignment="Stretch"
                     PreviewTextInput="ImageCount_PreviewTextInput"
                     Text="{Binding SessionImageCount, FallbackValue=0, TargetNullValue=''}"
@@ -125,48 +123,51 @@
             </UniformGrid>
         </Border>
 
-        <!--  Shuffle section.  -->
-        <Border Grid.Row="6" Style="{StaticResource ContentPanel}">
-            <UniformGrid Columns="2">
-                <TextBlock
-                    VerticalAlignment="Center"
-                    Style="{StaticResource BodyTextBlockStyle}"
-                    Text="Shuffle images" />
-                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsShuffleEnabled}" />
-            </UniformGrid>
-        </Border>
-
-        <!--  Endless mode section.  -->
-        <Border Grid.Row="8" Style="{StaticResource ContentPanel}">
-            <UniformGrid Columns="2">
-                <StackPanel Orientation="Horizontal">
+        <Grid Grid.Row="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!--  Shuffle section.  -->
+            <Border Grid.Column="0" Style="{StaticResource ContentPanel}">
+                <StackPanel>
                     <TextBlock
-                        VerticalAlignment="Center"
+                        Margin="0,0,0,8"
+                        HorizontalAlignment="Center"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="Shuffle images" />
+                    <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsShuffleEnabled, Mode=TwoWay}" />
+                </StackPanel>
+
+            </Border>
+
+            <!--  Endless mode section.  -->
+            <Border Grid.Column="2" Style="{StaticResource ContentPanel}">
+                <StackPanel>
+                    <TextBlock
+                        Margin="0,0,0,8"
+                        HorizontalAlignment="Center"
                         Style="{StaticResource BodyTextBlockStyle}"
                         Text="Endless mode" />
-                    <TextBlock
-                        Margin="8,4,0,0"
-                        VerticalAlignment="Center"
-                        FontFamily="{StaticResource SegoeUiIcons}"
-                        Text="&#xE946;">
-                        <TextBlock.ToolTip>
-                            <ToolTip>
-                                <TextBlock Style="{StaticResource InfoToolTip}" Text="A session will start over when the last image is done" />
-                            </ToolTip>
-                        </TextBlock.ToolTip>
-                    </TextBlock>
+                    <CheckBox
+                        HorizontalAlignment="Center"
+                        IsChecked="{Binding IsEndlessModeEnabled, Mode=TwoWay}"
+                        ToolTipService.InitialShowDelay="100"
+                        ToolTipService.Placement="MousePoint"
+                        ToolTipService.ToolTip="A session will start over when the last image is done" />
                 </StackPanel>
-                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsEndlessModeEnabled, Mode=TwoWay}" />
-            </UniformGrid>
-        </Border>
+            </Border>
+        </Grid>
 
-        <Grid Grid.Row="10">
+        <Grid Grid.Row="8">
             <Button
-                Height="38"
+                Height="32"
                 HorizontalAlignment="Stretch"
-                VerticalAlignment="Center"
                 Command="{Binding StartSessionCommand}"
-                Content="Start a drawing session"
+                Content="&#xF5B0;"
+                FontFamily="{StaticResource SegoeUiIcons}"
+                FontSize="16"
                 Style="{DynamicResource AccentButtonStyle}" />
         </Grid>
     </Grid>

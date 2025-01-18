@@ -3,9 +3,12 @@
         x:Key="SettingsButton"
         BasedOn="{StaticResource {x:Type Button}}"
         TargetType="Button">
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Width" Value="32" />
         <Setter Property="Padding" Value="4" />
         <Setter Property="FontFamily" Value="{DynamicResource SegoeUiIcons}" />
-        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
     <!--  Session window.  -->
     <!--  Control buttons.  -->
@@ -59,11 +62,7 @@
         x:Key="RadioToggleButton"
         BasedOn="{StaticResource {x:Type ToggleButton}}"
         TargetType="RadioButton">
-        <Setter Property="Height" Value="30" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Height" Value="32" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
     </Style>
@@ -93,12 +92,10 @@
         x:Key="FoldersAddRemoveButton"
         BasedOn="{StaticResource {x:Type Button}}"
         TargetType="Button">
-        <Setter Property="Height" Value="38" />
+        <Setter Property="Height" Value="32" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="FontFamily" Value="{DynamicResource SegoeUiIcons}" />
-        <Setter Property="FontSize" Value="24" />
-        <Setter Property="Padding" Value="0" />
+        <Setter Property="FontSize" Value="16" />
     </Style>
     <!--  Textbox tooltips for buttons with SegoeUI icons font.  -->
     <Style

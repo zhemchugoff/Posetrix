@@ -15,7 +15,7 @@
     Icon="pack://application:,,,/Assets/Icons/favicon.ico"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid Margin="24">
+    <Grid Margin="16">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />

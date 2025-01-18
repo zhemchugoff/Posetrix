@@ -28,7 +28,7 @@
         <KeyBinding Key="E" Command="{Binding ToggleMirrorYCommand}" />
         <KeyBinding Key="G" Command="{Binding ToggleGreyScaleCommand}" />
     </Window.InputBindings>
-    <Grid Margin="24">
+    <Grid Margin="16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -36,7 +36,7 @@
         <StackPanel Grid.Row="0">
             <Border
                 Grid.Row="0"
-                Padding="8"
+                Padding="16,8"
                 Background="{DynamicResource ExpanderHeaderBackground}"
                 BorderBrush="{DynamicResource ExpanderHeaderBorderBrush}"
                 BorderThickness="{StaticResource ExpanderBorderThemeThickness}"

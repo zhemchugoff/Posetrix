@@ -11,7 +11,7 @@
     mc:Ignorable="d">
     <Grid>
         <TextBox
-            Height="30"
+            Height="32"
             PreviewTextInput="TextBox_PreviewTextInput"
             Text="{Binding Seconds, FallbackValue=0, TargetNullValue=''}"
             ToolTipService.InitialShowDelay="100"
