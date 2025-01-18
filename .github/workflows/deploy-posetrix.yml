@@ -22,6 +22,10 @@ jobs:
           with: 
             dotnet-version: 9.0.x
 
+        # Execute all unit tests in the solution
+        - name: Execute unit tests
+          run: dotnet test
+
         - name: Restore dependencies
           run: dotnet restore ${{ env.PROJECT_PATH }}
   
