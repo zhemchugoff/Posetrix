@@ -8,7 +8,7 @@
     xmlns:views="clr-namespace:Posetrix.Views"
     Title="{Binding WindowTitle}"
     Width="440"
-    Height="604"
+    Height="540"
     d:DataContext="{d:DesignInstance Type=core:MainViewModel}"
     Icon="pack://application:,,,/Assets/Icons/favicon.ico"
     ResizeMode="CanMinimize"
@@ -98,11 +98,10 @@
                 <ComboBox
                     Grid.Row="1"
                     Margin="0,0,0,8"
-                    DisplayMemberPath="DisplayName"
-                    ItemsSource="{Binding DynamicViews}"
-                    SelectedItem="{Binding SelectedViewModel}" />
+                    ItemsSource="{Binding ComboboxItems}"
+                    SelectedItem="{Binding SelectedComboboxItem}" />
                 <Grid Grid.Row="2">
-                    <ContentControl Content="{Binding SelectedViewModel}" />
+                    <ContentControl Content="{Binding SelectedView}" />
                 </Grid>
             </Grid>
         </Border>
@@ -130,34 +129,35 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <!--  Shuffle section.  -->
-            <Border Grid.Column="0" Style="{StaticResource ContentPanel}">
-                <StackPanel>
-                    <TextBlock
-                        Margin="0,0,0,8"
-                        HorizontalAlignment="Center"
-                        Style="{StaticResource BodyTextBlockStyle}"
-                        Text="Shuffle images" />
-                    <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsShuffleEnabled, Mode=TwoWay}" />
-                </StackPanel>
-
-            </Border>
-
+            <ToggleButton
+                Grid.Column="0"
+                Height="32"
+                HorizontalAlignment="Stretch"
+                Content="&#xE8B1;"
+                FontFamily="{StaticResource SegoeUiIcons}"
+                FontSize="16"
+                IsChecked="{Binding IsShuffleEnabled}">
+                <ToggleButton.ToolTip>
+                    <ToolTip>
+                        <TextBlock Style="{StaticResource InfoToolTip}" Text="Shuffle a collection" />
+                    </ToolTip>
+                </ToggleButton.ToolTip>
+            </ToggleButton>
             <!--  Endless mode section.  -->
-            <Border Grid.Column="2" Style="{StaticResource ContentPanel}">
-                <StackPanel>
-                    <TextBlock
-                        Margin="0,0,0,8"
-                        HorizontalAlignment="Center"
-                        Style="{StaticResource BodyTextBlockStyle}"
-                        Text="Endless mode" />
-                    <CheckBox
-                        HorizontalAlignment="Center"
-                        IsChecked="{Binding IsEndlessModeEnabled, Mode=TwoWay}"
-                        ToolTipService.InitialShowDelay="100"
-                        ToolTipService.Placement="MousePoint"
-                        ToolTipService.ToolTip="A session will start over when the last image is done" />
-                </StackPanel>
-            </Border>
+            <ToggleButton
+                Grid.Column="2"
+                Height="32"
+                HorizontalAlignment="Stretch"
+                Content="&#xE8EE;"
+                FontFamily="{StaticResource SegoeUiIcons}"
+                FontSize="16"
+                IsChecked="{Binding IsEndlessModeEnabled}">
+                <ToggleButton.ToolTip>
+                    <ToolTip>
+                        <TextBlock Style="{StaticResource InfoToolTip}" Text="Start over when last image is done" />
+                    </ToolTip>
+                </ToggleButton.ToolTip>
+            </ToggleButton>
         </Grid>
 
         <Grid Grid.Row="8">
@@ -168,7 +168,13 @@
                 Content="&#xF5B0;"
                 FontFamily="{StaticResource SegoeUiIcons}"
                 FontSize="16"
-                Style="{DynamicResource AccentButtonStyle}" />
+                Style="{DynamicResource AccentButtonStyle}">
+                <Button.ToolTip>
+                    <ToolTip>
+                        <TextBlock Style="{StaticResource InfoToolTip}" Text="Start a session" />
+                    </ToolTip>
+                </Button.ToolTip>
+            </Button>
         </Grid>
     </Grid>
 </Window>

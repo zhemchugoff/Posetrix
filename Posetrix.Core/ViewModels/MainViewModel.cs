@@ -18,8 +18,15 @@ public partial class MainViewModel : BaseViewModel
     private readonly ISharedSessionParametersService _sharedSessionParametersService;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SelectedView))]
     [NotifyCanExecuteChangedFor(nameof(StartSessionCommand))]
-    public partial IDynamicViewModel SelectedViewModel { get; set; }
+    public partial string SelectedComboboxItem { get; set; }
+    public List<string> ComboboxItems { get; } = ["Predefined intervals", "Custom interval (in seconds)"];
+
+    public IDynamicViewModel SelectedView => SelectedComboboxItem == "Predefined intervals"
+        ? (IDynamicViewModel)_viewModelFactory.GetViewModel(ViewModelNames.PredefinedIntervals)
+        : (IDynamicViewModel)_viewModelFactory.GetViewModel(ViewModelNames.CustomInterval);
+
     public ObservableCollection<ImageFolder> ReferenceFolders { get; }
     public string FoldersInfo => $" Folders: {FolderCount} Images: {ImageCountInfo}";
 
@@ -31,9 +38,6 @@ public partial class MainViewModel : BaseViewModel
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FoldersInfo))]
     public partial int ImageCountInfo { get; set; } = 0;
-
-    public List<IDynamicViewModel> DynamicViews { get; } = [];
-
     [ObservableProperty] public partial int? SessionImageCount { get; set; }
     [ObservableProperty] public partial bool IsShuffleEnabled { get; set; }
     [ObservableProperty] public partial bool IsEndlessModeEnabled { get; set; }
@@ -43,28 +47,21 @@ public partial class MainViewModel : BaseViewModel
     public MainViewModel(IWindowManager windowManager, IViewModelFactory viewModelFactory, IUserSettings userSettings, IThemeService themeService, ISharedCollectionService sharedCollectionService, ISharedSessionParametersService sharedSessionParametersService)
     {
         ViewModelName = ViewModelNames.Main;
+        themeService.SetTheme(userSettings.Theme);
+
         _windowManager = windowManager;
         _viewModelFactory = viewModelFactory;
         _sharedCollectionService = sharedCollectionService;
-
         _sharedSessionParametersService = sharedSessionParametersService;
+
         SessionImageCount = _sharedSessionParametersService.SessionImageCount;
         IsShuffleEnabled = _sharedSessionParametersService.IsShuffleEnabled;
         IsEndlessModeEnabled = _sharedSessionParametersService.IsEndlessModeEnabled;
 
-        // Set app theme on startup.
-        themeService.SetTheme(userSettings.Theme);
-
-        var customIntervalViewModel = (IDynamicViewModel)_viewModelFactory.GetViewModel(ViewModelNames.CustomInterval);
-        var predefinedIntervalViewModel = (IDynamicViewModel)_viewModelFactory.GetViewModel(ViewModelNames.PredefinedIntervals);
-
         ReferenceFolders = _sharedCollectionService.ImageFolders;
         ReferenceFolders.CollectionChanged += ReferenceFolders_CollectionChanged;
 
-        // Combobox items.
-        DynamicViews.Add(predefinedIntervalViewModel);
-        DynamicViews.Add(customIntervalViewModel);
-        SelectedViewModel = DynamicViews.First();
+        SelectedComboboxItem = ComboboxItems.First();
     }
 
     private void ReferenceFolders_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)

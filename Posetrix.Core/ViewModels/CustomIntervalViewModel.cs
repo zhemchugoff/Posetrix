@@ -16,7 +16,7 @@ public partial class CustomIntervalViewModel : BaseViewModel, IDynamicViewModel
     {
         ViewModelName = ViewModelNames.CustomInterval;
         _sharedSessionParametersService = sharedSessionParametersService;
-        Seconds = _sharedSessionParametersService.Seconds;
+        _sharedSessionParametersService.Seconds = Seconds;
     }
     partial void OnSecondsChanged(int? value)
     {
