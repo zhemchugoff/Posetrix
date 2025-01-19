@@ -1,6 +1,6 @@
 ﻿namespace Posetrix.Core.Services;
 
-public static class ResourceLocator
+public class ResourceLocator
 {
     // Paths.
     private const string PlaceholderPath = "pack://application:,,,/Assets/Images/";

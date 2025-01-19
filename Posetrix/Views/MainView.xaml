@@ -8,7 +8,7 @@
     xmlns:views="clr-namespace:Posetrix.Views"
     Title="{Binding WindowTitle}"
     Width="440"
-    Height="540"
+    Height="572"
     d:DataContext="{d:DesignInstance Type=core:MainViewModel}"
     Icon="pack://application:,,,/Assets/Icons/favicon.ico"
     ResizeMode="CanMinimize"
@@ -121,44 +121,40 @@
                     ToolTipService.ToolTip="0: Entire collection" />
             </UniformGrid>
         </Border>
+        <Border Grid.Row="6" Style="{StaticResource ContentPanel}">
 
-        <Grid Grid.Row="6">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="16" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <!--  Shuffle section.  -->
-            <ToggleButton
-                Grid.Column="0"
-                Height="32"
-                HorizontalAlignment="Stretch"
-                Content="&#xE8B1;"
-                FontFamily="{StaticResource SegoeUiIcons}"
-                FontSize="16"
-                IsChecked="{Binding IsShuffleEnabled}">
-                <ToggleButton.ToolTip>
-                    <ToolTip>
-                        <TextBlock Style="{StaticResource InfoToolTip}" Text="Shuffle a collection" />
-                    </ToolTip>
-                </ToggleButton.ToolTip>
-            </ToggleButton>
-            <!--  Endless mode section.  -->
-            <ToggleButton
-                Grid.Column="2"
-                Height="32"
-                HorizontalAlignment="Stretch"
-                Content="&#xE8EE;"
-                FontFamily="{StaticResource SegoeUiIcons}"
-                FontSize="16"
-                IsChecked="{Binding IsEndlessModeEnabled}">
-                <ToggleButton.ToolTip>
-                    <ToolTip>
-                        <TextBlock Style="{StaticResource InfoToolTip}" Text="Start over when last image is done" />
-                    </ToolTip>
-                </ToggleButton.ToolTip>
-            </ToggleButton>
-        </Grid>
+            <Grid Grid.Row="6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="16" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--  Shuffle section.  -->
+                <ToggleButton
+                    Grid.Column="0"
+                    Content="&#xE8B1;"
+                    IsChecked="{Binding IsShuffleEnabled}"
+                    Style="{StaticResource SessionParametersToggleButton}">
+                    <ToggleButton.ToolTip>
+                        <ToolTip>
+                            <TextBlock Style="{StaticResource InfoToolTip}" Text="Shuffle a collection" />
+                        </ToolTip>
+                    </ToggleButton.ToolTip>
+                </ToggleButton>
+                <!--  Endless mode section.  -->
+                <ToggleButton
+                    Grid.Column="2"
+                    Content="&#xE8EE;"
+                    IsChecked="{Binding IsEndlessModeEnabled}"
+                    Style="{StaticResource SessionParametersToggleButton}">
+                    <ToggleButton.ToolTip>
+                        <ToolTip>
+                            <TextBlock Style="{StaticResource InfoToolTip}" Text="Start over when last image is done" />
+                        </ToolTip>
+                    </ToggleButton.ToolTip>
+                </ToggleButton>
+            </Grid>
+        </Border>
 
         <Grid Grid.Row="8">
             <Button
