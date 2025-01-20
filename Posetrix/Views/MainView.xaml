@@ -7,8 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="clr-namespace:Posetrix.Views"
     Title="{Binding WindowTitle}"
-    Width="440"
-    Height="572"
+    Width="420"
+    Height="524"
     d:DataContext="{d:DesignInstance Type=core:MainViewModel}"
     Icon="pack://application:,,,/Assets/Icons/favicon.ico"
     ResizeMode="CanMinimize"
@@ -24,14 +24,9 @@
             <RowDefinition Height="16" />
             <!--  References number.  -->
             <RowDefinition Height="Auto" />
-            <!--  Shuffle section.  -->
             <RowDefinition Height="16" />
-            <RowDefinition Height="Auto" />
             <!--  Start a sessiom button.  -->
-            <RowDefinition Height="16" />
             <RowDefinition Height="Auto" />
-
-
         </Grid.RowDefinitions>
         <Border Grid.Row="0" Style="{StaticResource ContentPanel}">
             <Grid>
@@ -45,8 +40,14 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Button
+                    <TextBlock
                         Grid.Column="0"
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource SubtitleTextBlockStyle}"
+                        Text="Add reference images" />
+                    <Button
+                        Grid.Column="1"
+                        HorizontalAlignment="Right"
                         Command="{Binding OpenSettingsCommand}"
                         Content="&#xE713;"
                         Style="{StaticResource SettingsButton}">
@@ -56,12 +57,6 @@
                             </ToolTip>
                         </Button.ToolTip>
                     </Button>
-                    <TextBlock
-                        Grid.Column="1"
-                        Margin="-28,0,0,8"
-                        HorizontalAlignment="Center"
-                        Style="{StaticResource SubtitleTextBlockStyle}"
-                        Text="Add images" />
                 </Grid>
                 <Button
                     Grid.Row="1"
@@ -75,8 +70,9 @@
                     Style="{DynamicResource AccentButtonStyle}" />
                 <TextBlock
                     Grid.Row="2"
-                    HorizontalAlignment="Center"
+                    HorizontalAlignment="Left"
                     Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                    Style="{StaticResource CaptionTextBlockStyle}"
                     Text="{Binding FoldersInfo}" />
             </Grid>
         </Border>
@@ -91,7 +87,7 @@
                 <TextBlock
                     Grid.Row="0"
                     Margin="0,0,0,8"
-                    HorizontalAlignment="Center"
+                    HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Style="{StaticResource SubtitleTextBlockStyle}"
                     Text="Practice intervals" />
@@ -108,55 +104,64 @@
 
         <!--  Image count section  -->
         <Border Grid.Row="4" Style="{StaticResource ContentPanel}">
-            <UniformGrid VerticalAlignment="Center" Columns="2">
-                <TextBlock VerticalAlignment="Center" Text="Images to draw" />
-                <TextBox
-                    x:Name="ImageCount"
-                    Height="32"
-                    HorizontalAlignment="Stretch"
-                    PreviewTextInput="ImageCount_PreviewTextInput"
-                    Text="{Binding SessionImageCount, FallbackValue=0, TargetNullValue=''}"
-                    ToolTipService.InitialShowDelay="100"
-                    ToolTipService.Placement="MousePoint"
-                    ToolTipService.ToolTip="0: Entire collection" />
-            </UniformGrid>
+            <StackPanel>
+                <TextBlock
+                    Margin="0,0,0,8"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource SubtitleTextBlockStyle}"
+                    Text="Images to draw" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="8" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="8" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <!--  Image count.  -->
+                    <TextBox
+                        x:Name="ImageCount"
+                        Grid.Column="0"
+                        Height="32"
+                        HorizontalAlignment="Stretch"
+                        PreviewTextInput="ImageCount_PreviewTextInput"
+                        Text="{Binding SessionImageCount, FallbackValue=0, TargetNullValue=''}">
+                        <TextBox.ToolTip>
+                            <ToolTip>
+                                <TextBlock Style="{StaticResource InfoToolTip}" Text="0: entire collection" />
+                            </ToolTip>
+                        </TextBox.ToolTip>
+                    </TextBox>
+                    <!--  Shuffle section.  -->
+                    <ToggleButton
+                        Grid.Column="2"
+                        Content="&#xE8B1;"
+                        IsChecked="{Binding IsShuffleEnabled}"
+                        Style="{StaticResource SessionParametersToggleButton}">
+                        <ToggleButton.ToolTip>
+                            <ToolTip>
+                                <TextBlock Style="{StaticResource InfoToolTip}" Text="Shuffle a collection" />
+                            </ToolTip>
+                        </ToggleButton.ToolTip>
+                    </ToggleButton>
+                    <!--  Endless mode section.  -->
+                    <ToggleButton
+                        Grid.Column="4"
+                        VerticalAlignment="Center"
+                        Content="&#xE8EE;"
+                        IsChecked="{Binding IsEndlessModeEnabled}"
+                        Style="{StaticResource SessionParametersToggleButton}">
+                        <ToggleButton.ToolTip>
+                            <ToolTip>
+                                <TextBlock Style="{StaticResource InfoToolTip}" Text="Start over when last image is done" />
+                            </ToolTip>
+                        </ToggleButton.ToolTip>
+                    </ToggleButton>
+                </Grid>
+            </StackPanel>
         </Border>
-        <Border Grid.Row="6" Style="{StaticResource ContentPanel}">
 
-            <Grid Grid.Row="6">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="16" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <!--  Shuffle section.  -->
-                <ToggleButton
-                    Grid.Column="0"
-                    Content="&#xE8B1;"
-                    IsChecked="{Binding IsShuffleEnabled}"
-                    Style="{StaticResource SessionParametersToggleButton}">
-                    <ToggleButton.ToolTip>
-                        <ToolTip>
-                            <TextBlock Style="{StaticResource InfoToolTip}" Text="Shuffle a collection" />
-                        </ToolTip>
-                    </ToggleButton.ToolTip>
-                </ToggleButton>
-                <!--  Endless mode section.  -->
-                <ToggleButton
-                    Grid.Column="2"
-                    Content="&#xE8EE;"
-                    IsChecked="{Binding IsEndlessModeEnabled}"
-                    Style="{StaticResource SessionParametersToggleButton}">
-                    <ToggleButton.ToolTip>
-                        <ToolTip>
-                            <TextBlock Style="{StaticResource InfoToolTip}" Text="Start over when last image is done" />
-                        </ToolTip>
-                    </ToggleButton.ToolTip>
-                </ToggleButton>
-            </Grid>
-        </Border>
-
-        <Grid Grid.Row="8">
+        <Grid Grid.Row="6">
             <Button
                 Height="32"
                 HorizontalAlignment="Stretch"

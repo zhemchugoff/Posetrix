@@ -97,8 +97,8 @@
                             <TextBlock.ToolTip>
                                 <ToolTip>
                                     <TextBlock Style="{StaticResource InfoToolTip}" TextWrapping="Wrap">
-                                        Higher image quality - higher memory consumption and worse app performance.<LineBreak />
-                                        Default: keep an original image size.<LineBreak />
+                                        Higher image quality - higher memory consumption and worse app performance<LineBreak />
+                                        Default: keep an original image size<LineBreak />
                                         Low: 480<LineBreak />
                                         Medium: 960<LineBreak />
                                         High: 1920</TextBlock>
