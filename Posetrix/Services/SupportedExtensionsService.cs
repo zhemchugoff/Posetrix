@@ -4,8 +4,5 @@ namespace Posetrix.Services;
 
 public class SupportedExtensionsService : IExtensionsService
 {
-    public List<string> LoadExtensions()
-    {
-        return [".bmp", ".jpg", ".jpeg", ".png", ".gif", ".tiff", ".wdp"];
-    }
+    public string[] LoadExtensions() => [".bmp", ".jpg", ".jpeg", ".png", ".gif", ".tiff", ".wdp"];
 }

@@ -2,5 +2,5 @@
 
 public interface IExtensionsService
 {
-    List<string> LoadExtensions();
+    string[] LoadExtensions();
 }

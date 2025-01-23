@@ -10,7 +10,10 @@ public class SharedCollectionService : ISharedCollectionService
 
     public void AddFolder(ImageFolder imageFolder)
     {
-        ImageFolders.Add(imageFolder);
+        if (!ImageFolders.Contains(imageFolder))
+        {
+            ImageFolders.Add(imageFolder);
+        }
     }
 
     public void RemoveFolder(ImageFolder imageFolder)

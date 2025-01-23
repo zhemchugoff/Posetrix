@@ -11,10 +11,10 @@ public partial class FolderAddViewModel : BaseViewModel
 {
     public static string WindowTitle => "Add folders";
     private readonly IFolderBrowserServiceAsync _folderBrowserService;
-    private readonly IExtensionsService _extensionsService;
     private readonly ISharedCollectionService _sharedCollectionService;
 
     public ObservableCollection<ImageFolder> Folders { get; }
+    private readonly string[] _supportedExtensions;
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(RemoveFolderCommand))]
@@ -25,9 +25,11 @@ public partial class FolderAddViewModel : BaseViewModel
     public FolderAddViewModel(IFolderBrowserServiceAsync folderBrowserServiceAsync, IExtensionsService extensionsService, ISharedCollectionService sharedCollectionService)
     {
         ViewModelName = ViewModelNames.FolderAdd;
+
         _folderBrowserService = folderBrowserServiceAsync;
-        _extensionsService = extensionsService;
         _sharedCollectionService = sharedCollectionService;
+
+        _supportedExtensions = extensionsService.LoadExtensions();
         Folders = _sharedCollectionService.ImageFolders;
     }
 
@@ -42,7 +44,7 @@ public partial class FolderAddViewModel : BaseViewModel
                                    where !string.IsNullOrEmpty(folder)
                                    select folder)
             {
-                GetFolder(folder);
+                GetFolderFromPath(folder);
             }
         }
     }
@@ -52,43 +54,38 @@ public partial class FolderAddViewModel : BaseViewModel
     {
         _sharedCollectionService.RemoveFolder(referencesFolder);
     }
-    private void GetFolder(string? folderPath)
+
+    private void GetFolderFromPath(string? folderPath)
     {
         if (string.IsNullOrEmpty(folderPath))
         {
             return;
         }
 
-        // Gets a folder name from a full path and removes any trailing separators.
         DirectoryInfo directoryInfo = new(path: folderPath);
         var folderName = directoryInfo.Name;
 
-        List<string> references = [];
-        GetImageFiles(references, folderPath, _extensionsService.LoadExtensions());
+        List<string> folderFiles = GetFolderFilesFilteredByExtension(folderPath);
 
-        AddImageFolderToCollection(folderPath, folderName, references);
-    }
-
-    private void AddImageFolderToCollection(string folderPath, string folderName, List<string> references)
-    {
-        if (!string.IsNullOrEmpty(folderName) && references.Count > 0)
+        if (!string.IsNullOrEmpty(folderName) && folderFiles.Count > 0)
         {
-            ImageFolder imageFolder = new(folderPath, folderName, references);
-
-            if (!Folders.Contains(imageFolder))
-            {
-                _sharedCollectionService.AddFolder(imageFolder);
-            }
+            ImageFolder imageFolder = new ImageFolder(folderName, folderPath, folderFiles);
+            _sharedCollectionService.AddFolder(imageFolder);
         }
     }
 
-    /// <summary>
-    /// Method <c>GetImageFiles</c> populates the list with image files with supported extensions.
-    /// </summary>
-    public static void GetImageFiles(List<string> files, string folderPath, List<string> supportedExtensions)
+    private List<string> GetFolderFilesFilteredByExtension(string folderPath)
     {
-        files.Clear();
-        files.AddRange(Directory.GetFiles(folderPath)
-            .Where(file => supportedExtensions.Contains(Path.GetExtension(file).ToLowerInvariant())));
+        List<string> files = [];
+
+        foreach (string file in Directory.GetFiles(folderPath))
+        {
+            if (_supportedExtensions.Contains(Path.GetExtension(file).ToLowerInvariant()))
+            {
+                files.Add(file);
+            }
+        }
+
+        return files;
     }
 }
