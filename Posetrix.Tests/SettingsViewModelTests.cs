@@ -65,8 +65,10 @@ public class SettingsViewModelTests
     public void IsSoundEnabled_WhenSelectedSoundIsOff_ShouldReturnFalse()
     {
         // Arrange.
-        var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
-        settingsViewModel.SelectedSound = "Off";
+        var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation)
+        {
+            SelectedSound = "Off"
+        };
         // Act.
         bool actualIsSoundEnabled = settingsViewModel.IsSoundEnabled;
         // Assert.
@@ -80,8 +82,10 @@ public class SettingsViewModelTests
     public void IsSoundEnabled_WhenSelectedSoundIsNotOff_ShouldReturnTrue(string selectedSound)
     {
         // Arrange.
-        var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
-        settingsViewModel.SelectedSound = selectedSound;
+        var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation)
+        {
+            SelectedSound = selectedSound
+        };
         // Act.
         bool actualIsSoundEnabled = settingsViewModel.IsSoundEnabled;
         // Assert.
@@ -104,7 +108,7 @@ public class SettingsViewModelTests
     {
         // Arrange.
         var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
-        List<string> expectedThemes = new() { "System", "Light", "Dark" };
+        List<string> expectedThemes = ["System", "Light", "Dark"];
         // Act.
         List<string> actualThemes = settingsViewModel.Themes;
         // Assert.
@@ -128,7 +132,7 @@ public class SettingsViewModelTests
     {
         // Arrange.
         var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
-        List<string> expectedSounds = new() { "Off", "Classic Countdown", "Beep Countdown", "Three Two One Countdown" };
+        List<string> expectedSounds = ["Off", "Classic Countdown", "Beep Countdown", "Three Two One Countdown"];
         // Act.
         List<string> actualSounds = settingsViewModel.Sounds;
         // Assert.
@@ -151,7 +155,7 @@ public class SettingsViewModelTests
     {
         // Arrange.
         var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
-        List<string> expectedResolutions = new() { "Default", "Low", "Medium", "High" };
+        List<string> expectedResolutions = ["Default", "Low", "Medium", "High"];
         // Act.
         List<string> actualResolutions = settingsViewModel.Resolutions;
         // Assert.
@@ -192,9 +196,11 @@ public class SettingsViewModelTests
         string defaultTheme = "System";
         _mockUserSettings.Theme.Returns(defaultTheme);
         string expectedTheme = "Light";
-        var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
-        // Act.
-        settingsViewModel.Theme = expectedTheme;
+        var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation)
+        {
+            // Act.
+            Theme = expectedTheme
+        };
         string actualTheme = settingsViewModel.Theme;
         // Assert.
         Assert.Equal(expectedTheme, actualTheme);
@@ -220,9 +226,11 @@ public class SettingsViewModelTests
         string defaultSound = "Off";
         _mockUserSettings.Sound.Returns(defaultSound);
         string expectedSound = "Classic Countdown";
-        var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
-        // Act.
-        settingsViewModel.Sound = expectedSound;
+        var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation)
+        {
+            // Act.
+            Sound = expectedSound
+        };
         string actualSound = settingsViewModel.Sound;
         // Assert.
         Assert.Equal(expectedSound, actualSound);
@@ -248,9 +256,11 @@ public class SettingsViewModelTests
         string defaultImageResolution = "High";
         _mockUserSettings.ImageResolution.Returns(defaultImageResolution);
         string expectedImageResolution = "Low";
-        var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
-        // Act.
-        settingsViewModel.ImageResolution = expectedImageResolution;
+        var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation)
+        {
+            // Act.
+            ImageResolution = expectedImageResolution
+        };
         string actualImageResolution = settingsViewModel.ImageResolution;
         // Assert.
         Assert.Equal(expectedImageResolution, actualImageResolution);
@@ -292,9 +302,11 @@ public class SettingsViewModelTests
         // Arrange.
         string defaultSelectedTheme = "System";
         _mockUserSettings.Sound.Returns(defaultSelectedTheme);
-        var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
-        // Act.
-        settingsViewModel.SelectedTheme = "Light";
+        var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation)
+        {
+            // Act.
+            SelectedTheme = "Light"
+        };
         // Assert.
         _mockUserSettings.Received().Theme = "Light";
     }
@@ -336,9 +348,11 @@ public class SettingsViewModelTests
         // Arrange.
         string defaultImageResolution = "Off";
         _mockUserSettings.Sound.Returns(defaultImageResolution);
-        var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
-        // Act.
-        settingsViewModel.SelectedImageResolution = "Low";
+        var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation)
+        {
+            // Act.
+            SelectedImageResolution = "Low"
+        };
         // Assert.
         _mockUserSettings.Received().ImageResolution = "Low";
     }
@@ -394,9 +408,11 @@ public class SettingsViewModelTests
         // Arrange.
         string defaultSelectedSound = "Off";
         _mockUserSettings.Sound.Returns(defaultSelectedSound);
-        var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
-        // Act.
-        settingsViewModel.SelectedSound = "Classic Countdown";
+        var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation)
+        {
+            // Act.
+            SelectedSound = "Classic Countdown"
+        };
         // Assert.
         _mockUserSettings.Received().Sound = "Classic Countdown";
     }
@@ -424,9 +440,11 @@ public class SettingsViewModelTests
         // Arrange.
         string defaultSelectedSound = "Off";
         _mockUserSettings.Sound.Returns(defaultSelectedSound);
-        var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
-        // Act.
-        settingsViewModel.SelectedSound = "Classic Countdown";
+        var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation)
+        {
+            // Act.
+            SelectedSound = "Classic Countdown"
+        };
 
         if (settingsViewModel.PlaySoundCommand.CanExecute(null))
         {
@@ -443,9 +461,11 @@ public class SettingsViewModelTests
         // Arrange.
         string defaultSelectedSound = "Off";
         _mockUserSettings.Sound.Returns(defaultSelectedSound);
-        var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
-        // Act.
-        settingsViewModel.SelectedSound = "Classic Countdown";
+        var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation)
+        {
+            // Act.
+            SelectedSound = "Classic Countdown"
+        };
 
         if (settingsViewModel.PlaySoundCommand.CanExecute(null))
         {
