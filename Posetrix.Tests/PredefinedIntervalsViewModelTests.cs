@@ -2,6 +2,7 @@
 using Posetrix.Core.Enums;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.ViewModels;
+using Shouldly;
 
 namespace Posetrix.Tests;
 
@@ -21,7 +22,7 @@ public class PredefinedIntervalsViewModelTests
         // Act.
         string actualDisplayName = predefinedIntervalsViewModel.DisplayName;
         // Assert.
-        Assert.NotEmpty(actualDisplayName);
+        actualDisplayName.ShouldNotBeEmpty();
     }
 
     [Fact]
@@ -33,7 +34,7 @@ public class PredefinedIntervalsViewModelTests
         // Act.
         string actualDisplayName = predefinedIntervalsViewModel.DisplayName;
         // Assert.
-        Assert.Equal(expectedDisplayName, actualDisplayName);
+        actualDisplayName.ShouldBe(expectedDisplayName);
     }
 
     [Fact]
@@ -47,7 +48,7 @@ public class PredefinedIntervalsViewModelTests
         // Act.
         int actualSeconds = PredefinedIntervalsViewModel.ConvertEnumToSeconds(predefinedIntervalsViewModel.SelectedInterval);
         // Assert.
-        Assert.Equal(30, actualSeconds);
+        actualSeconds.ShouldBe(30);
     }
 
     [Fact]
@@ -61,7 +62,7 @@ public class PredefinedIntervalsViewModelTests
         // Act.
         int actualSeconds = PredefinedIntervalsViewModel.ConvertEnumToSeconds(predefinedIntervalsViewModel.SelectedInterval);
         // Assert.
-        Assert.Equal(45, actualSeconds);
+        actualSeconds.ShouldBe(45);
     }
 
     [Fact]
@@ -75,7 +76,7 @@ public class PredefinedIntervalsViewModelTests
         // Act.
         int actualSeconds = PredefinedIntervalsViewModel.ConvertEnumToSeconds(predefinedIntervalsViewModel.SelectedInterval);
         // Assert.
-        Assert.Equal(60, actualSeconds);
+        actualSeconds.ShouldBe(60);
     }
 
     [Fact]
@@ -89,7 +90,7 @@ public class PredefinedIntervalsViewModelTests
         // Act.
         int actualSeconds = PredefinedIntervalsViewModel.ConvertEnumToSeconds(predefinedIntervalsViewModel.SelectedInterval);
         // Assert.
-        Assert.Equal(120, actualSeconds);
+        actualSeconds.ShouldBe(120);
     }
 
     [Fact]
@@ -103,7 +104,7 @@ public class PredefinedIntervalsViewModelTests
         // Act.
         int actualSeconds = PredefinedIntervalsViewModel.ConvertEnumToSeconds(predefinedIntervalsViewModel.SelectedInterval);
         // Assert.
-        Assert.Equal(300, actualSeconds);
+        actualSeconds.ShouldBe(300);
     }
 
     [Fact]
@@ -117,7 +118,7 @@ public class PredefinedIntervalsViewModelTests
         // Act.
         int actualSeconds = PredefinedIntervalsViewModel.ConvertEnumToSeconds(predefinedIntervalsViewModel.SelectedInterval);
         // Assert.
-        Assert.Equal(600, actualSeconds);
+        actualSeconds.ShouldBe(600);
     }
 
     [Fact]
@@ -134,6 +135,6 @@ public class PredefinedIntervalsViewModelTests
         predefinedIntervalsViewModel.SelectedInterval = Intervals.Interval1;
         predefinedIntervalsViewModel.SelectedInterval = Intervals.Interval1;
         // Assert.
-        Assert.Equal(3, propertyChangedCount);
+        propertyChangedCount.ShouldBe(3);
     }
 }

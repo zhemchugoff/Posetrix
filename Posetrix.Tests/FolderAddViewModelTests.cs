@@ -3,6 +3,7 @@ using Posetrix.Core.Enums;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.Models;
 using Posetrix.Core.ViewModels;
+using Shouldly;
 using System.Collections.ObjectModel;
 
 namespace Posetrix.Tests;
@@ -26,7 +27,7 @@ public class FolderAddViewModelTests
         // Act.
         string actualWindowTitle = FolderAddViewModel.WindowTitle;
         // Assert.
-        Assert.NotEmpty(actualWindowTitle);
+        actualWindowTitle.ShouldNotBeEmpty();
     }
     [Fact]
     public void WindowTitle_ShouldHaveConstValue()
@@ -36,7 +37,7 @@ public class FolderAddViewModelTests
         // Act.
         string actualWindowTitle = FolderAddViewModel.WindowTitle;
         // Assert.
-        Assert.Equal(expectedWindowTitle, actualWindowTitle);
+        actualWindowTitle.ShouldBe(expectedWindowTitle);
     }
 
     [Fact]
@@ -48,7 +49,7 @@ public class FolderAddViewModelTests
         var folderAddViewModel = new FolderAddViewModel(_mockFolderBrowserService, _mockExtensionsService, _mockSharedCollectionService);
         var actualViewModelName = folderAddViewModel.ViewModelName;
         // Assert.
-        Assert.Equal(expectedViewModelName, actualViewModelName);
+        actualViewModelName.ShouldBe(expectedViewModelName);
     }
 
     [Fact]
@@ -65,7 +66,7 @@ public class FolderAddViewModelTests
         var folderAddViewModel = new FolderAddViewModel(_mockFolderBrowserService, _mockExtensionsService, _mockSharedCollectionService);
         var actualCollection = folderAddViewModel.Folders;
         // Assert.
-        Assert.Equal(expectedCollection, actualCollection);
+        actualCollection.ShouldBeEquivalentTo(expectedCollection);
     }
 
     [Fact]
@@ -82,7 +83,7 @@ public class FolderAddViewModelTests
             folderAddViewModel.RemoveFolderCommand.Execute(null);
         }
         // Assert.
-        Assert.False(folderAddViewModel.RemoveFolderCommand.CanExecute(null));
+        folderAddViewModel.RemoveFolderCommand.CanExecute(null).ShouldBeFalse();
     }
 
     [Fact]
@@ -98,6 +99,6 @@ public class FolderAddViewModelTests
             folderAddViewModel.RemoveFolderCommand.Execute(null);
         }
         // Assert.
-        Assert.True(folderAddViewModel.RemoveFolderCommand.CanExecute(null));
+        folderAddViewModel.RemoveFolderCommand.CanExecute(null).ShouldBeTrue();
     }
 }

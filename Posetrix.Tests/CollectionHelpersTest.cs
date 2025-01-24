@@ -1,5 +1,6 @@
 ﻿using Posetrix.Core.Models;
 using Posetrix.Core.Services;
+using Shouldly;
 using System.Collections.ObjectModel;
 
 namespace Posetrix.Tests;
@@ -39,7 +40,7 @@ public class CollectionHelpersTest
         List<string> actualList = [];
         ImageCollectionHelpers.PopulateListWithImagePaths(actualList, _imageFolders);
         // Assert.
-        Assert.Equal(expectedList, actualList);
+        actualList.ShouldBeEquivalentTo(expectedList);
     }
 
     [Fact]
@@ -51,7 +52,7 @@ public class CollectionHelpersTest
         List<string> actualList = [];
         ImageCollectionHelpers.PopulateListWithImagePaths(actualList, _imageFolders);
         // Assert.
-        Assert.NotEqual(expectedList, actualList);
+        actualList.ShouldNotBeSameAs(expectedList);
     }
 
     [Fact]
@@ -63,7 +64,7 @@ public class CollectionHelpersTest
         List<string> actualList = new(expectedList);
         ImageCollectionHelpers.ShuffleList(actualList);
         // Assert.
-        Assert.NotEqual(expectedList, actualList);
+        actualList.ShouldNotBeSameAs(expectedList);
     }
 
     [Theory]
@@ -77,7 +78,7 @@ public class CollectionHelpersTest
         // Act.
         ImageCollectionHelpers.TrimList(list, count);
         // Assert.
-        Assert.Equal(count, list.Count);
+        count.ShouldBe(list.Count);
     }
 
     [Theory]
@@ -92,8 +93,8 @@ public class CollectionHelpersTest
         // Act.
         ImageCollectionHelpers.TrimList(list, count);
         // Assert.
-        Assert.NotEmpty(list);
-        Assert.Equal(expectedListCount, list.Count);
+        list.ShouldNotBeEmpty();
+        list.Count.ShouldBe(expectedListCount);
     }
 
     [Theory]
@@ -105,12 +106,11 @@ public class CollectionHelpersTest
     {
         // Arrange.
         List<string> list = [];
-        var expectedListCount = list.Count;
         // Act.
         ImageCollectionHelpers.TrimList(list, count);
         // Assert.
-        Assert.Empty(list);
-        Assert.Equal(expectedListCount, list.Count);
+        list.ShouldBeEmpty();
+        list.Count.ShouldBe(0);
     }
 
     [Fact]
@@ -122,7 +122,7 @@ public class CollectionHelpersTest
         List<string> actualList = [];
         ImageCollectionHelpers.PopulateAndConvertObservableColletionToList(actualList, _imageFolders, false, null);
         // Assert.
-        Assert.Equal(expectedList, actualList);
+        actualList.ShouldBeEquivalentTo(expectedList);
     }
 
     [Fact]
@@ -134,6 +134,6 @@ public class CollectionHelpersTest
         List<string> actualList = [];
         ImageCollectionHelpers.PopulateAndConvertObservableColletionToList(actualList, _imageFolders, true, null);
         // Assert.
-        Assert.NotEqual(expectedList, actualList);
+        actualList.ShouldNotBeSameAs(expectedList);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using NSubstitute;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.ViewModels;
+using Shouldly;
 
 namespace Posetrix.Tests;
 
@@ -19,7 +20,7 @@ public class CustomIntervalViewModelTests
         // Act.
         string actualDisplayName = customIntervalViewModel.DisplayName;
         // Assert.
-        Assert.NotEmpty(actualDisplayName);
+        actualDisplayName.ShouldNotBeEmpty();
     }
 
     [Fact]
@@ -31,7 +32,7 @@ public class CustomIntervalViewModelTests
         // Act.
         string actualDisplayName = customIntervalViewModel.DisplayName;
         // Assert.
-        Assert.Equal(expectedDisplayName, actualDisplayName);
+        actualDisplayName.ShouldBe(expectedDisplayName);
     }
 
     [Theory]
@@ -50,7 +51,7 @@ public class CustomIntervalViewModelTests
         // Act.
         int? actualSeconds = customIntervalViewModel.Seconds;
         // Assert.
-        Assert.Equal(seconds, actualSeconds);
+        actualSeconds.ShouldBe(seconds);
     }
 
     [Fact]
@@ -65,7 +66,7 @@ public class CustomIntervalViewModelTests
         // Act.
         int? actualSeconds = customIntervalViewModel.Seconds;
         // Assert.
-        Assert.Equal(0, actualSeconds);
+        actualSeconds.ShouldBe(0);
     }
 
     [Fact]
@@ -80,7 +81,7 @@ public class CustomIntervalViewModelTests
         // Act.
         int? actualSeconds = customIntervalViewModel.Seconds;
         // Assert.
-        Assert.Equal(0, actualSeconds);
+        actualSeconds.ShouldBe(0);
     }
 
     [Fact]
@@ -96,6 +97,6 @@ public class CustomIntervalViewModelTests
         customIntervalViewModel.Seconds = 10;
         customIntervalViewModel.Seconds = 12;
         // Assert.
-        Assert.Equal(3, propertyChangedCount);
+        propertyChangedCount.ShouldBe(3);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using NSubstitute;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.ViewModels;
+using Shouldly;
 
 namespace Posetrix.Tests;
 
@@ -26,7 +27,7 @@ public class SettingsViewModelTests
         // Act.
         string actualWindowTitle = settingsViewModel.WindowTitle;
         // Assert.
-        Assert.NotEmpty(actualWindowTitle);
+        actualWindowTitle.ShouldNotBeEmpty();
     }
     [Fact]
     public void WindowTitle_ShouldHaveConstValue()
@@ -37,7 +38,7 @@ public class SettingsViewModelTests
         // Act.
         string actualWindowTitle = settingsViewModel.WindowTitle;
         // Assert.
-        Assert.Equal(expectedWindowTitle, actualWindowTitle);
+        actualWindowTitle.ShouldBe(expectedWindowTitle);
     }
     [Fact]
     public void SourceLink_ShouldNotBeEmpty()
@@ -47,7 +48,7 @@ public class SettingsViewModelTests
         // Act.
         string actualSourceLink = settingsViewModel.SourceLink;
         // Assert.
-        Assert.NotEmpty(actualSourceLink);
+        actualSourceLink.ShouldNotBeEmpty();
     }
     [Fact]
     public void SourceLink_ShouldHaveConstValue()
@@ -58,7 +59,7 @@ public class SettingsViewModelTests
         // Act.
         string actualSourceLink = settingsViewModel.SourceLink;
         // Assert.
-        Assert.Equal(expectedSourceLink, actualSourceLink);
+        actualSourceLink.ShouldBe(expectedSourceLink);
     }
 
     [Fact]
@@ -72,7 +73,7 @@ public class SettingsViewModelTests
         // Act.
         bool actualIsSoundEnabled = settingsViewModel.IsSoundEnabled;
         // Assert.
-        Assert.False(actualIsSoundEnabled);
+        actualIsSoundEnabled.ShouldBeFalse();
     }
 
     [Theory]
@@ -89,7 +90,7 @@ public class SettingsViewModelTests
         // Act.
         bool actualIsSoundEnabled = settingsViewModel.IsSoundEnabled;
         // Assert.
-        Assert.True(actualIsSoundEnabled);
+        actualIsSoundEnabled.ShouldBeTrue();
     }
 
     [Fact]
@@ -100,7 +101,7 @@ public class SettingsViewModelTests
         // Act.
         int actualThemesCount = settingsViewModel.Themes.Count;
         // Assert.
-        Assert.Equal(3, actualThemesCount);
+        actualThemesCount.ShouldBe(3);
     }
 
     [Fact]
@@ -112,8 +113,8 @@ public class SettingsViewModelTests
         // Act.
         List<string> actualThemes = settingsViewModel.Themes;
         // Assert.
-        Assert.NotEmpty(actualThemes);
-        Assert.Equal(expectedThemes, actualThemes);
+        actualThemes.ShouldNotBeEmpty();
+        actualThemes.ShouldBeEquivalentTo(expectedThemes);
     }
 
     [Fact]
@@ -124,7 +125,7 @@ public class SettingsViewModelTests
         // Act.
         int actualSoundsCount = settingsViewModel.Sounds.Count;
         // Assert.
-        Assert.Equal(4, actualSoundsCount);
+        actualSoundsCount.ShouldBe(4);
     }
 
     [Fact]
@@ -136,7 +137,7 @@ public class SettingsViewModelTests
         // Act.
         List<string> actualSounds = settingsViewModel.Sounds;
         // Assert.
-        Assert.Equal(expectedSounds, actualSounds);
+        actualSounds.ShouldBeEquivalentTo(expectedSounds);
     }
 
     [Fact]
@@ -147,7 +148,7 @@ public class SettingsViewModelTests
         // Act.
         int actualResolutionsCount = settingsViewModel.Resolutions.Count;
         // Assert.
-        Assert.Equal(4, actualResolutionsCount);
+        actualResolutionsCount.ShouldBe(4);
     }
 
     [Fact]
@@ -159,7 +160,7 @@ public class SettingsViewModelTests
         // Act.
         List<string> actualResolutions = settingsViewModel.Resolutions;
         // Assert.
-        Assert.Equal(expectedResolutions, actualResolutions);
+        actualResolutions.ShouldBeEquivalentTo(expectedResolutions);
     }
 
     [Fact]
@@ -173,7 +174,7 @@ public class SettingsViewModelTests
         var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
         string actualRuntimeInformation = settingsViewModel.RuntimeInformation;
         // Assert.
-        Assert.Equal(expectedRuntimeInformation, actualRuntimeInformation);
+        actualRuntimeInformation.ShouldBeEquivalentTo(expectedRuntimeInformation);
     }
 
     [Fact]
@@ -186,7 +187,7 @@ public class SettingsViewModelTests
         var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
         string actualTheme = settingsViewModel.Theme;
         // Assert.
-        Assert.Equal(expectedTheme, actualTheme);
+        actualTheme.ShouldBe(expectedTheme);
     }
 
     [Fact]
@@ -203,7 +204,7 @@ public class SettingsViewModelTests
         };
         string actualTheme = settingsViewModel.Theme;
         // Assert.
-        Assert.Equal(expectedTheme, actualTheme);
+        actualTheme.ShouldBe(expectedTheme);
     }
 
     [Fact]
@@ -216,7 +217,7 @@ public class SettingsViewModelTests
         var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
         string actualSound = settingsViewModel.Sound;
         // Assert.
-        Assert.Equal(expectedSound, actualSound);
+        actualSound.ShouldBe(expectedSound);
     }
 
     [Fact]
@@ -233,7 +234,7 @@ public class SettingsViewModelTests
         };
         string actualSound = settingsViewModel.Sound;
         // Assert.
-        Assert.Equal(expectedSound, actualSound);
+        actualSound.ShouldBe(expectedSound);
     }
 
     [Fact]
@@ -246,7 +247,7 @@ public class SettingsViewModelTests
         var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
         string actualImageResolution = settingsViewModel.ImageResolution;
         // Assert.
-        Assert.Equal(expectedImageResolution, actualImageResolution);
+        actualImageResolution.ShouldBe(expectedImageResolution);
     }
 
     [Fact]
@@ -263,7 +264,7 @@ public class SettingsViewModelTests
         };
         string actualImageResolution = settingsViewModel.ImageResolution;
         // Assert.
-        Assert.Equal(expectedImageResolution, actualImageResolution);
+        actualImageResolution.ShouldBe(expectedImageResolution);
     }
 
     [Fact]
@@ -276,7 +277,7 @@ public class SettingsViewModelTests
         var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
         string actualTheme = settingsViewModel.SelectedTheme;
         // Assert.
-        Assert.Equal(expectedTheme, actualTheme);
+        actualTheme.ShouldBe(expectedTheme);
     }
 
     [Fact]
@@ -293,7 +294,7 @@ public class SettingsViewModelTests
         settingsViewModel.SelectedTheme = "Dark";
         settingsViewModel.SelectedTheme = "System";
         // Assert.
-        Assert.Equal(3, propertyChangedCount);
+        propertyChangedCount.ShouldBe(3);
     }
 
     [Fact]
@@ -321,7 +322,7 @@ public class SettingsViewModelTests
         var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
         string actualImageResolution = settingsViewModel.SelectedImageResolution;
         // Assert.
-        Assert.Equal(expectedImageResolution, actualImageResolution);
+        actualImageResolution.ShouldBe(expectedImageResolution);
     }
 
     [Fact]
@@ -339,7 +340,7 @@ public class SettingsViewModelTests
         settingsViewModel.SelectedImageResolution = "Low";
         settingsViewModel.SelectedImageResolution = "Default";
         // Assert.
-        Assert.Equal(4, propertyChangedCount);
+        propertyChangedCount.ShouldBe(4);
     }
 
     [Fact]
@@ -367,7 +368,7 @@ public class SettingsViewModelTests
         var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
         string actualSelectedSound = settingsViewModel.SelectedSound;
         // Assert.
-        Assert.Equal(expectedSelectedSound, actualSelectedSound);
+        actualSelectedSound.ShouldBe(expectedSelectedSound);
     }
 
     [Fact]
@@ -381,7 +382,7 @@ public class SettingsViewModelTests
         Assert.False(settingsViewModel.IsSoundEnabled);
         settingsViewModel.SelectedSound = "Classic Countdown";
         // Assert.
-        Assert.True(settingsViewModel.IsSoundEnabled);
+        settingsViewModel.IsSoundEnabled.ShouldBeTrue();
 
     }
 
@@ -399,7 +400,7 @@ public class SettingsViewModelTests
         settingsViewModel.SelectedSound = "Beep Countdown";
         settingsViewModel.SelectedSound = "Classic Countdown";
         // Assert.
-        Assert.Equal(6, propertyChangedCount); // Also notifies IsSoundEnabled property.
+        propertyChangedCount.ShouldBe(6); // Also notifies IsSoundEnabled property.
     }
 
     [Fact]
@@ -430,7 +431,7 @@ public class SettingsViewModelTests
             settingsViewModel.PlaySoundCommand.Execute(null);
         }
         // Assert.
-        Assert.False(settingsViewModel.PlaySoundCommand.CanExecute(null));
+        settingsViewModel.PlaySoundCommand.CanExecute(null).ShouldBeFalse();
         await _mockSoundService.DidNotReceive().PlaySound("Off");
     }
 
@@ -451,7 +452,7 @@ public class SettingsViewModelTests
             settingsViewModel.PlaySoundCommand.Execute(null);
         }
         // Assert.
-        Assert.True(settingsViewModel.PlaySoundCommand.CanExecute(null));
+        settingsViewModel.PlaySoundCommand.CanExecute(null).ShouldBeTrue();
         await _mockSoundService.Received(1).PlaySound("Classic Countdown");
     }
 
@@ -473,7 +474,7 @@ public class SettingsViewModelTests
             settingsViewModel.PlaySoundCommand.Execute(null);
         }
         // Assert.
-        Assert.True(settingsViewModel.PlaySoundCommand.CanExecute(null));
+        settingsViewModel.PlaySoundCommand.CanExecute(null).ShouldBeTrue();
         await _mockSoundService.Received(2).PlaySound("Classic Countdown");
     }
 }
