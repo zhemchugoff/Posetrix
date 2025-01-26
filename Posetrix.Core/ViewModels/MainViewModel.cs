@@ -28,7 +28,7 @@ public partial class MainViewModel : BaseViewModel
         : (IDynamicViewModel)_viewModelFactory.GetViewModel(ViewModelNames.CustomInterval);
 
     public ObservableCollection<ImageFolder> ReferenceFolders { get; }
-    public string FoldersInfo => $" Folders: {FolderCount} Images: {ImageCountInfo}";
+    public string FoldersInfo => $"Folders: {FolderCount} Images: {ImageCountInfo}";
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FoldersInfo))]
