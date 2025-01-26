@@ -22,6 +22,18 @@ public class FolderAddViewModelTests
     }
 
     [Fact]
+    public void ViewModelName_ShouldHaveValue_WhenViewModelIsInitialized()
+    {
+        // Arrange.
+        var expectedViewModelName = ViewModelNames.FolderAdd;
+        // Act.
+        var folderAddViewModel = new FolderAddViewModel(_mockFolderBrowserService, _mockExtensionsService, _mockSharedCollectionService);
+        var actualViewModelName = folderAddViewModel.ViewModelName;
+        // Assert.
+        actualViewModelName.ShouldBe(expectedViewModelName);
+    }
+
+    [Fact]
     public void WindowTitle_ShouldNotBeEmpty()
     {
         // Act.
@@ -29,6 +41,7 @@ public class FolderAddViewModelTests
         // Assert.
         actualWindowTitle.ShouldNotBeEmpty();
     }
+
     [Fact]
     public void WindowTitle_ShouldHaveConstValue()
     {
@@ -38,18 +51,6 @@ public class FolderAddViewModelTests
         string actualWindowTitle = FolderAddViewModel.WindowTitle;
         // Assert.
         actualWindowTitle.ShouldBe(expectedWindowTitle);
-    }
-
-    [Fact]
-    public void ViewModelName_ShouldHasConstantValue_WhenViewModelIsInitialized()
-    {
-        // Arrange.
-        var expectedViewModelName = ViewModelNames.FolderAdd;
-        // Act.
-        var folderAddViewModel = new FolderAddViewModel(_mockFolderBrowserService, _mockExtensionsService, _mockSharedCollectionService);
-        var actualViewModelName = folderAddViewModel.ViewModelName;
-        // Assert.
-        actualViewModelName.ShouldBe(expectedViewModelName);
     }
 
     [Fact]

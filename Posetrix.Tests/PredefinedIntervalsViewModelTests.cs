@@ -14,6 +14,19 @@ public class PredefinedIntervalsViewModelTests
     {
         _mockSessionParametersService = Substitute.For<ISharedSessionParametersService>();
     }
+
+    [Fact]
+    public void ViewModelName_ShouldHaveValue_WhenViewModelInitialized()
+    {
+        // Arrange.
+        var predefinedIntervalsViewModel = new PredefinedIntervalsViewModel(_mockSessionParametersService);
+        var expectedViewModelName = ViewModelNames.PredefinedIntervals;
+        // Act.
+        var actualViewModelName = predefinedIntervalsViewModel.ViewModelName;
+        // Assert.
+        actualViewModelName.ShouldBe(expectedViewModelName);
+    }
+
     [Fact]
     public void DisplayName_ShouldNotBeEmpty()
     {

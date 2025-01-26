@@ -1,4 +1,5 @@
 ﻿using NSubstitute;
+using Posetrix.Core.Enums;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.ViewModels;
 using Shouldly;
@@ -19,6 +20,19 @@ public class SettingsViewModelTests
         _mockSoundService = Substitute.For<ISoundService>();
         _mockRuntimeInformation = Substitute.For<IRuntimeInformation>();
     }
+
+    [Fact]
+    public void ViewModelName_ShouldHaveValue_WhenViewModelInitialized()
+    {
+        // Arrange.
+        var settingsViewModel = new SettingsViewModel(_mockUserSettings, _mockThemeService, _mockSoundService, _mockRuntimeInformation);
+        var expectedViewModelName = ViewModelNames.Settings;
+        // Act.
+        var actualViewModelName = settingsViewModel.ViewModelName;
+        // Assert.
+        actualViewModelName.ShouldBe(expectedViewModelName);
+    }
+
     [Fact]
     public void WindowTitle_ShouldNotBeEmpty()
     {
@@ -40,6 +54,7 @@ public class SettingsViewModelTests
         // Assert.
         actualWindowTitle.ShouldBe(expectedWindowTitle);
     }
+
     [Fact]
     public void SourceLink_ShouldNotBeEmpty()
     {

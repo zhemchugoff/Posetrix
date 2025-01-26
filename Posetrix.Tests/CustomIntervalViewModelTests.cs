@@ -1,4 +1,5 @@
 ﻿using NSubstitute;
+using Posetrix.Core.Enums;
 using Posetrix.Core.Interfaces;
 using Posetrix.Core.ViewModels;
 using Shouldly;
@@ -12,8 +13,21 @@ public class CustomIntervalViewModelTests
     {
         _mockSessionParametersService = Substitute.For<ISharedSessionParametersService>();
     }
+
     [Fact]
-    public void DisplayName_ShouldNotBeEmpty()
+    public void ViewModelName_ShouldHaveValue_WhenViewModelInitialized()
+    {
+        // Arrange.
+        var customIntervalViewModel = new CustomIntervalViewModel(_mockSessionParametersService);
+        var expectedViewModelName = ViewModelNames.CustomInterval;
+        // Act.
+        var actualViewModelName = customIntervalViewModel.ViewModelName;
+        // Assert.
+        actualViewModelName.ShouldBe(expectedViewModelName);
+    }
+
+    [Fact]
+    public void DisplayName_ShouldNotBeEmpty_WhenViewModelInitialized()
     {
         // Arrange.
         var customIntervalViewModel = new CustomIntervalViewModel(_mockSessionParametersService);
@@ -24,15 +38,14 @@ public class CustomIntervalViewModelTests
     }
 
     [Fact]
-    public void DisplayName_ShouldHaveConstValue()
+    public void DisplayName_ShouldHaveConstValue_WhenViewModelInitialized()
     {
         // Arrange.
         var customIntervalViewModel = new CustomIntervalViewModel(_mockSessionParametersService);
-        string expectedDisplayName = "Custom interval (in seconds)";
         // Act.
         string actualDisplayName = customIntervalViewModel.DisplayName;
         // Assert.
-        actualDisplayName.ShouldBe(expectedDisplayName);
+        actualDisplayName.ShouldBe("Custom interval (in seconds)");
     }
 
     [Theory]
