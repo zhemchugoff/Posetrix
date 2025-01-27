@@ -21,7 +21,7 @@ public partial class SessionViewModel : BaseViewModel, IDisposable
     private readonly List<string> _sessionCollection = [];
     [ObservableProperty] public partial int SessionCollectionCount { get; private set; }
     private readonly ObservableCollection<string> _completedImages = [];
-    private readonly bool _IsEndlessModeOn;
+    private readonly bool _isEndlessModeOn;
 
     // Counters.
     [ObservableProperty]
@@ -30,15 +30,15 @@ public partial class SessionViewModel : BaseViewModel, IDisposable
     [NotifyCanExecuteChangedFor(nameof(SelectPreviousImageCommand))]
     public partial int CurrentImageIndex { get; set; }
 
-    [ObservableProperty] public partial bool IsMirroredX { get; private set; } = false;
-    [ObservableProperty] public partial bool IsMirroredY { get; private set; } = false;
-    [ObservableProperty] public partial bool IsGreyScaleOn { get; set; } = false;
-    [ObservableProperty] public partial bool IsAlwaysOnTopOn { get; set; } = false;
-    [ObservableProperty] public partial bool IsImageInfoVisible { get; set; } = false;
+    [ObservableProperty] public partial bool IsMirroredX { get; private set; }
+    [ObservableProperty] public partial bool IsMirroredY { get; private set; }
+    [ObservableProperty] public partial bool IsGreyScaleOn { get; set; }
+    [ObservableProperty] public partial bool IsAlwaysOnTopOn { get; set; }
+    [ObservableProperty] public partial bool IsImageInfoVisible { get; set; }
     [ObservableProperty] public partial bool IsTimeVisible { get; set; }
     [ObservableProperty] public partial bool IsSessionActive { get; set; } = true;
     [ObservableProperty] public partial bool IsEndOfCollection { get; set; }
-    [ObservableProperty] public partial bool IsSessionResultsVisible { get; private set; } = false;
+    [ObservableProperty] public partial bool IsSessionResultsVisible { get; private set; }
 
     // Commands conditions.
     public bool CanSelectNextImage => IsSessionActive && CurrentImageIndex < SessionCollectionCount && SessionCollectionCount > 0;
@@ -82,7 +82,7 @@ public partial class SessionViewModel : BaseViewModel, IDisposable
     {
         ViewModelName = ViewModelNames.Session;
 
-        _IsEndlessModeOn = sharedSessionParametersService.IsEndlessModeEnabled;
+        _isEndlessModeOn = sharedSessionParametersService.IsEndlessModeEnabled;
 
         _soundService = soundService;
         _userSettings = userSettings;
@@ -276,7 +276,7 @@ public partial class SessionViewModel : BaseViewModel, IDisposable
     {
         if (CurrentImageIndex == SessionCollectionCount)
         {
-            if (_IsEndlessModeOn)
+            if (_isEndlessModeOn)
             {
                 ImageCollectionHelpers.ShuffleList(_sessionCollection);
                 _completedImages.Clear();
