@@ -8,7 +8,7 @@
     xmlns:viewmodels="clr-namespace:Posetrix.Core.ViewModels;assembly=Posetrix.Core"
     Title="{Binding WindowTitle}"
     Width="480"
-    Height="400"
+    Height="380"
     d:DataContext="{d:DesignInstance Type=viewmodels:SettingsViewModel}"
     Icon="pack://application:,,,/Assets/Icons/favicon.ico"
     ResizeMode="NoResize"
@@ -23,7 +23,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="16" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="16" />
+            <RowDefinition Height="8" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="Transparent">
@@ -119,13 +119,15 @@
             Grid.Row="6"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Style="{DynamicResource BodyTextBlockStyle}"
+            Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+            Style="{DynamicResource CaptionTextBlockStyle}"
             Text="{Binding RuntimeInformation}" />
         <TextBlock
             Grid.Row="8"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Style="{DynamicResource BodyTextBlockStyle}"
+            Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+            Style="{DynamicResource CaptionTextBlockStyle}"
             Text="{Binding SourceLink}" />
     </Grid>
 </Window>
