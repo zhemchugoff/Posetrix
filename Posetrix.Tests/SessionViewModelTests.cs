@@ -221,4 +221,289 @@ public class SessionViewModelTests
         // Assert.
         sessionViewModel.CurrentImage.ShouldBe(expectedValue);
     }
+
+    [Fact]
+    public void SelectNextImage_ShouldBeDisabled_WhenCanSelectNextImageIsFalse()
+    {
+
+        // Arrange.
+        _mockSharedCollectionService.ImageFolders.Returns([_imageFolder1, _imageFolder2]);
+        // Act.
+        var sessionViewModel = new SessionViewModel(_mockISoundService, _mockUserSettings, _mockImageResolutionService, _mockSharedCollectionService, _mockSharedSessionParametersService)
+        {
+            // Act.
+            IsSessionActive = false
+        };
+        // Assert.
+        sessionViewModel.SelectNextImageCommand.CanExecute(null).ShouldBeFalse();
+    }
+
+    [Fact]
+    public void SelectNextImage_ShouldBeEnabled_WhenCanSelectNextImageIsTrue()
+    {
+
+        // Arrange.
+        _mockSharedCollectionService.ImageFolders.Returns([_imageFolder1, _imageFolder2]);
+        // Act.
+        var sessionViewModel = new SessionViewModel(_mockISoundService, _mockUserSettings, _mockImageResolutionService, _mockSharedCollectionService, _mockSharedSessionParametersService)
+        {
+            // Act.
+            IsSessionActive = true
+        };
+        // Assert.
+        sessionViewModel.SelectNextImageCommand.CanExecute(null).ShouldBeTrue();
+    }
+
+    [Fact]
+    public void SelectNextImage_ShouldBeDisabled_WhenCurrentImageIndexIsEqualToCollectionCount()
+    {
+        // Arrange.
+        _mockSharedCollectionService.ImageFolders.Returns([_imageFolder1, _imageFolder2]);
+        // Act.
+        var sessionViewModel = new SessionViewModel(_mockISoundService, _mockUserSettings, _mockImageResolutionService, _mockSharedCollectionService, _mockSharedSessionParametersService)
+        {
+            // Act.
+            CurrentImageIndex = 5
+        };
+        // Assert.
+        sessionViewModel.SelectNextImageCommand.CanExecute(null).ShouldBeFalse();
+    }
+
+    [Fact]
+    public void CompletedImagesCount_ShouldBe1_WhenSelectNextImageIsExecuted()
+    {
+        // Arrange.
+        _mockSharedCollectionService.ImageFolders.Returns([_imageFolder1, _imageFolder2]);
+        // Act.
+        var sessionViewModel = new SessionViewModel(_mockISoundService, _mockUserSettings, _mockImageResolutionService, _mockSharedCollectionService, _mockSharedSessionParametersService);
+        sessionViewModel.SelectNextImageCommand.Execute(null);
+        // Assert.
+        sessionViewModel.CompletedImagesCount.ShouldBe(1);
+    }
+
+    [Fact]
+    public void CompletedImageCount_ShouldStayTheSame_WhenImageIsAlreadyCompleted()
+    {
+        // Arrange.
+        _mockSharedCollectionService.ImageFolders.Returns([_imageFolder1, _imageFolder2]);
+        // Act.
+        var sessionViewModel = new SessionViewModel(_mockISoundService, _mockUserSettings, _mockImageResolutionService, _mockSharedCollectionService, _mockSharedSessionParametersService);
+        sessionViewModel.SelectNextImageCommand.Execute(null);
+        sessionViewModel.CurrentImageIndex--;
+        // Assert.
+        sessionViewModel.CompletedImagesCount.ShouldBe(1);
+    }
+
+    [Fact]
+    public void SelectPreviousImage_ShouldBeDisabled_WhenCanSelectPreviousImageIsFalse()
+    {
+        // Arrange.
+        _mockSharedCollectionService.ImageFolders.Returns([_imageFolder1, _imageFolder2]);
+        // Act.
+        var sessionViewModel = new SessionViewModel(_mockISoundService, _mockUserSettings, _mockImageResolutionService, _mockSharedCollectionService, _mockSharedSessionParametersService)
+        {
+            // Act.
+            CurrentImageIndex = 0
+        };
+        // Assert.
+        sessionViewModel.SelectPreviousImageCommand.CanExecute(null).ShouldBeFalse();
+    }
+
+    [Fact]
+    public void SelectPreviousImage_ShouldBeEnabled_WhenCanSelectPreviousImageIsTrue()
+    {
+
+        // Arrange.
+        _mockSharedCollectionService.ImageFolders.Returns([_imageFolder1, _imageFolder2]);
+        // Act.
+        var sessionViewModel = new SessionViewModel(_mockISoundService, _mockUserSettings, _mockImageResolutionService, _mockSharedCollectionService, _mockSharedSessionParametersService);
+        sessionViewModel.SelectNextImageCommand.Execute(null);
+        // Assert.
+        sessionViewModel.SelectPreviousImageCommand.CanExecute(null).ShouldBeTrue();
+    }
+
+    [Fact]
+    public void SkipImage_ShouldBeDisabled_WhenCanSelectNextImageIsFalse()
+    {
+
+        // Arrange.
+        _mockSharedCollectionService.ImageFolders.Returns([_imageFolder1, _imageFolder2]);
+        // Act.
+        var sessionViewModel = new SessionViewModel(_mockISoundService, _mockUserSettings, _mockImageResolutionService, _mockSharedCollectionService, _mockSharedSessionParametersService)
+        {
+            CurrentImageIndex = 5
+        };
+        // Assert.
+        sessionViewModel.SkipImageCommand.CanExecute(null).ShouldBeFalse();
+    }
+
+    [Fact]
+    public void SkipImage_ShouldBeEnabled_WhenCanSelectNextImageIsTrue()
+    {
+        // Arrange.
+        _mockSharedCollectionService.ImageFolders.Returns([_imageFolder1, _imageFolder2]);
+        // Act.
+        var sessionViewModel = new SessionViewModel(_mockISoundService, _mockUserSettings, _mockImageResolutionService, _mockSharedCollectionService, _mockSharedSessionParametersService);
+        // Assert.
+        sessionViewModel.SkipImageCommand.CanExecute(null).ShouldBeTrue();
+    }
+
+    [Fact]
+    public void SkipImage_ShouldNotAddImageToCompletedImagesCollection_WhenExecuted()
+    {
+        // Arrange.
+        _mockSharedCollectionService.ImageFolders.Returns([_imageFolder1, _imageFolder2]);
+        // Act.
+        var sessionViewModel = new SessionViewModel(_mockISoundService, _mockUserSettings, _mockImageResolutionService, _mockSharedCollectionService, _mockSharedSessionParametersService);
+        sessionViewModel.SkipImageCommand.Execute(null);
+        // Assert.
+        sessionViewModel.CompletedImagesCount.ShouldBe(0);
+    }
+
+    [Fact]
+    public void StopSession_ShouldBeEnabled_WhenSessionIsActive()
+    {
+        // Arrange.
+        _mockSharedCollectionService.ImageFolders.Returns([_imageFolder1, _imageFolder2]);
+        // Act.
+        var sessionViewModel = new SessionViewModel(_mockISoundService, _mockUserSettings, _mockImageResolutionService, _mockSharedCollectionService, _mockSharedSessionParametersService);
+        // Assert.
+        sessionViewModel.StopSessionCommand.CanExecute(null).ShouldBeTrue();
+    }
+
+    [Fact]
+    public void StopSession_ShouldBeDisabled_WhenSessionIsNotActive()
+    {
+        // Arrange.
+        _mockSharedCollectionService.ImageFolders.Returns([_imageFolder1, _imageFolder2]);
+        // Act.
+        var sessionViewModel = new SessionViewModel(_mockISoundService, _mockUserSettings, _mockImageResolutionService, _mockSharedCollectionService, _mockSharedSessionParametersService)
+        {
+            IsSessionActive = false
+        };
+        // Assert.
+        sessionViewModel.StopSessionCommand.CanExecute(null).ShouldBeFalse();
+    }
+
+    [Fact]
+    public void CurrentImage_ShouldChangeToPlaceholder_WhenStopSessionIsExecuted()
+    {
+        // Arrange.
+        _mockSharedCollectionService.ImageFolders.Returns([_imageFolder1, _imageFolder2]);
+        var expectedValue = ResourceLocator.CelebrationImage;
+        // Act.
+        var sessionViewModel = new SessionViewModel(_mockISoundService, _mockUserSettings, _mockImageResolutionService, _mockSharedCollectionService, _mockSharedSessionParametersService);
+        sessionViewModel.StopSessionCommand.Execute(null);
+        var actualValue = sessionViewModel.CurrentImage;
+        // Assert.
+        actualValue.ShouldBe(expectedValue);
+    }
+
+    [Fact]
+    public void IsSessionResultsVisible_ShouldBeTrue_WhenStopSessionIsExecuted()
+    {
+        // Arrange.
+        _mockSharedCollectionService.ImageFolders.Returns([_imageFolder1, _imageFolder2]);
+        // Act.
+        var sessionViewModel = new SessionViewModel(_mockISoundService, _mockUserSettings, _mockImageResolutionService, _mockSharedCollectionService, _mockSharedSessionParametersService);
+        sessionViewModel.StopSessionCommand.Execute(null);
+        // Assert.
+        sessionViewModel.IsSessionResultsVisible.ShouldBeTrue();
+    }
+
+    [Fact]
+    public void IsSessionActive_ShouldBeFalse_WhenStopSessionIsExecuted()
+    {
+        // Arrange.
+        _mockSharedCollectionService.ImageFolders.Returns([_imageFolder1, _imageFolder2]);
+        // Act.
+        var sessionViewModel = new SessionViewModel(_mockISoundService, _mockUserSettings, _mockImageResolutionService, _mockSharedCollectionService, _mockSharedSessionParametersService);
+        sessionViewModel.StopSessionCommand.Execute(null);
+        // Assert.
+        sessionViewModel.IsSessionActive.ShouldBeFalse();
+    }
+
+    [Fact]
+    public void ToggleMirrorX_ShouldToggleIsMirroredX()
+    {
+        // Arrange.
+        _mockSharedCollectionService.ImageFolders.Returns([_imageFolder1, _imageFolder2]);
+        // Act.
+        var sessionViewModel = new SessionViewModel(_mockISoundService, _mockUserSettings, _mockImageResolutionService, _mockSharedCollectionService, _mockSharedSessionParametersService);
+        var actualValue = sessionViewModel.IsMirroredX;
+        sessionViewModel.ToggleMirrorXCommand.Execute(null);
+        // Assert.
+        sessionViewModel.IsMirroredX.ShouldBe(!actualValue);
+    }
+
+    [Fact]
+    public void ToggleMirrorY_ShouldToggleIsMirroredY()
+    {
+        // Arrange.
+        _mockSharedCollectionService.ImageFolders.Returns([_imageFolder1, _imageFolder2]);
+        // Act.
+        var sessionViewModel = new SessionViewModel(_mockISoundService, _mockUserSettings, _mockImageResolutionService, _mockSharedCollectionService, _mockSharedSessionParametersService);
+        var actualValue = sessionViewModel.IsMirroredY;
+        sessionViewModel.ToggleMirrorYCommand.Execute(null);
+        // Assert.
+        sessionViewModel.IsMirroredY.ShouldBe(!actualValue);
+    }
+
+    [Fact]
+    public void ToggleGreyScale_ShouldToggleIsGreyScaleOn()
+    {
+        // Arrange.
+        _mockSharedCollectionService.ImageFolders.Returns([_imageFolder1, _imageFolder2]);
+        // Act.
+        var sessionViewModel = new SessionViewModel(_mockISoundService, _mockUserSettings, _mockImageResolutionService, _mockSharedCollectionService, _mockSharedSessionParametersService);
+        var actualValue = sessionViewModel.IsGreyScaleOn;
+        sessionViewModel.ToggleGreyScaleCommand.Execute(null);
+        // Assert.
+        sessionViewModel.IsGreyScaleOn.ShouldBe(!actualValue);
+    }
+
+    [Fact]
+    public void ToggleMirrorX_ShouldBeFalse_WhenSelectNextImageIsExecuted()
+    {
+        // Arrange.
+        _mockSharedCollectionService.ImageFolders.Returns([_imageFolder1, _imageFolder2]);
+        // Act.
+        var sessionViewModel = new SessionViewModel(_mockISoundService, _mockUserSettings, _mockImageResolutionService, _mockSharedCollectionService, _mockSharedSessionParametersService);
+        var actualValue = sessionViewModel.IsMirroredX;
+        sessionViewModel.ToggleMirrorXCommand.Execute(null);
+        sessionViewModel.IsMirroredX.ShouldBe(!actualValue);
+        sessionViewModel.SelectNextImageCommand.Execute(null);
+        // Assert.
+        sessionViewModel.IsMirroredX.ShouldBe(actualValue);
+    }
+
+    [Fact]
+    public void ToggleMirrorY_ShouldBeFalse_WhenSelectNextImageIsExecuted()
+    {
+        // Arrange.
+        _mockSharedCollectionService.ImageFolders.Returns([_imageFolder1, _imageFolder2]);
+        // Act.
+        var sessionViewModel = new SessionViewModel(_mockISoundService, _mockUserSettings, _mockImageResolutionService, _mockSharedCollectionService, _mockSharedSessionParametersService);
+        var actualValue = sessionViewModel.IsMirroredY;
+        sessionViewModel.ToggleMirrorYCommand.Execute(null);
+        sessionViewModel.IsMirroredY.ShouldBe(!actualValue);
+        sessionViewModel.SelectNextImageCommand.Execute(null);
+        // Assert.
+        sessionViewModel.IsMirroredY.ShouldBe(actualValue);
+    }
+
+    [Fact]
+    public void ToggleGreyScale_ShouldBeFalse_WhenSelectNextImageIsExecuted()
+    {
+        // Arrange.
+        _mockSharedCollectionService.ImageFolders.Returns([_imageFolder1, _imageFolder2]);
+        // Act.
+        var sessionViewModel = new SessionViewModel(_mockISoundService, _mockUserSettings, _mockImageResolutionService, _mockSharedCollectionService, _mockSharedSessionParametersService);
+        var actualValue = sessionViewModel.IsGreyScaleOn;
+        sessionViewModel.ToggleGreyScaleCommand.Execute(null);
+        sessionViewModel.IsGreyScaleOn.ShouldBe(!actualValue);
+        sessionViewModel.SelectNextImageCommand.Execute(null);
+        // Assert.
+        sessionViewModel.IsGreyScaleOn.ShouldBe(actualValue);
+    }
 }

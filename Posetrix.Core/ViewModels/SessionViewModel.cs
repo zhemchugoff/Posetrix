@@ -41,8 +41,8 @@ public partial class SessionViewModel : BaseViewModel, IDisposable
     [ObservableProperty] public partial bool IsSessionResultsVisible { get; private set; }
 
     // Commands conditions.
-    public bool CanSelectNextImage => IsSessionActive && CurrentImageIndex < SessionCollectionCount && SessionCollectionCount > 0;
-    public bool CanSelectPreviousImage => IsSessionActive && CurrentImageIndex > 0 && SessionCollectionCount > 0;
+    public bool CanSelectNextImage => IsSessionActive && CurrentImageIndex < SessionCollectionCount;
+    public bool CanSelectPreviousImage => IsSessionActive && CurrentImageIndex > 0;
     public bool IsStopEnabled => IsSessionActive;
     public bool IsPauseEnabled => IsSessionActive && IsTimeVisible;
     public bool IsTimerPaused => _timerStore.IsTimerPaused && IsTimeVisible;
@@ -216,7 +216,6 @@ public partial class SessionViewModel : BaseViewModel, IDisposable
         TotalPracticeTime = $"Total practice time: {_timerStore.GetTotalPracticeTime():hh\\:mm\\:ss}";
         IsSessionResultsVisible = true;
         IsSessionActive = false;
-
     }
 
     /// <summary>
