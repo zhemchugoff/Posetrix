@@ -19,9 +19,7 @@ public partial class FolderAddViewModel : BaseViewModel
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(RemoveFolderCommand))]
     public partial ImageFolder? SelectedFolder { get; set; }
-
     public bool CanDeleteFolder => SelectedFolder is not null;
-
     public FolderAddViewModel(IFolderBrowserServiceAsync folderBrowserServiceAsync, IExtensionsService extensionsService, ISharedCollectionService sharedCollectionService)
     {
         ViewModelName = ViewModelNames.FolderAdd;

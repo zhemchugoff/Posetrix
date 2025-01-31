@@ -13,6 +13,7 @@
     MinHeight="400"
     d:DataContext="{d:DesignInstance Type=viewmodels:FolderAddViewModel}"
     Icon="pack://application:,,,/Assets/Icons/favicon.ico"
+    PreviewKeyDown="Window_PreviewKeyDown"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Grid Margin="16">

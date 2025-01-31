@@ -55,4 +55,12 @@ public partial class SessionView : Window
 
     private void SessionWindow_MouseEnter(object sender, MouseEventArgs e) { SessionStackPanel.Visibility = Visibility.Visible; }
     private void SessionWindow_MouseLeave(object sender, MouseEventArgs e) { SessionStackPanel.Visibility = Visibility.Collapsed; }
+
+    private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Space)
+        {
+            e.Handled = true; // Prevent space from activating buttons.
+        }
+    }
 }

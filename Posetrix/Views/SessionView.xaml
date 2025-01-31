@@ -12,11 +12,12 @@
     MinHeight="400"
     d:DataContext="{d:DesignInstance viewmodels:SessionViewModel}"
     Icon="pack://application:,,,/Assets/Icons/favicon.ico"
+    PreviewKeyDown="Window_PreviewKeyDown"
     Topmost="{Binding IsAlwaysOnTopOn}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Window.InputBindings>
-        <KeyBinding Key="Space" Command="{Binding PauseSessionCommand}" />
+        <KeyBinding Key="P" Command="{Binding PauseSessionCommand}" />
         <KeyBinding Key="Left" Command="{Binding SelectPreviousImageCommand}" />
         <KeyBinding Key="A" Command="{Binding SelectPreviousImageCommand}" />
         <KeyBinding Key="Right" Command="{Binding SelectNextImageCommand}" />
@@ -229,7 +230,7 @@
                         <ToolTip>
                             <TextBlock Style="{StaticResource InfoToolTip}">
                                 Pause session<LineBreak />
-                                Keys: Spacebar</TextBlock>
+                                Keys: P</TextBlock>
                         </ToolTip>
                     </ToggleButton.ToolTip>
                 </ToggleButton>
