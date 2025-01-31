@@ -9,7 +9,7 @@
 		<NoWarn>$(NoWarn);WPF0001</NoWarn>
 		<ApplicationIcon>posetrix.ico</ApplicationIcon>
 		<LangVersion>preview</LangVersion>
-		<FileVersion>0.3.1</FileVersion>
+		<FileVersion>0.4.0</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
