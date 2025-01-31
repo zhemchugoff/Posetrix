@@ -1,7 +1,7 @@
 <div id="posetrix-logo" align="center">
     <img src="./Images/icon.svg" alt="Posetrix Logo" width="100"/>
     <h1>Posetrix</h1>
-  <img src="./Images/screenshot.png" alt="Posetrix Screenshot"/>
+  <img src="./Images/posetrix-screenshot.png" alt="Posetrix Screenshot"/>
 </div>
 
 <div id="badges" align="center">
@@ -27,6 +27,7 @@ I started this project to practice C# and WPF framework and hope someone will fi
 ## Credits
 - Illustrations by [unDraw](https://undraw.co)
 - Sounds from [Freesound](https://freesound.org)
+- Screenshot photo by <a href="https://unsplash.com/@davidhurley?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">David Hurley</a> on <a href="https://unsplash.com/photos/woman-in-yellow-long-sleeved-shirt-and-black-jeans-h3wYYNrmy28?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
