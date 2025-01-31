@@ -285,8 +285,10 @@ public class MainViewModelTests
         // Arrange.
         _mockSharedCollectionService.ImageFolders.Returns(new ObservableCollection<ImageFolder>());
         // Act.
-        var mainViewModel = new MainViewModel(_mockWindowManager, _mockViewModelFactory, _mockUserSettings, _mockThemeService, _mockSharedCollectionService, _mockSharedSessionParametersService);
-        mainViewModel.FolderCount = 4;
+        var mainViewModel = new MainViewModel(_mockWindowManager, _mockViewModelFactory, _mockUserSettings, _mockThemeService, _mockSharedCollectionService, _mockSharedSessionParametersService)
+        {
+            FolderCount = 4
+        };
         // Assert.
         mainViewModel.StartSessionCommand.CanExecute(null).ShouldBeTrue();
     }
@@ -297,9 +299,11 @@ public class MainViewModelTests
         // Arrange.
         _mockSharedCollectionService.ImageFolders.Returns(new ObservableCollection<ImageFolder>());
         _mockSharedSessionParametersService.SessionImageCount.Returns(0);
-        var mainViewModel = new MainViewModel(_mockWindowManager, _mockViewModelFactory, _mockUserSettings, _mockThemeService, _mockSharedCollectionService, _mockSharedSessionParametersService);
-        // Act.
-        mainViewModel.SessionImageCount = 121;
+        var mainViewModel = new MainViewModel(_mockWindowManager, _mockViewModelFactory, _mockUserSettings, _mockThemeService, _mockSharedCollectionService, _mockSharedSessionParametersService)
+        {
+            // Act.
+            SessionImageCount = 121
+        };
         // Assert.
         _mockSharedSessionParametersService.Received().SessionImageCount = 121;
     }
@@ -310,9 +314,11 @@ public class MainViewModelTests
         // Arrange.
         _mockSharedCollectionService.ImageFolders.Returns(new ObservableCollection<ImageFolder>());
         _mockSharedSessionParametersService.IsShuffleEnabled.Returns(false);
-        var mainViewModel = new MainViewModel(_mockWindowManager, _mockViewModelFactory, _mockUserSettings, _mockThemeService, _mockSharedCollectionService, _mockSharedSessionParametersService);
-        // Act.
-        mainViewModel.IsShuffleEnabled = true;
+        var mainViewModel = new MainViewModel(_mockWindowManager, _mockViewModelFactory, _mockUserSettings, _mockThemeService, _mockSharedCollectionService, _mockSharedSessionParametersService)
+        {
+            // Act.
+            IsShuffleEnabled = true
+        };
         // Assert.
         _mockSharedSessionParametersService.Received().IsShuffleEnabled = true;
     }
@@ -323,9 +329,11 @@ public class MainViewModelTests
         // Arrange.
         _mockSharedCollectionService.ImageFolders.Returns(new ObservableCollection<ImageFolder>());
         _mockSharedSessionParametersService.IsEndlessModeEnabled.Returns(false);
-        var mainViewModel = new MainViewModel(_mockWindowManager, _mockViewModelFactory, _mockUserSettings, _mockThemeService, _mockSharedCollectionService, _mockSharedSessionParametersService);
-        // Act.
-        mainViewModel.IsEndlessModeEnabled = true;
+        var mainViewModel = new MainViewModel(_mockWindowManager, _mockViewModelFactory, _mockUserSettings, _mockThemeService, _mockSharedCollectionService, _mockSharedSessionParametersService)
+        {
+            // Act.
+            IsEndlessModeEnabled = true
+        };
         // Assert.
         _mockSharedSessionParametersService.Received().IsEndlessModeEnabled = true;
     }
